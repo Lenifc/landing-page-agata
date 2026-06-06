@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 const open = ref(false)
 const links = [
   { to: '/', label: 'Home' },

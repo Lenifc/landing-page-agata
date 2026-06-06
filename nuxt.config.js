@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Talkateria — Speak English with confidence',
-      htmlAttrs: { lang: 'en', class: 'bg-background' },
+      htmlAttrs: { lang: 'pl', class: 'bg-background' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -33,7 +33,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600&display=swap',
         },
       ],
     },
