@@ -1,0 +1,21 @@
+{
+  "name": "Talkateria",
+  "short_name": "Talkateria",
+  "lang": "pl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff8f2",
+  "theme_color": "#9c5a3c",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "1254x1254",
+      "type": "image/png"
+    }
+  ]
+}

@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'Talkateria — Speak English with confidence',
+      titleTemplate: '%s | Talkateria',
+      title: 'Angielski z pewnością siebie',
       htmlAttrs: { lang: 'pl', class: 'bg-background' },
       meta: [
         { charset: 'utf-8' },
@@ -18,23 +19,42 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Talkateria is a small, personal English studio offering conversation-led lessons for adults and teens.',
+            'Talkateria to kameralne lekcje angielskiego w Rumi: indywidualnie, w duecie i w małych grupach. Przyjazna atmosfera, rozmowa i realne efekty.',
         },
+        { name: 'robots', content: 'noindex, nofollow' },
+        { name: 'format-detection', content: 'telephone=yes, email=yes' },
         { name: 'theme-color', content: '#9c5a3c' },
+        { property: 'og:locale', content: 'pl_PL' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Talkateria' },
+        { property: 'og:title', content: 'Talkateria | Angielski z pewnością siebie' },
+        {
+          property: 'og:description',
+          content:
+            'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych. Bez stresu, z naciskiem na mówienie i praktykę.',
+        },
+        { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [
         {
-          rel: 'preconnect',
-          href: 'https://fonts.googleapis.com',
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon.png',
+          sizes: '64x64',
         },
         {
-          rel: 'preconnect',
-          href: 'https://fonts.gstatic.com',
-          crossorigin: '',
+          rel: 'icon',
+          type: 'image/png',
+          href: '/icon.png',
+          sizes: '1254x1254',
         },
         {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600&display=swap',
+          rel: 'apple-touch-icon',
+          href: '/apple-icon.png',
+        },
+        {
+          rel: 'manifest',
+          href: '/site.webmanifest',
         },
       ],
     },

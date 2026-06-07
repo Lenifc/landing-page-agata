@@ -1,27 +1,32 @@
 <script setup>
-useHead({ title: 'Contact — Talkateria' })
+useSeoMeta({
+  title: 'Kontakt',
+  description:
+    'Skontaktuj się z Talkateria w Rumi i umów lekcję próbną z języka angielskiego. Odpowiedź zwykle w ciągu jednego dnia roboczego.',
+  ogTitle: 'Talkateria | Kontakt',
+  ogDescription:
+    'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
+})
 
 const details = [
   { label: 'Email', value: 'hello@talkateria.com', href: 'mailto:hello@talkateria.com' },
-  { label: 'Phone', value: '+44 1273 555 018', href: 'tel:+441273555018' },
-  { label: 'Studio', value: '12 Linden Street, Brighton, BN1 4QP' },
-  { label: 'Hours', value: 'Mon–Fri · 9am – 7pm' },
-  { label: 'Instagram', value: '@talkateria', href: 'https://instagram.com/talkateria' },
+  { label: 'Lokalizacja', value: 'Rumia, ul. Wrocławska 2' },
+  { label: 'Dostępność', value: 'Odpowiedź zwykle w 1 dzień roboczy' },
 ]
 </script>
 
 <template>
-  <main>
+  <main id="main-content">
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mb-12 max-w-2xl">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary">Contact</span>
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
         <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-          Let&apos;s find your voice in English.
+          Porozmawiajmy o Twoim angielskim.
         </h1>
         <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
-          Have a question or ready to book your free trial? Reach out using any
-          of the details below and I&apos;ll reply personally within one working
-          day.
+          Masz pytanie, chcesz zapisać się na lekcję próbną albo dobrać najlepszą
+          formę zajęć? Napisz, a wrócę z odpowiedzią osobiście, zwykle w ciągu
+          jednego dnia roboczego.
         </p>
       </div>
 
@@ -49,22 +54,25 @@ const details = [
         <div class="space-y-6">
           <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
             <img
-              src="/studio-space.png"
-              alt="The Talkateria studio with a round table and chalkboard"
+              src="/studio-space.jpg"
+              alt="Studio Talkateria z okrągłym stołem i tablicą"
               class="h-64 w-full object-cover"
-            />
+              width="1024"
+              height="2048"
+              loading="lazy"
+            >
           </div>
           <div class="rounded-3xl border border-border bg-secondary p-6">
-            <h3 class="font-serif text-lg font-semibold text-foreground">Prefer to just talk?</h3>
+            <h2 class="font-serif text-lg font-semibold text-foreground">Wolisz najpierw krótko porozmawiać?</h2>
             <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
-              Drop me a line on Instagram or by email and we can arrange a quick,
-              no-pressure call to see how I can help you reach your goals.
+              Opisz swój cel: egzamin, rozmowy, praca albo przełamanie bariery.
+              Podpowiem, która forma zajęć będzie dla Ciebie najwygodniejsza.
             </p>
             <a
               href="mailto:hello@talkateria.com"
               class="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Email me directly →
+              Napisz bezpośrednio →
             </a>
           </div>
         </div>

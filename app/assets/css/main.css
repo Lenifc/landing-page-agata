@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Avenir Next', 'Segoe UI', 'Trebuchet MS', ui-sans-serif, sans-serif;
+  --font-serif: 'Iowan Old Style', 'Baskerville Old Face', 'Palatino Linotype', Georgia, serif;
 
   --color-background: oklch(0.985 0.012 85);
   --color-foreground: oklch(0.27 0.02 50);
@@ -21,13 +21,36 @@
   --radius: 0.625rem;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(248, 211, 238, 0.65), transparent 28%),
+    linear-gradient(180deg, rgba(255, 248, 242, 1) 0%, rgba(255, 253, 249, 1) 100%);
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a,
+button {
+  transition-duration: 180ms;
+}
+
+#main-content {
+  scroll-margin-top: 6rem;
 }

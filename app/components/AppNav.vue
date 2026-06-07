@@ -1,17 +1,21 @@
 <script setup>
 const open = ref(false)
 const links = [
-  { to: '/', label: 'Home' },
-  { to: '/pricing', label: 'Pricing' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', label: 'Start' },
+  { to: '/cennik', label: 'Cennik' },
+  { to: '/kontakt', label: 'Kontakt' },
 ]
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <NuxtLink to="/" class="font-serif text-xl font-semibold tracking-tight text-foreground">
-        Talkateria
+  <header class="sticky top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-xl">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
+      <NuxtLink to="/" class="flex items-center" aria-label="Talkateria - strona glowna">
+        <img
+          src="/talkateria-logo.png"
+          alt="Talkateria"
+          class="h-12 w-auto sm:h-14"
+        >
       </NuxtLink>
 
       <ul class="hidden items-center gap-8 md:flex">
@@ -27,16 +31,16 @@ const links = [
       </ul>
 
       <NuxtLink
-        to="/contact"
-        class="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+        to="/kontakt"
+        class="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[0_12px_30px_rgba(156,90,60,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:inline-flex"
       >
-        Book a free trial
+        Umów lekcję próbną
       </NuxtLink>
 
       <button
         class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
         :aria-expanded="open"
-        aria-label="Toggle menu"
+        aria-label="Przełącz menu"
         @click="open = !open"
       >
         <svg v-if="!open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -61,11 +65,11 @@ const links = [
         </li>
         <li class="pt-2">
           <NuxtLink
-            to="/contact"
+            to="/kontakt"
             class="inline-flex w-full justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
             @click="open = false"
           >
-            Book a free trial
+            Umów lekcję próbną
           </NuxtLink>
         </li>
       </ul>

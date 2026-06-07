@@ -1,129 +1,163 @@
-<script setup lang="ts">
+<script setup>
+useSeoMeta({
+  title: 'Angielski w Rumi',
+  description:
+    'Lekcje angielskiego w Rumi dla młodzieży i dorosłych. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie i pewność siebie.',
+  ogTitle: 'Talkateria | Angielski w Rumi',
+  ogDescription:
+    'Kameralne zajęcia z angielskiego w przyjaznej atmosferze. Mniej stresu, więcej mówienia i praktyki.',
+  twitterTitle: 'Talkateria | Angielski w Rumi',
+  twitterDescription:
+    'Lekcje angielskiego indywidualne i grupowe w Rumi, nastawione na rozmowę i realny postęp.',
+})
+
 const features = [
   {
-    title: 'Conversation first',
-    body: 'Every lesson is built around real talking, so you gain fluency you can actually use.',
+    title: 'Mówienie od pierwszych minut',
+    body: 'Zajęcia są oparte na rozmowie, dzięki czemu angielski staje się narzędziem, a nie tylko teorią z podręcznika.',
   },
   {
-    title: 'Truly one-on-one',
-    body: 'No crowded classes. Just you, me, and a plan shaped around your goals.',
+    title: 'Plan dopasowany do Ciebie',
+    body: 'Pracujemy w tempie, które pasuje do Twojego celu: egzamin, praca, wyjazd albo swobodne rozmowy.',
   },
   {
-    title: 'Warm & patient',
-    body: 'A relaxed studio where mistakes are welcome and progress feels natural.',
+    title: 'Spokojna, wspierająca atmosfera',
+    body: 'Bez presji i oceniania. Jest miejsce na błędy, pytania i naturalne budowanie pewności siebie.',
   },
 ]
 
 const photos = [
   {
-    src: '/studio-space.png',
-    alt: 'The studio classroom with a round table and chalkboard',
+    src: '/studio-space.webp',
+    alt: 'Przestrzeń do nauki z okrągłym stołem i tablicą',
     class: 'col-span-2 row-span-2',
   },
-  { src: '/lesson-1.png', alt: 'Two adults in a relaxed English conversation lesson' },
-  { src: '/lesson-2.png', alt: 'Hands writing English vocabulary in a notebook' },
+  { src: '/lesson-1.webp', alt: 'Kursanci podczas swobodnej rozmowy po angielsku' },
+  { src: '/lesson-2.webp', alt: 'Notatki i słownictwo przygotowywane na zajęciach' },
 ]
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        serviceType: 'Lekcje języka angielskiego',
+        provider: {
+          '@type': 'EducationalOrganization',
+          name: 'Talkateria',
+        },
+        areaServed: 'Rumia i okolice',
+        audience: {
+          '@type': 'Audience',
+          audienceType: 'dzieci, młodzież i dorośli',
+        },
+      }),
+    },
+  ],
+})
 </script>
 
 <template>
-  <main>
-    <!-- Hero -->
+  <main id="main-content">
     <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
       <div class="space-y-6">
-        <span class="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground">
-          Small studio · big confidence
+        <span class="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm">
+          Kameralne zajęcia • duża swoboda
         </span>
         <h1 class="text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl">
-          Speak English with real confidence.
+          Angielski, w którym naprawdę zaczniesz mówić.
         </h1>
         <p class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
-          Talkateria is a small, personal studio offering conversation-led
-          lessons for adults and teens. Friendly, patient, and built entirely
-          around you.
+          Talkateria to kameralne lekcje angielskiego dla młodzieży i dorosłych
+          w Rumi. Przyjazna atmosfera, rozmowa i plan dopasowany do Ciebie.
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <NuxtLink
-            to="/contact"
-            class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            to="/kontakt"
+            class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(156,90,60,0.22)] transition-all hover:-translate-y-0.5 hover:opacity-90"
           >
-            Book a free trial →
+            Umów lekcję próbną →
           </NuxtLink>
           <NuxtLink
-            to="/pricing"
+            to="/cennik"
             class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
-            See pricing
+            Zobacz cennik
           </NuxtLink>
         </div>
       </div>
 
       <div class="relative">
-        <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
+        <div class="overflow-hidden rounded-[2rem] border border-border bg-card shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
           <img
-            src="/studio-hero.png"
-            alt="The bright, cozy interior of the Talkateria studio"
+            src="/studio-hero.webp"
+            alt="Jasne i przytulne wnętrze studia Talkateria"
             class="h-full w-full object-cover"
-          />
+            width="1024"
+            height="1024"
+            fetchpriority="high"
+          >
         </div>
         <div class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card px-5 py-4 shadow-md sm:block">
-          <p class="font-serif text-3xl font-semibold text-primary">12+</p>
-          <p class="text-sm text-muted-foreground">years teaching</p>
+          <p class="font-serif text-3xl font-semibold text-primary">8+</p>
+          <p class="text-sm text-muted-foreground">lat doświadczenia</p>
         </div>
       </div>
     </section>
 
-    <!-- Features -->
     <section class="border-y border-border bg-secondary">
       <div class="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-3">
-        <div v-for="f in features" :key="f.title" class="space-y-3">
-          <h3 class="font-serif text-xl font-semibold text-foreground">{{ f.title }}</h3>
-          <p class="text-pretty leading-relaxed text-muted-foreground">{{ f.body }}</p>
+        <div v-for="feature in features" :key="feature.title" class="space-y-3">
+          <h2 class="font-serif text-xl font-semibold text-foreground">{{ feature.title }}</h2>
+          <p class="text-pretty leading-relaxed text-muted-foreground">{{ feature.body }}</p>
         </div>
       </div>
     </section>
 
-    <!-- About -->
     <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-[0.9fr_1.1fr]">
       <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
         <img
-          src="/teacher-portrait.png"
-          alt="Portrait of Elena, founder and teacher"
+          src="/teacher-portrait.webp"
+          alt="Portret Agaty, lektorki i założycielki studia"
           class="h-full w-full object-cover"
-        />
+          width="1024"
+          height="1024"
+          loading="lazy"
+        >
       </div>
       <div class="space-y-5">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary">Hello, I&apos;m Elena</span>
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">Cześć, tu Agata</span>
         <h2 class="text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-foreground">
-          I started Talkateria to teach the way I always wished I&apos;d been taught.
+          Stworzyłam Talkaterię tak, jak sama chciałabym kiedyś się uczyć.
         </h2>
         <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
           <p>
-            For over a decade I taught in large language schools, and I kept
-            noticing the same thing: students learned grammar but froze the
-            moment they had to speak. So I built a studio that does it
-            differently.
+            Przez lata pracowałam z osobami, które znały gramatykę, ale nadal
+            blokowały się, gdy trzeba było powiedzieć coś spontanicznie. Dlatego
+            postawiłam na zajęcia, które dają przestrzeń do mówienia i oswajają
+            stres krok po kroku.
           </p>
           <p>
-            My lessons are calm, conversational, and completely tailored. We
-            talk about things you actually care about — your work, your travels,
-            your favorite shows — and the language follows naturally. Whether
-            you&apos;re preparing for an exam, a job interview, or simply want to
-            feel at home in English, we&apos;ll find your voice together.
+            Zajęcia są spokojne, praktyczne i dopasowane do Ciebie. Rozmawiamy
+            o tym, co naprawdę jest Ci potrzebne: pracy, podróżach, egzaminach
+            albo codziennym używaniu angielskiego. Dzięki temu język zaczyna
+            działać naturalnie, a nie tylko "na kartce".
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Gallery -->
     <section class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="mb-10 max-w-xl space-y-3">
           <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
-            Inside the studio
+            Jak wygląda nauka
           </h2>
           <p class="text-pretty leading-relaxed text-muted-foreground">
-            A bright, welcoming space designed to make learning feel less like a
-            classroom and more like a conversation with a friend.
+            Jasna, spokojna przestrzeń i zajęcia zaprojektowane tak, by nauka
+            była bliżej rozmowy niż szkolnej ławki.
           </p>
         </div>
         <div class="grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4">
@@ -137,27 +171,29 @@ const photos = [
               :src="photo.src"
               :alt="photo.alt"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+              width="1024"
+              height="1024"
+              loading="lazy"
+            >
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="mx-auto max-w-6xl px-6 py-20">
-      <div class="rounded-3xl bg-primary px-8 py-14 text-center md:px-16">
+      <div class="rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(156,90,60,0.2)] md:px-16">
         <h2 class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
-          Your first lesson is on me.
+          Pierwsze spotkanie jest niezobowiązujące.
         </h2>
         <p class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80">
-          Book a free 30-minute trial and let&apos;s see if we&apos;re a good
-          fit. No pressure, just a friendly conversation.
+          Umów krótką lekcję próbną i sprawdźmy, jaka forma nauki będzie dla
+          Ciebie najlepsza. Bez presji, w spokojnej atmosferze.
         </p>
         <NuxtLink
-          to="/contact"
+          to="/kontakt"
           class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90"
         >
-          Book your free trial →
+          Napisz do mnie →
         </NuxtLink>
       </div>
     </section>
