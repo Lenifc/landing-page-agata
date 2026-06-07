@@ -54,7 +54,7 @@ const details = [
         <div class="space-y-6">
           <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
             <img
-              src="/studio-space.jpg"
+              src="/studio-space.webp"
               alt="Studio Talkateria z okrągłym stołem i tablicą"
               class="h-64 w-full object-cover"
               width="1024"
