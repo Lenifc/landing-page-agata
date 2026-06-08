@@ -5,19 +5,28 @@ useHead({
       type: 'application/ld+json',
       children: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'EducationalOrganization',
+        '@type': ['EducationalOrganization', 'LocalBusiness'],
         name: 'Talkateria',
         description:
-          'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych.',
+          'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic.',
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Rumia',
           streetAddress: 'ul. Wrocławska 2',
           addressCountry: 'PL',
         },
-        email: 'hello@talkateria.com',
-        areaServed: 'Rumia Reda Trójmiasto',
-        knowsAbout: ['język angielski', 'konwersacje po angielsku', 'przygotowanie do egzaminów'],
+        priceRange: '$$',
+        areaServed: [
+          { '@type': 'City', name: 'Rumia' },
+          { '@type': 'City', name: 'Reda' },
+          { '@type': 'City', name: 'Gdynia' },
+        ],
+        knowsAbout: [
+          'język angielski',
+          'konwersacje po angielsku',
+          'lekcje angielskiego w Rumi',
+          'przygotowanie do egzaminów',
+        ],
       }),
     },
   ],

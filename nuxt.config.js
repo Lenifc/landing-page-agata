@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       titleTemplate: '%s | Talkateria',
-      title: 'Angielski z pewnością siebie',
+      title: 'Nauka języka angielskiego Rumia',
       htmlAttrs: { lang: 'pl', class: 'bg-background' },
       meta: [
         { charset: 'utf-8' },
@@ -19,28 +19,48 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Talkateria to kameralne lekcje angielskiego w Rumi: indywidualnie, w duecie i w małych grupach. Przyjazna atmosfera, rozmowa i realne efekty.',
+            'Talkateria to kameralne lekcje angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Przyjazna atmosfera, rozmowa i realne efekty.',
         },
         { name: 'robots', content: 'noindex, nofollow' },
+        { name: 'author', content: 'Talkateria' },
+        { name: 'geo.region', content: 'PL-PM' },
+        { name: 'geo.placename', content: 'Rumia, Reda, Gdynia' },
+        { name: 'color-scheme', content: 'light' },
         { name: 'format-detection', content: 'telephone=yes, email=yes' },
-        { name: 'theme-color', content: '#9c5a3c' },
+        { name: 'theme-color', content: '#315db7' },
         { property: 'og:locale', content: 'pl_PL' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Talkateria' },
-        { property: 'og:title', content: 'Talkateria | Angielski z pewnością siebie' },
+        {
+          property: 'og:title',
+          content: 'Talkateria | Angielski Rumia, Reda, Gdynia',
+        },
         {
           property: 'og:description',
           content:
-            'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych. Bez stresu, z naciskiem na mówienie i praktykę.',
+            'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic. Bez stresu, z naciskiem na mówienie.',
         },
-        { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [
         {
           rel: 'icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico',
+          sizes: 'any',
+        },
+        {
+          rel: 'icon',
           type: 'image/png',
-          href: '/favicon.png',
-          sizes: '64x64',
+          href: '/icon-light-32x32.png',
+          sizes: '32x32',
+          media: '(prefers-color-scheme: light)',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/icon-dark-32x32.png',
+          sizes: '32x32',
+          media: '(prefers-color-scheme: dark)',
         },
         {
           rel: 'icon',
