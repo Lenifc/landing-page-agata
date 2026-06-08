@@ -27,6 +27,10 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
+          name: 'google-site-verification',
+          content: 'hwrUsKc2ui7UcCaU6tQfzlzXcrx3C9zY8hwdUadeSog',
+        },
+        {
           name: 'description',
           content:
             'Talkateria to kameralne lekcje angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Przyjazna atmosfera, rozmowa i realne efekty.',
