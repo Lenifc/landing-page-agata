@@ -1,22 +1,25 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Avenir Next', 'Segoe UI', 'Trebuchet MS', ui-sans-serif, sans-serif;
-  --font-serif: 'Iowan Old Style', 'Baskerville Old Face', 'Palatino Linotype', Georgia, serif;
+  --font-sans:
+    'Avenir Next', 'Segoe UI', 'Trebuchet MS', ui-sans-serif, sans-serif;
+  --font-serif:
+    'Iowan Old Style', 'Baskerville Old Face', 'Palatino Linotype', Georgia,
+    serif;
 
-  --color-background: oklch(0.985 0.012 85);
-  --color-foreground: oklch(0.27 0.02 50);
-  --color-card: oklch(0.995 0.008 85);
-  --color-card-foreground: oklch(0.27 0.02 50);
-  --color-primary: oklch(0.55 0.14 45);
-  --color-primary-foreground: oklch(0.99 0.01 85);
-  --color-secondary: oklch(0.95 0.02 80);
-  --color-secondary-foreground: oklch(0.32 0.03 50);
-  --color-muted: oklch(0.95 0.015 80);
-  --color-muted-foreground: oklch(0.5 0.025 55);
-  --color-accent: oklch(0.9 0.05 80);
-  --color-accent-foreground: oklch(0.32 0.04 50);
-  --color-border: oklch(0.9 0.02 75);
+  --color-background: oklch(0.985 0.012 235);
+  --color-foreground: oklch(0.25 0.035 255);
+  --color-card: oklch(0.995 0.006 230);
+  --color-card-foreground: oklch(0.25 0.035 255);
+  --color-primary: oklch(0.48 0.135 250);
+  --color-primary-foreground: oklch(0.99 0.006 230);
+  --color-secondary: oklch(0.955 0.025 220);
+  --color-secondary-foreground: oklch(0.3 0.04 250);
+  --color-muted: oklch(0.955 0.018 230);
+  --color-muted-foreground: oklch(0.46 0.035 245);
+  --color-accent: oklch(0.91 0.065 168);
+  --color-accent-foreground: oklch(0.27 0.055 190);
+  --color-border: oklch(0.88 0.025 225);
 
   --radius: 0.625rem;
 }
@@ -31,9 +34,12 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(248, 211, 238, 0.65), transparent 28%),
-    linear-gradient(180deg, rgba(255, 248, 242, 1) 0%, rgba(255, 253, 249, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(241, 248, 255, 1) 0%,
+    rgba(250, 253, 255, 1) 48%,
+    rgba(246, 252, 249, 1) 100%
+  );
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);

@@ -4,11 +4,11 @@
   "lang": "pl",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff8f2",
-  "theme_color": "#9c5a3c",
+  "background_color": "#f1f8ff",
+  "theme_color": "#315db7",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/favicon.ico",
       "sizes": "64x64",
       "type": "image/png"
     },
