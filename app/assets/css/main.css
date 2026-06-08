@@ -1,11 +1,11 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
+
+@source '../../**/*.{vue,js,ts}';
 
 @theme {
   --font-sans:
     'Avenir Next', 'Segoe UI', 'Trebuchet MS', ui-sans-serif, sans-serif;
-  --font-serif:
-    'Iowan Old Style', 'Baskerville Old Face', 'Palatino Linotype', Georgia,
-    serif;
+  --font-serif: 'Fraunces', Georgia, ui-serif, serif;
 
   --color-background: oklch(0.985 0.012 235);
   --color-foreground: oklch(0.25 0.035 255);

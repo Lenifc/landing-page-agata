@@ -86,7 +86,7 @@ useHead({
           Kameralne zajęcia • duża swoboda
         </span>
         <h1
-          class="text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl"
+          class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl"
         >
           Kameralne studio języka angielskiego w Rumi. Zajęcia dla młodzieży i
           dorosłych.
@@ -233,19 +233,19 @@ useHead({
         <h2
           class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground"
         >
-          Pierwsze spotkanie jest niezobowiązujące.
+          Umów się na lekcję próbną.
         </h2>
         <p
           class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80"
         >
-          Umów krótką lekcję próbną i sprawdźmy, jaka forma nauki będzie dla
+          Umów pierwszą lekcję próbną i sprawdźmy, jaka forma nauki będzie dla
           Ciebie najlepsza. Bez presji, w spokojnej atmosferze.
         </p>
         <NuxtLink
           to="/kontakt"
           class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90"
         >
-          Napisz do mnie →
+          Kontakt →
         </NuxtLink>
       </div>
     </section>

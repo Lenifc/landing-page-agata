@@ -5,6 +5,16 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: true,
   css: ['~/assets/css/main.css'],
+  nitro: {
+    compressPublicAssets: {
+      gzip: true,
+      brotli: false,
+    },
+    prerender: {
+      crawlLinks: true,
+      routes: ['/', '/oferta', '/kontakt'],
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -21,7 +31,7 @@ export default defineNuxtConfig({
           content:
             'Talkateria to kameralne lekcje angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Przyjazna atmosfera, rozmowa i realne efekty.',
         },
-        { name: 'robots', content: 'noindex, nofollow' },
+        { name: 'robots', content: 'index, follow' },
         { name: 'author', content: 'Talkateria' },
         { name: 'geo.region', content: 'PL-PM' },
         { name: 'geo.placename', content: 'Rumia, Reda, Gdynia' },
@@ -42,6 +52,19 @@ export default defineNuxtConfig({
         },
       ],
       link: [
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.googleapis.com',
+        },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: '',
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap',
+        },
         {
           rel: 'icon',
           type: 'image/x-icon',
