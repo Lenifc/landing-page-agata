@@ -53,17 +53,18 @@ export default defineNuxtConfig({
       ],
       link: [
         {
-          rel: 'preconnect',
-          href: 'https://fonts.googleapis.com',
-        },
-        {
-          rel: 'preconnect',
-          href: 'https://fonts.gstatic.com',
+          rel: 'preload',
+          href: '/fonts/fraunces-latin-600.woff2',
+          as: 'font',
+          type: 'font/woff2',
           crossorigin: '',
         },
         {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap',
+          rel: 'preload',
+          href: '/fonts/fraunces-latin-ext-600.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: '',
         },
         {
           rel: 'icon',
