@@ -45,7 +45,7 @@ const links = [
         :to="ROUTES.contact"
         class="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[0_12px_30px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:inline-flex"
       >
-        Zapisz się teraz
+        Zapytaj o wolny termin
       </NuxtLink>
 
       <button
@@ -99,7 +99,7 @@ const links = [
             class="inline-flex w-full justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
             @click="open = false"
           >
-            Zapisz się teraz
+            Zapytaj o wolny termin
           </NuxtLink>
         </li>
       </ul>

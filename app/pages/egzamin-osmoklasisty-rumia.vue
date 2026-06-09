@@ -1,4 +1,5 @@
 <script setup>
+import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.eighthGradeExam
@@ -26,23 +27,7 @@ const steps = [
   'Ćwiczenie krótkich form pisemnych z jasną informacją zwrotną.',
 ]
 
-const priceOptions = [
-  {
-    name: 'Grupa egzaminacyjna',
-    price: '120 zł za osobę',
-    details: '100 min (2 × 50 min), kameralna grupa 4 osoby.',
-  },
-  {
-    name: 'Indywidualnie',
-    price: '100 zł',
-    details: '50 min, 1× tygodniowo, praca dokładnie nad potrzebami ucznia.',
-  },
-  {
-    name: 'Indywidualnie regularnie',
-    price: '90 zł',
-    details: '50 min przy 2 zajęciach tygodniowo.',
-  },
-]
+const priceOptions = getPricingPlans('eighthGradeExam')
 
 const areaServed = [
   { '@type': 'City', name: 'Rumia' },
@@ -71,7 +56,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: 'Przygotowanie do egzaminu ósmoklasisty z angielskiego',
@@ -105,7 +90,7 @@ useHead({
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
@@ -265,9 +250,10 @@ useHead({
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
               Najczęściej wybieraną formą przygotowań jest grupa egzaminacyjna
-              za 120 zł za osobę. Jeśli uczeń potrzebuje indywidualnego tempa,
-              można wybrać zajęcia 1:1 w cenie 100 zł za 50 minut lub 90 zł przy
-              dwóch spotkaniach tygodniowo.
+              za {{ priceOptions[0].price }}. Jeśli uczeń potrzebuje
+              indywidualnego tempa, można wybrać zajęcia 1:1 w cenie
+              {{ priceOptions[1].price }} za 50 minut lub
+              {{ priceOptions[2].price }} przy dwóch spotkaniach tygodniowo.
             </p>
             <NuxtLink
               :to="ROUTES.prices"

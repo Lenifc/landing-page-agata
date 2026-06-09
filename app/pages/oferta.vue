@@ -1,5 +1,10 @@
 <script setup>
-import { ROUTES } from '~/config/routes'
+import { CONTACT } from '~/config/contact'
+import { PRICING, getPricingPlans } from '~/config/pricing'
+import { ROUTES, SITE_URL } from '~/config/routes'
+
+const pageRoute = ROUTES.offer
+const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
   title: 'Oferta i cennik angielskiego w Rumi',
@@ -12,64 +17,18 @@ useSeoMeta({
     'Zobacz formy zajęć i ceny lekcji angielskiego w Rumi. Indywidualnie, w małych grupach i grupach egzaminacyjnych.',
 })
 
-const plans = [
-  {
-    name: 'Indywidualne',
-    frequency: '1× tygodniowo',
-    duration: '50 min',
-    price: '100 zł',
-    details:
-      'Idealne rozwiązanie dla osób, które chcą uczyć się we własnym tempie i skupić się na swoim celu.',
-    featured: true,
-  },
-  {
-    name: 'Indywidualne',
-    frequency: '2× tygodniowo',
-    duration: '50 min',
-    price: '90 zł',
-    details:
-      'Większa regularność i szybsze efekty. Opcja dla osób, które chcą mocno przyspieszyć postępy.',
-    featured: false,
-  },
-  {
-    name: 'DUO',
-    frequency: '2 osoby',
-    duration: '50 min',
-    price: '150 zł za parę',
-    details:
-      'Dla znajomych, rodzeństwa lub par, które chcą uczyć się razem i wzajemnie motywować.',
-    featured: false,
-  },
-  {
-    name: 'TRIO',
-    frequency: '3 osoby',
-    duration: '50 min',
-    price: '180 zł za grupę',
-    details:
-      '3-osobowa grupa tworzona przez kursantów. Dla znajomych, którzy uczą się razem i mają wspólny cel językowy.',
-    featured: false,
-  },
-  {
-    name: 'Grupa egzaminacyjna',
-    frequency: '4 osoby',
-    duration: '100 min (2 × 50 min)',
-    price: '120 zł za osobę',
-    details:
-      'Rozwiązywanie zadań egzaminacyjnych, nauka strategii oraz powtórki gramatyczne i leksykalne.',
-    featured: false,
-  },
-]
+const plans = getPricingPlans('offer')
+const priceSummary = `Cena zależy od formy nauki: zajęcia indywidualne zaczynają się od ${PRICING.plans.individualTwiceWeekly.price} przy dwóch spotkaniach tygodniowo, DUO kosztuje ${PRICING.plans.duo.price}, TRIO ${PRICING.plans.trio.price}, a grupa egzaminacyjna ${PRICING.plans.examGroup.price}.`
 
 const faqs = [
   {
     q: 'Ile kosztują zajęcia?',
-    a: 'Aktualne ceny zajęć z angielskiego znajdziesz w cenniku. Cena zależy od formy nauki: zajęcia indywidualne zaczynają się od 90 zł przy dwóch spotkaniach tygodniowo, DUO kosztuje 150 zł za parę, TRIO 180 zł za grupę, a grupa egzaminacyjna 120 zł za osobę.',
+    a: `Aktualne ceny zajęć z angielskiego znajdziesz w cenniku. ${priceSummary}`,
     link: {
       label: 'cenniku',
       href: ROUTES.prices,
       before: 'Aktualne ceny zajęć z angielskiego znajdziesz w ',
-      after:
-        '. Cena zależy od formy nauki: zajęcia indywidualne zaczynają się od 90 zł przy dwóch spotkaniach tygodniowo, DUO kosztuje 150 zł za parę, TRIO 180 zł za grupę, a grupa egzaminacyjna 120 zł za osobę.',
+      after: `. ${priceSummary}`,
     },
   },
   {
@@ -99,6 +58,10 @@ const faqs = [
   {
     q: 'Jak odbywają się zajęcia?',
     a: 'Zajęcia prowadzone są w studiu przy ul. Wrocławskiej 2 w Rumi (Janowo) lub online na platformie Zoom.',
+  },
+  {
+    q: 'W jakich godzinach odbywają się zajęcia i kontakt?',
+    a: `${CONTACT.lessonHoursText} ${CONTACT.contactHoursText} ${CONTACT.smsText} ${CONTACT.emailResponseText}`,
   },
   {
     q: 'Jak wygląda pierwsze spotkanie?',
@@ -162,12 +125,21 @@ const areaServed = [
 ]
 
 useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageUrl,
+    },
+  ],
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
+        '@id': `${pageUrl}#faq`,
+        url: `${pageUrl}#faq`,
+        inLanguage: 'pl-PL',
         mainEntity: faqs.map((faq) => ({
           '@type': 'Question',
           name: faq.q,
@@ -180,7 +152,7 @@ useHead({
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'OfferCatalog',
         name: 'Cennik lekcji angielskiego Talkateria',
@@ -520,7 +492,7 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-3xl px-6 py-20">
+    <section id="faq" class="mx-auto max-w-3xl scroll-mt-24 px-6 py-20">
       <h2
         class="text-balance text-center font-serif text-3xl font-semibold tracking-tight text-foreground"
       >

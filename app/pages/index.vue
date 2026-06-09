@@ -1,5 +1,9 @@
 <script setup>
-import { ROUTES } from '~/config/routes'
+import { CONTACT } from '~/config/contact'
+import { ROUTES, SITE_URL } from '~/config/routes'
+
+const pageRoute = ROUTES.home
+const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
   title: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
@@ -44,10 +48,16 @@ const photos = [
 ]
 
 useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageUrl,
+    },
+  ],
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Service',
         serviceType: 'Lekcje języka angielskiego',
@@ -168,9 +178,6 @@ useHead({
         <span class="text-sm font-medium uppercase tracking-widest text-primary"
           >Cześć, tu Agata</span
         >
-        <!-- <h2 class="text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-foreground">
-          Stworzyłam Talkaterię tak, jak sama chciałabym kiedyś się uczyć.
-        </h2> -->
         <div
           class="space-y-4 text-pretty leading-relaxed text-muted-foreground"
         >

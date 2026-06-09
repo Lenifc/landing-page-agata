@@ -1,4 +1,5 @@
 <script setup>
+import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.maturaExam
@@ -26,24 +27,7 @@ const skills = [
   'strategie rozwiązywania zadań pod presją czasu',
 ]
 
-const priceOptions = [
-  {
-    name: 'Grupa egzaminacyjna',
-    price: '120 zł za osobę',
-    details: '100 min (2 × 50 min), grupa 4 osoby dobrana poziomem.',
-  },
-  {
-    name: 'Indywidualnie',
-    price: '100 zł',
-    details:
-      '50 min, 1× tygodniowo, plan pod poziom podstawowy lub rozszerzony.',
-  },
-  {
-    name: 'Indywidualnie regularnie',
-    price: '90 zł',
-    details: '50 min przy 2 zajęciach tygodniowo.',
-  },
-]
+const priceOptions = getPricingPlans('maturaExam')
 
 const areaServed = [
   { '@type': 'City', name: 'Rumia' },
@@ -72,7 +56,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: 'Przygotowanie do matury z angielskiego',
@@ -106,7 +90,7 @@ useHead({
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
@@ -258,9 +242,10 @@ useHead({
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
               Przygotowanie do matury może odbywać się w grupie egzaminacyjnej
-              za 120 zł za osobę lub indywidualnie od 100 zł za 50 minut. Przy
-              dwóch lekcjach tygodniowo cena zajęć indywidualnych wynosi 90 zł
-              za spotkanie.
+              za {{ priceOptions[0].price }} lub indywidualnie od
+              {{ priceOptions[1].price }} za 50 minut. Przy dwóch lekcjach
+              tygodniowo cena zajęć indywidualnych wynosi
+              {{ priceOptions[2].price }} za spotkanie.
             </p>
             <NuxtLink
               :to="ROUTES.prices"

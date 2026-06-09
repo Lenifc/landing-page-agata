@@ -1,4 +1,10 @@
 <script setup>
+import { CONTACT } from '~/config/contact'
+import { ROUTES, SITE_URL } from '~/config/routes'
+
+const pageRoute = ROUTES.contact
+const pageUrl = `${SITE_URL}${pageRoute}`
+
 useSeoMeta({
   title: 'Kontakt – angielski Rumia Janowo',
   description:
@@ -10,35 +16,34 @@ useSeoMeta({
     'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
 })
 
-const email = ref('kontakt [at] talkateria.pl')
+const email = ref(CONTACT.obfuscatedEmail)
 
 onMounted(() => {
-  email.value = 'kontakt@talkateria.pl'
+  email.value = CONTACT.email
 })
 
 const details = computed(() => [
   {
     label: 'Email',
     value: email.value,
-    href: 'mailto:kontakt@talkateria.pl',
+    href: `mailto:${CONTACT.email}`,
     icon: 'mail',
   },
   {
-    label: 'Telefon',
-    value: '506 135 219',
-    href: 'tel:+48506135219',
+    label: 'Telefon i SMS',
+    value: CONTACT.phoneNumber,
+    href: CONTACT.phoneHref,
     icon: 'phone',
   },
   {
     label: 'Lokalizacja',
-    value: 'Rumia, ul. Wrocławska 2 lub online',
+    value: CONTACT.addressWithOnline,
     icon: 'mapPin',
   },
   {
-    label: 'Facebook',
-    value: 'Fanpage',
-    href: 'https://facebook.com',
-    icon: 'message',
+    label: 'Godziny zajęć',
+    value: CONTACT.lessonHours,
+    icon: 'clock',
   },
 ])
 
@@ -56,10 +61,16 @@ const icons = {
 }
 
 useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageUrl,
+    },
+  ],
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'ContactPage',
         name: 'Kontakt Talkateria',
@@ -68,12 +79,21 @@ useHead({
         about: {
           '@type': 'EducationalOrganization',
           name: 'Talkateria',
-          telephone: '+48 506 135 219',
+          email: CONTACT.email,
+          telephone: CONTACT.phoneInternational,
           address: {
             '@type': 'PostalAddress',
-            streetAddress: 'ul. Wrocławska 2',
+            streetAddress: CONTACT.addressShort.replace('Rumia, ', ''),
             addressLocality: 'Rumia',
             addressCountry: 'PL',
+          },
+          contactPoint: {
+            '@type': 'ContactPoint',
+            telephone: CONTACT.phoneInternational,
+            email: CONTACT.email,
+            contactType: 'zapisy na zajęcia',
+            availableLanguage: ['pl', 'en'],
+            description: `${CONTACT.contactHoursText} ${CONTACT.smsText} ${CONTACT.emailResponseText}`,
           },
           areaServed: [
             { '@type': 'City', name: 'Rumia' },
@@ -115,6 +135,12 @@ useHead({
           Istnieje również możliwość uczestnictwa w zajęciach online
           prowadzonych na platformie Zoom. Taka forma nauki zapewnia pełną
           elastyczność i komfort pracy bez konieczności dojazdu.
+        </p>
+        <p
+          class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
+        >
+          {{ CONTACT.lessonHoursText }} {{ CONTACT.contactHoursText }}
+          {{ CONTACT.smsText }} {{ CONTACT.emailResponseText }}
         </p>
       </div>
 
@@ -181,21 +207,6 @@ useHead({
               loading="lazy"
             />
           </div>
-          <!-- <div class="rounded-3xl border border-border bg-secondary p-6">
-            <h2 class="font-serif text-lg font-semibold text-foreground">
-              Wolisz najpierw krótko porozmawiać?
-            </h2>
-            <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
-              Opisz swój cel: egzamin, rozmowy, praca albo przełamanie bariery. Podpowiem, która
-              forma zajęć będzie dla Ciebie najwygodniejsza.
-            </p>
-            <a
-              href="mailto:kontakt@talkateria.pl"
-              class="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              Napisz bezpośrednio →
-            </a>
-          </div> -->
         </div>
       </div>
     </section>

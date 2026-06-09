@@ -1,18 +1,20 @@
 <script setup>
+import { CONTACT } from '~/config/contact'
 import { ROUTES } from '~/config/routes'
 
 const year = new Date().getFullYear()
-const email = ref('kontakt [at] talkateria.pl')
-const phoneNumber = '506 135 219'
-const phoneHref = 'tel:+48506135219'
+const email = ref(CONTACT.obfuscatedEmail)
 const links = [
   { to: ROUTES.home, label: 'Strona główna' },
   { to: ROUTES.offer, label: 'Oferta' },
+  { to: ROUTES.eighthGradeExam, label: 'Egzamin ósmoklasisty' },
+  { to: ROUTES.maturaExam, label: 'Matura z angielskiego' },
+  { to: ROUTES.adultClasses, label: 'Zajęcia dla dorosłych' },
   { to: ROUTES.contact, label: 'Kontakt' },
 ]
 
 onMounted(() => {
-  email.value = 'kontakt@talkateria.pl'
+  email.value = CONTACT.email
 })
 </script>
 
@@ -57,13 +59,16 @@ onMounted(() => {
           <li>{{ email }}</li>
           <li>
             <a
-              :href="phoneHref"
+              :href="CONTACT.phoneHref"
               class="transition-colors hover:text-foreground"
             >
-              Tel. {{ phoneNumber }}
+              Tel. {{ CONTACT.phoneNumber }}
             </a>
           </li>
-          <li>Rumia, ul. Wrocławska 2</li>
+          <li>{{ CONTACT.addressShort }}</li>
+          <li>Godz. zajęć: {{ CONTACT.lessonHours }}</li>
+          <li>Kontakt: {{ CONTACT.contactHours }} lub e-mail o każdej porze</li>
+          <li>{{ CONTACT.smsText }}</li>
           <li>Lekcje indywidualne i grupowe dla osób z Rumi, Redy i Gdyni</li>
         </ul>
       </div>

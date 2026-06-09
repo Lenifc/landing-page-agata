@@ -1,4 +1,5 @@
 <script setup>
+import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.adultClasses
@@ -26,28 +27,7 @@ const benefits = [
   'duży nacisk na praktyczne użycie języka',
 ]
 
-const priceOptions = [
-  {
-    name: 'Indywidualne',
-    price: '100 zł',
-    details: '50 min, 1× tygodniowo.',
-  },
-  {
-    name: 'Indywidualne regularnie',
-    price: '90 zł',
-    details: '50 min przy 2 zajęciach tygodniowo.',
-  },
-  {
-    name: 'DUO',
-    price: '150 zł za parę',
-    details: '50 min dla dwóch osób uczących się razem.',
-  },
-  {
-    name: 'TRIO',
-    price: '180 zł za grupę',
-    details: '50 min dla trzech osób ze wspólnym celem językowym.',
-  },
-]
+const priceOptions = getPricingPlans('adultClasses')
 
 const areaServed = [
   { '@type': 'City', name: 'Rumia' },
@@ -76,7 +56,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: 'Angielski dla dorosłych',
@@ -110,7 +90,7 @@ useHead({
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
@@ -262,8 +242,9 @@ useHead({
               Ile kosztuje angielski dla dorosłych?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Zajęcia indywidualne kosztują 100 zł za 50 minut, a przy dwóch
-              spotkaniach tygodniowo 90 zł za zajęcia. Jeśli chcesz uczyć się z
+              Zajęcia indywidualne kosztują {{ priceOptions[0].price }} za 50
+              minut, a przy dwóch spotkaniach tygodniowo
+              {{ priceOptions[1].price }} za zajęcia. Jeśli chcesz uczyć się z
               drugą osobą albo w małej grupie, dostępne są też zajęcia DUO i
               TRIO.
             </p>
