@@ -1,32 +1,32 @@
 <script setup>
 useSeoMeta({
-  title: 'Kontakt angielski Rumia, Reda, Gdynia',
+  title: 'Kontakt – angielski Rumia Janowo',
   description:
-    'Skontaktuj się z Talkateria w Rumi i umów lekcję próbną z języka angielskiego. Lekcje dla osób z Rumi, Redy, Gdyni i okolic.',
+    'Skontaktuj się z Talkaterią w Rumi Janowie. Kameralne studio języka angielskiego przy ul. Wrocławskiej 2.',
   keywords:
     'kontakt angielski Rumia, lekcja język angielski Rumia, Talkateria Rumia, angielski Reda, angielski Gdynia',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
-    'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi, Redzie i Gdyni.',
+    'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
 })
 
-const email = ref('hello [at] talkateria.pl')
+const email = ref('kontakt [at] talkateria.pl')
 
 onMounted(() => {
-  email.value = 'hello@talkateria.pl'
+  email.value = 'kontakt@talkateria.pl'
 })
 
 const details = computed(() => [
   {
     label: 'Email',
     value: email.value,
-    href: 'mailto:hello@talkateria.com',
+    href: 'mailto:kontakt@talkateria.pl',
     icon: 'mail',
   },
   {
     label: 'Telefon',
-    value: 'Numer telefonu wkrótce',
-    // href: 'tel:hello@talkateria.com',
+    value: '506 135 219',
+    href: 'tel:+48506135219',
     icon: 'phone',
   },
   {
@@ -68,6 +68,7 @@ useHead({
         about: {
           '@type': 'EducationalOrganization',
           name: 'Talkateria',
+          telephone: '+48 506 135 219',
           address: {
             '@type': 'PostalAddress',
             streetAddress: 'ul. Wrocławska 2',
@@ -189,7 +190,7 @@ useHead({
               forma zajęć będzie dla Ciebie najwygodniejsza.
             </p>
             <a
-              href="mailto:hello@talkateria.com"
+              href="mailto:kontakt@talkateria.pl"
               class="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
             >
               Napisz bezpośrednio →

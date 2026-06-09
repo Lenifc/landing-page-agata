@@ -1,5 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
+import { PRERENDER_ROUTES } from './app/config/routes.js'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
@@ -12,7 +14,7 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/oferta', '/kontakt'],
+      routes: PRERENDER_ROUTES,
     },
   },
   vite: {
@@ -37,6 +39,12 @@ export default defineNuxtConfig({
         },
         { name: 'robots', content: 'index, follow' },
         { name: 'author', content: 'Talkateria' },
+        { name: 'application-name', content: 'Talkateria' },
+        { name: 'apple-mobile-web-app-title', content: 'Talkateria' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'msapplication-TileColor', content: '#315db7' },
         { name: 'geo.region', content: 'PL-PM' },
         { name: 'geo.placename', content: 'Rumia, Reda, Gdynia' },
         { name: 'color-scheme', content: 'light' },
@@ -72,33 +80,32 @@ export default defineNuxtConfig({
         },
         {
           rel: 'icon',
+          type: 'image/png',
+          href: '/favicon-96x96.png',
+          sizes: '96x96',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon-48x48.png',
+          sizes: '48x48',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon-32x32.png',
+          sizes: '32x32',
+        },
+        {
+          rel: 'icon',
           type: 'image/x-icon',
           href: '/favicon.ico',
-          sizes: 'any',
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          href: '/icon-light-32x32.png',
-          sizes: '32x32',
-          media: '(prefers-color-scheme: light)',
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          href: '/icon-dark-32x32.png',
-          sizes: '32x32',
-          media: '(prefers-color-scheme: dark)',
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          href: '/icon.png',
-          sizes: '1254x1254',
+          sizes: '16x16 32x32 48x48',
         },
         {
           rel: 'apple-touch-icon',
-          href: '/apple-icon.png',
+          href: '/apple-touch-icon.png',
+          sizes: '180x180',
         },
         {
           rel: 'manifest',

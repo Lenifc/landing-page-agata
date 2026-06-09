@@ -1,9 +1,18 @@
 <script setup>
+import { ROUTES } from '~/config/routes'
+
 const year = new Date().getFullYear()
-const email = ref('hello [at] talkateria.pl')
+const email = ref('kontakt [at] talkateria.pl')
+const phoneNumber = '506 135 219'
+const phoneHref = 'tel:+48506135219'
+const links = [
+  { to: ROUTES.home, label: 'Strona główna' },
+  { to: ROUTES.offer, label: 'Oferta' },
+  { to: ROUTES.contact, label: 'Kontakt' },
+]
 
 onMounted(() => {
-  email.value = 'hello@talkateria.pl'
+  email.value = 'kontakt@talkateria.pl'
 })
 </script>
 
@@ -13,13 +22,13 @@ onMounted(() => {
       <div class="space-y-3">
         <p class="font-serif text-xl font-semibold text-foreground">
           <img
-          src="/talkateria-logo-mono.svg"
-          alt="Talkateria - angielski w Rumi"
-          class="h-11 w-auto sm:h-12"
-          width="188"
-          height="56"
-          decoding="async"
-        />
+            src="/talkateria-logo-mono.svg"
+            alt="Talkateria - angielski w Rumi"
+            class="h-11 w-auto sm:h-12"
+            width="188"
+            height="56"
+            decoding="async"
+          />
         </p>
         <p
           class="max-w-xs text-pretty text-sm leading-relaxed text-muted-foreground"
@@ -32,23 +41,11 @@ onMounted(() => {
       <div class="space-y-3">
         <p class="text-sm font-semibold text-foreground">Nawigacja</p>
         <ul class="space-y-2 text-sm text-muted-foreground">
-          <li>
-            <NuxtLink to="/" class="transition-colors hover:text-foreground"
-              >Strona główna</NuxtLink
-            >
-          </li>
-          <li>
+          <li v-for="link in links" :key="link.to">
             <NuxtLink
-              to="/oferta"
+              :to="link.to"
               class="transition-colors hover:text-foreground"
-              >Oferta</NuxtLink
-            >
-          </li>
-          <li>
-            <NuxtLink
-              to="/kontakt"
-              class="transition-colors hover:text-foreground"
-              >Kontakt</NuxtLink
+              >{{ link.label }}</NuxtLink
             >
           </li>
         </ul>
@@ -58,6 +55,14 @@ onMounted(() => {
         <p class="text-sm font-semibold text-foreground">Kontakt</p>
         <ul class="space-y-2 text-sm text-muted-foreground">
           <li>{{ email }}</li>
+          <li>
+            <a
+              :href="phoneHref"
+              class="transition-colors hover:text-foreground"
+            >
+              Tel. {{ phoneNumber }}
+            </a>
+          </li>
           <li>Rumia, ul. Wrocławska 2</li>
           <li>Lekcje indywidualne i grupowe dla osób z Rumi, Redy i Gdyni</li>
         </ul>

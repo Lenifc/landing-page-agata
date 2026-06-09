@@ -1,11 +1,13 @@
 <script setup>
+import { ROUTES } from '~/config/routes'
+
 useSeoMeta({
-  title: 'Angielski Rumia, Reda, Gdynia',
+  title: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
   description:
-    'Lekcje angielskiego w Rumi dla młodzieży i dorosłych z Redy, Gdyni i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
+    'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Redy, Gdyni i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
   keywords:
-    'angielski Rumia, lekcje angielskiego Rumia, angielski Reda, angielski Gdynia, konwersacje po angielsku, korepetycje angielski Rumia',
-  ogTitle: 'Talkateria | Angielski Rumia, Reda i Gdynia',
+    'angielski Rumia, lekcje angielskiego Rumia, angielski Reda, angielski Gdynia, konwersacje po angielsku, korepetycje angielski Rumia, matura angielski Rumia, egzamin angielski Rumia',
+  ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
   ogDescription:
     'Kameralne zajęcia z angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Mniej stresu, więcej mówienia i praktyki.',
 })
@@ -100,13 +102,13 @@ useHead({
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <NuxtLink
-            to="/kontakt"
+            :to="ROUTES.contact"
             class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.22)] transition-all hover:-translate-y-0.5 hover:opacity-90"
           >
             Zapisz się teraz →
           </NuxtLink>
           <NuxtLink
-            to="/oferta"
+            :to="ROUTES.offer"
             class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
             Zobacz ofertę
@@ -242,11 +244,29 @@ useHead({
           Ciebie najlepsza. Bez presji, w spokojnej atmosferze.
         </p>
         <NuxtLink
-          to="/kontakt"
+          :to="ROUTES.contact"
           class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90"
         >
           Kontakt →
         </NuxtLink>
+      </div>
+    </section>
+
+    <section class="border-t border-border bg-secondary">
+      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+        <h2
+          class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
+        >
+          Angielski w Rumi - nauka dopasowana do Ciebie
+        </h2>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          Jeśli szukasz zajęć z języka angielskiego w Rumi, które stawiają na
+          swobodną komunikację i indywidualne podejście, Talkateria jest
+          miejscem dla Ciebie. Prowadzę lekcje angielskiego dla młodzieży i
+          dorosłych z Rumi, Redy, Gdyni oraz okolic. Oferujemy zajęcia
+          indywidualne, konwersacje oraz naukę przygotowującą do egzaminów i
+          codziennej komunikacji.
+        </p>
       </div>
     </section>
   </main>

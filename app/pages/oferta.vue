@@ -1,8 +1,10 @@
 <script setup>
+import { ROUTES } from '~/config/routes'
+
 useSeoMeta({
-  title: 'Oferta angielski Rumia, Reda, Gdynia',
+  title: 'Oferta i cennik angielskiego w Rumi',
   description:
-    'Oferta lekcji angielskiego Talkateria w Rumi: zajęcia indywidualne, małe grupy i grupy egzaminacyjne dla osób z Rumi, Redy, Gdyni i okolic.',
+    'Oferta i cennik lekcji angielskiego Talkateria w Rumi: zajęcia indywidualne, małe grupy i grupy egzaminacyjne dla osób z Rumi, Redy, Gdyni i okolic.',
   keywords:
     'oferta angielski Rumia, lekcje angielskiego Rumia, angielski Reda, angielski Gdynia, cennik angielski Rumia',
   ogTitle: 'Talkateria | Oferta angielskiego w Rumi',
@@ -60,22 +62,98 @@ const plans = [
 
 const faqs = [
   {
+    q: 'Ile kosztują zajęcia?',
+    a: 'Aktualne ceny zajęć z angielskiego znajdziesz w cenniku. Cena zależy od formy nauki: zajęcia indywidualne zaczynają się od 90 zł przy dwóch spotkaniach tygodniowo, DUO kosztuje 150 zł za parę, TRIO 180 zł za grupę, a grupa egzaminacyjna 120 zł za osobę.',
+    link: {
+      label: 'cenniku',
+      href: ROUTES.prices,
+      before: 'Aktualne ceny zajęć z angielskiego znajdziesz w ',
+      after:
+        '. Cena zależy od formy nauki: zajęcia indywidualne zaczynają się od 90 zł przy dwóch spotkaniach tygodniowo, DUO kosztuje 150 zł za parę, TRIO 180 zł za grupę, a grupa egzaminacyjna 120 zł za osobę.',
+    },
+  },
+  {
+    q: 'Jaką formę zajęć wybrać: indywidualne, DUO, TRIO czy grupę?',
+    a: 'Zajęcia indywidualne sprawdzają się, gdy potrzebujesz maksymalnego dopasowania tempa i programu. DUO i TRIO są dobre dla osób, które chcą uczyć się ze znajomymi lub rodzeństwem. Grupy egzaminacyjne są przeznaczone dla uczniów przygotowujących się do egzaminu ósmoklasisty albo matury.',
+  },
+  {
+    q: 'Czy przygotowujesz do egzaminu ósmoklasisty?',
+    a: 'Tak, prowadzę przygotowanie do egzaminu ósmoklasisty z angielskiego w Rumi. Na zajęciach ćwiczymy arkusze, strategie egzaminacyjne, czytanie, słuchanie, środki językowe, wypowiedź pisemną oraz najważniejsze powtórki gramatyczno-leksykalne.',
+  },
+  {
+    q: 'Czy przygotowujesz do matury z angielskiego?',
+    a: 'Tak. Przygotowuję do matury z angielskiego na poziomie podstawowym i rozszerzonym. Program obejmuje pracę z arkuszami, pisanie, słownictwo, gramatykę, strategie rozwiązywania zadań oraz wzmacnianie tych obszarów, które najbardziej wpływają na wynik.',
+  },
+  {
+    q: 'Czy prowadzisz zajęcia dla dorosłych?',
+    a: 'Tak, dorośli mogą uczyć się od podstaw, wrócić do angielskiego po przerwie albo rozwijać swobodę mówienia. Zajęcia dla dorosłych są dopasowane do celu: rozmowy, podróże, praca, przełamanie blokady językowej lub uporządkowanie gramatyki.',
+  },
+  {
+    q: 'Czy można zacząć od zera?',
+    a: 'Tak. Zajęcia mogą rozpocząć osoby bez wcześniejszej znajomości angielskiego. Tempo, materiały i sposób pracy dobieram tak, aby nauka była spokojna, zrozumiała i stopniowo budowała pewność w komunikacji.',
+  },
+  {
+    q: 'Czy zajęcia są tylko dla osób z Rumi?',
+    a: 'Nie. Studio znajduje się w Rumi Janowie, ale na zajęcia zgłaszają się też osoby z Redy, Gdyni i okolic. Możliwa jest również nauka online, jeśli dojazd do studia nie jest wygodny.',
+  },
+  {
     q: 'Jak odbywają się zajęcia?',
     a: 'Zajęcia prowadzone są w studiu przy ul. Wrocławskiej 2 w Rumi (Janowo) lub online na platformie Zoom.',
   },
   {
-    q: 'Jak długo trwa kurs?',
-    a: 'Czas trwania kursu zależy od jego rodzaju i celu językowego. Kursy egzaminacyjne grupowe obejmują 25 spotkań i kończą się przed egzaminami, czyli pod koniec kwietnia. Kursy szkolne trwają zazwyczaj od września do końca czerwca. W przypadku kursantów dorosłych kursy trwają zwykle zgodnie z indywidualnymi potrzebami.',
+    q: 'Jak wygląda pierwsze spotkanie?',
+    a: 'Na początku rozmawiamy o celu nauki, dotychczasowych doświadczeniach i dostępnych terminach. W przypadku uczniów sprawdzamy też poziom, potrzeby szkolne lub egzaminacyjne, aby dobrać odpowiednią formę zajęć i zakres pracy.',
   },
   {
     q: 'Czy zajęcia online różnią się od stacjonarnych?',
     a: 'Zajęcia online nie różnią się pod względem treści ani jakości od zajęć stacjonarnych. Prowadzone są na platformie Zoom i zapewniają taką samą interakcję, wsparcie oraz indywidualne podejście do kursanta. To idealna opcja dla osób ceniących komfort i wygodę nauki bez konieczności dojazdów.',
   },
   {
+    q: 'Jak często warto chodzić na angielski?',
+    a: 'Najczęściej wystarcza jedno spotkanie tygodniowo, jeśli celem jest regularna nauka i utrzymanie kontaktu z językiem. Dwa spotkania tygodniowo warto wybrać przy przygotowaniu do egzaminu, nadrabianiu zaległości albo wtedy, gdy zależy Ci na szybszych efektach.',
+  },
+  {
+    q: 'Jak długo trwa kurs?',
+    a: 'Czas trwania kursu zależy od jego rodzaju i celu językowego. Kursy egzaminacyjne grupowe obejmują 25 spotkań i kończą się przed egzaminami, czyli pod koniec kwietnia. Kursy szkolne trwają zazwyczaj od września do końca czerwca. W przypadku kursantów dorosłych kursy trwają zwykle zgodnie z indywidualnymi potrzebami.',
+  },
+  {
+    q: 'Ile osób jest w grupie?',
+    a: 'Małe grupy DUO i TRIO są tworzone przez kursantów, czyli przez 2 lub 3 osoby, które chcą uczyć się razem. Grupa egzaminacyjna liczy 4 osoby i jest dobierana tak, aby uczestnicy mieli zbliżony poziom oraz podobny cel nauki.',
+  },
+  {
+    q: 'Czy trzeba kupować podręcznik?',
+    a: 'To zależy od rodzaju zajęć i celu kursu. Materiały są dobierane do programu, poziomu i potrzeb kursanta. Jeśli podręcznik będzie potrzebny, informacja pojawi się wcześniej, bez zaskakiwania dodatkowymi kosztami.',
+  },
+  {
     q: 'Jak wygląda płatność za kurs?',
-    a: 'Grupy egzaminacyjne - płatność ratalna (8 rat). Pozostałe zajęcia -płatność z góry za miesiąc, zgodnie ze stałym grafikiem zajęć. Płatność możliwa przelewem lub gotówką w lokalu.',
+    a: 'Grupy egzaminacyjne mają płatność ratalną w 8 ratach. Pozostałe zajęcia są opłacane z góry za miesiąc, zgodnie ze stałym grafikiem spotkań. Płatność jest możliwa przelewem lub gotówką w lokalu.',
+  },
+  {
+    q: 'Co w przypadku nieobecności?',
+    a: 'Zasady odwoływania i odrabiania zajęć ustalamy przy zapisie, ponieważ zależą od formy nauki i grafiku. Najważniejsza jest wcześniejsza informacja, żeby można było sensownie zaplanować pracę i terminy.',
+  },
+  {
+    q: 'Czy można dołączyć w trakcie roku szkolnego?',
+    a: 'Tak, jeśli są dostępne terminy albo wolne miejsce w odpowiedniej grupie. Przy dołączeniu w trakcie roku sprawdzam poziom i cel nauki, aby zaproponować zajęcia, które będą realnie dopasowane do potrzeb ucznia lub osoby dorosłej.',
+  },
+  {
+    q: 'Jak zapisać się na zajęcia?',
+    a: 'Najprościej napisać wiadomość przez formularz kontaktowy lub mailowo. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
+    link: {
+      label: 'formularz kontaktowy',
+      href: ROUTES.contact,
+      before: 'Najprościej napisać wiadomość przez ',
+      after:
+        ' lub mailowo. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
+    },
   },
 ]
+
+const openFaqIndex = ref(null)
+
+const toggleFaq = (index) => {
+  openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
 
 const areaServed = [
   { '@type': 'City', name: 'Rumia' },
@@ -180,9 +258,26 @@ useHead({
                 maksymalne korzyści.
               </p>
               <p>
-                To dobre rozwiązanie dla osób przygotowujących się do egzaminów,
-                poprawiających wyniki w szkole lub chcących mówić płynniej i
-                pewniej.
+                To dobre rozwiązanie dla osób przygotowujących się do
+                <NuxtLink
+                  :to="ROUTES.eighthGradeExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  egzaminu ósmoklasisty</NuxtLink
+                >,
+                <NuxtLink
+                  :to="ROUTES.maturaExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  matury z angielskiego</NuxtLink
+                >, poprawiających wyniki w szkole lub chcących mówić płynniej i
+                pewniej. Dorośli kursanci mogą sprawdzić też
+                <NuxtLink
+                  :to="ROUTES.adultClasses"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  zajęcia z angielskiego dla dorosłych</NuxtLink
+                >.
               </p>
             </div>
           </article>
@@ -208,8 +303,25 @@ useHead({
               <p>
                 Grupa wspólnie określa cel nauki, a program zajęć jest
                 dopasowany do jej potrzeb - może obejmować przygotowanie do
-                egzaminów, wsparcie w nauce szkolnej lub rozwój umiejętności
-                komunikacyjnych.
+                <NuxtLink
+                  :to="ROUTES.eighthGradeExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  egzaminu ósmoklasisty</NuxtLink
+                >,
+                <NuxtLink
+                  :to="ROUTES.maturaExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  matury</NuxtLink
+                >, wsparcie w nauce szkolnej lub rozwój umiejętności
+                komunikacyjnych, także w formule
+                <NuxtLink
+                  :to="ROUTES.adultClasses"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  zajęć dla dorosłych</NuxtLink
+                >.
               </p>
               <p>
                 Takie połączenie pracy w grupie i indywidualnego podejścia
@@ -231,10 +343,23 @@ useHead({
             >
               <p>
                 Kursy egzaminacyjne przeznaczone są dla uczniów przygotowujących
-                się do Egzaminu Ósmoklasisty oraz matury na poziomie podstawowym
-                i rozszerzonym. Zajęcia odbywają się w kameralnych,
-                czteroosobowych grupach dobieranych przez lektora pod względem
-                poziomu i celu nauki.
+                się do
+                <NuxtLink
+                  :to="ROUTES.eighthGradeExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  Egzaminu Ósmoklasisty</NuxtLink
+                >
+                oraz
+                <NuxtLink
+                  :to="ROUTES.maturaExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+                >
+                  matury z angielskiego</NuxtLink
+                >
+                na poziomie podstawowym i rozszerzonym. Zajęcia odbywają się w
+                kameralnych, czteroosobowych grupach dobieranych przez lektora
+                pod względem poziomu i celu nauki.
               </p>
               <p>
                 Pracujemy według programu skoncentrowanego na wymaganiach
@@ -261,7 +386,7 @@ useHead({
         </div>
 
         <a
-          href="#cennik"
+          :href="ROUTES.prices"
           class="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90"
         >
           Zobacz cennik
@@ -387,7 +512,7 @@ useHead({
           </p>
         </div>
         <NuxtLink
-          to="/kontakt"
+          :to="ROUTES.contact"
           class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:mt-0"
         >
           Zapytaj o termin →
@@ -402,10 +527,50 @@ useHead({
         Najczęstsze pytania
       </h2>
       <div class="mt-10 divide-y divide-border border-y border-border">
-        <div v-for="faq in faqs" :key="faq.q" class="py-6">
-          <h3 class="font-medium text-foreground">{{ faq.q }}</h3>
-          <p class="mt-2 text-pretty leading-relaxed text-muted-foreground">
-            {{ faq.a }}
+        <div v-for="(faq, index) in faqs" :key="faq.q">
+          <h3>
+            <button
+              type="button"
+              class="flex w-full items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
+              :aria-expanded="openFaqIndex === index"
+              :aria-controls="`faq-answer-${index}`"
+              @click="toggleFaq(index)"
+            >
+              <span>{{ faq.q }}</span>
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-transform duration-200"
+                :class="{ 'rotate-180': openFaqIndex === index }"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </span>
+            </button>
+          </h3>
+          <p
+            :id="`faq-answer-${index}`"
+            v-show="openFaqIndex === index"
+            class="pb-6 text-pretty leading-relaxed text-muted-foreground"
+          >
+            <template v-if="faq.link">
+              {{ faq.link.before }}
+              <a
+                :href="faq.link.href"
+                class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+              >
+                {{ faq.link.label }}</a
+              >{{ faq.link.after }}
+            </template>
+            <template v-else>{{ faq.a }}</template>
           </p>
         </div>
       </div>

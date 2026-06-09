@@ -1,9 +1,11 @@
 <script setup>
+import { ROUTES } from '~/config/routes'
+
 const open = ref(false)
 const links = [
-  { to: '/', label: 'Strona główna' },
-  { to: '/oferta', label: 'Oferta' },
-  { to: '/kontakt', label: 'Kontakt' },
+  { to: ROUTES.home, label: 'Strona główna' },
+  { to: ROUTES.offer, label: 'Oferta' },
+  { to: ROUTES.contact, label: 'Kontakt' },
 ]
 </script>
 
@@ -13,7 +15,7 @@ const links = [
   >
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
       <NuxtLink
-        to="/"
+        :to="ROUTES.home"
         class="flex items-center"
         aria-label="Talkateria - strona główna"
       >
@@ -40,7 +42,7 @@ const links = [
       </ul>
 
       <NuxtLink
-        to="/kontakt"
+        :to="ROUTES.contact"
         class="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-[0_12px_30px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:inline-flex"
       >
         Zapisz się teraz
@@ -93,7 +95,7 @@ const links = [
         </li>
         <li class="pt-2">
           <NuxtLink
-            to="/kontakt"
+            :to="ROUTES.contact"
             class="inline-flex w-full justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
             @click="open = false"
           >
