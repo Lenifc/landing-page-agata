@@ -242,11 +242,12 @@ useHead({
               Ile kosztuje angielski dla dorosłych?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Zajęcia indywidualne kosztują {{ priceOptions[0].price }} za 50
-              minut, a przy dwóch spotkaniach tygodniowo
-              {{ priceOptions[1].price }} za zajęcia. Jeśli chcesz uczyć się z
-              drugą osobą albo w małej grupie, dostępne są też zajęcia DUO i
-              TRIO.
+              Zajęcia indywidualne w pakiecie stałym zaczynają się od
+              {{ priceOptions[0].price }} za pakiet 30 spotkań 60-minutowych raz
+              w tygodniu, a wariant intensywny obejmuje 30 spotkań i kosztuje
+              {{ priceOptions[1].price }}. Jeśli chcesz uczyć się z drugą osobą
+              albo w małej grupie, dostępne są też zajęcia DUO, TRIO, kursy
+              EXPRESS i lekcje okazjonalne.
             </p>
             <NuxtLink
               :to="ROUTES.prices"
@@ -277,9 +278,9 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 pb-20">
+    <section class="mx-auto max-w-6xl px-5 py-16">
       <div
-        class="rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]"
+        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]"
       >
         <h2
           class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground"

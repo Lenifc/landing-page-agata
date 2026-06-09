@@ -1,5 +1,4 @@
 <script setup>
-import { CONTACT } from '~/config/contact'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.home
@@ -206,11 +205,15 @@ useHead({
           <h2
             class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground"
           >
-            Jak wygląda nauka
+            Lokalizacja
           </h2>
           <p class="text-pretty leading-relaxed text-muted-foreground">
-            Jasna, spokojna przestrzeń i zajęcia zaprojektowane tak, by nauka
-            była bliżej rozmowy niż szkolnej ławki.
+            Zajęcia odbywają się w nowoczesnym, kameralnym studiu przy ul.
+            Wrocławskiej 2 w Rumi (dzielnica Janowo). Lokalizacja zapewnia
+            wygodny dojazd zarówno komunikacją miejską, jak i koleją - w pobliżu
+            znajdują się przystanki autobusowe oraz stacja SKM Rumia Janowo. Dla
+            osób dojeżdżających samochodem dostępny jest duży, ogólnodostępny
+            parking przy ul. Gdańskiej.
           </p>
         </div>
         <div
@@ -235,26 +238,25 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-20">
+    <section class="mx-auto max-w-6xl px-5 py-16">
       <div
-        class="rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16"
+        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16"
       >
         <h2
           class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground"
         >
-          Umów się na lekcję próbną.
+          Masz pytania?
         </h2>
         <p
           class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80"
         >
-          Umów pierwszą lekcję próbną i sprawdźmy, jaka forma nauki będzie dla
-          Ciebie najlepsza. Bez presji, w spokojnej atmosferze.
+          Skontaktuj się ze mną - pomogę dobrać odpowiednią formę nauki.
         </p>
         <NuxtLink
           :to="ROUTES.contact"
           class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90"
         >
-          Kontakt →
+          Skontaktuj się →
         </NuxtLink>
       </div>
     </section>
@@ -264,15 +266,15 @@ useHead({
         <h2
           class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
         >
-          Angielski w Rumi - nauka dopasowana do Ciebie
+          Talkateria - English Studio - nauka dopasowana do Twoich potrzeb
         </h2>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
           Jeśli szukasz zajęć z języka angielskiego w Rumi, które stawiają na
-          swobodną komunikację i indywidualne podejście, Talkateria jest
+          swobodną komunikację oraz indywidualne podejście, Talkateria jest
           miejscem dla Ciebie. Prowadzę lekcje angielskiego dla młodzieży i
-          dorosłych z Rumi, Redy, Gdyni oraz okolic. Oferujemy zajęcia
-          indywidualne, konwersacje oraz naukę przygotowującą do egzaminów i
-          codziennej komunikacji.
+          dorosłych z Rumi, Redy, Gdyni oraz okolic. Oferuję zajęcia
+          indywidualne, konwersacje oraz kursy przygotowujące do egzaminów i
+          codziennej komunikacji w języku angielskim.
         </p>
       </div>
     </section>

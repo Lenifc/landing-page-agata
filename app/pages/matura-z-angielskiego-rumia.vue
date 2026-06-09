@@ -242,10 +242,11 @@ useHead({
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
               Przygotowanie do matury może odbywać się w grupie egzaminacyjnej
-              za {{ priceOptions[0].price }} lub indywidualnie od
-              {{ priceOptions[1].price }} za 50 minut. Przy dwóch lekcjach
-              tygodniowo cena zajęć indywidualnych wynosi
-              {{ priceOptions[2].price }} za spotkanie.
+              obejmującej 25 spotkań za {{ priceOptions[0].price }}. Przy
+              konkretnym celu i krótszym czasie można wybrać kurs
+              {{ priceOptions[1].name }} w cenie {{ priceOptions[1].price }}, a
+              przy stałej pracy indywidualnej 30-spotkaniowe pakiety 1:1
+              zaczynają się od {{ priceOptions[2].price }}.
             </p>
             <NuxtLink
               :to="ROUTES.prices"
@@ -278,9 +279,9 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 pb-20">
+    <section class="mx-auto max-w-6xl px-5 py-16">
       <div
-        class="rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]"
+        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]"
       >
         <h2
           class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground"

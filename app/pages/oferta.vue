@@ -1,6 +1,6 @@
 <script setup>
 import { CONTACT } from '~/config/contact'
-import { PRICING, getPricingPlans } from '~/config/pricing'
+import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.offer
@@ -18,17 +18,85 @@ useSeoMeta({
 })
 
 const plans = getPricingPlans('offer')
-const priceSummary = `Cena zależy od formy nauki: zajęcia indywidualne zaczynają się od ${PRICING.plans.individualTwiceWeekly.price} przy dwóch spotkaniach tygodniowo, DUO kosztuje ${PRICING.plans.duo.price}, TRIO ${PRICING.plans.trio.price}, a grupa egzaminacyjna ${PRICING.plans.examGroup.price}.`
+
+const pricingSections = [
+  {
+    id: 'wspolpraca-stala',
+    navLabel: 'Współpraca stała',
+    title: 'Współpraca stała',
+    badge: 'Najczęściej wybierane',
+    description: [
+      'Pakiety edukacyjne to najkorzystniejsza forma nauki. Pakiety stałe obejmują 30 spotkań, a kurs egzaminacyjny w grupie obejmuje 25 spotkań.',
+      'Zapewniają regularność, stałe miejsce w grafiku oraz niższą cenę za lekcję w porównaniu do zajęć pojedynczych.',
+      'Cena miesięczna obejmuje zajęcia raz w tygodniu: w wariancie standardowym jedno spotkanie 60-minutowe tygodniowo, a w wariancie intensywnym jedno spotkanie 90-minutowe tygodniowo.',
+      'Płatność odbywa się z góry, w 8 miesięcznych ratach.',
+    ],
+    groups: [
+      {
+        id: 'zajecia-indywidualne',
+        navLabel: '1:1',
+        title: 'Zajęcia indywidualne (1:1)',
+        plans: getPricingPlans('regularIndividual'),
+      },
+      {
+        id: 'zajecia-duo',
+        navLabel: 'DUO',
+        title: 'Zajęcia w parze (DUO)',
+        plans: getPricingPlans('regularDuo'),
+      },
+      {
+        id: 'male-grupy',
+        navLabel: 'Małe grupy',
+        title: 'Małe grupy',
+        plans: getPricingPlans('regularGroups'),
+      },
+    ],
+  },
+  {
+    id: 'kursy-express',
+    navLabel: 'Kursy EXPRESS',
+    title: 'Kursy EXPRESS (15 lekcji)',
+    badge: 'Intensywnie',
+    description: [
+      'Intensywne kursy krótkoterminowe dla osób z konkretnym celem: egzaminem, nadrobieniem materiału, wyjazdem lub pracą.',
+      'Możliwość płatności w 4 ratach. Doskonałe dla osób przygotowujących się do egzaminów, takich jak E8 lub matura.',
+    ],
+    plans: getPricingPlans('express'),
+  },
+  {
+    id: 'lekcje-okazjonalne',
+    navLabel: 'Lekcje okazjonalne',
+    title: 'Lekcje okazjonalne',
+    badge: 'Doraźne wsparcie',
+    description: [
+      'Dla osób, które potrzebują jednorazowego wsparcia lub nie chcą wiązać się długoterminowym kursem. Idealne do nadrabiania materiału, konsultacji oraz doraźnej pomocy przed sprawdzianami i egzaminami.',
+      'Płatność odbywa się z góry przed zajęciami.',
+    ],
+    plans: getPricingPlans('occasional'),
+  },
+]
+
+const pricingLinks = pricingSections.flatMap((section) => [
+  {
+    href: `#${section.id}`,
+    label: section.navLabel,
+  },
+  ...(section.groups?.map((group) => ({
+    href: `#${group.id}`,
+    label: group.navLabel,
+  })) ?? []),
+])
 
 const faqs = [
   {
     q: 'Ile kosztują zajęcia?',
-    a: `Aktualne ceny zajęć z angielskiego znajdziesz w cenniku. ${priceSummary}`,
+    a: 'Ceny zależą od formy zajęć - indywidualnych, w parze lub w grupie - oraz od tego, czy wybierzesz regularną naukę w pakiecie, czy pojedyncze lekcje, na przykład doraźną pomoc przed sprawdzianem. Aktualne ceny znajdziesz w cenniku.',
     link: {
       label: 'cenniku',
       href: ROUTES.prices,
-      before: 'Aktualne ceny zajęć z angielskiego znajdziesz w ',
-      after: `. ${priceSummary}`,
+      before:
+        'Ceny zależą od formy zajęć - indywidualnych, w parze lub w grupie - oraz od tego, czy wybierzesz regularną naukę w pakiecie, czy pojedyncze lekcje, na przykład doraźną pomoc przed sprawdzianem. Aktualne ceny znajdziesz w ',
+      after: '.',
     },
   },
   {
@@ -77,7 +145,7 @@ const faqs = [
   },
   {
     q: 'Jak długo trwa kurs?',
-    a: 'Czas trwania kursu zależy od jego rodzaju i celu językowego. Kursy egzaminacyjne grupowe obejmują 25 spotkań i kończą się przed egzaminami, czyli pod koniec kwietnia. Kursy szkolne trwają zazwyczaj od września do końca czerwca. W przypadku kursantów dorosłych kursy trwają zwykle zgodnie z indywidualnymi potrzebami.',
+    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Kursy egzaminacyjne w grupie obejmują 25 spotkań i kończą się przed egzaminami, czyli pod koniec kwietnia. Kursy szkolne trwają zazwyczaj od września do końca czerwca. Najczęściej wybierane są pakiety obejmujące 30 spotkań, które stanowią podstawę regularnej nauki. W przypadku kursantów dorosłych kursy trwają zwykle zgodnie z indywidualnymi potrzebami.',
   },
   {
     q: 'Ile osób jest w grupie?',
@@ -89,11 +157,11 @@ const faqs = [
   },
   {
     q: 'Jak wygląda płatność za kurs?',
-    a: 'Grupy egzaminacyjne mają płatność ratalną w 8 ratach. Pozostałe zajęcia są opłacane z góry za miesiąc, zgodnie ze stałym grafikiem spotkań. Płatność jest możliwa przelewem lub gotówką w lokalu.',
+    a: 'Płatność za kurs zależy od jego rodzaju. Kursy regularne (30 spotkań) opłacane są w systemie miesięcznym. Kursy EXPRESS (15 spotkań) opłacane są jako całość, z możliwością rozbicia płatności na 4 raty. Pojedyncze lekcje (doraźne) opłacane są z góry przed zajęciami.',
   },
   {
     q: 'Co w przypadku nieobecności?',
-    a: 'Zasady odwoływania i odrabiania zajęć ustalamy przy zapisie, ponieważ zależą od formy nauki i grafiku. Najważniejsza jest wcześniejsza informacja, żeby można było sensownie zaplanować pracę i terminy.',
+    a: 'Zasady odwoływania i odrabiania zajęć ustalamy przy zapisie, ponieważ zależą od formy nauki i grafiku. Najważniejsza jest wcześniejsza informacja, żeby można było sensownie zaplanować pracę i terminy. W przypadku zajęć indywidualnych (1:1), jeśli nieobecność zostanie zgłoszona najpóźniej dzień przed zajęciami, lekcję można odrobić w innym terminie ustalonym wspólnie lub zajęcia zostają przesunięte (lekcja jest dopisana na koniec kursu). Jeżeli lekcja zostanie odwołana w dniu zajęć, lekcja jest uznawana za zrealizowaną. W przypadku zajęć grupowych, na prośbę uczestnika możliwe jest otrzymanie materiałów z opuszczonych zajęć.',
   },
   {
     q: 'Czy można dołączyć w trakcie roku szkolnego?',
@@ -101,9 +169,9 @@ const faqs = [
   },
   {
     q: 'Jak zapisać się na zajęcia?',
-    a: 'Najprościej napisać wiadomość przez formularz kontaktowy lub mailowo. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
+    a: 'Najprościej napisać wiadomość przez maila/SMS lub zadzwonić. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
     link: {
-      label: 'formularz kontaktowy',
+      label: 'maila/SMS lub zadzwonić',
       href: ROUTES.contact,
       before: 'Najprościej napisać wiadomość przez ',
       after:
@@ -366,8 +434,8 @@ useHead({
       </div>
     </section>
 
-    <section id="cennik" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-16">
-      <div class="mb-8 max-w-2xl">
+    <section id="cennik" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-14">
+      <div class="mb-7 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary"
           >Cennik</span
         >
@@ -377,94 +445,222 @@ useHead({
           Cennik zajęć
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Proste ceny dla osób z Rumi, Redy, Gdyni i okolic. Bez ukrytych
-          kosztów, z naciskiem na komfort nauki i regularność.
+          Wybierz konsultację, stały pakiet edukacyjny z zajęciami raz w
+          tygodniu, intensywny kurs EXPRESS albo lekcję okazjonalną. Ceny zależą
+          od formy zajęć, liczby osób i trybu nauki.
         </p>
       </div>
 
-      <div
-        class="overflow-hidden rounded-[2rem] border border-[#d9e7f7] bg-card shadow-[0_28px_80px_rgba(24,55,110,0.08)]"
-      >
-        <div
-          class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid"
+      <nav class="mb-8 flex flex-wrap gap-2" aria-label="Sekcje cennika">
+        <a
+          v-for="link in pricingLinks"
+          :key="link.href"
+          :href="link.href"
+          class="inline-flex rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
         >
-          <div class="px-6 py-4 text-lg font-semibold text-foreground">
-            Rodzaj zajęć
-          </div>
-          <div
-            class="border-l border-border/80 px-6 py-4 text-center text-lg font-semibold text-foreground"
-          >
-            Czas trwania
-          </div>
-          <div
-            class="border-l border-border/80 px-6 py-4 text-center text-lg font-semibold text-foreground"
-          >
-            Cena
-          </div>
-        </div>
+          {{ link.label }}
+        </a>
+      </nav>
 
-        <div
-          v-for="plan in plans"
-          :key="`${plan.name}-${plan.frequency}`"
-          class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
-          :class="
-            plan.featured
-              ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
-              : 'bg-card'
-          "
+      <div class="space-y-9">
+        <article
+          v-for="section in pricingSections"
+          :id="section.id"
+          :key="section.title"
+          class="scroll-mt-24 border-t border-border pt-8 first:border-t-0 first:pt-0"
         >
-          <div class="px-5 py-4 md:px-6">
+          <div class="max-w-3xl">
             <div class="flex flex-wrap items-center gap-3">
-              <h2 class="text-xl font-semibold text-foreground">
-                {{ plan.name }}
-              </h2>
-              <span
-                v-if="plan.featured"
-                class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-primary"
+              <h3
+                class="font-serif text-2xl font-semibold tracking-tight text-foreground md:text-3xl"
               >
-                Najczęściej wybierane
+                {{ section.title }}
+              </h3>
+              <span
+                class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary"
+              >
+                {{ section.badge }}
               </span>
             </div>
-            <p class="mt-1 text-base text-foreground/80">
-              {{ plan.frequency }}
-            </p>
-            <p
-              class="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground md:text-sm"
+            <div
+              class="mt-3 space-y-2.5 text-pretty text-sm leading-relaxed text-muted-foreground md:text-base"
             >
-              {{ plan.details }}
-            </p>
+              <p v-for="paragraph in section.description" :key="paragraph">
+                {{ paragraph }}
+              </p>
+            </div>
+          </div>
+
+          <div v-if="section.groups" class="mt-6 space-y-6">
+            <div
+              v-for="group in section.groups"
+              :id="group.id"
+              :key="group.title"
+              class="scroll-mt-24"
+            >
+              <h4 class="font-serif text-xl font-semibold text-foreground">
+                {{ group.title }}
+              </h4>
+              <div
+                class="mt-2 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]"
+              >
+                <div
+                  class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid"
+                >
+                  <div class="px-5 py-3 text-sm font-semibold text-foreground">
+                    Rodzaj zajęć
+                  </div>
+                  <div
+                    class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
+                  >
+                    Czas trwania
+                  </div>
+                  <div
+                    class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
+                  >
+                    Cena
+                  </div>
+                </div>
+
+                <div
+                  v-for="plan in group.plans"
+                  :key="`${group.title}-${plan.name}-${plan.frequency}`"
+                  class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
+                  :class="
+                    plan.featured
+                      ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
+                      : 'bg-card'
+                  "
+                >
+                  <div class="px-4 py-3.5 md:px-5">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <h5 class="text-lg font-semibold text-foreground">
+                        {{ plan.name }}
+                      </h5>
+                      <span
+                        v-if="plan.featured"
+                        class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-primary"
+                      >
+                        Najczęściej wybierane
+                      </span>
+                    </div>
+                    <p class="mt-0.5 text-sm text-foreground/80">
+                      {{ plan.frequency }}
+                    </p>
+                    <p
+                      class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground"
+                    >
+                      {{ plan.details }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
+                  >
+                    <p
+                      class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
+                    >
+                      Czas trwania
+                    </p>
+                    <p
+                      class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
+                    >
+                      {{ plan.duration }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
+                  >
+                    <p
+                      class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
+                    >
+                      Cena
+                    </p>
+                    <p
+                      class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
+                    >
+                      {{ plan.price }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div
-            class="border-t border-border/70 px-5 py-4 md:border-l md:border-t-0 md:px-6 md:text-center"
+            v-else
+            class="mt-5 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]"
           >
-            <p
-              class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
+            <div
+              class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid"
             >
-              Czas trwania
-            </p>
-            <p
-              class="mt-2 font-serif text-2xl font-semibold text-foreground md:mt-0"
-            >
-              {{ plan.duration }}
-            </p>
-          </div>
+              <div class="px-5 py-3 text-sm font-semibold text-foreground">
+                Rodzaj zajęć
+              </div>
+              <div
+                class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
+              >
+                Czas trwania
+              </div>
+              <div
+                class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
+              >
+                Cena
+              </div>
+            </div>
 
-          <div
-            class="border-t border-border/70 px-5 py-4 md:border-l md:border-t-0 md:px-6 md:text-center"
-          >
-            <p
-              class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
+            <div
+              v-for="plan in section.plans"
+              :key="`${section.title}-${plan.name}-${plan.frequency}`"
+              class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
             >
-              Cena
-            </p>
-            <p
-              class="mt-2 font-serif text-2xl font-semibold text-foreground md:mt-0"
-            >
-              {{ plan.price }}
-            </p>
+              <div class="px-4 py-3.5 md:px-5">
+                <h4 class="text-lg font-semibold text-foreground">
+                  {{ plan.name }}
+                </h4>
+                <p class="mt-0.5 text-sm text-foreground/80">
+                  {{ plan.frequency }}
+                </p>
+                <p
+                  class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground"
+                >
+                  {{ plan.details }}
+                </p>
+              </div>
+
+              <div
+                class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
+              >
+                <p
+                  class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
+                >
+                  Czas trwania
+                </p>
+                <p
+                  class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
+                >
+                  {{ plan.duration }}
+                </p>
+              </div>
+
+              <div
+                class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
+              >
+                <p
+                  class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
+                >
+                  Cena
+                </p>
+                <p
+                  class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
+                >
+                  {{ plan.price }}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -503,7 +699,7 @@ useHead({
           <h3>
             <button
               type="button"
-              class="flex w-full items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
+              class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
               :aria-expanded="openFaqIndex === index"
               :aria-controls="`faq-answer-${index}`"
               @click="toggleFaq(index)"
