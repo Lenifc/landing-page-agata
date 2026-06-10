@@ -81,7 +81,7 @@ useHead({
         offers: priceOptions.map((option) => ({
           '@type': 'Offer',
           name: option.name,
-          price: option.price.match(/\d+/)?.[0],
+          price: option.schemaPrice ?? option.price.match(/\d+/)?.[0],
           priceCurrency: 'PLN',
           description: `${option.price}. ${option.details}`,
         })),
@@ -208,7 +208,7 @@ useHead({
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
           Możemy skupić się na konwersacjach, powrocie do podstaw, angielskim do
           pracy albo bieżących sytuacjach z życia. Zajęcia mogą odbywać się
-          indywidualnie, w parze, w małej grupie lub online.
+          indywidualnie, w parze lub online.
         </p>
       </div>
 
@@ -242,12 +242,12 @@ useHead({
               Ile kosztuje angielski dla dorosłych?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Zajęcia indywidualne w pakiecie stałym zaczynają się od
-              {{ priceOptions[0].price }} za pakiet 30 spotkań 60-minutowych raz
-              w tygodniu, a wariant intensywny obejmuje 30 spotkań i kosztuje
-              {{ priceOptions[1].price }}. Jeśli chcesz uczyć się z drugą osobą
-              albo w małej grupie, dostępne są też zajęcia DUO, TRIO, kursy
-              EXPRESS i lekcje okazjonalne.
+              Zajęcia indywidualne w pakiecie rocznym zaczynają się od
+              {{ priceOptions[0].price }} za 30 spotkań po 50 minut raz w
+              tygodniu. Przy dwóch lekcjach tygodniowo pakiet roczny obejmuje 60
+              spotkań i kosztuje {{ priceOptions[1].price }}. Jeśli chcesz uczyć
+              się z drugą osobą, dostępne są też pakiety DUO, pakiet MINI i
+              lekcje okazjonalne.
             </p>
             <NuxtLink
               :to="ROUTES.prices"

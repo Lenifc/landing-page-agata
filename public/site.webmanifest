@@ -11,7 +11,7 @@
   "theme_color": "#315db7",
   "icons": [
     {
-      "src": "/favicon-48x48.png",
+      "src": "/google-favicon.png",
       "sizes": "48x48",
       "type": "image/png"
     },

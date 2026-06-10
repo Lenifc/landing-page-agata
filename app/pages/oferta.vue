@@ -9,67 +9,66 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 useSeoMeta({
   title: 'Oferta i cennik angielskiego w Rumi',
   description:
-    'Oferta i cennik lekcji angielskiego Talkateria w Rumi: zajęcia indywidualne, małe grupy i grupy egzaminacyjne dla osób z Rumi, Redy, Gdyni i okolic.',
+    'Oferta i cennik lekcji angielskiego Talkateria w Rumi: pakiety roczne, pakiet MINI, zajęcia indywidualne, DUO i kurs egzaminacyjny.',
   keywords:
     'oferta angielski Rumia, lekcje angielskiego Rumia, angielski Reda, angielski Gdynia, cennik angielski Rumia',
   ogTitle: 'Talkateria | Oferta angielskiego w Rumi',
   ogDescription:
-    'Zobacz formy zajęć i ceny lekcji angielskiego w Rumi. Indywidualnie, w małych grupach i grupach egzaminacyjnych.',
+    'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, pakiet egzaminacyjny i lekcje okazjonalne.',
 })
 
 const plans = getPricingPlans('offer')
 
 const pricingSections = [
   {
-    id: 'wspolpraca-stala',
-    navLabel: 'Współpraca stała',
-    title: 'Współpraca stała',
-    badge: 'Najczęściej wybierane',
+    id: 'pakiety-roczne',
+    navLabel: 'Roczne i egzaminacyjne',
+    title: 'Pakiety roczne i egzaminacyjne',
+    badge: 'Stała cena',
     description: [
-      'Pakiety edukacyjne to najkorzystniejsza forma nauki. Pakiety stałe obejmują 30 spotkań, a kurs egzaminacyjny w grupie obejmuje 25 spotkań.',
-      'Zapewniają regularność, stałe miejsce w grafiku oraz niższą cenę za lekcję w porównaniu do zajęć pojedynczych.',
-      'Cena miesięczna obejmuje zajęcia raz w tygodniu: w wariancie standardowym jedno spotkanie 60-minutowe tygodniowo, a w wariancie intensywnym jedno spotkanie 90-minutowe tygodniowo.',
-      'Płatność odbywa się z góry, w 8 miesięcznych ratach.',
+      'Kompleksowe cykle nauki z gwarancją stałej ceny. Płatność jest rozłożona na wygodne raty miesięczne.',
+      'Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych.',
     ],
     groups: [
       {
         id: 'zajecia-indywidualne',
         navLabel: '1:1',
         title: 'Zajęcia indywidualne (1:1)',
-        plans: getPricingPlans('regularIndividual'),
+        plans: getPricingPlans('annualIndividual'),
       },
       {
         id: 'zajecia-duo',
         navLabel: 'DUO',
         title: 'Zajęcia w parze (DUO)',
-        plans: getPricingPlans('regularDuo'),
+        plans: getPricingPlans('annualDuo'),
       },
       {
-        id: 'male-grupy',
-        navLabel: 'Małe grupy',
-        title: 'Małe grupy',
-        plans: getPricingPlans('regularGroups'),
+        id: 'pakiet-egzaminacyjny',
+        navLabel: 'Egzaminacyjny',
+        title: 'Kurs egzaminacyjny',
+        plans: getPricingPlans('annualExam'),
       },
     ],
   },
   {
-    id: 'kursy-express',
-    navLabel: 'Kursy EXPRESS',
-    title: 'Kursy EXPRESS (15 lekcji)',
-    badge: 'Intensywnie',
+    id: 'pakiet-mini',
+    navLabel: 'Pakiet MINI',
+    title: 'Pakiet MINI',
+    badge: '8 rat',
     description: [
-      'Intensywne kursy krótkoterminowe dla osób z konkretnym celem: egzaminem, nadrobieniem materiału, wyjazdem lub pracą.',
-      'Możliwość płatności w 4 ratach. Doskonałe dla osób przygotowujących się do egzaminów, takich jak E8 lub matura.',
+      'Krótsza i bardziej elastyczna forma nauki. To dobra opcja dla osób, które nie chcą wiązać się umową od września do czerwca.',
+      'Pakiet sprawdza się przy intensywnym wsparciu do końca kwietnia, aby zdążyć przed egzaminem ósmoklasisty lub maturą.',
     ],
-    plans: getPricingPlans('express'),
+    plans: getPricingPlans('mini'),
   },
   {
     id: 'lekcje-okazjonalne',
     navLabel: 'Lekcje okazjonalne',
-    title: 'Lekcje okazjonalne',
-    badge: 'Doraźne wsparcie',
+    title: 'Lekcje okazjonalne - bez zobowiązań',
+    badge: 'Płatność z góry',
     description: [
-      'Dla osób, które potrzebują jednorazowego wsparcia lub nie chcą wiązać się długoterminowym kursem. Idealne do nadrabiania materiału, konsultacji oraz doraźnej pomocy przed sprawdzianami i egzaminami.',
+      'Doraźna pomoc, nadrabianie materiału lub konsultacje przed sprawdzianem bez długoterminowych umów.',
+      'Pierwsza lekcja okazjonalna jest objęta promocją -20%.',
       'Płatność odbywa się z góry przed zajęciami.',
     ],
     plans: getPricingPlans('occasional'),
@@ -90,18 +89,18 @@ const pricingLinks = pricingSections.flatMap((section) => [
 const faqs = [
   {
     q: 'Ile kosztują zajęcia?',
-    a: 'Ceny zależą od formy zajęć - indywidualnych, w parze lub w grupie - oraz od tego, czy wybierzesz regularną naukę w pakiecie, czy pojedyncze lekcje, na przykład doraźną pomoc przed sprawdzianem. Aktualne ceny znajdziesz w cenniku.',
+    a: 'Ceny zależą od formy zajęć - indywidualnych, w parze lub w kursie egzaminacyjnym - oraz od tego, czy wybierzesz pakiet roczny, pakiet MINI czy pojedynczą lekcję. Aktualne ceny znajdziesz w cenniku.',
     link: {
       label: 'cenniku',
       href: ROUTES.prices,
       before:
-        'Ceny zależą od formy zajęć - indywidualnych, w parze lub w grupie - oraz od tego, czy wybierzesz regularną naukę w pakiecie, czy pojedyncze lekcje, na przykład doraźną pomoc przed sprawdzianem. Aktualne ceny znajdziesz w ',
+        'Ceny zależą od formy zajęć - indywidualnych, w parze lub w kursie egzaminacyjnym - oraz od tego, czy wybierzesz pakiet roczny, pakiet MINI czy pojedynczą lekcję. Aktualne ceny znajdziesz w ',
       after: '.',
     },
   },
   {
-    q: 'Jaką formę zajęć wybrać: indywidualne, DUO, TRIO czy grupę?',
-    a: 'Zajęcia indywidualne sprawdzają się, gdy potrzebujesz maksymalnego dopasowania tempa i programu. DUO i TRIO są dobre dla osób, które chcą uczyć się ze znajomymi lub rodzeństwem. Grupy egzaminacyjne są przeznaczone dla uczniów przygotowujących się do egzaminu ósmoklasisty albo matury.',
+    q: 'Jaką formę zajęć wybrać: indywidualne, DUO czy pakiet egzaminacyjny?',
+    a: 'Zajęcia indywidualne sprawdzają się, gdy potrzebujesz maksymalnego dopasowania tempa i programu. DUO jest dobre dla dwóch osób, które chcą uczyć się razem i pracować w podobnym rytmie. Pakiet egzaminacyjny jest przeznaczony dla uczniów przygotowujących się do egzaminu ósmoklasisty albo matury.',
   },
   {
     q: 'Czy przygotowujesz do egzaminu ósmoklasisty?',
@@ -145,11 +144,11 @@ const faqs = [
   },
   {
     q: 'Jak długo trwa kurs?',
-    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Kursy egzaminacyjne w grupie obejmują 25 spotkań i kończą się przed egzaminami, czyli pod koniec kwietnia. Kursy szkolne trwają zazwyczaj od września do końca czerwca. Najczęściej wybierane są pakiety obejmujące 30 spotkań, które stanowią podstawę regularnej nauki. W przypadku kursantów dorosłych kursy trwają zwykle zgodnie z indywidualnymi potrzebami.',
+    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Pakiety roczne obejmują 30 spotkań w wersji Standard albo 60 spotkań w wersji Intense. Kurs egzaminacyjny obejmuje 25 spotkań po 100 minut, a pakiet MINI obejmuje 20 spotkań po 50 minut.',
   },
   {
-    q: 'Ile osób jest w grupie?',
-    a: 'Małe grupy DUO i TRIO są tworzone przez kursantów, czyli przez 2 lub 3 osoby, które chcą uczyć się razem. Grupa egzaminacyjna liczy 4 osoby i jest dobierana tak, aby uczestnicy mieli zbliżony poziom oraz podobny cel nauki.',
+    q: 'Jak wygląda nauka w DUO i pakiecie egzaminacyjnym?',
+    a: 'DUO to zajęcia w parze dla dwóch osób, które chcą uczyć się razem. Pakiet egzaminacyjny dla 8 klasy i matury ma formę kameralnej grupy maksymalnie 4-osobowej i obejmuje 25 spotkań po 100 minut. Mała grupa daje motywację wspólnej pracy, a jednocześnie pozwala zachować indywidualne podejście.',
   },
   {
     q: 'Czy trzeba kupować podręcznik?',
@@ -157,7 +156,7 @@ const faqs = [
   },
   {
     q: 'Jak wygląda płatność za kurs?',
-    a: 'Płatność za kurs zależy od jego rodzaju. Kursy regularne (30 spotkań) opłacane są w systemie miesięcznym. Kursy EXPRESS (15 spotkań) opłacane są jako całość, z możliwością rozbicia płatności na 4 raty. Pojedyncze lekcje (doraźne) opłacane są z góry przed zajęciami.',
+    a: 'Pakiety roczne i kurs egzaminacyjny są płatne w 10 stałych ratach miesięcznych, a pakiet MINI w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami.',
   },
   {
     q: 'Co w przypadku nieobecności?',
@@ -229,7 +228,7 @@ useHead({
           name: `${plan.name} - ${plan.frequency}`,
           description: plan.details,
           category: 'Lekcje języka angielskiego',
-          price: plan.price.match(/\d+/)?.[0],
+          price: plan.schemaPrice ?? plan.price.match(/\d+/)?.[0],
           priceCurrency: 'PLN',
           areaServed,
         })),
@@ -253,9 +252,9 @@ useHead({
       <p
         class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground"
       >
-        Zajęcia indywidualne, małe grupy i kursy egzaminacyjne dla osób z Rumi,
-        Redy, Gdyni i okolic. Spokojnie, praktycznie i z programem dopasowanym
-        do celu nauki.
+        Pakiety roczne, pakiet MINI, lekcje indywidualne, DUO i kursy
+        egzaminacyjne dla osób z Rumi, Redy, Gdyni i okolic. Spokojnie,
+        praktycznie i z programem dopasowanym do celu nauki.
       </p>
     </section>
 
@@ -269,13 +268,13 @@ useHead({
           <h2
             class="mt-4 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground"
           >
-            Trzy formy nauki dopasowane do różnych potrzeb i celów.
+            Formy nauki dopasowane do różnych potrzeb i celów.
           </h2>
           <p
             class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
           >
-            Oferuję zajęcia języka angielskiego w trzech formach, dopasowanych
-            do różnych potrzeb i celów nauki.
+            Możesz wybrać zajęcia indywidualne, naukę w parze, kurs
+            egzaminacyjny albo krótszy pakiet MINI.
           </p>
         </div>
 
@@ -328,21 +327,20 @@ useHead({
             <p
               class="text-sm font-medium uppercase tracking-widest text-primary"
             >
-              Małe grupy tworzone przez kursantów (2-3 osoby)
+              Zajęcia DUO w parach
             </p>
             <div
               class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground"
             >
               <p>
-                Zajęcia odbywają się w kameralnych grupach tworzonych przez
-                uczestników - z przyjaciółmi, znajomymi lub bliskimi osobami.
-                Dzięki temu nauka przebiega w swobodnej i komfortowej
-                atmosferze, a uczenie się z osobami, które się zna, pomaga
-                zmniejszyć stres i zwiększa pewność siebie.
+                Zajęcia DUO są przeznaczone dla dwóch osób, które chcą uczyć się
+                razem: z przyjacielem, rodzeństwem, partnerem albo znajomą
+                osobą. Wspólny rytm nauki pomaga utrzymać regularność i
+                swobodniejszą atmosferę na lekcji.
               </p>
               <p>
-                Grupa wspólnie określa cel nauki, a program zajęć jest
-                dopasowany do jej potrzeb - może obejmować przygotowanie do
+                Para wspólnie określa cel nauki, a program zajęć jest dopasowany
+                do jej potrzeb - może obejmować przygotowanie do
                 <NuxtLink
                   :to="ROUTES.eighthGradeExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
@@ -364,8 +362,9 @@ useHead({
                 >.
               </p>
               <p>
-                Takie połączenie pracy w grupie i indywidualnego podejścia
-                sprawia, że nauka jest skuteczna i przynosi realne efekty.
+                To dobre rozwiązanie, jeśli chcesz niższą cenę za lekcję niż w
+                zajęciach 1:1, ale nadal zależy Ci na kameralnej pracy i
+                regularnym kontakcie z językiem.
               </p>
             </div>
           </article>
@@ -376,7 +375,7 @@ useHead({
             <p
               class="text-sm font-medium uppercase tracking-widest text-primary"
             >
-              Grupy egzaminacyjne (4 osoby)
+              Kurs egzaminacyjny
             </p>
             <div
               class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground"
@@ -397,29 +396,32 @@ useHead({
                 >
                   matury z angielskiego</NuxtLink
                 >
-                na poziomie podstawowym i rozszerzonym. Zajęcia odbywają się w
-                kameralnych, czteroosobowych grupach dobieranych przez lektora
-                pod względem poziomu i celu nauki.
+                na poziomie podstawowym i rozszerzonym. Pakiet obejmuje 25
+                spotkań po 100 minut w kameralnej grupie maksymalnie 4-osobowej.
               </p>
               <p>
                 Pracujemy według programu skoncentrowanego na wymaganiach
                 egzaminacyjnych, rozwijając wszystkie sprawności językowe oraz
-                ćwicząc strategie niezbędne do osiągnięcia wysokiego wyniku.
+                ćwicząc strategie potrzebne do pewniejszej pracy z arkuszem.
               </p>
               <p>
-                Małe grupy pozwalają na indywidualne podejście do każdego
-                ucznia, a jednocześnie zapewniają motywację i dynamikę wspólnej
-                pracy.
+                Mała grupa jest dobrą równowagą między spokojnym wsparciem
+                lektora a energią wspólnej nauki. Uczeń może porównać strategie,
+                usłyszeć pytania innych osób i jednocześnie dostać uwagę
+                potrzebną do poprawy własnych błędów.
+              </p>
+              <p>
+                Kurs obejmuje łącznie ponad 41 godzin nauki i kończy się przed
+                terminem egzaminu.
               </p>
               <p class="text-sm leading-relaxed text-muted-foreground/80">
                 <strong class="font-semibold text-foreground"
                   >Informacja organizacyjna:</strong
                 >
-                grupy egzaminacyjne są uruchamiane po skompletowaniu pełnego
-                składu uczestników. W przypadku niewystarczającej liczby
-                zgłoszeń organizator może zaproponować alternatywną formę nauki,
-                np. zajęcia w parze lub inną grupę o zbliżonym poziomie i celu
-                nauki.
+                pakiety egzaminacyjne są uruchamiane po skompletowaniu grupy. W
+                przypadku niewystarczającej liczby zgłoszeń organizator może
+                zaproponować alternatywną formę nauki, np. zajęcia w parze lub
+                pakiet indywidualny.
               </p>
             </div>
           </article>
@@ -445,9 +447,8 @@ useHead({
           Cennik zajęć
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Wybierz konsultację, stały pakiet edukacyjny z zajęciami raz w
-          tygodniu, intensywny kurs EXPRESS albo lekcję okazjonalną. Ceny zależą
-          od formy zajęć, liczby osób i trybu nauki.
+          Wybierz pakiet roczny, krótszy pakiet MINI albo lekcję okazjonalną.
+          Ceny zależą od formy zajęć, liczby spotkań i trybu nauki.
         </p>
       </div>
 
@@ -582,6 +583,15 @@ useHead({
                     >
                       {{ plan.price }}
                     </p>
+                    <p
+                      v-if="plan.promo"
+                      class="mt-2 text-xs font-medium leading-relaxed text-primary"
+                    >
+                      {{ plan.promo.label }}:<br />
+                      <span class="font-serif text-lg font-semibold">
+                        {{ plan.promo.price }}
+                      </span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -656,6 +666,15 @@ useHead({
                   class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
                 >
                   {{ plan.price }}
+                </p>
+                <p
+                  v-if="plan.promo"
+                  class="mt-2 text-xs font-medium leading-relaxed text-primary"
+                >
+                  {{ plan.promo.label }}:<br />
+                  <span class="font-serif text-lg font-semibold">
+                    {{ plan.promo.price }}
+                  </span>
                 </p>
               </div>
             </div>

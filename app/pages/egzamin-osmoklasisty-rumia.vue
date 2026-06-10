@@ -81,7 +81,7 @@ useHead({
         offers: priceOptions.map((option) => ({
           '@type': 'Offer',
           name: option.name,
-          price: option.price.match(/\d+/)?.[0],
+          price: option.schemaPrice ?? option.price.match(/\d+/)?.[0],
           priceCurrency: 'PLN',
           description: `${option.price}. ${option.details}`,
         })),
@@ -249,12 +249,13 @@ useHead({
               Ile kosztuje przygotowanie do egzaminu ósmoklasisty?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Najczęściej wybieraną formą przygotowań jest grupa egzaminacyjna
-              obejmująca 25 spotkań za {{ priceOptions[0].price }}. Przy
-              konkretnym celu i krótszym czasie można wybrać kurs
-              {{ priceOptions[1].name }} w cenie {{ priceOptions[1].price }}, a
-              przy stałej pracy indywidualnej 30-spotkaniowe pakiety 1:1
-              zaczynają się od {{ priceOptions[2].price }}.
+              Najczęściej wybieraną formą przygotowań jest pakiet egzaminacyjny
+              w kameralnej grupie maksymalnie 4-osobowej, obejmujący 25 spotkań
+              po 100 minut za {{ priceOptions[0].price }}. Dostępne są też
+              roczne pakiety 1:1: 30 spotkań raz w tygodniu od
+              {{ priceOptions[1].price }} albo 60 spotkań dwa razy w tygodniu za
+              {{ priceOptions[2].price }}. Krótszy pakiet MINI obejmuje 20
+              spotkań po 50 minut i kosztuje {{ priceOptions[3].price }}.
             </p>
             <NuxtLink
               :to="ROUTES.prices"
