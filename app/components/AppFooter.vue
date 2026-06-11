@@ -79,6 +79,12 @@ onMounted(() => {
       <div class="mx-auto max-w-6xl px-6 py-3">
         <p class="text-xs text-muted-foreground">
           © {{ year }} Talkateria. Wszelkie prawa zastrzeżone.
+          <NuxtLink
+            :to="ROUTES.privacyPolicy"
+            class="ml-2 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+          >
+            Polityka prywatności
+          </NuxtLink>
         </p>
       </div>
     </div>

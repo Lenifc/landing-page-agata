@@ -1,6 +1,7 @@
 <script setup>
 import { BUSINESS_ENTITY } from '~/config/business'
 import { CONTACT } from '~/config/contact'
+import { GOOGLE_FORM } from '~/config/forms'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.contact
@@ -186,6 +187,83 @@ useHead({
             />
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="formularz" class="border-t border-border bg-secondary">
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <div class="mb-8 max-w-2xl">
+          <span
+            class="text-sm font-medium uppercase tracking-widest text-primary"
+            >Formularz zgłoszeniowy</span
+          >
+          <h2
+            class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
+          >
+            Opisz krótko, jakich zajęć szukasz.
+          </h2>
+          <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
+            Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy
+            interesują Cię spotkania w studiu, czy online. Dzięki temu łatwiej
+            dobrać termin oraz sposób pracy.
+          </p>
+        </div>
+
+        <div
+          class="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
+        >
+          <iframe
+            v-if="GOOGLE_FORM.isConfigured"
+            :src="GOOGLE_FORM.embedUrl"
+            title="Formularz zgłoszeniowy Talkateria"
+            class="h-[760px] w-full bg-background md:h-[820px]"
+            loading="lazy"
+          >
+            Ładowanie formularza...
+          </iframe>
+
+          <div v-else class="px-6 py-10 md:px-10">
+            <div class="max-w-2xl space-y-4">
+              <h3 class="font-serif text-2xl font-semibold text-foreground">
+                Wyślij zapytanie mailowo lub SMS-em.
+              </h3>
+              <p class="leading-relaxed text-muted-foreground">
+                W wiadomości wystarczy krótko opisać wiek lub poziom ucznia, cel
+                nauki, preferowaną formę zajęć oraz dostępność w tygodniu.
+              </p>
+              <div class="flex flex-wrap gap-3 pt-2">
+                <a
+                  :href="`mailto:${CONTACT.email}`"
+                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+                >
+                  Napisz maila
+                </a>
+                <a
+                  :href="CONTACT.phoneHref"
+                  class="inline-flex items-center justify-center rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                >
+                  Zadzwoń lub wyślij SMS
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p
+          v-if="GOOGLE_FORM.isConfigured"
+          class="mt-4 text-sm text-muted-foreground"
+        >
+          Jeśli formularz nie wyświetla się poprawnie,
+          <a
+            :href="GOOGLE_FORM.openUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            otwórz go w nowej karcie
+          </a>
+          .
+        </p>
       </div>
     </section>
   </main>
