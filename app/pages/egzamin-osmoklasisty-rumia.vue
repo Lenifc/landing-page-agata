@@ -1,4 +1,5 @@
 <script setup>
+import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
@@ -50,18 +51,12 @@ const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
 }
 
-const areaServed = [
-  { '@type': 'City', name: 'Rumia' },
-  { '@type': 'City', name: 'Reda' },
-  { '@type': 'City', name: 'Gdynia' },
-]
-
 useSeoMeta({
   title: 'Egzamin ósmoklasisty z angielskiego Rumia',
   description:
-    'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie egzaminacyjne i powtórki dla uczniów z Rumi, Redy i Gdyni.',
+    'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi, Redy i Gdyni.',
   keywords:
-    'egzamin ósmoklasisty angielski Rumia, przygotowanie do egzaminu ósmoklasisty Rumia, angielski ósmoklasista Reda, angielski egzamin Gdynia',
+    'egzamin ósmoklasisty angielski Rumia, przygotowanie do egzaminu ósmoklasisty Rumia, przygotowanie egzamin ósmoklasisty angielski Janowo, angielski ósmoklasista Reda, angielski egzamin Gdynia',
   ogTitle: 'Egzamin ósmoklasisty z angielskiego | Talkateria Rumia',
   ogDescription:
     'Kameralne przygotowanie do egzaminu ósmoklasisty z angielskiego: arkusze, strategie, gramatyka, słownictwo i spokojna praca krok po kroku.',
@@ -84,17 +79,8 @@ useHead({
         serviceType: 'Lekcje języka angielskiego',
         description:
           'Zajęcia przygotowujące do egzaminu ósmoklasisty z języka angielskiego w Rumi dla uczniów z Rumi, Redy, Gdyni i okolic.',
-        provider: {
-          '@type': 'EducationalOrganization',
-          name: 'Talkateria',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'ul. Wrocławska 2',
-            addressLocality: 'Rumia',
-            addressCountry: 'PL',
-          },
-        },
-        areaServed,
+        provider: BUSINESS_ENTITY,
+        areaServed: AREA_SERVED,
         audience: {
           '@type': 'EducationalAudience',
           educationalRole: 'uczeń szkoły podstawowej',
@@ -169,10 +155,10 @@ useHead({
           Przygotowanie do egzaminu ósmoklasisty z angielskiego w Rumi.
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
-          Zajęcia pomagają uporządkować materiał, oswoić arkusze i zbudować
-          pewność przed egzaminem. Pracujemy spokojnie, regularnie i konkretnie:
-          na zadaniach, strategiach oraz tych obszarach, które najbardziej
-          wpływają na wynik.
+          Zajęcia w Rumi pomagają uporządkować materiał, oswoić arkusze
+          i zbudować pewność przed egzaminem. Pracujemy spokojnie, regularnie i
+          konkretnie: na zadaniach, strategiach oraz tych obszarach, które
+          najbardziej wpływają na wynik.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink

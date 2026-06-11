@@ -1,4 +1,5 @@
 <script setup>
+import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
@@ -50,18 +51,12 @@ const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
 }
 
-const areaServed = [
-  { '@type': 'City', name: 'Rumia' },
-  { '@type': 'City', name: 'Reda' },
-  { '@type': 'City', name: 'Gdynia' },
-]
-
 useSeoMeta({
   title: 'Matura z angielskiego Rumia',
   description:
     'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi, Redy, Gdyni i okolic.',
   keywords:
-    'matura angielski Rumia, przygotowanie do matury z angielskiego Rumia, angielski matura rozszerzona Rumia, korepetycje angielski matura Reda Gdynia',
+    'matura angielski Rumia, przygotowanie do matury z angielskiego Rumia, przygotowanie do matury angielski Janowo, angielski matura rozszerzona Rumia, korepetycje angielski matura Reda Gdynia',
   ogTitle: 'Matura z angielskiego | Talkateria Rumia',
   ogDescription:
     'Kameralne przygotowanie do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',
@@ -84,17 +79,8 @@ useHead({
         serviceType: 'Lekcje języka angielskiego',
         description:
           'Zajęcia przygotowujące do matury z języka angielskiego na poziomie podstawowym i rozszerzonym w Rumi.',
-        provider: {
-          '@type': 'EducationalOrganization',
-          name: 'Talkateria',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'ul. Wrocławska 2',
-            addressLocality: 'Rumia',
-            addressCountry: 'PL',
-          },
-        },
-        areaServed,
+        provider: BUSINESS_ENTITY,
+        areaServed: AREA_SERVED,
         audience: {
           '@type': 'EducationalAudience',
           educationalRole: 'uczeń szkoły średniej',
@@ -169,10 +155,10 @@ useHead({
           Przygotowanie do matury z angielskiego w Rumi.
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
-          Zajęcia pomagają przełożyć wiedzę na wynik: porządkujemy gramatykę,
-          rozwijamy słownictwo, ćwiczymy arkusze i pracujemy nad pisaniem oraz
-          mówieniem. Program dopasowuję do poziomu podstawowego lub
-          rozszerzonego.
+          Zajęcia w Rumi pomagają przełożyć wiedzę na wynik:
+          porządkujemy gramatykę, rozwijamy słownictwo, ćwiczymy arkusze i
+          pracujemy nad pisaniem oraz mówieniem. Program dopasowuję do poziomu
+          podstawowego lub rozszerzonego.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink

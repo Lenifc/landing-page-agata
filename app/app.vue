@@ -1,39 +1,11 @@
 <script setup>
-import { CONTACT } from '~/config/contact'
-import { SITE_URL } from '~/config/routes'
+import { LOCAL_BUSINESS_JSON_LD } from '~/config/business'
 
 useHead({
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': ['EducationalOrganization', 'LocalBusiness'],
-        name: 'Talkateria',
-        url: SITE_URL,
-        telephone: CONTACT.phoneInternational,
-        description:
-          'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic.',
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: 'Rumia',
-          streetAddress: 'ul. Wrocławska 2',
-          addressCountry: 'PL',
-        },
-        priceRange: '$$',
-        openingHours: `Zajęcia: ${CONTACT.lessonHours}; kontakt: ${CONTACT.contactHours}`,
-        areaServed: [
-          { '@type': 'City', name: 'Rumia' },
-          { '@type': 'City', name: 'Reda' },
-          { '@type': 'City', name: 'Gdynia' },
-        ],
-        knowsAbout: [
-          'język angielski',
-          'konwersacje po angielsku',
-          'lekcje angielskiego w Rumi',
-          'przygotowanie do egzaminów',
-        ],
-      }),
+      innerHTML: JSON.stringify(LOCAL_BUSINESS_JSON_LD),
     },
   ],
 })

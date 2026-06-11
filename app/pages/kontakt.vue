@@ -1,4 +1,5 @@
 <script setup>
+import { BUSINESS_ENTITY } from '~/config/business'
 import { CONTACT } from '~/config/contact'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
@@ -6,11 +7,11 @@ const pageRoute = ROUTES.contact
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
-  title: 'Kontakt – angielski Rumia Janowo',
+  title: 'Kontakt – angielski Rumia',
   description:
-    'Skontaktuj się z Talkaterią w Rumi Janowie. Kameralne studio języka angielskiego przy ul. Wrocławskiej 2.',
+    'Skontaktuj się z Talkaterią w Rumi. Kameralne studio języka angielskiego przy ul. Wrocławskiej 2.',
   keywords:
-    'kontakt angielski Rumia, lekcja język angielski Rumia, Talkateria Rumia, angielski Reda, angielski Gdynia',
+    'kontakt angielski Rumia, kontakt angielski Rumia, lekcja język angielski Rumia, Talkateria Rumia, Talkateria Janowo, angielski Reda, angielski Gdynia',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
     'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
@@ -76,31 +77,8 @@ useHead({
         name: 'Kontakt Talkateria',
         description:
           'Kontakt w sprawie lekcji języka angielskiego w Rumi, Redzie, Gdyni i okolicach.',
-        about: {
-          '@type': 'EducationalOrganization',
-          name: 'Talkateria',
-          email: CONTACT.email,
-          telephone: CONTACT.phoneInternational,
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: CONTACT.addressShort.replace('Rumia, ', ''),
-            addressLocality: 'Rumia',
-            addressCountry: 'PL',
-          },
-          contactPoint: {
-            '@type': 'ContactPoint',
-            telephone: CONTACT.phoneInternational,
-            email: CONTACT.email,
-            contactType: 'zapisy na zajęcia',
-            availableLanguage: ['pl', 'en'],
-            description: `${CONTACT.contactHoursText} ${CONTACT.smsText} ${CONTACT.emailResponseText}`,
-          },
-          areaServed: [
-            { '@type': 'City', name: 'Rumia' },
-            { '@type': 'City', name: 'Reda' },
-            { '@type': 'City', name: 'Gdynia' },
-          ],
-        },
+        about: BUSINESS_ENTITY,
+        mainEntity: BUSINESS_ENTITY,
       }),
     },
   ],

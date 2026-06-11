@@ -1,4 +1,5 @@
 <script setup>
+import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
@@ -50,18 +51,12 @@ const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
 }
 
-const areaServed = [
-  { '@type': 'City', name: 'Rumia' },
-  { '@type': 'City', name: 'Reda' },
-  { '@type': 'City', name: 'Gdynia' },
-]
-
 useSeoMeta({
   title: 'Angielski dla dorosłych Rumia',
   description:
     'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi, Redy, Gdyni i okolic.',
   keywords:
-    'angielski dla dorosłych Rumia, zajęcia angielski dorośli Rumia, konwersacje angielski Rumia, angielski online dla dorosłych Reda Gdynia',
+    'angielski dla dorosłych Rumia, angielski dla dorosłych Rumia Janowo, Rumia Janowo angielski dla dorosłych, zajęcia angielski dorośli Rumia, konwersacje angielski Rumia, konwersacje angielski Rumia Janowo, angielski do pracy Rumia, angielski online dla dorosłych Reda Gdynia',
   ogTitle: 'Angielski dla dorosłych | Talkateria Rumia',
   ogDescription:
     'Kameralne zajęcia dla dorosłych: rozmowa, praktyczne słownictwo, powrót do podstaw i nauka bez presji.',
@@ -81,20 +76,11 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: 'Angielski dla dorosłych',
-        serviceType: 'Lekcje języka angielskiego',
+        serviceType: 'Angielski dla dorosłych w Rumi',
         description:
           'Indywidualne i kameralne zajęcia z języka angielskiego dla dorosłych w Rumi oraz online.',
-        provider: {
-          '@type': 'EducationalOrganization',
-          name: 'Talkateria',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'ul. Wrocławska 2',
-            addressLocality: 'Rumia',
-            addressCountry: 'PL',
-          },
-        },
-        areaServed,
+        provider: BUSINESS_ENTITY,
+        areaServed: AREA_SERVED,
         audience: {
           '@type': 'Audience',
           audienceType: 'dorośli',
@@ -170,9 +156,9 @@ useHead({
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
           Jeśli chcesz wrócić do angielskiego, przełamać barierę mówienia albo
-          poczuć się pewniej w pracy i podróży, zajęcia dla dorosłych są
-          układane wokół Twojego celu. Praktycznie, spokojnie i w tempie, które
-          da się połączyć z codziennym życiem.
+          poczuć się pewniej w pracy i podróży, zajęcia dla dorosłych w Rumi
+          są układane wokół Twojego celu. Praktycznie, spokojnie i w
+          tempie, które da się połączyć z codziennym życiem.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink

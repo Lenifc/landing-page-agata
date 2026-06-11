@@ -1,4 +1,5 @@
 <script setup>
+import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
@@ -116,18 +117,12 @@ const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
 }
 
-const areaServed = [
-  { '@type': 'City', name: 'Rumia' },
-  { '@type': 'City', name: 'Reda' },
-  { '@type': 'City', name: 'Gdynia' },
-]
-
 useSeoMeta({
   title: 'Zajęcia zdalne z angielskiego',
   description:
-    'Zajęcia zdalne z angielskiego w Talkaterii: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem i materiałami dopasowanymi do celu.',
+    'Zajęcia zdalne z angielskiego w Talkaterii w Rumi: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem.',
   keywords:
-    'zajęcia zdalne angielski, angielski online Rumia, lekcje angielskiego online Reda, angielski online Gdynia, korepetycje angielski online, angielski online cała Polska',
+    'zajęcia zdalne angielski, angielski online Rumia, angielski online Rumia Janowo, lekcje angielskiego online Reda, angielski online Gdynia, korepetycje angielski online, angielski online cała Polska',
   ogTitle: 'Zajęcia zdalne z angielskiego | Talkateria',
   ogDescription:
     'Angielski online bez dojazdów, z całej Polski: wygodnie, regularnie i z takim samym indywidualnym podejściem jak w studiu.',
@@ -149,18 +144,9 @@ useHead({
         name: 'Zajęcia zdalne z angielskiego',
         serviceType: 'Lekcje języka angielskiego online',
         description:
-          'Indywidualne i kameralne zajęcia z języka angielskiego online na platformie Zoom.',
-        provider: {
-          '@type': 'EducationalOrganization',
-          name: 'Talkateria',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'ul. Wrocławska 2',
-            addressLocality: 'Rumia',
-            addressCountry: 'PL',
-          },
-        },
-        areaServed,
+          'Indywidualne i kameralne zajęcia z języka angielskiego online na platformie Zoom, prowadzone przez studio w Rumi.',
+        provider: BUSINESS_ENTITY,
+        areaServed: AREA_SERVED,
         audience: {
           '@type': 'Audience',
           audienceType: 'młodzież i dorośli',

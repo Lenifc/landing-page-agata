@@ -1,4 +1,5 @@
 <script setup>
+import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.home
@@ -7,10 +8,11 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 useSeoMeta({
   title: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
   description:
-    'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Redy, Gdyni i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
+    'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
   keywords:
-    'angielski Rumia, lekcje angielskiego Rumia, angielski Reda, angielski Gdynia, konwersacje po angielsku, korepetycje angielski Rumia, matura angielski Rumia, egzamin angielski Rumia',
-  ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
+    'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, angielski Reda, angielski Gdynia, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
+  ogTitle:
+    'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
   ogDescription:
     'Kameralne zajęcia z angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Mniej stresu, więcej mówienia i praktyki.',
 })
@@ -46,6 +48,33 @@ const photos = [
   },
 ]
 
+const landingLinks = [
+  {
+    to: ROUTES.eighthGradeExam,
+    eyebrow: 'Dla klas 7-8',
+    title: 'Egzamin ósmoklasisty',
+    body: 'Arkusze, strategie i powtórki z angielskiego w Rumi przed egzaminem.',
+  },
+  {
+    to: ROUTES.maturaExam,
+    eyebrow: 'Dla liceum i technikum',
+    title: 'Matura z angielskiego',
+    body: 'Przygotowanie do poziomu podstawowego i rozszerzonego, z pisaniem i arkuszami.',
+  },
+  {
+    to: ROUTES.adultClasses,
+    eyebrow: 'Dla dorosłych',
+    title: 'Angielski po przerwie',
+    body: 'Konwersacje, angielski do pracy i spokojny powrót do nauki bez presji.',
+  },
+  {
+    to: ROUTES.onlineClasses,
+    eyebrow: 'Online',
+    title: 'Zajęcia zdalne',
+    body: 'Lekcje angielskiego online.',
+  },
+]
+
 useHead({
   link: [
     {
@@ -59,26 +88,14 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Service',
-        serviceType: 'Lekcje języka angielskiego',
-        provider: {
-          '@type': 'EducationalOrganization',
-          name: 'Talkateria',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: 'ul. Wrocławska 2',
-            addressLocality: 'Rumia',
-            addressCountry: 'PL',
-          },
-        },
-        areaServed: [
-          { '@type': 'City', name: 'Rumia' },
-          { '@type': 'City', name: 'Reda' },
-          { '@type': 'City', name: 'Gdynia' },
-        ],
+        serviceType: 'Lekcje języka angielskiego w Rumi',
+        provider: BUSINESS_ENTITY,
+        areaServed: AREA_SERVED,
         audience: {
           '@type': 'Audience',
           audienceType: 'młodzież i dorośli',
         },
+        url: pageUrl,
       }),
     },
   ],
@@ -99,15 +116,15 @@ useHead({
         <h1
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl"
         >
-          Kameralne studio języka angielskiego w Rumi. Zajęcia dla młodzieży i
-          dorosłych.
+          Kameralne studio języka angielskiego w Rumi. Zajęcia dla
+          młodzieży i dorosłych.
         </h1>
         <p
           class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground"
         >
-          Talkateria to kameralne lekcje angielskiego dla młodzieży i dorosłych
-          z Rumi, Redy i Gdyni. Przyjazna atmosfera, rozmowa i plan dopasowany
-          do Ciebie.
+          Talkateria to kameralne lekcje angielskiego w Rumi dla
+          młodzieży i dorosłych z Rumi, Redy i Gdyni. Przyjazna atmosfera,
+          rozmowa i plan dopasowany do Ciebie.
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <NuxtLink
@@ -148,6 +165,53 @@ useHead({
     </section>
 
     <section class="border-y border-border bg-secondary">
+      <div class="mx-auto max-w-6xl px-6 py-14">
+        <div class="mb-8 max-w-2xl">
+          <span
+            class="text-sm font-medium uppercase tracking-widest text-primary"
+          >
+            Wybierz cel nauki
+          </span>
+          <h2
+            class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
+          >
+            Najważniejsze ścieżki angielskiego w Talkaterii.
+          </h2>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-4">
+          <NuxtLink
+            v-for="link in landingLinks"
+            :key="link.to"
+            :to="link.to"
+            class="group flex min-h-[210px] flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_38px_rgba(24,55,110,0.09)]"
+          >
+            <span class="text-xs font-semibold uppercase text-primary">
+              {{ link.eyebrow }}
+            </span>
+            <span>
+              <span
+                class="block font-serif text-2xl font-semibold leading-tight text-foreground"
+              >
+                {{ link.title }}
+              </span>
+              <span
+                class="mt-3 block text-sm leading-relaxed text-muted-foreground"
+              >
+                {{ link.body }}
+              </span>
+            </span>
+            <span
+              class="text-sm font-medium text-primary transition-transform group-hover:translate-x-1"
+            >
+              Zobacz szczegóły →
+            </span>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-b border-border">
       <div class="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-3">
         <div v-for="feature in features" :key="feature.title" class="space-y-3">
           <h2 class="font-serif text-xl font-semibold text-foreground">
