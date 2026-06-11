@@ -211,6 +211,17 @@ export const PRICING = Object.freeze({
       'occasionalIndividual',
       'occasionalDuo',
     ],
+    onlineClasses: [
+      'individualAnnualWeekly',
+      'individualAnnualTwiceWeekly',
+      'duoAnnualWeekly',
+      'duoAnnualTwiceWeekly',
+      'examGroup',
+      'miniIndividual',
+      'miniDuo',
+      'occasionalIndividual',
+      'occasionalDuo',
+    ],
   },
 })
 

@@ -10,6 +10,7 @@ const links = [
   { to: ROUTES.eighthGradeExam, label: 'Egzamin ósmoklasisty' },
   { to: ROUTES.maturaExam, label: 'Matura z angielskiego' },
   { to: ROUTES.adultClasses, label: 'Zajęcia dla dorosłych' },
+  { to: ROUTES.onlineClasses, label: 'Zajęcia zdalne' },
   { to: ROUTES.contact, label: 'Kontakt' },
 ]
 

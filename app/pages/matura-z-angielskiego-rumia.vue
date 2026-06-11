@@ -29,6 +29,27 @@ const skills = [
 
 const priceOptions = getPricingPlans('maturaExam')
 
+const faqs = [
+  {
+    q: 'Czy przygotowanie obejmuje poziom podstawowy i rozszerzony?',
+    a: 'Tak. Zakres pracy dobieram do poziomu matury, celu punktowego i tego, które obszary najmocniej wpływają na wynik: arkusze, słownictwo, gramatykę, pisanie albo strategie.',
+  },
+  {
+    q: 'Czy na zajęciach są sprawdzane prace pisemne i ćwiczone konwersacje?',
+    a: 'Tak. Sprawdzamy wypowiedzi pisemne z informacją zwrotną: treść, spójność, słownictwo, gramatykę i typowe miejsca utraty punktów. Na zajęciach ćwiczymy też konwersacje, reagowanie językowe i swobodniejsze mówienie po angielsku.',
+  },
+  {
+    q: 'Czy można zacząć przygotowanie w trakcie roku szkolnego?',
+    a: 'Tak, jeśli są dostępne terminy. Wtedy zaczynamy od diagnozy i ustalenia priorytetów, żeby skupić się na zadaniach, które dadzą najbardziej odczuwalną poprawę.',
+  },
+]
+
+const openFaqIndex = ref(null)
+
+const toggleFaq = (index) => {
+  openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
+
 const areaServed = [
   { '@type': 'City', name: 'Rumia' },
   { '@type': 'City', name: 'Reda' },
@@ -86,6 +107,24 @@ useHead({
           description: `${option.price}. ${option.details}`,
         })),
         url: pageUrl,
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}#faq`,
+        url: `${pageUrl}#faq`,
+        inLanguage: 'pl-PL',
+        mainEntity: faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.a,
+          },
+        })),
       }),
     },
     {
@@ -271,11 +310,70 @@ useHead({
                   {{ option.price }}
                 </p>
               </div>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span
+                  class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+                >
+                  {{ option.frequency }}
+                </span>
+                <span
+                  class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
+                >
+                  {{ option.duration }}
+                </span>
+              </div>
               <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {{ option.details }}
               </p>
             </article>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="mx-auto max-w-3xl scroll-mt-24 px-6 py-16">
+      <h2
+        class="text-balance text-center font-serif text-3xl font-semibold tracking-tight text-foreground"
+      >
+        Mini FAQ o maturze z angielskiego
+      </h2>
+      <div class="mt-10 divide-y divide-border border-y border-border">
+        <div v-for="(faq, index) in faqs" :key="faq.q">
+          <h3>
+            <button
+              type="button"
+              class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
+              :aria-expanded="openFaqIndex === index"
+              :aria-controls="`matura-faq-answer-${index}`"
+              @click="toggleFaq(index)"
+            >
+              <span>{{ faq.q }}</span>
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-transform duration-200"
+                :class="{ 'rotate-180': openFaqIndex === index }"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </span>
+            </button>
+          </h3>
+          <p
+            :id="`matura-faq-answer-${index}`"
+            v-show="openFaqIndex === index"
+            class="pb-6 text-pretty leading-relaxed text-muted-foreground"
+          >
+            {{ faq.a }}
+          </p>
         </div>
       </div>
     </section>
