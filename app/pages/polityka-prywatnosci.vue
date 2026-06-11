@@ -1,5 +1,9 @@
 <script setup>
-import { BUSINESS_ENTITY } from '~/config/business'
+import {
+  BUSINESS_ENTITY,
+  BUSINESS_LEGAL_NAME,
+  BUSINESS_NAME,
+} from '~/config/business'
 import { CONTACT } from '~/config/contact'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
@@ -51,8 +55,8 @@ useHead({
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">1. Administrator danych</h2>
         <p>
-          Administratorem danych osobowych jest Talkateria, studio języka
-          angielskiego w Rumi.
+          Administratorem danych osobowych jest {{ BUSINESS_LEGAL_NAME }},
+          prowadząca studio języka angielskiego {{ BUSINESS_NAME }} w Rumi.
         </p>
         <p>Adres studia: {{ CONTACT.addressShort }}.</p>
         <p>

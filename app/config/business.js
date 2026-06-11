@@ -3,6 +3,7 @@ import { SITE_URL } from './routes'
 
 export const BUSINESS_ID = `${SITE_URL}/#talkateria`
 export const BUSINESS_NAME = 'Talkateria'
+export const BUSINESS_LEGAL_NAME = 'English Coaching Agata Pionke'
 
 export const BUSINESS_ADDRESS = Object.freeze({
   '@type': 'PostalAddress',
@@ -23,6 +24,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   '@type': ['EducationalOrganization', 'LocalBusiness'],
   '@id': BUSINESS_ID,
   name: BUSINESS_NAME,
+  legalName: BUSINESS_LEGAL_NAME,
   alternateName: 'Talkateria English Studio',
   url: SITE_URL,
   email: CONTACT.email,
