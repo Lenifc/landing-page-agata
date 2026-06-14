@@ -52,26 +52,33 @@ const landingLinks = [
   {
     to: ROUTES.eighthGradeExam,
     eyebrow: 'Dla klas 7-8',
-    title: 'Egzamin ósmoklasisty',
-    body: 'Arkusze, strategie i powtórki z angielskiego w Rumi przed egzaminem.',
+    title: 'Przygotowanie do egzaminu ósmoklasisty',
+    body: `Skuteczne przygotowanie do Egzaminu Ósmoklasisty z języka angielskiego. Zajęcia obejmują
+      powtórkę gramatyki i słownictwa, ćwiczenie typowych zadań egzaminacyjnych oraz naukę
+      strategii, które pomagają lepiej wykorzystać czas i osiągnąć jak najlepszy wynik.`,
   },
   {
     to: ROUTES.maturaExam,
     eyebrow: 'Dla liceum i technikum',
-    title: 'Matura z angielskiego',
-    body: 'Przygotowanie do poziomu podstawowego i rozszerzonego, z pisaniem i arkuszami.',
+    title: 'Przygotowanie do matury',
+    body: `Kompleksowe przygotowanie do matury z języka angielskiego na poziomie podstawowym i
+      rozszerzonym. Obejmuje ćwiczenie wszystkich typów zadań egzaminacyjnych, rozwijanie
+      umiejętności językowych oraz poznawanie skutecznych strategii egzaminacyjnych`,
   },
   {
     to: ROUTES.adultClasses,
     eyebrow: 'Dla dorosłych',
-    title: 'Angielski po przerwie',
-    body: 'Konwersacje, angielski do pracy i spokojny powrót do nauki bez presji.',
+    title: 'Zajęcia konwersacyjne',
+    body: `Praktyczne zajęcia nastawione na rozwijanie umiejętności mówienia. Obejmują swobodne
+      rozmowy, utrwalanie najważniejszych struktur gramatycznych oraz poszerzanie słownictwa,
+      dzięki czemu uczestnicy zyskują większą płynność i pewność siebie w komunikacji po
+      angielsku.`,
   },
   {
     to: ROUTES.onlineClasses,
     eyebrow: 'Online',
-    title: 'Zajęcia zdalne',
-    body: 'Lekcje angielskiego online.',
+    title: 'Lekcje języka angielskiego online',
+    body: 'Ucz się angielskiego z dowolnego miejsca. Zajęcia online to wygodna i skuteczna forma nauki bez konieczności dojazdów.',
   },
 ]
 
@@ -104,39 +111,28 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section
-      class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24"
-    >
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
       <div class="space-y-6">
         <span
-          class="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm"
-        >
-          Kameralne zajęcia • duża swoboda
+          class="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm">
+          Przygotowanie do egzaminów • Pomoc z materiałem szkolnym • Konwersacje
         </span>
         <h1
-          class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl"
-        >
-          Kameralne studio języka angielskiego w Rumi. Zajęcia dla
-          młodzieży i dorosłych.
+          class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
+          Talkateria - English Studio
         </h1>
-        <p
-          class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground"
-        >
-          Talkateria to kameralne lekcje angielskiego w Rumi dla
-          młodzieży i dorosłych z Rumi, Redy i Gdyni. Przyjazna atmosfera,
-          rozmowa i plan dopasowany do Ciebie.
+        <p class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
+          Kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i dorosłym rozwijać
+          pewność siebie w mówieniu po angielsku, przygotować się do matury i egzaminu ósmoklasisty
+          oraz skutecznie radzić sobie z materiałem szkolnym.
         </p>
         <div class="flex flex-wrap items-center gap-4">
-          <NuxtLink
-            :to="ROUTES.contact"
-            class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.22)] transition-all hover:-translate-y-0.5 hover:opacity-90"
-          >
+          <NuxtLink :to="ROUTES.contact"
+            class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.22)] transition-all hover:-translate-y-0.5 hover:opacity-90">
             Zapisz się teraz →
           </NuxtLink>
-          <NuxtLink
-            :to="ROUTES.offer"
-            class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-          >
+          <NuxtLink :to="ROUTES.offer"
+            class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
             Zobacz ofertę
           </NuxtLink>
         </div>
@@ -144,20 +140,12 @@ useHead({
 
       <div class="relative">
         <div
-          class="overflow-hidden rounded-[2rem] border border-border bg-card shadow-[0_24px_70px_rgba(17,17,17,0.08)]"
-        >
-          <img
-            src="/studio-hero.webp"
-            alt="Jasne i przytulne wnętrze studia Talkateria"
-            class="h-full w-full object-cover"
-            width="1024"
-            height="1024"
-            fetchpriority="high"
-          />
+          class="overflow-hidden rounded-[2rem] border border-border bg-card shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
+          <img src="/studio-hero.webp" alt="Jasne i przytulne wnętrze studia Talkateria"
+            class="h-full w-full object-cover" width="1024" height="1024" fetchpriority="high" />
         </div>
         <div
-          class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card px-5 py-4 shadow-md sm:block"
-        >
+          class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card px-5 py-4 shadow-md sm:block">
           <p class="font-serif text-3xl font-semibold text-primary">8+</p>
           <p class="text-sm text-muted-foreground">lat doświadczenia</p>
         </div>
@@ -167,43 +155,30 @@ useHead({
     <section class="border-y border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14">
         <div class="mb-8 max-w-2xl">
-          <span
-            class="text-sm font-medium uppercase tracking-widest text-primary"
-          >
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">
             Wybierz cel nauki
           </span>
-          <h2
-            class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
-          >
-            Najważniejsze ścieżki angielskiego w Talkaterii.
+          <h2 class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            Wybierz zajęcia dopasowane do swoich potrzeb.
           </h2>
         </div>
 
         <div class="grid gap-4 md:grid-cols-4">
-          <NuxtLink
-            v-for="link in landingLinks"
-            :key="link.to"
-            :to="link.to"
-            class="group flex min-h-[210px] flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_38px_rgba(24,55,110,0.09)]"
-          >
+          <NuxtLink v-for="link in landingLinks" :key="link.to" :to="link.to"
+            class="group flex min-h-[210px] flex-col justify-start rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_18px_38px_rgba(24,55,110,0.09)]">
             <span class="text-xs font-semibold uppercase text-primary">
               {{ link.eyebrow }}
             </span>
             <span>
               <span
-                class="block font-serif text-2xl font-semibold leading-tight text-foreground"
-              >
+                class="flex min-h-[90px] items-center font-serif text-2xl font-semibold leading-tight text-foreground">
                 {{ link.title }}
               </span>
-              <span
-                class="mt-3 block text-sm leading-relaxed text-muted-foreground"
-              >
+              <span class="mt-3 block text-sm leading-relaxed text-muted-foreground">
                 {{ link.body }}
               </span>
             </span>
-            <span
-              class="text-sm font-medium text-primary transition-transform group-hover:translate-x-1"
-            >
+            <span class="mt-auto pt-5 text-sm font-medium text-primary transition-transform group-hover:translate-x-1">
               Zobacz szczegóły →
             </span>
           </NuxtLink>
@@ -224,40 +199,25 @@ useHead({
       </div>
     </section>
 
-    <section
-      class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-[0.9fr_1.1fr]"
-    >
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-[0.9fr_1.1fr]">
       <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
-        <img
-          src="/teacher-portrait.webp"
-          alt="Portret Agaty, lektorki i założycielki studia"
-          class="h-full w-full object-cover"
-          width="1024"
-          height="1024"
-          loading="lazy"
-        />
+        <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
+          class="h-full w-full object-cover" width="1024" height="1024" loading="lazy" />
       </div>
       <div class="space-y-5">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary"
-          >Cześć, tu Agata</span
-        >
-        <div
-          class="space-y-4 text-pretty leading-relaxed text-muted-foreground"
-        >
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">Cześć, tu Agata</span>
+        <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
           <p>
-            Jestem magistrem filologii angielskiej i lektorką z 8-letnim
-            doświadczeniem w nauczaniu dzieci, młodzieży i dorosłych. Pomagam
-            przełamywać barierę mówienia, przygotowywać się do egzaminów,
-            poprawiać wyniki w szkole oraz rozwijać praktyczne umiejętności
-            językowe.
+            Jestem magistrem filologii angielskiej oraz lektorką z ponad 8-letnim doświadczeniem w
+            nauczaniu dzieci, młodzieży i dorosłych. Pomagam przełamywać barierę mówienia,
+            przygotowywać się do egzaminów, poprawiać wyniki w szkole oraz rozwijać praktyczne
+            umiejętności językowe.
           </p>
           <p>
-            Ukończyłam również studia podyplomowe z coachingu z elementami
-            psychologii, co pozwala mi skuteczniej wspierać uczniów w procesie
-            nauki, motywacji i radzeniu sobie ze stresem. Każde zajęcia
-            dostosowuję do indywidualnych potrzeb kursanta, dbając o przyjazną
-            atmosferę, efektywną naukę i budowanie pewności siebie w komunikacji
-            po angielsku.
+            Ukończyłam również studia podyplomowe z coachingu z elementami psychologii, dzięki czemu
+            skuteczniej wspieram uczniów w procesie nauki, budowaniu motywacji oraz radzeniu sobie ze
+            stresem. Każde zajęcia dostosowuję do indywidualnych potrzeb kursanta, dbając o kameralną
+            atmosferę, efektywną naukę i rozwijanie pewności siebie w komunikacji w języku angielskim.
           </p>
         </div>
       </div>
@@ -266,37 +226,31 @@ useHead({
     <section class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="mb-10 max-w-xl space-y-3">
-          <h2
-            class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground"
-          >
+          <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
             Lokalizacja
           </h2>
           <p class="text-pretty leading-relaxed text-muted-foreground">
-            Zajęcia odbywają się w nowoczesnym, kameralnym studiu przy ul.
-            Wrocławskiej 2 w Rumi (dzielnica Janowo). Lokalizacja zapewnia
-            wygodny dojazd zarówno komunikacją miejską, jak i koleją - w pobliżu
-            znajdują się przystanki autobusowe oraz stacja SKM Rumia Janowo. Dla
-            osób dojeżdżających samochodem dostępny jest duży, ogólnodostępny
-            parking przy ul. Gdańskiej.
+            Zajęcia odbywają się w nowoczesnym, kameralnym studiu przy ul. Wrocławskiej 2 w Rumi
+            (dzielnica Janowo). Lokalizacja zapewnia wygodny dojazd zarówno komunikacją miejską, jak i
+            koleją - w pobliżu znajdują się przystanki autobusowe oraz stacja SKM Rumia Janowo. Dla osób
+            dojeżdżających samochodem dostępny jest duży, ogólnodostępny parking przy ul. Gdańskiej.
+
+          </p>
+          <p class="text-pretty leading-relaxed text-muted-foreground">
+            Dla komfortu kursantów w budynku dostępna jest również niewielka poczekalnia, z której można
+            skorzystać przed rozpoczęciem zajęć lub w oczekiwaniu na autobus czy pociąg.
+          </p>
+          <p class="text-pretty leading-relaxed text-muted-foreground">
+            Istnieje również możliwość uczestnictwa w zajęciach online. Ten rodzaj zajęć pozwala uczyć się
+            wygodnie z dowolnego miejsca bez konieczności dojazdów
           </p>
         </div>
-        <div
-          class="grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4"
-        >
-          <div
-            v-for="photo in photos"
-            :key="photo.src"
-            class="group relative overflow-hidden rounded-2xl border border-border"
-            :class="photo.class"
-          >
-            <img
-              :src="photo.src"
-              :alt="photo.alt"
+        <div class="grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4">
+          <div v-for="photo in photos" :key="photo.src"
+            class="group relative overflow-hidden rounded-2xl border border-border" :class="photo.class">
+            <img :src="photo.src" :alt="photo.alt"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              width="1024"
-              height="1024"
-              loading="lazy"
-            />
+              width="1024" height="1024" loading="lazy" />
           </div>
         </div>
       </div>
@@ -304,22 +258,16 @@ useHead({
 
     <section class="mx-auto max-w-6xl px-5 py-16">
       <div
-        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16"
-      >
+        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16">
         <h2
-          class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground"
-        >
+          class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
           Masz pytania?
         </h2>
-        <p
-          class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80"
-        >
-          Skontaktuj się ze mną - pomogę dobrać odpowiednią formę nauki.
+        <p class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80">
+          Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
         </p>
-        <NuxtLink
-          :to="ROUTES.contact"
-          class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90"
-        >
+        <NuxtLink :to="ROUTES.contact"
+          class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
           Skontaktuj się →
         </NuxtLink>
       </div>
@@ -327,19 +275,21 @@ useHead({
 
     <section class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
-        <h2
-          class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
-        >
-          Talkateria - English Studio - nauka dopasowana do Twoich potrzeb
+        <h2 class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+          Dla kogo są zajęcia w Talkaterii?
         </h2>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Jeśli szukasz zajęć z języka angielskiego w Rumi, które stawiają na
-          swobodną komunikację oraz indywidualne podejście, Talkateria jest
-          miejscem dla Ciebie. Prowadzę lekcje angielskiego dla młodzieży i
-          dorosłych z Rumi, Redy, Gdyni oraz okolic. Oferuję zajęcia
-          indywidualne, konwersacje oraz kursy przygotowujące do egzaminów i
-          codziennej komunikacji w języku angielskim.
+          Jeżeli chcesz zacząć swobodnie mówić po angielsku, potrzebujesz wsparcia w nauce szkolnej
+          lub przygotowaniu do egzaminów i szukasz zajęć dopasowanych do swojego tempa i potrzeb,
+          Talkateria będzie dobrym miejscem dla Ciebie.
         </p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">To propozycja dla młodzieży i dorosłych,
+          To propozycja dla młodzieży i dorosłych, którzy chcą uporządkować wiedzę, nabrać pewności w
+          mówieniu i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i przyjaznej
+          atmosferze</p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">To propozycja dla młodzieży i dorosłych,
+          Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co pozwala na pełne
+          dopasowanie do ucznia i komfortową naukę.</p>
       </div>
     </section>
   </main>

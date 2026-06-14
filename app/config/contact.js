@@ -20,7 +20,6 @@ export const CONTACT = Object.freeze({
   lessonHoursText: 'Zajęcia prowadzę w godzinach 14.00-20.30.',
   contactHoursText:
     'Kontakt telefoniczny i SMS najlepiej w godzinach 8.00-13.00.',
-  smsText: 'Jeśli nie odbiorę, wyślij SMS - oddzwonię.',
   emailResponseText:
     'Maila można wysłać o każdej porze; odpowiadam zwykle w ciągu kilku godzin.',
 })

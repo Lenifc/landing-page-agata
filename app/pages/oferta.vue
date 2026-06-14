@@ -23,12 +23,11 @@ const plans = getPricingPlans('offer')
 const pricingSections = [
   {
     id: 'pakiety-roczne',
-    navLabel: 'Roczne i egzaminacyjne',
     title: 'Pakiety roczne i egzaminacyjne',
     badge: 'Stała cena',
     description: [
-      'Kompleksowe cykle nauki z gwarancją stałej ceny. Płatność jest rozłożona na wygodne raty miesięczne.',
-      'Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych.',
+      'Kompleksowe cykle nauki z gwarancją stałej ceny. Płatność rozłożona jest na 10 równych, wygodnych rat miesięcznych.',
+      'Wysokość rat pozostaje stała niezależnie od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych.',
     ],
     groups: [
       {
@@ -57,9 +56,11 @@ const pricingSections = [
     title: 'Pakiet MINI',
     badge: '8 rat',
     description: [
-      'Krótsza i bardziej elastyczna forma nauki. To dobra opcja dla osób, które nie chcą wiązać się umową od września do czerwca.',
-      'Pakiet sprawdza się przy intensywnym wsparciu do końca kwietnia, aby zdążyć przed egzaminem ósmoklasisty lub maturą.',
-    ],
+      'Krótsza i bardziej elastyczna forma nauki - dobra opcja dla osób, które nie chcą zobowiązywać się do długiego cyklu od września do czerwca.',
+      `Pakiet sprawdza się zarówno jako intensywne wsparcie przed egzaminem ósmoklasisty lub
+      maturą (do końca kwietnia), jak i jako krótszy kurs konwersacyjny dla osób, które chcą skupić
+      się na praktycznym użyciu języka bez długoterminowego zobowiązania.`,
+      'Płatność w 8 równych ratach miesięcznych, niezależnie od przerw świątecznych i ferii.'],
     plans: getPricingPlans('mini'),
   },
   {
@@ -68,8 +69,7 @@ const pricingSections = [
     title: 'Lekcje okazjonalne - bez zobowiązań',
     badge: 'Płatność z góry',
     description: [
-      'Doraźna pomoc, nadrabianie materiału lub konsultacje przed sprawdzianem bez długoterminowych umów.',
-      'Pierwsza lekcja okazjonalna jest objęta promocją -20%.',
+      'Doraźna pomoc, nadrabianie materiału lub konsultacje przed sprawdzianem bez długoterminowych umów. Pierwsza lekcja okazjonalna jest objęta promocją -20%.',
       'Płatność odbywa się z góry przed zajęciami.',
     ],
     plans: getPricingPlans('occasional'),
@@ -77,14 +77,20 @@ const pricingSections = [
 ]
 
 const pricingLinks = pricingSections.flatMap((section) => [
-  {
-    href: `#${section.id}`,
-    label: section.navLabel,
-  },
-  ...(section.groups?.map((group) => ({
-    href: `#${group.id}`,
-    label: group.navLabel,
-  })) ?? []),
+  ...(section.navLabel
+    ? [
+      {
+        href: `#${section.id}`,
+        label: section.navLabel,
+      },
+    ]
+    : []),
+  ...(section.groups
+    ?.filter((group) => group.navLabel)
+    .map((group) => ({
+      href: `#${group.id}`,
+      label: group.navLabel,
+    })) ?? []),
 ])
 
 const faqs = [
@@ -129,7 +135,7 @@ const faqs = [
   },
   {
     q: 'W jakich godzinach odbywają się zajęcia i kontakt?',
-    a: `${CONTACT.lessonHoursText} ${CONTACT.contactHoursText} ${CONTACT.smsText} ${CONTACT.emailResponseText}`,
+    a: `${CONTACT.lessonHoursText} ${CONTACT.contactHoursText} ${CONTACT.emailResponseText}`,
   },
   {
     q: 'Jak wygląda pierwsze spotkanie?',
@@ -169,13 +175,13 @@ const faqs = [
   },
   {
     q: 'Jak zapisać się na zajęcia?',
-    a: 'Najprościej napisać wiadomość przez maila/SMS lub zadzwonić. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
+    a: 'Najprościej napisać wiadomość przez formularz lub mailowo. Można tez zadzwonić lub wysłać SMS. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
     link: {
-      label: 'maila/SMS lub zadzwonić',
+      label: 'formularz lub mailowo',
       href: ROUTES.contact,
       before: 'Najprościej napisać wiadomość przez ',
       after:
-        ' lub mailowo. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
+        '. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
     },
   },
 ]
@@ -236,196 +242,139 @@ useHead({
 <template>
   <main id="main-content">
     <section class="mx-auto max-w-3xl px-6 py-16 text-center md:py-24">
-      <span class="text-sm font-medium uppercase tracking-widest text-primary"
-        >Oferta</span
-      >
-      <h1
-        class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground"
-      >
+      <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
+      <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
         Oferta lekcji angielskiego w Rumi.
       </h1>
-      <p
-        class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground"
-      >
-        Pakiety roczne, pakiet MINI, lekcje indywidualne, DUO i kursy
-        egzaminacyjne dla osób z Rumi, Redy, Gdyni i okolic. Spokojnie,
-        praktycznie i z programem dopasowanym do celu nauki.
+      <p class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
+        Każdy uczy się inaczej, dlatego oferuję różne formy zajęć. Wybierz kurs dopasowany do swoich
+        celów, tempa nauki i możliwości czasowych.
       </p>
     </section>
 
     <section class="border-y border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
-          <span
-            class="text-sm font-medium uppercase tracking-widest text-primary"
-            >Formy zajęć</span
-          >
-          <h2
-            class="mt-4 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground"
-          >
-            Formy nauki dopasowane do różnych potrzeb i celów.
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">Formy zajęć</span>
+          <h2 class="mt-4 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
+            Znajdź zajęcia idealne dla siebie
           </h2>
-          <p
-            class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
-          >
+          <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
             Możesz wybrać zajęcia indywidualne, naukę w parze, kurs
             egzaminacyjny albo krótszy pakiet MINI.
           </p>
         </div>
 
         <div class="mt-12 grid gap-6">
-          <article
-            class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8"
-          >
-            <p
-              class="text-sm font-medium uppercase tracking-widest text-primary"
-            >
+          <article class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8">
+            <p class="text-sm font-medium uppercase tracking-widest text-primary">
               Zajęcia indywidualne (1:1)
             </p>
-            <div
-              class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground"
-            >
+            <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Indywidualne zajęcia to najbardziej efektywna i spersonalizowana
-                forma nauki. Program, tempo pracy i materiały są dopasowywane do
-                potrzeb i celów kursanta, dzięki czemu każda lekcja przynosi
-                maksymalne korzyści.
+                Indywidualne zajęcia to najbardziej elastyczna i spersonalizowana forma nauki. Program, tempo
+                pracy oraz materiały są dostosowywane do potrzeb, poziomu i celów kursanta, dzięki czemu każda
+                lekcja koncentruje się na tym, co jest dla niego najważniejsze.
               </p>
               <p>
-                To dobre rozwiązanie dla osób przygotowujących się do
-                <NuxtLink
-                  :to="ROUTES.eighthGradeExam"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  egzaminu ósmoklasisty</NuxtLink
-                >,
-                <NuxtLink
-                  :to="ROUTES.maturaExam"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  matury z angielskiego</NuxtLink
-                >, poprawiających wyniki w szkole lub chcących mówić płynniej i
-                pewniej. Dorośli kursanci mogą sprawdzić też
-                <NuxtLink
-                  :to="ROUTES.adultClasses"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  zajęcia z angielskiego dla dorosłych</NuxtLink
-                >.
+                To doskonałe rozwiązanie dla osób przygotowujących się do
+                <NuxtLink :to="ROUTES.eighthGradeExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  egzaminu ósmoklasisty</NuxtLink>,
+                <NuxtLink :to="ROUTES.maturaExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  matury z języka angielskiego</NuxtLink>, poprawiających wyniki w szkole, a także dla tych, którzy chcą
+                rozwijać
+                umiejętności konwersacyjne i swobodniej komunikować się po angielsku. Dzięki pełnemu skupieniu
+                na jednym kursancie nauka jest bardziej efektywna, a postępy widoczne szybciej.
+                Dorośli kursanci mogą sprawdzić też
+                <NuxtLink :to="ROUTES.adultClasses"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  zajęcia z angielskiego dla dorosłych</NuxtLink>.
               </p>
             </div>
           </article>
 
-          <article
-            class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8"
-          >
-            <p
-              class="text-sm font-medium uppercase tracking-widest text-primary"
-            >
+          <article class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8">
+            <p class="text-sm font-medium uppercase tracking-widest text-primary">
               Zajęcia DUO w parach
             </p>
-            <div
-              class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground"
-            >
+            <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Zajęcia DUO są przeznaczone dla dwóch osób, które chcą uczyć się
-                razem: z przyjacielem, rodzeństwem, partnerem albo znajomą
-                osobą. Wspólny rytm nauki pomaga utrzymać regularność i
-                swobodniejszą atmosferę na lekcji.
+                Zajęcia DUO są przeznaczone dla dwóch osób, które chcą uczyć się razem - z rodzeństwem,
+                przyjacielem, partnerem lub inną bliską osobą. To połączenie indywidualnego podejścia z zaletami
+                nauki we dwoje, takimi jak wzajemna motywacja, większa swoboda komunikacji i możliwość
+                wspólnego osiągania celów.
               </p>
               <p>
-                Para wspólnie określa cel nauki, a program zajęć jest dopasowany
-                do jej potrzeb - może obejmować przygotowanie do
-                <NuxtLink
-                  :to="ROUTES.eighthGradeExam"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  egzaminu ósmoklasisty</NuxtLink
-                >,
-                <NuxtLink
-                  :to="ROUTES.maturaExam"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  matury</NuxtLink
-                >, wsparcie w nauce szkolnej lub rozwój umiejętności
-                komunikacyjnych, także w formule
-                <NuxtLink
-                  :to="ROUTES.adultClasses"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  zajęć dla dorosłych</NuxtLink
-                >.
+                Program zajęć jest dopasowywany do poziomu i potrzeb uczestników. Lekcje mogą obejmować
+                przygotowanie do
+                <NuxtLink :to="ROUTES.eighthGradeExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  egzaminu ósmoklasisty</NuxtLink>,
+                <NuxtLink :to="ROUTES.maturaExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  matury</NuxtLink>, wsparcie w nauce szkolnej, rozwijanie
+                umiejętności konwersacyjnych lub praktyczną naukę
+                <NuxtLink :to="ROUTES.adultClasses"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  języka dla dorosłych</NuxtLink>.
               </p>
               <p>
-                To dobre rozwiązanie, jeśli chcesz niższą cenę za lekcję niż w
-                zajęciach 1:1, ale nadal zależy Ci na kameralnej pracy i
-                regularnym kontakcie z językiem.
+                To świetna opcja dla osób, które cenią kameralną atmosferę, regularny kontakt z językiem i
+                aktywną pracę podczas zajęć, a jednocześnie chcą uczyć się w towarzystwie osoby, z którą czują
+                się komfortowo. Dodatkowym atutem jest niższy koszt nauki w porównaniu z zajęciami
+                indywidualnymi.
+
               </p>
             </div>
           </article>
 
-          <article
-            class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8"
-          >
-            <p
-              class="text-sm font-medium uppercase tracking-widest text-primary"
-            >
+          <article class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8">
+            <p class="text-sm font-medium uppercase tracking-widest text-primary">
               Kurs egzaminacyjny
             </p>
-            <div
-              class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground"
-            >
+            <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Kursy egzaminacyjne przeznaczone są dla uczniów przygotowujących
-                się do
-                <NuxtLink
-                  :to="ROUTES.eighthGradeExam"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  Egzaminu Ósmoklasisty</NuxtLink
-                >
+                Kursy egzaminacyjne są przeznaczone dla uczniów przygotowujących się do
+                <NuxtLink :to="ROUTES.eighthGradeExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  Egzaminu Ósmoklasisty</NuxtLink>
                 oraz
-                <NuxtLink
-                  :to="ROUTES.maturaExam"
-                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-                >
-                  matury z angielskiego</NuxtLink
-                >
-                na poziomie podstawowym i rozszerzonym. Pakiet obejmuje 25
-                spotkań po 100 minut w kameralnej grupie maksymalnie 4-osobowej.
+                <NuxtLink :to="ROUTES.maturaExam"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  matury z języka angielskiego</NuxtLink>
+                o na poziomie podstawowym i rozszerzonym.
+                Zajęcia odbywają się w kameralnych grupach liczących maksymalnie 4 osoby i obejmują 25
+                spotkań po 100 minut.
               </p>
               <p>
-                Pracujemy według programu skoncentrowanego na wymaganiach
-                egzaminacyjnych, rozwijając wszystkie sprawności językowe oraz
-                ćwicząc strategie potrzebne do pewniejszej pracy z arkuszem.
+                Program kursu koncentruje się na wymaganiach egzaminacyjnych. Podczas zajęć rozwijamy
+                wszystkie sprawności językowe, systematycznie pracujemy z arkuszami egzaminacyjnymi oraz
+                ćwiczymy strategie, które pomagają osiągnąć lepszy wynik i zwiększają pewność siebie na
+                egzaminie.
               </p>
               <p>
-                Mała grupa jest dobrą równowagą między spokojnym wsparciem
-                lektora a energią wspólnej nauki. Uczeń może porównać strategie,
-                usłyszeć pytania innych osób i jednocześnie dostać uwagę
-                potrzebną do poprawy własnych błędów.
+                Niewielka liczba uczestników pozwala na aktywny udział w zajęciach, indywidualne wsparcie
+                lektora oraz naukę w motywującym środowisku rówieśników. Dzięki temu kursanci mogą
+                korzystać zarówno z zalet pracy grupowej, jak i uwagi poświęconej ich własnym potrzebom.
               </p>
               <p>
-                Kurs obejmuje łącznie ponad 41 godzin nauki i kończy się przed
-                terminem egzaminu.
+                Kurs obejmuje ponad 41 godzin nauki i kończy się przed terminem egzaminu, pozostawiając
+                czas na samodzielne powtórki.
               </p>
-              <p class="text-sm leading-relaxed text-muted-foreground/80">
-                <strong class="font-semibold text-foreground"
-                  >Informacja organizacyjna:</strong
-                >
-                pakiety egzaminacyjne są uruchamiane po skompletowaniu grupy. W
-                przypadku niewystarczającej liczby zgłoszeń organizator może
-                zaproponować alternatywną formę nauki, np. zajęcia w parze lub
-                pakiet indywidualny.
+              <p class="text-xs leading-relaxed text-muted-foreground/70">
+                Informacja organizacyjna: kursy egzaminacyjne są uruchamiane po skompletowaniu grupy. W przypadku
+                niewystarczającej liczby zgłoszeń może zostać zaproponowana alternatywna forma nauki, np. zajęcia DUO
+                lub
+                lekcje indywidualne.
               </p>
             </div>
           </article>
         </div>
 
-        <a
-          :href="ROUTES.prices"
-          class="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90"
-        >
+        <a :href="ROUTES.prices"
+          class="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
           Zobacz cennik
         </a>
       </div>
@@ -433,54 +382,41 @@ useHead({
 
     <section id="cennik" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-14">
       <div class="mb-7 max-w-2xl">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary"
-          >Cennik</span
-        >
-        <h2
-          class="mt-3 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground"
-        >
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">Cennik</span>
+        <h2 class="mt-3 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
           Cennik zajęć
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Wybierz pakiet roczny, krótszy pakiet MINI albo lekcję okazjonalną.
-          Ceny zależą od formy zajęć, liczby spotkań i trybu nauki.
+          Różne potrzeby wymagają różnych rozwiązań. Wybierz formę nauki dopasowaną do swoich
+          celów, tempa pracy i możliwości czasowych.
+        </p>
+        <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
+          W ofercie znajdują się pakiety roczne, pakiety MINI oraz pojedyncze lekcje. Koszt zajęć zależy od wybranego
+          wariantu, częstotliwości spotkań i formy nauki.
         </p>
       </div>
 
       <nav class="mb-8 flex flex-wrap gap-2" aria-label="Sekcje cennika">
-        <a
-          v-for="link in pricingLinks"
-          :key="link.href"
-          :href="link.href"
-          class="inline-flex rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
-        >
+        <a v-for="link in pricingLinks" :key="link.href" :href="link.href"
+          class="inline-flex rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary">
           {{ link.label }}
         </a>
       </nav>
 
       <div class="space-y-9">
-        <article
-          v-for="section in pricingSections"
-          :id="section.id"
-          :key="section.title"
-          class="scroll-mt-24 border-t border-border pt-8 first:border-t-0 first:pt-0"
-        >
+        <article v-for="section in pricingSections" :id="section.id" :key="section.title"
+          class="scroll-mt-24 border-t border-border pt-8 first:border-t-0 first:pt-0">
           <div class="max-w-3xl">
             <div class="flex flex-wrap items-center gap-3">
-              <h3
-                class="font-serif text-2xl font-semibold tracking-tight text-foreground md:text-3xl"
-              >
+              <h3 class="font-serif text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
                 {{ section.title }}
               </h3>
               <span
-                class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary"
-              >
+                class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
                 {{ section.badge }}
               </span>
             </div>
-            <div
-              class="mt-3 space-y-2.5 text-pretty text-sm leading-relaxed text-muted-foreground md:text-base"
-            >
+            <div class="mt-3 space-y-2.5 text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
               <p v-for="paragraph in section.description" :key="paragraph">
                 {{ paragraph }}
               </p>
@@ -488,100 +424,66 @@ useHead({
           </div>
 
           <div v-if="section.groups" class="mt-6 space-y-6">
-            <div
-              v-for="group in section.groups"
-              :id="group.id"
-              :key="group.title"
-              class="scroll-mt-24"
-            >
+            <div v-for="group in section.groups" :id="group.id" :key="group.title" class="scroll-mt-24">
               <h4 class="font-serif text-xl font-semibold text-foreground">
                 {{ group.title }}
               </h4>
               <div
-                class="mt-2 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]"
-              >
+                class="mt-2 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]">
                 <div
-                  class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid"
-                >
+                  class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid">
                   <div class="px-5 py-3 text-sm font-semibold text-foreground">
                     Rodzaj zajęć
                   </div>
-                  <div
-                    class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
-                  >
+                  <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
                     Czas trwania
                   </div>
-                  <div
-                    class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
-                  >
+                  <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
                     Cena
                   </div>
                 </div>
 
-                <div
-                  v-for="plan in group.plans"
-                  :key="`${group.title}-${plan.name}-${plan.frequency}`"
+                <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
                   class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
-                  :class="
-                    plan.featured
-                      ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
-                      : 'bg-card'
-                  "
-                >
+                  :class="plan.featured
+                    ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
+                    : 'bg-card'
+                    ">
                   <div class="px-4 py-3.5 md:px-5">
                     <div class="flex flex-wrap items-center gap-3">
                       <h5 class="text-lg font-semibold text-foreground">
                         {{ plan.name }}
                       </h5>
-                      <span
-                        v-if="plan.featured"
-                        class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-primary"
-                      >
+                      <span v-if="plan.featured"
+                        class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-primary">
                         Najczęściej wybierane
                       </span>
                     </div>
                     <p class="mt-0.5 text-sm text-foreground/80">
                       {{ plan.frequency }}
                     </p>
-                    <p
-                      class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground"
-                    >
+                    <p class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
                       {{ plan.details }}
                     </p>
                   </div>
 
-                  <div
-                    class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
-                  >
-                    <p
-                      class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
-                    >
+                  <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+                    <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                       Czas trwania
                     </p>
-                    <p
-                      class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
-                    >
+                    <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
                       {{ plan.duration }}
                     </p>
                   </div>
 
-                  <div
-                    class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
-                  >
-                    <p
-                      class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
-                    >
+                  <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+                    <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                       Cena
                     </p>
-                    <p
-                      class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
-                    >
+                    <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
                       {{ plan.price }}
                     </p>
-                    <p
-                      v-if="plan.promo"
-                      class="mt-2 text-xs font-medium leading-relaxed text-primary"
-                    >
+                    <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
                       {{ plan.promo.label }}:<br />
                       <span class="font-serif text-lg font-semibold">
                         {{ plan.promo.price }}
@@ -593,33 +495,23 @@ useHead({
             </div>
           </div>
 
-          <div
-            v-else
-            class="mt-5 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]"
-          >
+          <div v-else
+            class="mt-5 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]">
             <div
-              class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid"
-            >
+              class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid">
               <div class="px-5 py-3 text-sm font-semibold text-foreground">
                 Rodzaj zajęć
               </div>
-              <div
-                class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
-              >
+              <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
                 Czas trwania
               </div>
-              <div
-                class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground"
-              >
+              <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
                 Cena
               </div>
             </div>
 
-            <div
-              v-for="plan in section.plans"
-              :key="`${section.title}-${plan.name}-${plan.frequency}`"
-              class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
-            >
+            <div v-for="plan in section.plans" :key="`${section.title}-${plan.name}-${plan.frequency}`"
+              class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70">
               <div class="px-4 py-3.5 md:px-5">
                 <h4 class="text-lg font-semibold text-foreground">
                   {{ plan.name }}
@@ -627,45 +519,28 @@ useHead({
                 <p class="mt-0.5 text-sm text-foreground/80">
                   {{ plan.frequency }}
                 </p>
-                <p
-                  class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground"
-                >
+                <p class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
                   {{ plan.details }}
                 </p>
               </div>
 
-              <div
-                class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
-              >
-                <p
-                  class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
-                >
+              <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+                <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                   Czas trwania
                 </p>
-                <p
-                  class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
-                >
+                <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
                   {{ plan.duration }}
                 </p>
               </div>
 
-              <div
-                class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center"
-              >
-                <p
-                  class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden"
-                >
+              <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+                <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                   Cena
                 </p>
-                <p
-                  class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0"
-                >
+                <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
                   {{ plan.price }}
                 </p>
-                <p
-                  v-if="plan.promo"
-                  class="mt-2 text-xs font-medium leading-relaxed text-primary"
-                >
+                <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
                   {{ plan.promo.label }}:<br />
                   <span class="font-serif text-lg font-semibold">
                     {{ plan.promo.price }}
@@ -680,77 +555,50 @@ useHead({
 
     <section class="mx-auto max-w-6xl px-6 py-10">
       <div
-        class="rounded-[2rem] border border-border bg-secondary px-8 py-10 md:flex md:items-center md:justify-between md:gap-8"
-      >
+        class="rounded-[2rem] border border-border bg-secondary px-8 py-10 md:flex md:items-center md:justify-between md:gap-8">
         <div class="max-w-2xl">
-          <h2
-            class="font-serif text-3xl font-semibold tracking-tight text-foreground"
-          >
-            Nie wiesz, która forma będzie najlepsza?
+          <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
+            Masz pytania?
           </h2>
           <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            Opowiedz mi o sobie i swoim celu, a pomogę Ci wybrać odpowiednią
-            formę zajęć.
+            Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
           </p>
         </div>
-        <NuxtLink
-          :to="ROUTES.contact"
-          class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:mt-0"
-        >
-          Zapytaj o termin →
+        <NuxtLink :to="ROUTES.contact"
+          class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:mt-0">
+          Skontaktuj się →
         </NuxtLink>
       </div>
     </section>
 
     <section id="faq" class="mx-auto max-w-3xl scroll-mt-24 px-6 py-20">
-      <h2
-        class="text-balance text-center font-serif text-3xl font-semibold tracking-tight text-foreground"
-      >
+      <h2 class="text-balance text-center font-serif text-3xl font-semibold tracking-tight text-foreground">
         Najczęstsze pytania
       </h2>
       <div class="mt-10 divide-y divide-border border-y border-border">
         <div v-for="(faq, index) in faqs" :key="faq.q">
           <h3>
-            <button
-              type="button"
+            <button type="button"
               class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
-              :aria-expanded="openFaqIndex === index"
-              :aria-controls="`faq-answer-${index}`"
-              @click="toggleFaq(index)"
-            >
+              :aria-expanded="openFaqIndex === index" :aria-controls="`faq-answer-${index}`" @click="toggleFaq(index)">
               <span>{{ faq.q }}</span>
               <span
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-transform duration-200"
-                :class="{ 'rotate-180': openFaqIndex === index }"
-                aria-hidden="true"
-              >
-                <svg
-                  class="h-4 w-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                :class="{ 'rotate-180': openFaqIndex === index }" aria-hidden="true">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </span>
             </button>
           </h3>
-          <p
-            :id="`faq-answer-${index}`"
-            v-show="openFaqIndex === index"
-            class="pb-6 text-pretty leading-relaxed text-muted-foreground"
-          >
+          <p :id="`faq-answer-${index}`" v-show="openFaqIndex === index"
+            class="pb-6 text-pretty leading-relaxed text-muted-foreground">
             <template v-if="faq.link">
               {{ faq.link.before }}
-              <a
-                :href="faq.link.href"
-                class="font-medium text-primary underline-offset-4 transition-colors hover:underline"
-              >
-                {{ faq.link.label }}</a
-              >{{ faq.link.after }}
+              <a :href="faq.link.href"
+                class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                {{ faq.link.label }}</a>{{ faq.link.after }}
             </template>
             <template v-else>{{ faq.a }}</template>
           </p>

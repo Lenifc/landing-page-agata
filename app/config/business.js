@@ -56,7 +56,7 @@ export const BUSINESS_ENTITY = Object.freeze({
       opens: CONTACT.contactOpens,
       closes: CONTACT.contactCloses,
     },
-    description: `${CONTACT.contactHoursText} ${CONTACT.smsText} ${CONTACT.emailResponseText}`,
+    description: `${CONTACT.contactHoursText} ${CONTACT.emailResponseText}`,
   },
   areaServed: AREA_SERVED,
   knowsAbout: [

@@ -42,11 +42,11 @@ const details = computed(() => [
     value: CONTACT.addressWithOnline,
     icon: 'mapPin',
   },
-  {
-    label: 'Godziny zajęć',
-    value: CONTACT.lessonHours,
-    icon: 'clock',
-  },
+  // {
+  //   label: 'Godziny zajęć',
+  //   value: CONTACT.lessonHours,
+  //   icon: 'clock',
+  // },
 ])
 
 const icons = {
@@ -101,26 +101,43 @@ useHead({
         <p
           class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
         >
-          Zajęcia odbywają się w nowoczesnym, kameralnym studiu przy ul.
-          Wrocławskiej 2 w Rumi (dzielnica Janowo). Lokalizacja zapewnia wygodny
-          dojazd zarówno komunikacją miejską, jak i koleją - w pobliżu znajdują
-          się przystanki autobusowe oraz stacja SKM Rumia Janowo. Dla osób
-          dojeżdżających samochodem dostępny jest duży, ogólnodostępny parking
-          przy ul. Gdańskiej.
+          Nie prowadzę stacjonarnego biura - kontakt odbywa się telefonicznie,
+          mailowo lub online.
         </p>
         <p
           class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
         >
-          Istnieje również możliwość uczestnictwa w zajęciach online
-          prowadzonych na platformie Zoom. Taka forma nauki zapewnia pełną
-          elastyczność i komfort pracy bez konieczności dojazdu.
+          Możesz napisać wiadomość lub skontaktować się telefonicznie. W
+          wiadomości warto podać kilka informacji, takich jak wiek ucznia,
+          poziom języka oraz rodzaj zajęć, który Cię interesuje – ułatwi to
+          szybkie dopasowanie odpowiedniej formy nauki.
         </p>
         <p
           class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
         >
-          {{ CONTACT.lessonHoursText }} {{ CONTACT.contactHoursText }}
-          {{ CONTACT.smsText }} {{ CONTACT.emailResponseText }}
+          Najwygodniejszą i najszybszą formą zapisu na zajęcia jest krótki
+          formularz zgłoszeniowy - pozwala on sprawnie dopasować kurs oraz
+          dostępne terminy
         </p>
+        <a
+          href="#formularz"
+          class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90"
+        >
+          Przejdź do formularza
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 5v14" />
+            <path d="m19 12-7 7-7-7" />
+          </svg>
+        </a>
       </div>
 
       <div class="grid gap-12 lg:grid-cols-2">
@@ -151,8 +168,52 @@ useHead({
               <p class="text-sm font-medium text-muted-foreground">
                 {{ item.label }}
               </p>
+              <div
+                v-if="item.icon === 'phone'"
+                class="relative inline-flex max-w-full items-center gap-1.5"
+              >
+                <a
+                  :href="item.href"
+                  class="break-words font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  {{ item.value }}
+                </a>
+                <button
+                  type="button"
+                  class="peer inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  aria-label="Informacja o kontakcie telefonicznym"
+                  aria-describedby="contact-phone-tooltip"
+                >
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4" />
+                    <path d="M12 8h.01" />
+                  </svg>
+                </button>
+                <span
+                  id="contact-phone-tooltip"
+                  role="tooltip"
+                  class="pointer-events-none fixed bottom-6 left-6 right-6 z-50 rounded-lg border border-border bg-card px-4 py-3 text-left text-xs leading-relaxed text-foreground opacity-0 shadow-lg transition-opacity peer-hover:opacity-100 peer-focus:opacity-100 md:absolute md:bottom-full md:left-0 md:right-auto md:mb-3 md:w-[22rem]"
+                >
+                  Ze względu na charakter mojej pracy nie zawsze mogę odebrać
+                  telefon. Jeśli nie uda się Państwu ze mną skontaktować, proszę
+                  o wysłanie wiadomości SMS lub e-maila z krótką informacją
+                  dotyczącą celu kontaktu. Odpowiem lub oddzwonię najszybciej,
+                  jak to będzie możliwe.
+                </span>
+              </div>
               <component
                 :is="item.href ? 'a' : 'p'"
+                v-else
                 :href="item.href"
                 :target="item.href?.startsWith('http') ? '_blank' : undefined"
                 :rel="
@@ -209,9 +270,7 @@ useHead({
           </p>
         </div>
 
-        <div
-          class="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
-        >
+        <div class="overflow-hidden rounded-3xl bg-card">
           <iframe
             v-if="GOOGLE_FORM.isConfigured"
             :src="GOOGLE_FORM.embedUrl"
