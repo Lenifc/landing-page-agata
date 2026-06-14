@@ -150,8 +150,8 @@ useHead({
           Przygotowanie do egzaminu ósmoklasisty z angielskiego w Rumi.
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
-          Zajęcia w Rumi pomagają uporządkować materiał, oswoić arkusze
-          i zbudować pewność przed egzaminem. Pracujemy spokojnie, regularnie i
+          Zajęcia w Rumi pomagają uporządkować materiał, oswoić arkusze i
+          zbudować pewność przed egzaminem. Pracujemy spokojnie, regularnie i
           konkretnie: na zadaniach, strategiach oraz tych obszarach, które
           najbardziej wpływają na wynik.
         </p>
@@ -313,20 +313,22 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-5 py-16">
-      <div
-        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
-        <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
-          Chcesz sprawdzić, od czego zacząć przygotowania?
-        </h2>
-        <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
-          Napisz, w której klasie jest uczeń i jaki jest obecny poziom.
-          Dobierzemy formę pracy i tempo przygotowań do egzaminu.
-        </p>
-        <NuxtLink :to="ROUTES.contact"
-          class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
-          Skontaktuj się
-        </NuxtLink>
+    <section class="border-t border-border bg-secondary">
+      <div class="mx-auto max-w-6xl px-5 py-16">
+        <div
+          class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
+          <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
+            Chcesz sprawdzić, od czego zacząć przygotowania?
+          </h2>
+          <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
+            Napisz, w której klasie jest uczeń i jaki jest obecny poziom.
+            Dobierzemy formę pracy i tempo przygotowań do egzaminu.
+          </p>
+          <NuxtLink :to="ROUTES.contact"
+            class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
+            Skontaktuj się
+          </NuxtLink>
+        </div>
       </div>
     </section>
   </main>

@@ -11,8 +11,7 @@ useSeoMeta({
     'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
   keywords:
     'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, angielski Reda, angielski Gdynia, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
-  ogTitle:
-    'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
+  ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
   ogDescription:
     'Kameralne zajęcia z angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Mniej stresu, więcej mówienia i praktyki.',
 })
@@ -122,9 +121,10 @@ useHead({
           Talkateria - English Studio
         </h1>
         <p class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
-          Kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i dorosłym rozwijać
-          pewność siebie w mówieniu po angielsku, przygotować się do matury i egzaminu ósmoklasisty
-          oraz skutecznie radzić sobie z materiałem szkolnym.
+          Kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i
+          dorosłym rozwijać pewność siebie w mówieniu po angielsku, przygotować
+          się do matury i egzaminu ósmoklasisty oraz skutecznie radzić sobie z
+          materiałem szkolnym.
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <NuxtLink :to="ROUTES.contact"
@@ -199,50 +199,58 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-[0.9fr_1.1fr]">
-      <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
-        <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
-          class="h-full w-full object-cover" width="1024" height="1024" loading="lazy" />
-      </div>
-      <div class="space-y-5">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary">Cześć, tu Agata</span>
-        <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
-          <p>
-            Jestem magistrem filologii angielskiej oraz lektorką z ponad 8-letnim doświadczeniem w
-            nauczaniu dzieci, młodzieży i dorosłych. Pomagam przełamywać barierę mówienia,
-            przygotowywać się do egzaminów, poprawiać wyniki w szkole oraz rozwijać praktyczne
-            umiejętności językowe.
-          </p>
-          <p>
-            Ukończyłam również studia podyplomowe z coachingu z elementami psychologii, dzięki czemu
-            skuteczniej wspieram uczniów w procesie nauki, budowaniu motywacji oraz radzeniu sobie ze
-            stresem. Każde zajęcia dostosowuję do indywidualnych potrzeb kursanta, dbając o kameralną
-            atmosferę, efektywną naukę i rozwijanie pewności siebie w komunikacji w języku angielskim.
-          </p>
+    <section class="border-y border-border bg-secondary">
+      <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-[0.9fr_1.1fr]">
+        <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
+          <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
+            class="h-full w-full object-cover" width="1024" height="1024" loading="lazy" />
+        </div>
+        <div class="space-y-5">
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">Cześć, tu Agata</span>
+          <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
+            <p>
+              Jestem magistrem filologii angielskiej oraz lektorką z ponad
+              8-letnim doświadczeniem w nauczaniu dzieci, młodzieży i dorosłych.
+              Pomagam przełamywać barierę mówienia, przygotowywać się do
+              egzaminów, poprawiać wyniki w szkole oraz rozwijać praktyczne
+              umiejętności językowe.
+            </p>
+            <p>
+              Ukończyłam również studia podyplomowe z coachingu z elementami
+              psychologii, dzięki czemu skuteczniej wspieram uczniów w procesie
+              nauki, budowaniu motywacji oraz radzeniu sobie ze stresem. Każde
+              zajęcia dostosowuję do indywidualnych potrzeb kursanta, dbając o
+              kameralną atmosferę, efektywną naukę i rozwijanie pewności siebie
+              w komunikacji w języku angielskim.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="border-t border-border bg-secondary">
+    <section class="border-b border-border">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="mb-10 max-w-xl space-y-3">
           <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
             Lokalizacja
           </h2>
           <p class="text-pretty leading-relaxed text-muted-foreground">
-            Zajęcia odbywają się w nowoczesnym, kameralnym studiu przy ul. Wrocławskiej 2 w Rumi
-            (dzielnica Janowo). Lokalizacja zapewnia wygodny dojazd zarówno komunikacją miejską, jak i
-            koleją - w pobliżu znajdują się przystanki autobusowe oraz stacja SKM Rumia Janowo. Dla osób
-            dojeżdżających samochodem dostępny jest duży, ogólnodostępny parking przy ul. Gdańskiej.
-
+            Zajęcia odbywają się w nowoczesnym, kameralnym studiu przy ul.
+            Wrocławskiej 2 w Rumi (dzielnica Janowo). Lokalizacja zapewnia
+            wygodny dojazd zarówno komunikacją miejską, jak i koleją - w pobliżu
+            znajdują się przystanki autobusowe oraz stacja SKM Rumia Janowo. Dla
+            osób dojeżdżających samochodem dostępny jest duży, ogólnodostępny
+            parking przy ul. Gdańskiej.
           </p>
           <p class="text-pretty leading-relaxed text-muted-foreground">
-            Dla komfortu kursantów w budynku dostępna jest również niewielka poczekalnia, z której można
-            skorzystać przed rozpoczęciem zajęć lub w oczekiwaniu na autobus czy pociąg.
+            Dla komfortu kursantów w budynku dostępna jest również niewielka
+            poczekalnia, z której można skorzystać przed rozpoczęciem zajęć lub
+            w oczekiwaniu na autobus czy pociąg.
           </p>
           <p class="text-pretty leading-relaxed text-muted-foreground">
-            Istnieje również możliwość uczestnictwa w zajęciach online. Ten rodzaj zajęć pozwala uczyć się
-            wygodnie z dowolnego miejsca bez konieczności dojazdów
+            Istnieje również możliwość uczestnictwa w zajęciach online. Ten
+            rodzaj zajęć pozwala uczyć się wygodnie z dowolnego miejsca bez
+            konieczności dojazdów
           </p>
         </div>
         <div class="grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4">
@@ -256,40 +264,47 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-5 py-16">
-      <div
-        class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16">
-        <h2
-          class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
-          Masz pytania?
-        </h2>
-        <p class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80">
-          Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
-        </p>
-        <NuxtLink :to="ROUTES.contact"
-          class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
-          Skontaktuj się →
-        </NuxtLink>
+    <section class="border-y border-border bg-secondary">
+      <div class="mx-auto max-w-6xl px-5 py-16">
+        <div
+          class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16">
+          <h2
+            class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
+            Masz pytania?
+          </h2>
+          <p class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80">
+            Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
+          </p>
+          <NuxtLink :to="ROUTES.contact"
+            class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
+            Skontaktuj się →
+          </NuxtLink>
+        </div>
       </div>
     </section>
 
-    <section class="border-t border-border bg-secondary">
+    <section class="border-t border-border">
       <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
         <h2 class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
           Dla kogo są zajęcia w Talkaterii?
         </h2>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Jeżeli chcesz zacząć swobodnie mówić po angielsku, potrzebujesz wsparcia w nauce szkolnej
-          lub przygotowaniu do egzaminów i szukasz zajęć dopasowanych do swojego tempa i potrzeb,
-          Talkateria będzie dobrym miejscem dla Ciebie.
+          Jeżeli chcesz zacząć swobodnie mówić po angielsku, potrzebujesz
+          wsparcia w nauce szkolnej lub przygotowaniu do egzaminów i szukasz
+          zajęć dopasowanych do swojego tempa i potrzeb, Talkateria będzie
+          dobrym miejscem dla Ciebie.
         </p>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">To propozycja dla młodzieży i dorosłych,
-          To propozycja dla młodzieży i dorosłych, którzy chcą uporządkować wiedzę, nabrać pewności w
-          mówieniu i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i przyjaznej
-          atmosferze</p>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">To propozycja dla młodzieży i dorosłych,
-          Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co pozwala na pełne
-          dopasowanie do ucznia i komfortową naukę.</p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          To propozycja dla młodzieży i dorosłych, To propozycja dla młodzieży i
+          dorosłych, którzy chcą uporządkować wiedzę, nabrać pewności w mówieniu
+          i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i
+          przyjaznej atmosferze
+        </p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          To propozycja dla młodzieży i dorosłych, Zajęcia prowadzę wyłącznie
+          indywidualnie lub w mini grupach, co pozwala na pełne dopasowanie do
+          ucznia i komfortową naukę.
+        </p>
       </div>
     </section>
   </main>

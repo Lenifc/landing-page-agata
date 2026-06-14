@@ -60,7 +60,8 @@ const pricingSections = [
       `Pakiet sprawdza się zarówno jako intensywne wsparcie przed egzaminem ósmoklasisty lub
       maturą (do końca kwietnia), jak i jako krótszy kurs konwersacyjny dla osób, które chcą skupić
       się na praktycznym użyciu języka bez długoterminowego zobowiązania.`,
-      'Płatność w 8 równych ratach miesięcznych, niezależnie od przerw świątecznych i ferii.'],
+      'Płatność w 8 równych ratach miesięcznych, niezależnie od przerw świątecznych i ferii.',
+    ],
     plans: getPricingPlans('mini'),
   },
   {
@@ -247,8 +248,8 @@ useHead({
         Oferta lekcji angielskiego w Rumi.
       </h1>
       <p class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
-        Każdy uczy się inaczej, dlatego oferuję różne formy zajęć. Wybierz kurs dopasowany do swoich
-        celów, tempa nauki i możliwości czasowych.
+        Każdy uczy się inaczej, dlatego oferuję różne formy zajęć. Wybierz kurs
+        dopasowany do swoich celów, tempa nauki i możliwości czasowych.
       </p>
     </section>
 
@@ -272,9 +273,11 @@ useHead({
             </p>
             <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Indywidualne zajęcia to najbardziej elastyczna i spersonalizowana forma nauki. Program, tempo
-                pracy oraz materiały są dostosowywane do potrzeb, poziomu i celów kursanta, dzięki czemu każda
-                lekcja koncentruje się na tym, co jest dla niego najważniejsze.
+                Indywidualne zajęcia to najbardziej elastyczna i
+                spersonalizowana forma nauki. Program, tempo pracy oraz
+                materiały są dostosowywane do potrzeb, poziomu i celów kursanta,
+                dzięki czemu każda lekcja koncentruje się na tym, co jest dla
+                niego najważniejsze.
               </p>
               <p>
                 To doskonałe rozwiązanie dla osób przygotowujących się do
@@ -284,10 +287,10 @@ useHead({
                 <NuxtLink :to="ROUTES.maturaExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   matury z języka angielskiego</NuxtLink>, poprawiających wyniki w szkole, a także dla tych, którzy chcą
-                rozwijać
-                umiejętności konwersacyjne i swobodniej komunikować się po angielsku. Dzięki pełnemu skupieniu
-                na jednym kursancie nauka jest bardziej efektywna, a postępy widoczne szybciej.
-                Dorośli kursanci mogą sprawdzić też
+                rozwijać umiejętności konwersacyjne i swobodniej komunikować się
+                po angielsku. Dzięki pełnemu skupieniu na jednym kursancie nauka
+                jest bardziej efektywna, a postępy widoczne szybciej. Dorośli
+                kursanci mogą sprawdzić też
                 <NuxtLink :to="ROUTES.adultClasses"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   zajęcia z angielskiego dla dorosłych</NuxtLink>.
@@ -301,31 +304,32 @@ useHead({
             </p>
             <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Zajęcia DUO są przeznaczone dla dwóch osób, które chcą uczyć się razem - z rodzeństwem,
-                przyjacielem, partnerem lub inną bliską osobą. To połączenie indywidualnego podejścia z zaletami
-                nauki we dwoje, takimi jak wzajemna motywacja, większa swoboda komunikacji i możliwość
-                wspólnego osiągania celów.
+                Zajęcia DUO są przeznaczone dla dwóch osób, które chcą uczyć się
+                razem - z rodzeństwem, przyjacielem, partnerem lub inną bliską
+                osobą. To połączenie indywidualnego podejścia z zaletami nauki
+                we dwoje, takimi jak wzajemna motywacja, większa swoboda
+                komunikacji i możliwość wspólnego osiągania celów.
               </p>
               <p>
-                Program zajęć jest dopasowywany do poziomu i potrzeb uczestników. Lekcje mogą obejmować
-                przygotowanie do
+                Program zajęć jest dopasowywany do poziomu i potrzeb
+                uczestników. Lekcje mogą obejmować przygotowanie do
                 <NuxtLink :to="ROUTES.eighthGradeExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   egzaminu ósmoklasisty</NuxtLink>,
                 <NuxtLink :to="ROUTES.maturaExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
-                  matury</NuxtLink>, wsparcie w nauce szkolnej, rozwijanie
-                umiejętności konwersacyjnych lub praktyczną naukę
+                  matury</NuxtLink>, wsparcie w nauce szkolnej, rozwijanie umiejętności
+                konwersacyjnych lub praktyczną naukę
                 <NuxtLink :to="ROUTES.adultClasses"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   języka dla dorosłych</NuxtLink>.
               </p>
               <p>
-                To świetna opcja dla osób, które cenią kameralną atmosferę, regularny kontakt z językiem i
-                aktywną pracę podczas zajęć, a jednocześnie chcą uczyć się w towarzystwie osoby, z którą czują
-                się komfortowo. Dodatkowym atutem jest niższy koszt nauki w porównaniu z zajęciami
-                indywidualnymi.
-
+                To świetna opcja dla osób, które cenią kameralną atmosferę,
+                regularny kontakt z językiem i aktywną pracę podczas zajęć, a
+                jednocześnie chcą uczyć się w towarzystwie osoby, z którą czują
+                się komfortowo. Dodatkowym atutem jest niższy koszt nauki w
+                porównaniu z zajęciami indywidualnymi.
               </p>
             </div>
           </article>
@@ -336,7 +340,8 @@ useHead({
             </p>
             <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Kursy egzaminacyjne są przeznaczone dla uczniów przygotowujących się do
+                Kursy egzaminacyjne są przeznaczone dla uczniów przygotowujących
+                się do
                 <NuxtLink :to="ROUTES.eighthGradeExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   Egzaminu Ósmoklasisty</NuxtLink>
@@ -344,30 +349,33 @@ useHead({
                 <NuxtLink :to="ROUTES.maturaExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   matury z języka angielskiego</NuxtLink>
-                o na poziomie podstawowym i rozszerzonym.
-                Zajęcia odbywają się w kameralnych grupach liczących maksymalnie 4 osoby i obejmują 25
+                o na poziomie podstawowym i rozszerzonym. Zajęcia odbywają się w
+                kameralnych grupach liczących maksymalnie 4 osoby i obejmują 25
                 spotkań po 100 minut.
               </p>
               <p>
-                Program kursu koncentruje się na wymaganiach egzaminacyjnych. Podczas zajęć rozwijamy
-                wszystkie sprawności językowe, systematycznie pracujemy z arkuszami egzaminacyjnymi oraz
-                ćwiczymy strategie, które pomagają osiągnąć lepszy wynik i zwiększają pewność siebie na
-                egzaminie.
+                Program kursu koncentruje się na wymaganiach egzaminacyjnych.
+                Podczas zajęć rozwijamy wszystkie sprawności językowe,
+                systematycznie pracujemy z arkuszami egzaminacyjnymi oraz
+                ćwiczymy strategie, które pomagają osiągnąć lepszy wynik i
+                zwiększają pewność siebie na egzaminie.
               </p>
               <p>
-                Niewielka liczba uczestników pozwala na aktywny udział w zajęciach, indywidualne wsparcie
-                lektora oraz naukę w motywującym środowisku rówieśników. Dzięki temu kursanci mogą
-                korzystać zarówno z zalet pracy grupowej, jak i uwagi poświęconej ich własnym potrzebom.
+                Niewielka liczba uczestników pozwala na aktywny udział w
+                zajęciach, indywidualne wsparcie lektora oraz naukę w
+                motywującym środowisku rówieśników. Dzięki temu kursanci mogą
+                korzystać zarówno z zalet pracy grupowej, jak i uwagi
+                poświęconej ich własnym potrzebom.
               </p>
               <p>
-                Kurs obejmuje ponad 41 godzin nauki i kończy się przed terminem egzaminu, pozostawiając
-                czas na samodzielne powtórki.
+                Kurs obejmuje ponad 41 godzin nauki i kończy się przed terminem
+                egzaminu, pozostawiając czas na samodzielne powtórki.
               </p>
               <p class="text-xs leading-relaxed text-muted-foreground/70">
-                Informacja organizacyjna: kursy egzaminacyjne są uruchamiane po skompletowaniu grupy. W przypadku
-                niewystarczającej liczby zgłoszeń może zostać zaproponowana alternatywna forma nauki, np. zajęcia DUO
-                lub
-                lekcje indywidualne.
+                Informacja organizacyjna: kursy egzaminacyjne są uruchamiane po
+                skompletowaniu grupy. W przypadku niewystarczającej liczby
+                zgłoszeń może zostać zaproponowana alternatywna forma nauki, np.
+                zajęcia DUO lub lekcje indywidualne.
               </p>
             </div>
           </article>
@@ -387,12 +395,13 @@ useHead({
           Cennik zajęć
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Różne potrzeby wymagają różnych rozwiązań. Wybierz formę nauki dopasowaną do swoich
-          celów, tempa pracy i możliwości czasowych.
+          Różne potrzeby wymagają różnych rozwiązań. Wybierz formę nauki
+          dopasowaną do swoich celów, tempa pracy i możliwości czasowych.
         </p>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          W ofercie znajdują się pakiety roczne, pakiety MINI oraz pojedyncze lekcje. Koszt zajęć zależy od wybranego
-          wariantu, częstotliwości spotkań i formy nauki.
+          W ofercie znajdują się pakiety roczne, pakiety MINI oraz pojedyncze
+          lekcje. Koszt zajęć zależy od wybranego wariantu, częstotliwości
+          spotkań i formy nauki.
         </p>
       </div>
 
@@ -553,21 +562,24 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-10">
-      <div
-        class="rounded-[2rem] border border-border bg-secondary px-8 py-10 md:flex md:items-center md:justify-between md:gap-8">
-        <div class="max-w-2xl">
-          <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-            Masz pytania?
-          </h2>
-          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
-          </p>
+    <section class="border-y border-border bg-secondary">
+      <div class="mx-auto max-w-6xl px-6 py-10">
+        <div
+          class="rounded-[2rem] border border-border bg-card px-8 py-10 shadow-sm md:flex md:items-center md:justify-between md:gap-8">
+          <div class="max-w-2xl">
+            <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
+              Masz pytania?
+            </h2>
+            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+              Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę
+              nauki.
+            </p>
+          </div>
+          <NuxtLink :to="ROUTES.contact"
+            class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:mt-0">
+            Skontaktuj się →
+          </NuxtLink>
         </div>
-        <NuxtLink :to="ROUTES.contact"
-          class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:mt-0">
-          Skontaktuj się →
-        </NuxtLink>
       </div>
     </section>
 
