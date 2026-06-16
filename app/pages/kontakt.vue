@@ -90,50 +90,30 @@ useHead({
   <main id="main-content">
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="mb-12 max-w-2xl">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary"
-          >Kontakt</span
-        >
-        <h1
-          class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground"
-        >
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
+        <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
           Kontakt i lokalizacja studia.
         </h1>
-        <p
-          class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
-        >
+        <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
           Nie prowadzę stacjonarnego biura - kontakt odbywa się telefonicznie,
           mailowo lub online.
         </p>
-        <p
-          class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
-        >
+        <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
           Możesz napisać wiadomość lub skontaktować się telefonicznie. W
           wiadomości warto podać kilka informacji, takich jak wiek ucznia,
           poziom języka oraz rodzaj zajęć, który Cię interesuje – ułatwi to
           szybkie dopasowanie odpowiedniej formy nauki.
         </p>
-        <p
-          class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground"
-        >
+        <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
           Najwygodniejszą i najszybszą formą zapisu na zajęcia jest krótki
           formularz zgłoszeniowy - pozwala on sprawnie dopasować kurs oraz
           dostępne terminy
         </p>
-        <a
-          href="#formularz"
-          class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90"
-        >
+        <a href="#formularz"
+          class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
           Przejdź do formularza
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 5v14" />
             <path d="m19 12-7 7-7-7" />
           </svg>
@@ -142,24 +122,13 @@ useHead({
 
       <div class="grid gap-12 lg:grid-cols-2">
         <div class="space-y-5">
-          <div
-            v-for="item in details"
-            :key="item.label"
-            class="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm"
-          >
+          <div v-for="item in details" :key="item.label"
+            class="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm">
             <span
               class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
-              aria-hidden="true"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-5 w-5"
-              >
+              aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" class="h-5 w-5">
                 <path v-for="path in icons[item.icon]" :key="path" :d="path" />
               </svg>
             </span>
@@ -168,42 +137,23 @@ useHead({
               <p class="text-sm font-medium text-muted-foreground">
                 {{ item.label }}
               </p>
-              <div
-                v-if="item.icon === 'phone'"
-                class="relative inline-flex max-w-full items-center gap-1.5"
-              >
-                <a
-                  :href="item.href"
-                  class="break-words font-medium text-foreground transition-colors hover:text-primary"
-                >
+              <div v-if="item.icon === 'phone'" class="relative inline-flex max-w-full items-center gap-1.5">
+                <a :href="item.href"
+                  class="break-words font-medium text-foreground transition-colors hover:text-primary">
                   {{ item.value }}
                 </a>
-                <button
-                  type="button"
+                <button type="button"
                   class="peer inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  aria-label="Informacja o kontakcie telefonicznym"
-                  aria-describedby="contact-phone-tooltip"
-                >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    class="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                  aria-label="Informacja o kontakcie telefonicznym" aria-describedby="contact-phone-tooltip">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10" />
                     <path d="M12 16v-4" />
                     <path d="M12 8h.01" />
                   </svg>
                 </button>
-                <span
-                  id="contact-phone-tooltip"
-                  role="tooltip"
-                  class="pointer-events-none fixed bottom-6 left-6 right-6 z-50 rounded-lg border border-border bg-card px-4 py-3 text-left text-xs leading-relaxed text-foreground opacity-0 shadow-lg transition-opacity peer-hover:opacity-100 peer-focus:opacity-100 md:absolute md:bottom-full md:left-0 md:right-auto md:mb-3 md:w-[22rem]"
-                >
+                <span id="contact-phone-tooltip" role="tooltip"
+                  class="pointer-events-none fixed bottom-6 left-6 right-6 z-50 rounded-lg border border-border bg-card px-4 py-3 text-left text-xs leading-relaxed text-foreground opacity-0 shadow-lg transition-opacity peer-hover:opacity-100 peer-focus:opacity-100 md:absolute md:bottom-full md:left-0 md:right-auto md:mb-3 md:w-[22rem]">
                   Ze względu na charakter mojej pracy nie zawsze mogę odebrać
                   telefon. Jeśli nie uda się Państwu ze mną skontaktować, proszę
                   o wysłanie wiadomości SMS lub e-maila z krótką informacją
@@ -211,23 +161,14 @@ useHead({
                   jak to będzie możliwe.
                 </span>
               </div>
-              <component
-                :is="item.href ? 'a' : 'p'"
-                v-else
-                :href="item.href"
-                :target="item.href?.startsWith('http') ? '_blank' : undefined"
-                :rel="
-                  item.href?.startsWith('http')
-                    ? 'noopener noreferrer'
-                    : undefined
-                "
-                class="break-words text-foreground"
-                :class="
-                  item.href
+              <component :is="item.href ? 'a' : 'p'" v-else :href="item.href"
+                :target="item.href?.startsWith('http') ? '_blank' : undefined" :rel="item.href?.startsWith('http')
+                  ? 'noopener noreferrer'
+                  : undefined
+                  " class="break-words text-foreground" :class="item.href
                     ? 'font-medium transition-colors hover:text-primary'
                     : ''
-                "
-              >
+                    ">
                 {{ item.value }}
               </component>
             </div>
@@ -235,32 +176,19 @@ useHead({
         </div>
 
         <div class="space-y-6">
-          <div
-            class="overflow-hidden rounded-3xl border border-border shadow-sm"
-          >
-            <img
-              src="/studio-space.webp"
-              alt="Studio Talkateria w Rumi z tablicą i monitorem."
-              class="h-64 w-full object-cover"
-              width="1024"
-              height="2048"
-              loading="lazy"
-            />
+          <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
+            <img src="/studio-space.webp" alt="Studio Talkateria w Rumi z tablicą i monitorem."
+              class="h-64 w-full object-cover" width="1024" height="2048" loading="lazy" />
           </div>
         </div>
       </div>
     </section>
 
     <section id="formularz" class="border-t border-border bg-secondary">
-      <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
         <div class="mb-8 max-w-2xl">
-          <span
-            class="text-sm font-medium uppercase tracking-widest text-primary"
-            >Formularz zgłoszeniowy</span
-          >
-          <h2
-            class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
-          >
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">Formularz zgłoszeniowy</span>
+          <h2 class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Opisz krótko, jakich zajęć szukasz.
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
@@ -271,13 +199,8 @@ useHead({
         </div>
 
         <div class="overflow-hidden rounded-3xl bg-card">
-          <iframe
-            v-if="GOOGLE_FORM.isConfigured"
-            :src="GOOGLE_FORM.embedUrl"
-            title="Formularz zgłoszeniowy Talkateria"
-            class="h-[760px] w-full bg-background md:h-[820px]"
-            loading="lazy"
-          >
+          <iframe v-if="GOOGLE_FORM.isConfigured" :src="GOOGLE_FORM.embedUrl" title="Formularz zgłoszeniowy Talkateria"
+            class="h-[760px] w-full bg-background md:h-[820px]" loading="lazy">
             Ładowanie formularza...
           </iframe>
 
@@ -291,16 +214,12 @@ useHead({
                 nauki, preferowaną formę zajęć oraz dostępność w tygodniu.
               </p>
               <div class="flex flex-wrap gap-3 pt-2">
-                <a
-                  :href="`mailto:${CONTACT.email}`"
-                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-                >
+                <a :href="`mailto:${CONTACT.email}`"
+                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90">
                   Napisz maila
                 </a>
-                <a
-                  :href="CONTACT.phoneHref"
-                  class="inline-flex items-center justify-center rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-                >
+                <a :href="CONTACT.phoneHref"
+                  class="inline-flex items-center justify-center rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted">
                   Zadzwoń lub wyślij SMS
                 </a>
               </div>
@@ -308,17 +227,10 @@ useHead({
           </div>
         </div>
 
-        <p
-          v-if="GOOGLE_FORM.isConfigured"
-          class="mt-4 text-sm text-muted-foreground"
-        >
+        <p v-if="GOOGLE_FORM.isConfigured" class="mt-4 text-sm text-muted-foreground">
           Jeśli formularz nie wyświetla się poprawnie,
-          <a
-            :href="GOOGLE_FORM.openUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-primary underline-offset-4 hover:underline"
-          >
+          <a :href="GOOGLE_FORM.openUrl" target="_blank" rel="noopener noreferrer"
+            class="font-medium text-primary underline-offset-4 hover:underline">
             otwórz go w nowej karcie
           </a>
           .

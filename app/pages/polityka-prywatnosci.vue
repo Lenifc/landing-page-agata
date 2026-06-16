@@ -15,7 +15,7 @@ useSeoMeta({
   title: 'Polityka prywatności',
   description:
     'Polityka prywatności Talkaterii: zasady przetwarzania danych osobowych, kontaktu, usług Google i plików cookies.',
-  robots: 'index, follow',
+  robots: 'noindex, follow',
   ogTitle: 'Talkateria | Polityka prywatności',
   ogDescription:
     'Informacje o przetwarzaniu danych osobowych przez Talkaterię.',

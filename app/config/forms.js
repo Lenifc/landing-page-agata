@@ -1,5 +1,6 @@
 // Google Forms: Send > Embed HTML > use the iframe src value.
-const GOOGLE_FORM_EMBED_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf3F_P6cFuzx5KpprHjc9K4DOVvOTYdllxn8RpO380WOHcmPg/viewform'
+const GOOGLE_FORM_EMBED_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSeH0Tnelw-lrebqnSYGTmxBQ6W_u1ED4GLb01VP52ftNJHTaw/viewform'
 
 export const GOOGLE_FORM = Object.freeze({
   embedUrl: GOOGLE_FORM_EMBED_URL,
