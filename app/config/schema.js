@@ -215,6 +215,7 @@ export const buildOfferPageJsonLd = ({
   }
 
   return graph([
+    BUSINESS_ENTITY,
     buildWebPageNode({
       pageUrl,
       name,
@@ -245,6 +246,7 @@ export const buildServicePageJsonLd = ({
   }
 
   return graph([
+    BUSINESS_ENTITY,
     buildWebPageNode({
       pageUrl,
       name: pageName ?? serviceName,
@@ -270,6 +272,7 @@ export const buildContactPageJsonLd = ({
   breadcrumbItems,
 }) =>
   graph([
+    BUSINESS_ENTITY,
     {
       ...buildContactPageNode({ pageUrl, description }),
       mainEntity: {

@@ -240,8 +240,10 @@ useHead({
           <h3>
             <button type="button"
               class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
-              :aria-expanded="openFaqIndex === index" :aria-controls="`matura-faq-answer-${index}`"
-              @click="toggleFaq(index)">
+              :aria-expanded="openFaqIndex === index" :aria-controls="`matura-faq-answer-${index}`" :aria-label="(openFaqIndex === index ? 'Zwiń' : 'Rozwiń') +
+                ' odpowiedź: ' +
+                faq.q
+                " @click="toggleFaq(index)">
               <span>{{ faq.q }}</span>
               <span
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-transform duration-200"

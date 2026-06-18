@@ -4,6 +4,12 @@ import { SITE_URL } from './routes'
 export const BUSINESS_ID = `${SITE_URL}/#talkateria`
 export const BUSINESS_NAME = 'Talkateria'
 export const BUSINESS_LEGAL_NAME = 'English Coaching Agata Pionke'
+export const BUSINESS_LOGO = Object.freeze({
+  '@type': 'ImageObject',
+  url: `${SITE_URL}/talkateria-logo.png`,
+  width: 2086,
+  height: 754,
+})
 
 export const BUSINESS_ADDRESS = Object.freeze({
   '@type': 'PostalAddress',
@@ -27,6 +33,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   legalName: BUSINESS_LEGAL_NAME,
   alternateName: 'Talkateria English Studio',
   url: SITE_URL,
+  logo: BUSINESS_LOGO,
   email: CONTACT.email,
   telephone: CONTACT.phoneInternational,
   description:

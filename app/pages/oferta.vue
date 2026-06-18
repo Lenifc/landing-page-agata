@@ -380,7 +380,7 @@ useHead({
       </div>
 
       <nav class="mb-8 flex flex-wrap gap-2" aria-label="Sekcje cennika">
-        <a v-for="link in pricingLinks" :key="link.href" :href="link.href"
+        <a v-for="link in pricingLinks" :key="link.href" :href="link.href" :aria-label="link.label"
           class="inline-flex rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary">
           {{ link.label }}
         </a>
@@ -429,8 +429,8 @@ useHead({
                 <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
                   class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
                   :class="plan.featured
-                      ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
-                      : 'bg-card'
+                    ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
+                    : 'bg-card'
                     ">
                   <div class="px-4 py-3.5 md:px-5">
                     <div class="flex flex-wrap items-center gap-3">
@@ -566,7 +566,10 @@ useHead({
           <h3>
             <button type="button"
               class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
-              :aria-expanded="openFaqIndex === index" :aria-controls="`faq-answer-${index}`" @click="toggleFaq(index)">
+              :aria-expanded="openFaqIndex === index" :aria-controls="`faq-answer-${index}`" :aria-label="(openFaqIndex === index ? 'Zwiń' : 'Rozwiń') +
+                ' odpowiedź: ' +
+                faq.q
+                " @click="toggleFaq(index)">
               <span>{{ faq.q }}</span>
               <span
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-transform duration-200"
