@@ -8,12 +8,12 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 useSeoMeta({
   title: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
   description:
-    'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
+    'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
   keywords:
-    'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, angielski Reda, angielski Gdynia, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
+    'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
   ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
   ogDescription:
-    'Kameralne zajęcia z angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Mniej stresu, więcej mówienia i praktyki.',
+    'Kameralne zajęcia z angielskiego w Rumi dla osób z Rumi i okolic. Mniej stresu, więcej mówienia i praktyki.',
 })
 
 const features = [
@@ -295,13 +295,13 @@ useHead({
           dobrym miejscem dla Ciebie.
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla młodzieży i dorosłych, To propozycja dla młodzieży i
+          To propozycja dla młodzieży i
           dorosłych, którzy chcą uporządkować wiedzę, nabrać pewności w mówieniu
           i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i
           przyjaznej atmosferze
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla młodzieży i dorosłych, Zajęcia prowadzę wyłącznie
+          Zajęcia prowadzę wyłącznie
           indywidualnie lub w mini grupach, co pozwala na pełne dopasowanie do
           ucznia i komfortową naukę.
         </p>
