@@ -1,8 +1,8 @@
 <script setup>
 import {
-  BUSINESS_ENTITY,
   BUSINESS_LEGAL_NAME,
   BUSINESS_NAME,
+  BUSINESS_REFERENCE,
 } from '~/config/business'
 import { CONTACT } from '~/config/contact'
 import { ROUTES, SITE_URL } from '~/config/routes'
@@ -33,11 +33,16 @@ useHead({
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'PrivacyPolicy',
-        name: 'Polityka prywatności Talkateria',
-        url: pageUrl,
-        publisher: BUSINESS_ENTITY,
-        dateModified: '2026-06-11',
+        '@graph': [
+          {
+            '@type': 'PrivacyPolicy',
+            '@id': `${pageUrl}#privacy-policy`,
+            name: 'Polityka prywatności Talkateria',
+            url: pageUrl,
+            publisher: BUSINESS_REFERENCE,
+            dateModified: '2026-06-11',
+          },
+        ],
       }),
     },
   ],

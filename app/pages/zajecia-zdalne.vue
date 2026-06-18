@@ -1,7 +1,7 @@
 <script setup>
-import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.onlineClasses
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -17,7 +17,7 @@ const benefits = [
   },
   {
     title: 'Odległość przestaje mieć znaczenie',
-    body: 'Mieszkasz dalej niż Rumia, Reda czy Gdynia? Żaden problem. Zajęcia zdalne są dostępne z całej Polski, więc możesz uczyć się w Talkaterii bez organizowania dojazdów.',
+    body: 'Mieszkasz dalej niż Rumia? Żaden problem. Zajęcia zdalne są dostępne z całej Polski, więc możesz uczyć się w Talkaterii bez organizowania dojazdów.',
   },
   {
     title: 'Łatwiej dopasować naukę do dnia',
@@ -70,7 +70,7 @@ const forWhom = [
   },
   {
     title: 'Osoby spoza Rumi',
-    body: 'Dla kursantów z Redy, Gdyni, innych miast i całej Polski, którzy chcą uczyć się w Talkaterii, ale nie mogą lub nie chcą regularnie dojeżdżać do studia.',
+    body: 'Dla kursantów z innych miast i całej Polski, którzy chcą uczyć się w Talkaterii, ale nie mogą lub nie chcą regularnie dojeżdżać do studia.',
   },
 ]
 
@@ -122,7 +122,7 @@ useSeoMeta({
   description:
     'Zajęcia zdalne z angielskiego w Talkaterii w Rumi: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem.',
   keywords:
-    'zajęcia zdalne angielski, angielski online Rumia, angielski online Rumia Janowo, lekcje angielskiego online Reda, angielski online Gdynia, korepetycje angielski online, angielski online cała Polska',
+    'zajęcia zdalne angielski, angielski online Rumia, angielski online Rumia Janowo, lekcje angielskiego online Reda, angielski online, korepetycje angielski online, angielski online cała Polska',
   ogTitle: 'Zajęcia zdalne z angielskiego | Talkateria',
   ogDescription:
     'Angielski online bez dojazdów, z całej Polski: wygodnie, regularnie i z takim samym indywidualnym podejściem jak w studiu.',
@@ -136,17 +136,17 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Zajęcia zdalne z angielskiego',
+    jsonLdScript(
+      buildServicePageJsonLd({
+        pageUrl,
+        pageName: 'Zajęcia zdalne z angielskiego',
+        pageDescription:
+          'Zajęcia zdalne z angielskiego w Talkaterii w Rumi: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem.',
+        serviceName: 'Zajęcia zdalne z angielskiego',
         serviceType: 'Lekcje języka angielskiego online',
-        description:
+        serviceDescription:
           'Indywidualne i kameralne zajęcia z języka angielskiego online na platformie Zoom, prowadzone przez studio w Rumi.',
-        provider: BUSINESS_ENTITY,
-        areaServed: AREA_SERVED,
+        priceOptions,
         audience: {
           '@type': 'Audience',
           audienceType: 'młodzież i dorośli',
@@ -159,55 +159,9 @@ useHead({
             url: pageUrl,
           },
         },
-        offers: priceOptions.map((option) => ({
-          '@type': 'Offer',
-          name: option.name,
-          price: option.schemaPrice ?? option.price.match(/\d+/)?.[0],
-          priceCurrency: 'PLN',
-          description: `${option.price}. ${option.details}`,
-        })),
-        url: pageUrl,
+        faqs,
       }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        url: `${pageUrl}#faq`,
-        inLanguage: 'pl-PL',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.a,
-          },
-        })),
-      }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Oferta',
-            item: `${SITE_URL}${ROUTES.offer}`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Zajęcia zdalne',
-            item: pageUrl,
-          },
-        ],
-      }),
-    },
+    ),
   ],
 })
 </script>

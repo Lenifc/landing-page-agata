@@ -7,19 +7,10 @@ export const CONTACT = Object.freeze({
   addressShort: 'Rumia, ul. Wrocławska 2',
   addressWithOnline: 'Rumia, ul. Wrocławska 2 lub online',
   streetAddress: 'ul. Wrocławska 2',
+  postalCode: '84-230',
   addressLocality: 'Rumia',
   addressRegion: 'pomorskie',
   addressCountry: 'PL',
-  openingDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-  lessonHours: '14.00-20.30',
-  lessonOpens: '14:00',
-  lessonCloses: '20:30',
-  contactHours: '8.00-13.00',
-  contactOpens: '08:00',
-  contactCloses: '13:00',
-  lessonHoursText: 'Zajęcia prowadzę w godzinach 14.00-20.30.',
-  contactHoursText:
-    'Kontakt telefoniczny i SMS najlepiej w godzinach 8.00-13.00.',
   emailResponseText:
     'Maila można wysłać o każdej porze; odpowiadam zwykle w ciągu kilku godzin.',
 })

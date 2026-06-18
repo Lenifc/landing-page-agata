@@ -1,7 +1,7 @@
 <script setup>
-import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.maturaExam
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -54,9 +54,9 @@ const toggleFaq = (index) => {
 useSeoMeta({
   title: 'Matura z angielskiego Rumia',
   description:
-    'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi, Redy, Gdyni i okolic.',
+    'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi i okolic.',
   keywords:
-    'matura angielski Rumia, przygotowanie do matury z angielskiego Rumia, przygotowanie do matury angielski Janowo, angielski matura rozszerzona Rumia, korepetycje angielski matura Reda Gdynia',
+    'matura angielski Rumia, przygotowanie do matury z angielskiego Rumia, przygotowanie do matury angielski Janowo, angielski matura rozszerzona Rumia, korepetycje angielski matura Reda',
   ogTitle: 'Matura z angielskiego | Talkateria Rumia',
   ogDescription:
     'Kameralne przygotowanie do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',
@@ -70,70 +70,24 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Przygotowanie do matury z angielskiego',
-        serviceType: 'Lekcje języka angielskiego',
-        description:
+    jsonLdScript(
+      buildServicePageJsonLd({
+        pageUrl,
+        pageName: 'Matura z angielskiego Rumia',
+        pageDescription:
+          'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi i okolic.',
+        serviceName: 'Przygotowanie do matury z angielskiego',
+        serviceType: 'Przygotowanie do matury z języka angielskiego',
+        serviceDescription:
           'Zajęcia przygotowujące do matury z języka angielskiego na poziomie podstawowym i rozszerzonym w Rumi.',
-        provider: BUSINESS_ENTITY,
-        areaServed: AREA_SERVED,
+        priceOptions,
         audience: {
           '@type': 'EducationalAudience',
           educationalRole: 'uczeń szkoły średniej',
         },
-        offers: priceOptions.map((option) => ({
-          '@type': 'Offer',
-          name: option.name,
-          price: option.schemaPrice ?? option.price.match(/\d+/)?.[0],
-          priceCurrency: 'PLN',
-          description: `${option.price}. ${option.details}`,
-        })),
-        url: pageUrl,
+        faqs,
       }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        url: `${pageUrl}#faq`,
-        inLanguage: 'pl-PL',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.a,
-          },
-        })),
-      }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Oferta',
-            item: `${SITE_URL}${ROUTES.offer}`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Egzamin maturalny',
-            item: pageUrl,
-          },
-        ],
-      }),
-    },
+    ),
   ],
 })
 </script>

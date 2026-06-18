@@ -1,8 +1,8 @@
 <script setup>
-import { BUSINESS_ENTITY } from '~/config/business'
 import { CONTACT } from '~/config/contact'
 import { GOOGLE_FORM } from '~/config/forms'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildContactPageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.contact
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -12,7 +12,7 @@ useSeoMeta({
   description:
     'Skontaktuj się z Talkaterią w Rumi. Kameralne studio języka angielskiego przy ul. Wrocławskiej 2.',
   keywords:
-    'kontakt angielski Rumia, kontakt angielski Rumia, lekcja język angielski Rumia, Talkateria Rumia, Talkateria Janowo, angielski Reda, angielski Gdynia',
+    'kontakt angielski Rumia, kontakt angielski Rumia, lekcja język angielski Rumia, Talkateria Rumia, Talkateria Janowo, angielski Reda',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
     'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
@@ -42,11 +42,6 @@ const details = computed(() => [
     value: CONTACT.addressWithOnline,
     icon: 'mapPin',
   },
-  // {
-  //   label: 'Godziny zajęć',
-  //   value: CONTACT.lessonHours,
-  //   icon: 'clock',
-  // },
 ])
 
 const icons = {
@@ -58,8 +53,6 @@ const icons = {
     'M12 21s7-6.1 7-12a7 7 0 0 0-14 0c0 5.9 7 12 7 12Z',
     'M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
   ],
-  clock: ['M12 6v6l4 2', 'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'],
-  message: ['M21 12a8 8 0 0 1-8 8H7l-4 3 1.5-5.2A8 8 0 1 1 21 12Z'],
 }
 
 useHead({
@@ -70,18 +63,21 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'ContactPage',
-        name: 'Kontakt Talkateria',
-        description:
-          'Kontakt w sprawie lekcji języka angielskiego w Rumi, Redzie, Gdyni i okolicach.',
-        about: BUSINESS_ENTITY,
-        mainEntity: BUSINESS_ENTITY,
+    jsonLdScript(
+      buildContactPageJsonLd({
+        pageUrl,
+        breadcrumbItems: [
+          {
+            name: 'Strona główna',
+            item: SITE_URL,
+          },
+          {
+            name: 'Kontakt',
+            item: pageUrl,
+          },
+        ],
       }),
-    },
+    ),
   ],
 })
 </script>
@@ -107,7 +103,7 @@ useHead({
         <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
           Najwygodniejszą i najszybszą formą zapisu na zajęcia jest krótki
           formularz zgłoszeniowy - pozwala on sprawnie dopasować kurs oraz
-          dostępne terminy
+          dostępne terminy.
         </p>
         <a href="#formularz"
           class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">

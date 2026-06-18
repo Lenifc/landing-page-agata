@@ -8,6 +8,7 @@ export const BUSINESS_LEGAL_NAME = 'English Coaching Agata Pionke'
 export const BUSINESS_ADDRESS = Object.freeze({
   '@type': 'PostalAddress',
   streetAddress: CONTACT.streetAddress,
+  postalCode: CONTACT.postalCode,
   addressLocality: CONTACT.addressLocality,
   addressRegion: CONTACT.addressRegion,
   addressCountry: CONTACT.addressCountry,
@@ -17,11 +18,10 @@ export const AREA_SERVED = Object.freeze([
   { '@type': 'City', name: 'Rumia' },
   { '@type': 'Place', name: 'Rumia Janowo' },
   { '@type': 'City', name: 'Reda' },
-  { '@type': 'City', name: 'Gdynia' },
 ])
 
 export const BUSINESS_ENTITY = Object.freeze({
-  '@type': ['EducationalOrganization', 'LocalBusiness'],
+  '@type': ['LocalBusiness', 'EducationalOrganization'],
   '@id': BUSINESS_ID,
   name: BUSINESS_NAME,
   legalName: BUSINESS_LEGAL_NAME,
@@ -29,36 +29,25 @@ export const BUSINESS_ENTITY = Object.freeze({
   url: SITE_URL,
   email: CONTACT.email,
   telephone: CONTACT.phoneInternational,
-  image: `${SITE_URL}/studio-hero.webp`,
-  logo: `${SITE_URL}/talkateria-logo-color.svg`,
   description:
-    'Kameralne lekcje języka angielskiego w Rumi Janowie dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic.',
+    'Kameralne lekcje języka angielskiego w Rumi Janowie dla młodzieży i dorosłych z Rumi i okolic.',
   address: BUSINESS_ADDRESS,
-  priceRange: '$$',
-  openingHours: 'Mo-Fr 14:00-20:30',
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: CONTACT.openingDays,
-      opens: CONTACT.lessonOpens,
-      closes: CONTACT.lessonCloses,
-    },
-  ],
+  priceRange: '80-512 PLN',
+  currenciesAccepted: 'PLN',
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: CONTACT.phoneInternational,
     email: CONTACT.email,
     contactType: 'zapisy na zajęcia',
     availableLanguage: ['pl', 'en'],
-    hoursAvailable: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: CONTACT.openingDays,
-      opens: CONTACT.contactOpens,
-      closes: CONTACT.contactCloses,
-    },
-    description: `${CONTACT.contactHoursText} ${CONTACT.emailResponseText}`,
+    description: CONTACT.emailResponseText,
   },
   areaServed: AREA_SERVED,
+  serviceArea: AREA_SERVED,
+  founder: {
+    '@type': 'Person',
+    name: 'Agata Pionke',
+  },
   knowsAbout: [
     'angielski Rumia',
     'angielski Rumia Janowo',
@@ -70,7 +59,6 @@ export const BUSINESS_ENTITY = Object.freeze({
   ],
 })
 
-export const LOCAL_BUSINESS_JSON_LD = Object.freeze({
-  '@context': 'https://schema.org',
-  ...BUSINESS_ENTITY,
+export const BUSINESS_REFERENCE = Object.freeze({
+  '@id': BUSINESS_ID,
 })

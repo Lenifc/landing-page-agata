@@ -1,7 +1,7 @@
 <script setup>
-import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.adultClasses
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -54,9 +54,9 @@ const toggleFaq = (index) => {
 useSeoMeta({
   title: 'Angielski dla dorosłych Rumia',
   description:
-    'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi, Redy, Gdyni i okolic.',
+    'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi i okolic.',
   keywords:
-    'angielski dla dorosłych Rumia, angielski dla dorosłych Rumia Janowo, Rumia Janowo angielski dla dorosłych, zajęcia angielski dorośli Rumia, konwersacje angielski Rumia, konwersacje angielski Rumia Janowo, angielski do pracy Rumia, angielski online dla dorosłych Reda Gdynia',
+    'angielski dla dorosłych Rumia, angielski dla dorosłych Rumia Janowo, Rumia Janowo angielski dla dorosłych, zajęcia angielski dorośli Rumia, konwersacje angielski Rumia, konwersacje angielski Rumia Janowo, angielski do pracy Rumia, angielski online dla dorosłych Reda',
   ogTitle: 'Angielski dla dorosłych | Talkateria Rumia',
   ogDescription:
     'Kameralne zajęcia dla dorosłych: rozmowa, praktyczne słownictwo, powrót do podstaw i nauka bez presji.',
@@ -70,70 +70,38 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Angielski dla dorosłych',
+    jsonLdScript(
+      buildServicePageJsonLd({
+        pageUrl,
+        pageName: 'Angielski dla dorosłych Rumia',
+        pageDescription:
+          'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi i okolic.',
+        serviceName: 'Angielski dla dorosłych',
         serviceType: 'Angielski dla dorosłych w Rumi',
-        description:
+        serviceDescription:
           'Indywidualne i kameralne zajęcia z języka angielskiego dla dorosłych w Rumi oraz online.',
-        provider: BUSINESS_ENTITY,
-        areaServed: AREA_SERVED,
+        priceOptions,
         audience: {
           '@type': 'Audience',
           audienceType: 'dorośli',
         },
-        offers: priceOptions.map((option) => ({
-          '@type': 'Offer',
-          name: option.name,
-          price: option.schemaPrice ?? option.price.match(/\d+/)?.[0],
-          priceCurrency: 'PLN',
-          description: `${option.price}. ${option.details}`,
-        })),
-        url: pageUrl,
-      }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        url: `${pageUrl}#faq`,
-        inLanguage: 'pl-PL',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.a,
-          },
-        })),
-      }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
+        availableChannel: [
           {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Oferta',
-            item: `${SITE_URL}${ROUTES.offer}`,
+            '@type': 'ServiceChannel',
+            name: 'Zajęcia stacjonarne',
+            serviceLocation: {
+              '@id': 'https://talkateria.pl/#talkateria',
+            },
           },
           {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Zajęcia dla dorosłych',
-            item: pageUrl,
+            '@type': 'ServiceChannel',
+            name: 'Zajęcia online',
+            serviceUrl: pageUrl,
           },
         ],
+        faqs,
       }),
-    },
+    ),
   ],
 })
 </script>

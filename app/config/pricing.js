@@ -89,7 +89,7 @@ export const PRICING = Object.freeze({
       details: `Kurs egzaminacyjny dla uczniów klasy 8 oraz maturzystów obejmuje 25 spotkań po 100 minut w
         kameralnej grupie maksymalnie 4-osobowej. Zajęcia odbywają się raz w tygodniu w bloku
         (jedna po drugiej). W sumie to ponad 41 godzin nauki, a kurs kończy się przed terminem
-        egzaminu`,
+        egzaminu.`,
       featured: false,
       contexts: {
         eighthGradeExam: {

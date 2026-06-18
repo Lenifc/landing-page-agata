@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Talkateria to kameralne lekcje angielskiego w Rumi dla osób z Rumi, Redy, Gdyni i okolic. Przyjazna atmosfera, rozmowa i realne efekty.',
+            'Talkateria to kameralne lekcje angielskiego dla osób z Rumi i okolic. Przyjazna atmosfera, rozmowa i realne efekty.',
         },
         { name: 'robots', content: 'index, follow' },
         { name: 'author', content: 'Talkateria' },
@@ -46,7 +46,7 @@ export default defineNuxtConfig({
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'msapplication-TileColor', content: '#315db7' },
         { name: 'geo.region', content: 'PL-PM' },
-        { name: 'geo.placename', content: 'Rumia, Reda, Gdynia' },
+        { name: 'geo.placename', content: 'Rumia, Reda' },
         { name: 'color-scheme', content: 'light' },
         { name: 'format-detection', content: 'telephone=yes, email=yes' },
         { name: 'theme-color', content: '#315db7' },
@@ -55,12 +55,12 @@ export default defineNuxtConfig({
         { property: 'og:site_name', content: 'Talkateria' },
         {
           property: 'og:title',
-          content: 'Talkateria | Angielski Rumia, Reda, Gdynia',
+          content: 'Talkateria | Angielski Rumia',
         },
         {
           property: 'og:description',
           content:
-            'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi, Redy, Gdyni i okolic. Bez stresu, z naciskiem na mówienie.',
+            'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi i okolic. Bez stresu, z naciskiem na mówienie.',
         },
       ],
       link: [

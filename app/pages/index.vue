@@ -1,6 +1,6 @@
 <script setup>
-import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildHomePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.home
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -10,10 +10,10 @@ useSeoMeta({
   description:
     'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
   keywords:
-    'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
+    'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, angielski Reda, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
   ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
   ogDescription:
-    'Kameralne zajęcia z angielskiego w Rumi dla osób z Rumi i okolic. Mniej stresu, więcej mówienia i praktyki.',
+    'Kameralne zajęcia z angielskiego dla osób z Rumi i okolic. Mniej stresu, więcej mówienia i praktyki.',
 })
 
 const features = [
@@ -62,7 +62,7 @@ const landingLinks = [
     title: 'Przygotowanie do matury',
     body: `Kompleksowe przygotowanie do matury z języka angielskiego na poziomie podstawowym i
       rozszerzonym. Obejmuje ćwiczenie wszystkich typów zadań egzaminacyjnych, rozwijanie
-      umiejętności językowych oraz poznawanie skutecznych strategii egzaminacyjnych`,
+      umiejętności językowych oraz poznawanie skutecznych strategii egzaminacyjnych.`,
   },
   {
     to: ROUTES.adultClasses,
@@ -89,21 +89,18 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        serviceType: 'Lekcje języka angielskiego w Rumi',
-        provider: BUSINESS_ENTITY,
-        areaServed: AREA_SERVED,
+    jsonLdScript(
+      buildHomePageJsonLd({
+        pageUrl,
+        pageName: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
+        pageDescription:
+          'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych: zajęcia indywidualne, DUO, przygotowanie do egzaminów i konwersacje.',
         audience: {
           '@type': 'Audience',
           audienceType: 'młodzież i dorośli',
         },
-        url: pageUrl,
       }),
-    },
+    ),
   ],
 })
 </script>
@@ -250,7 +247,7 @@ useHead({
           <p class="text-pretty leading-relaxed text-muted-foreground">
             Istnieje również możliwość uczestnictwa w zajęciach online. Ten
             rodzaj zajęć pozwala uczyć się wygodnie z dowolnego miejsca bez
-            konieczności dojazdów
+            konieczności dojazdów.
           </p>
         </div>
         <div class="grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4">
@@ -295,15 +292,12 @@ useHead({
           dobrym miejscem dla Ciebie.
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla młodzieży i
-          dorosłych, którzy chcą uporządkować wiedzę, nabrać pewności w mówieniu
-          i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i
-          przyjaznej atmosferze
+          To propozycja dla młodzieży i dorosłych, którzy chcą uporządkować wiedzę, nabrać
+          pewności w mówieniu i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i przyjaznej atmosferze
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Zajęcia prowadzę wyłącznie
-          indywidualnie lub w mini grupach, co pozwala na pełne dopasowanie do
-          ucznia i komfortową naukę.
+          Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co
+          pozwala na pełne dopasowanie do ucznia i komfortową naukę.
         </p>
       </div>
     </section>

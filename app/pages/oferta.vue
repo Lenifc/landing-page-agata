@@ -1,8 +1,7 @@
 <script setup>
-import { CONTACT } from '~/config/contact'
-import { AREA_SERVED } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildOfferPageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.offer
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -12,7 +11,7 @@ useSeoMeta({
   description:
     'Oferta i cennik lekcji angielskiego Talkateria w Rumi: pakiety roczne, pakiet MINI, zajęcia indywidualne, DUO i kurs egzaminacyjny.',
   keywords:
-    'oferta angielski Rumia, oferta angielski Rumia Janowo, cennik angielski Rumia, cennik angielski Janowo, lekcje angielskiego Rumia, angielski Reda, angielski Gdynia',
+    'oferta angielski Rumia, oferta angielski Rumia Janowo, cennik angielski Rumia, cennik angielski Janowo, lekcje angielskiego Rumia, angielski Reda',
   ogTitle: 'Talkateria | Oferta angielskiego w Rumi',
   ogDescription:
     'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, pakiet egzaminacyjny i lekcje okazjonalne.',
@@ -135,8 +134,8 @@ const faqs = [
     a: 'Zajęcia prowadzone są w studiu przy ul. Wrocławskiej 2 w Rumi (Janowo) lub online na platformie Zoom.',
   },
   {
-    q: 'W jakich godzinach odbywają się zajęcia i kontakt?',
-    a: `${CONTACT.lessonHoursText} ${CONTACT.contactHoursText} ${CONTACT.emailResponseText}`,
+    q: 'Jak ustalane są terminy zajęć i kontakt?',
+    a: 'Terminy zajęć ustalam indywidualnie przy zapisie, po dopasowaniu formy nauki i dostępności kursanta. Najprościej wysłać formularz, e-mail lub SMS z krótką informacją o celu nauki.',
   },
   {
     q: 'Jak wygląda pierwsze spotkanie?',
@@ -176,7 +175,7 @@ const faqs = [
   },
   {
     q: 'Jak zapisać się na zajęcia?',
-    a: 'Najprościej napisać wiadomość przez formularz lub mailowo. Można tez zadzwonić lub wysłać SMS. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
+    a: 'Najprościej napisać wiadomość przez formularz lub mailowo. Można też zadzwonić lub wysłać SMS. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
     link: {
       label: 'formularz lub mailowo',
       href: ROUTES.contact,
@@ -201,41 +200,16 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        url: `${pageUrl}#faq`,
-        inLanguage: 'pl-PL',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.a,
-          },
-        })),
+    jsonLdScript(
+      buildOfferPageJsonLd({
+        pageUrl,
+        name: 'Oferta i cennik angielskiego w Rumi',
+        description:
+          'Oferta i cennik lekcji angielskiego Talkateria w Rumi: pakiety roczne, pakiet MINI, zajęcia indywidualne, DUO i kurs egzaminacyjny.',
+        plans,
+        faqs,
       }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'OfferCatalog',
-        name: 'Cennik lekcji angielskiego Talkateria',
-        itemListElement: plans.map((plan) => ({
-          '@type': 'Offer',
-          name: `${plan.name} - ${plan.frequency}`,
-          description: plan.details,
-          category: 'Lekcje języka angielskiego',
-          price: plan.schemaPrice ?? plan.price.match(/\d+/)?.[0],
-          priceCurrency: 'PLN',
-          areaServed: AREA_SERVED,
-        })),
-      }),
-    },
+    ),
   ],
 })
 </script>
@@ -349,7 +323,7 @@ useHead({
                 <NuxtLink :to="ROUTES.maturaExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   matury z języka angielskiego</NuxtLink>
-                o na poziomie podstawowym i rozszerzonym. Zajęcia odbywają się w
+                na poziomie podstawowym i rozszerzonym. Zajęcia odbywają się w
                 kameralnych grupach liczących maksymalnie 4 osoby i obejmują 25
                 spotkań po 100 minut.
               </p>
@@ -455,8 +429,8 @@ useHead({
                 <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
                   class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
                   :class="plan.featured
-                    ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
-                    : 'bg-card'
+                      ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
+                      : 'bg-card'
                     ">
                   <div class="px-4 py-3.5 md:px-5">
                     <div class="flex flex-wrap items-center gap-3">

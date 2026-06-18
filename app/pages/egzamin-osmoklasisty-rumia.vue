@@ -1,7 +1,7 @@
 <script setup>
-import { AREA_SERVED, BUSINESS_ENTITY } from '~/config/business'
 import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
+import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.eighthGradeExam
 const pageUrl = `${SITE_URL}${pageRoute}`
@@ -54,9 +54,9 @@ const toggleFaq = (index) => {
 useSeoMeta({
   title: 'Egzamin ósmoklasisty z angielskiego Rumia',
   description:
-    'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi, Redy i Gdyni.',
+    'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi i okolic.',
   keywords:
-    'egzamin ósmoklasisty angielski Rumia, przygotowanie do egzaminu ósmoklasisty Rumia, przygotowanie egzamin ósmoklasisty angielski Janowo, angielski ósmoklasista Reda, angielski egzamin Gdynia',
+    'egzamin ósmoklasisty angielski Rumia, przygotowanie do egzaminu ósmoklasisty Rumia, przygotowanie egzamin ósmoklasisty angielski Janowo, angielski ósmoklasista Reda',
   ogTitle: 'Egzamin ósmoklasisty z angielskiego | Talkateria Rumia',
   ogDescription:
     'Kameralne przygotowanie do egzaminu ósmoklasisty z angielskiego: arkusze, strategie, gramatyka, słownictwo i spokojna praca krok po kroku.',
@@ -70,70 +70,25 @@ useHead({
     },
   ],
   script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Przygotowanie do egzaminu ósmoklasisty z angielskiego',
-        serviceType: 'Lekcje języka angielskiego',
-        description:
-          'Zajęcia przygotowujące do egzaminu ósmoklasisty z języka angielskiego w Rumi dla uczniów z Rumi, Redy, Gdyni i okolic.',
-        provider: BUSINESS_ENTITY,
-        areaServed: AREA_SERVED,
+    jsonLdScript(
+      buildServicePageJsonLd({
+        pageUrl,
+        pageName: 'Egzamin ósmoklasisty z angielskiego Rumia',
+        pageDescription:
+          'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi i okolic.',
+        serviceName: 'Przygotowanie do egzaminu ósmoklasisty z angielskiego',
+        serviceType:
+          'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego',
+        serviceDescription:
+          'Zajęcia przygotowujące do egzaminu ósmoklasisty z języka angielskiego w Rumi dla uczniów z Rumi i okolic.',
+        priceOptions,
         audience: {
           '@type': 'EducationalAudience',
           educationalRole: 'uczeń szkoły podstawowej',
         },
-        offers: priceOptions.map((option) => ({
-          '@type': 'Offer',
-          name: option.name,
-          price: option.schemaPrice ?? option.price.match(/\d+/)?.[0],
-          priceCurrency: 'PLN',
-          description: `${option.price}. ${option.details}`,
-        })),
-        url: pageUrl,
+        faqs,
       }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        url: `${pageUrl}#faq`,
-        inLanguage: 'pl-PL',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.a,
-          },
-        })),
-      }),
-    },
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Oferta',
-            item: `${SITE_URL}${ROUTES.offer}`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Egzamin ósmoklasisty',
-            item: pageUrl,
-          },
-        ],
-      }),
-    },
+    ),
   ],
 })
 </script>
