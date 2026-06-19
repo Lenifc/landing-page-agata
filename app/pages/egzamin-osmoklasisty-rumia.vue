@@ -55,8 +55,6 @@ useSeoMeta({
   title: 'Egzamin ósmoklasisty z angielskiego Rumia',
   description:
     'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi i okolic.',
-  keywords:
-    'egzamin ósmoklasisty angielski Rumia, przygotowanie do egzaminu ósmoklasisty Rumia, przygotowanie egzamin ósmoklasisty angielski Janowo, angielski ósmoklasista Reda',
   ogTitle: 'Egzamin ósmoklasisty z angielskiego | Talkateria Rumia',
   ogDescription:
     'Kameralne przygotowanie do egzaminu ósmoklasisty z angielskiego: arkusze, strategie, gramatyka, słownictwo i spokojna praca krok po kroku.',

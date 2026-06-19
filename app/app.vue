@@ -1,3 +1,18 @@
+<script setup>
+import { SITE_URL } from '~/config/routes'
+
+const route = useRoute()
+const pageUrl = computed(() => {
+  const path = route.path === '/' ? '/' : route.path.replace(/\/+$/, '')
+
+  return `${SITE_URL}${path}`
+})
+
+useSeoMeta({
+  ogUrl: () => pageUrl.value,
+})
+</script>
+
 <template>
   <div class="flex min-h-screen flex-col bg-background">
     <a href="#main-content"

@@ -10,8 +10,6 @@ useSeoMeta({
   title: 'Oferta i cennik angielskiego w Rumi',
   description:
     'Oferta i cennik lekcji angielskiego Talkateria w Rumi: pakiety roczne, pakiet MINI, zajęcia indywidualne, DUO i kurs egzaminacyjny.',
-  keywords:
-    'oferta angielski Rumia, oferta angielski Rumia Janowo, cennik angielski Rumia, cennik angielski Janowo, lekcje angielskiego Rumia, angielski Reda',
   ogTitle: 'Talkateria | Oferta angielskiego w Rumi',
   ogDescription:
     'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, pakiet egzaminacyjny i lekcje okazjonalne.',

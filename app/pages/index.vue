@@ -9,8 +9,6 @@ useSeoMeta({
   title: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
   description:
     'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
-  keywords:
-    'angielski Rumia, angielski Rumia, Rumia angielski, lekcje angielskiego Rumia, lekcje angielskiego Janowo, angielski Reda, konwersacje angielski Rumia, korepetycje angielski Rumia, matura angielski Rumia, egzamin ósmoklasisty angielski Rumia',
   ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
   ogDescription:
     'Kameralne zajęcia z angielskiego dla osób z Rumi i okolic. Mniej stresu, więcej mówienia i praktyki.',

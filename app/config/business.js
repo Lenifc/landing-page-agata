@@ -54,6 +54,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   founder: {
     '@type': 'Person',
     name: 'Agata Pionke',
+    jobTitle: 'Lektorka języka angielskiego',
   },
   knowsAbout: [
     'angielski Rumia',

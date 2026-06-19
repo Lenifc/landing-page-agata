@@ -11,8 +11,6 @@ useSeoMeta({
   title: 'Kontakt – angielski Rumia',
   description:
     'Skontaktuj się z Talkaterią w Rumi. Kameralne studio języka angielskiego przy ul. Wrocławskiej 2.',
-  keywords:
-    'kontakt angielski Rumia, kontakt angielski Rumia, lekcja język angielski Rumia, Talkateria Rumia, Talkateria Janowo, angielski Reda',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
     'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
@@ -69,7 +67,7 @@ useHead({
         breadcrumbItems: [
           {
             name: 'Strona główna',
-            item: SITE_URL,
+            item: `${SITE_URL}/`,
           },
           {
             name: 'Kontakt',
@@ -174,7 +172,7 @@ useHead({
         <div class="space-y-6">
           <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
             <img src="/studio-space.webp" alt="Studio Talkateria w Rumi z tablicą i monitorem."
-              class="h-64 w-full object-cover" width="1024" height="2048" loading="lazy" />
+              class="h-64 w-full object-cover" width="1024" height="1024" loading="lazy" />
           </div>
         </div>
       </div>

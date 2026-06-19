@@ -5,6 +5,7 @@ import {
   BUSINESS_NAME,
 } from './business'
 import { CONTACT } from './contact'
+import { SITE_URL } from './routes'
 
 export const SCHEMA_CONTEXT = 'https://schema.org'
 export const SCHEMA_LANGUAGE = 'pl-PL'
@@ -15,6 +16,9 @@ const SERVICE_ID = (pageUrl) => `${pageUrl}#service`
 const FAQ_ID = (pageUrl) => `${pageUrl}#faq`
 const OFFER_CATALOG_ID = (pageUrl) => `${pageUrl}#offer-catalog`
 const BREADCRUMB_ID = (pageUrl) => `${pageUrl}#breadcrumb`
+const WEBSITE_ID = `${SITE_URL}/#website`
+const isHomePage = (pageUrl) =>
+  pageUrl === SITE_URL || pageUrl === `${SITE_URL}/`
 
 const compact = (value) => {
   if (Array.isArray(value)) {
@@ -62,8 +66,37 @@ const buildWebPageNode = ({
     name,
     description,
     inLanguage: SCHEMA_LANGUAGE,
+    isPartOf: nodeRef(WEBSITE_ID),
+    breadcrumb: isHomePage(pageUrl)
+      ? undefined
+      : nodeRef(BREADCRUMB_ID(pageUrl)),
     about: BUSINESS_REFERENCE,
     mainEntity: mainEntity.map((id) => nodeRef(id)),
+  })
+
+const buildWebSiteNode = () => ({
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  url: `${SITE_URL}/`,
+  name: BUSINESS_NAME,
+  alternateName: 'Talkateria English Studio',
+  inLanguage: SCHEMA_LANGUAGE,
+  publisher: BUSINESS_REFERENCE,
+})
+
+const buildDefaultBreadcrumbListNode = ({ pageUrl, name }) =>
+  buildBreadcrumbListNode({
+    pageUrl,
+    items: [
+      {
+        name: 'Strona główna',
+        item: `${SITE_URL}/`,
+      },
+      {
+        name,
+        item: pageUrl,
+      },
+    ],
   })
 
 const buildFAQPageNode = ({ pageUrl, faqs }) => ({
@@ -216,12 +249,14 @@ export const buildOfferPageJsonLd = ({
 
   return graph([
     BUSINESS_ENTITY,
+    buildWebSiteNode(),
     buildWebPageNode({
       pageUrl,
       name,
       description,
       mainEntity,
     }),
+    buildDefaultBreadcrumbListNode({ pageUrl, name }),
     buildOfferCatalogNode({ pageUrl, plans }),
     faqs.length ? buildFAQPageNode({ pageUrl, faqs }) : undefined,
   ])
@@ -247,11 +282,16 @@ export const buildServicePageJsonLd = ({
 
   return graph([
     BUSINESS_ENTITY,
+    buildWebSiteNode(),
     buildWebPageNode({
       pageUrl,
       name: pageName ?? serviceName,
       description: pageDescription ?? serviceDescription,
       mainEntity,
+    }),
+    buildDefaultBreadcrumbListNode({
+      pageUrl,
+      name: pageName ?? serviceName,
     }),
     buildServiceNode({
       pageUrl,
@@ -273,6 +313,7 @@ export const buildContactPageJsonLd = ({
 }) =>
   graph([
     BUSINESS_ENTITY,
+    buildWebSiteNode(),
     {
       ...buildContactPageNode({ pageUrl, description }),
       mainEntity: {
@@ -309,6 +350,7 @@ export const buildHomePageJsonLd = ({
 }) =>
   graph([
     BUSINESS_ENTITY,
+    buildWebSiteNode(),
     buildWebPageNode({
       pageUrl,
       name: pageName,

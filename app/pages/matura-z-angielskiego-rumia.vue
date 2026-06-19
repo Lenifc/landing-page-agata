@@ -55,8 +55,6 @@ useSeoMeta({
   title: 'Matura z angielskiego Rumia',
   description:
     'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi i okolic.',
-  keywords:
-    'matura angielski Rumia, przygotowanie do matury z angielskiego Rumia, przygotowanie do matury angielski Janowo, angielski matura rozszerzona Rumia, korepetycje angielski matura Reda',
   ogTitle: 'Matura z angielskiego | Talkateria Rumia',
   ogDescription:
     'Kameralne przygotowanie do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',

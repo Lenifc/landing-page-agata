@@ -121,8 +121,6 @@ useSeoMeta({
   title: 'Zajęcia zdalne z angielskiego',
   description:
     'Zajęcia zdalne z angielskiego w Talkaterii w Rumi: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem.',
-  keywords:
-    'zajęcia zdalne angielski, angielski online Rumia, angielski online Rumia Janowo, lekcje angielskiego online Reda, angielski online, korepetycje angielski online, angielski online cała Polska',
   ogTitle: 'Zajęcia zdalne z angielskiego | Talkateria',
   ogDescription:
     'Angielski online bez dojazdów, z całej Polski: wygodnie, regularnie i z takim samym indywidualnym podejściem jak w studiu.',

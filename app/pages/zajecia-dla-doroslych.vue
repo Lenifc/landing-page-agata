@@ -55,8 +55,6 @@ useSeoMeta({
   title: 'Angielski dla dorosłych Rumia',
   description:
     'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi i okolic.',
-  keywords:
-    'angielski dla dorosłych Rumia, angielski dla dorosłych Rumia Janowo, Rumia Janowo angielski dla dorosłych, zajęcia angielski dorośli Rumia, konwersacje angielski Rumia, konwersacje angielski Rumia Janowo, angielski do pracy Rumia, angielski online dla dorosłych Reda',
   ogTitle: 'Angielski dla dorosłych | Talkateria Rumia',
   ogDescription:
     'Kameralne zajęcia dla dorosłych: rozmowa, praktyczne słownictwo, powrót do podstaw i nauka bez presji.',
