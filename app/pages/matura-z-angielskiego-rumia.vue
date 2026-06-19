@@ -52,12 +52,12 @@ const toggleFaq = (index) => {
 }
 
 useSeoMeta({
-  title: 'Matura z angielskiego Rumia',
+  title: 'Matura z angielskiego Rumia – przygotowanie',
   description:
-    'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi i okolic.',
-  ogTitle: 'Matura z angielskiego | Talkateria Rumia',
+    'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony dla uczniów z całej Polski.',
+  ogTitle: 'Matura z angielskiego Rumia | Talkateria',
   ogDescription:
-    'Kameralne przygotowanie do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',
+    'Kameralne lekcje przygotowujące do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',
 })
 
 useHead({
@@ -71,9 +71,9 @@ useHead({
     jsonLdScript(
       buildServicePageJsonLd({
         pageUrl,
-        pageName: 'Matura z angielskiego Rumia',
+        pageName: 'Przygotowanie do matury z angielskiego w Rumi',
         pageDescription:
-          'Przygotowanie do matury z języka angielskiego w Rumi. Zajęcia do matury podstawowej i rozszerzonej dla uczniów z Rumi i okolic.',
+          'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony, arkusze, pisanie, mówienie oraz strategie egzaminacyjne.',
         serviceName: 'Przygotowanie do matury z angielskiego',
         serviceType: 'Przygotowanie do matury z języka angielskiego',
         serviceDescription:
@@ -187,13 +187,14 @@ useHead({
               Ile kosztuje przygotowanie do matury z angielskiego?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Przygotowanie do matury może odbywać się w pakiecie egzaminacyjnym
+              Przygotowanie do matury może odbywać się w kursie egzaminacyjnym
               w kameralnej grupie maksymalnie 4-osobowej, obejmującym 25 spotkań
               po 100 minut za {{ priceOptions[0].price }}. Dostępne są też
-              roczne pakiety 1:1: 30 spotkań raz w tygodniu od
-              {{ priceOptions[1].price }} albo 60 spotkań dwa razy w tygodniu za
+              roczne pakiety 1:1: 30 lekcji po 50 minut, zwykle raz w tygodniu,
+              od {{ priceOptions[1].price }}, albo 60 lekcji po 50 minut, zwykle
+              w 30 cotygodniowych blokach po 2 × 50 minut, za
               {{ priceOptions[2].price }}. Krótszy pakiet MINI obejmuje 20
-              spotkań po 50 minut i kosztuje {{ priceOptions[3].price }}.
+              lekcji po 50 minut i kosztuje {{ priceOptions[3].price }}.
             </p>
             <NuxtLink :to="ROUTES.prices"
               class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">

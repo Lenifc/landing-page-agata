@@ -52,9 +52,9 @@ const toggleFaq = (index) => {
 }
 
 useSeoMeta({
-  title: 'Angielski dla dorosłych Rumia',
+  title: 'Zajęcia z angielskiego dla dorosłych Rumia',
   description:
-    'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi i okolic.',
+    'Angielski dla dorosłych w Rumi: konwersacje, powrót do nauki, angielski do pracy i podróży. Kameralne lekcje stacjonarnie lub online.',
   ogTitle: 'Angielski dla dorosłych | Talkateria Rumia',
   ogDescription:
     'Kameralne zajęcia dla dorosłych: rozmowa, praktyczne słownictwo, powrót do podstaw i nauka bez presji.',
@@ -73,7 +73,7 @@ useHead({
         pageUrl,
         pageName: 'Angielski dla dorosłych Rumia',
         pageDescription:
-          'Zajęcia z angielskiego dla dorosłych w Rumi. Konwersacje, powrót do nauki, angielski do pracy i podróży dla osób z Rumi i okolic.',
+          'Angielski dla dorosłych w Rumi: konwersacje, powrót do nauki, angielski do pracy i podróży. Kameralne lekcje stacjonarnie lub online.',
         serviceName: 'Angielski dla dorosłych',
         serviceType: 'Angielski dla dorosłych w Rumi',
         serviceDescription:

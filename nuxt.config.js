@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       titleTemplate: '%s | Talkateria',
-      title: 'Nauka języka angielskiego Rumia',
+      title: 'Angielski w Rumi i online',
       htmlAttrs: { lang: 'pl', class: 'bg-background' },
       meta: [
         { charset: 'utf-8' },
@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Talkateria to kameralne lekcje angielskiego dla osób z Rumi i okolic. Przyjazna atmosfera, rozmowa i realne efekty.',
+            'Kameralne lekcje angielskiego w Rumi i online dla młodzieży oraz dorosłych. Nauka bez stresu, z naciskiem na swobodne mówienie. | Talkateria',
         },
         { name: 'robots', content: 'index, follow' },
         { name: 'author', content: 'Talkateria' },
@@ -55,12 +55,12 @@ export default defineNuxtConfig({
         { property: 'og:site_name', content: 'Talkateria' },
         {
           property: 'og:title',
-          content: 'Talkateria | Angielski Rumia',
+          content: 'Angielski w Rumi | Talkateria',
         },
         {
           property: 'og:description',
           content:
-            'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi i okolic. Bez stresu, z naciskiem na mówienie.',
+            'Kameralne zajęcia z angielskiego w Rumi dla młodzieży oraz dorosłych. Bez stresu, z naciskiem na mówienie.',
         },
       ],
       link: [

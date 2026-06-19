@@ -33,7 +33,7 @@ const priceOptions = getPricingPlans('eighthGradeExam')
 const faqs = [
   {
     q: 'Kiedy najlepiej zacząć przygotowania do egzaminu?',
-    a: 'Najwygodniej zacząć w 7 klasie albo na początku 8 klasy, bo wtedy jest czas na spokojną diagnozę, powtórki i regularne arkusze. Jeśli do egzaminu zostało mniej czasu, można ułożyć bardziej intensywny plan pracy.',
+    a: 'Najwygodniej zacząć w 7. klasie albo na początku 8. klasy, bo wtedy jest czas na spokojną diagnozę, powtórki i regularne arkusze. Jeśli do egzaminu zostało mniej czasu, można ułożyć bardziej intensywny plan pracy.',
   },
   {
     q: 'Czy zajęcia pomagają też przy zaległościach szkolnych?',
@@ -52,10 +52,10 @@ const toggleFaq = (index) => {
 }
 
 useSeoMeta({
-  title: 'Egzamin ósmoklasisty z angielskiego Rumia',
+  title: 'Egzamin ósmoklasisty z angielskiego w Rumi',
   description:
-    'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi i okolic.',
-  ogTitle: 'Egzamin ósmoklasisty z angielskiego | Talkateria Rumia',
+    'Zajęcia przygotowujące do egzaminu ósmoklasisty z angielskiego w Rumi: arkusze, strategie, gramatyka, słownictwo i spokojne powtórki.',
+  ogTitle: 'Egzamin ósmoklasisty z języka angielskiego | Talkateria',
   ogDescription:
     'Kameralne przygotowanie do egzaminu ósmoklasisty z angielskiego: arkusze, strategie, gramatyka, słownictwo i spokojna praca krok po kroku.',
 })
@@ -71,9 +71,9 @@ useHead({
     jsonLdScript(
       buildServicePageJsonLd({
         pageUrl,
-        pageName: 'Egzamin ósmoklasisty z angielskiego Rumia',
+        pageName: 'Egzamin ósmoklasisty z angielskiego w Rumi',
         pageDescription:
-          'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego w Rumi. Kameralne zajęcia, arkusze, strategie i powtórki dla uczniów z Rumi i okolic.',
+          'Zajęcia przygotowujące do egzaminu ósmoklasisty z angielskiego w Rumi: arkusze, strategie, gramatyka, słownictwo i spokojne powtórki.',
         serviceName: 'Przygotowanie do egzaminu ósmoklasisty z angielskiego',
         serviceType:
           'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego',
@@ -194,13 +194,14 @@ useHead({
               Ile kosztuje przygotowanie do egzaminu ósmoklasisty?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Najczęściej wybieraną formą przygotowań jest pakiet egzaminacyjny
+              Najczęściej wybieraną formą przygotowań jest kurs egzaminacyjny
               w kameralnej grupie maksymalnie 4-osobowej, obejmujący 25 spotkań
               po 100 minut za {{ priceOptions[0].price }}. Dostępne są też
-              roczne pakiety 1:1: 30 spotkań raz w tygodniu od
-              {{ priceOptions[1].price }} albo 60 spotkań dwa razy w tygodniu za
+              roczne pakiety 1:1: 30 lekcji po 50 minut, zwykle raz w tygodniu,
+              od {{ priceOptions[1].price }}, albo 60 lekcji po 50 minut, zwykle
+              w 30 cotygodniowych blokach po 2 × 50 minut, za
               {{ priceOptions[2].price }}. Krótszy pakiet MINI obejmuje 20
-              spotkań po 50 minut i kosztuje {{ priceOptions[3].price }}.
+              lekcji po 50 minut i kosztuje {{ priceOptions[3].price }}.
             </p>
             <NuxtLink :to="ROUTES.prices"
               class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">

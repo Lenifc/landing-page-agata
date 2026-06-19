@@ -7,12 +7,12 @@ const pageRoute = ROUTES.offer
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
-  title: 'Oferta i cennik angielskiego w Rumi',
+  title: 'Oferta oraz cennik zajęć z angielskiego w Rumi',
   description:
-    'Oferta i cennik lekcji angielskiego Talkateria w Rumi: pakiety roczne, pakiet MINI, zajęcia indywidualne, DUO i kurs egzaminacyjny.',
-  ogTitle: 'Talkateria | Oferta angielskiego w Rumi',
+    'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO, kursy egzaminacyjne, pakiet MINI i lekcje okazjonalne.',
+  ogTitle: 'Cennik zajęć z angielskiego w Rumi | Talkateria',
   ogDescription:
-    'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, pakiet egzaminacyjny i lekcje okazjonalne.',
+    'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, kurs egzaminacyjny i lekcje okazjonalne.',
 })
 
 const plans = getPricingPlans('offer')
@@ -104,8 +104,8 @@ const faqs = [
     },
   },
   {
-    q: 'Jaką formę zajęć wybrać: indywidualne, DUO czy pakiet egzaminacyjny?',
-    a: 'Zajęcia indywidualne sprawdzają się, gdy potrzebujesz maksymalnego dopasowania tempa i programu. DUO jest dobre dla dwóch osób, które chcą uczyć się razem i pracować w podobnym rytmie. Pakiet egzaminacyjny jest przeznaczony dla uczniów przygotowujących się do egzaminu ósmoklasisty albo matury.',
+    q: 'Jaką formę zajęć wybrać: indywidualne, DUO czy kurs egzaminacyjny?',
+    a: 'Zajęcia indywidualne sprawdzają się, gdy potrzebujesz maksymalnego dopasowania tempa i programu. DUO jest dobre dla dwóch osób, które chcą uczyć się razem i pracować w podobnym rytmie. Kurs egzaminacyjny jest przeznaczony dla uczniów przygotowujących się do egzaminu ósmoklasisty albo matury.',
   },
   {
     q: 'Czy przygotowujesz do egzaminu ósmoklasisty?',
@@ -145,15 +145,15 @@ const faqs = [
   },
   {
     q: 'Jak często warto chodzić na angielski?',
-    a: 'Najczęściej wystarcza jedno spotkanie tygodniowo, jeśli celem jest regularna nauka i utrzymanie kontaktu z językiem. Dwa spotkania tygodniowo warto wybrać przy przygotowaniu do egzaminu, nadrabianiu zaległości albo wtedy, gdy zależy Ci na szybszych efektach.',
+    a: 'Najczęściej wystarcza jedno spotkanie tygodniowo, jeśli celem jest regularna nauka i utrzymanie kontaktu z językiem. Wariant z dwiema lekcjami tygodniowo, zwykle realizowanymi w jednym bloku 2 × 50 minut, warto wybrać przy przygotowaniu do egzaminu, nadrabianiu zaległości albo wtedy, gdy zależy Ci na szybszych efektach.',
   },
   {
     q: 'Jak długo trwa kurs?',
-    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Pakiety roczne obejmują 30 spotkań w wersji Standard albo 60 spotkań w wersji Intense. Kurs egzaminacyjny obejmuje 25 spotkań po 100 minut, a pakiet MINI obejmuje 20 spotkań po 50 minut.',
+    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Pakiety roczne obejmują 30 lekcji w wersji Standard albo 60 lekcji w wersji Intense. Wariant Intense jest zwykle realizowany w 30 cotygodniowych blokach 2 × 50 minut. Kurs egzaminacyjny obejmuje 25 spotkań po 100 minut, a pakiet MINI obejmuje 20 lekcji po 50 minut.',
   },
   {
-    q: 'Jak wygląda nauka w DUO i pakiecie egzaminacyjnym?',
-    a: 'DUO to zajęcia w parze dla dwóch osób, które chcą uczyć się razem. Pakiet egzaminacyjny dla 8 klasy i matury ma formę kameralnej grupy maksymalnie 4-osobowej i obejmuje 25 spotkań po 100 minut. Mała grupa daje motywację wspólnej pracy, a jednocześnie pozwala zachować indywidualne podejście.',
+    q: 'Jak wygląda nauka w DUO i kursie egzaminacyjnym?',
+    a: 'DUO to zajęcia w parze dla dwóch osób, które chcą uczyć się razem. Kurs egzaminacyjny dla uczniów klasy 7/8 i maturzystów ma formę kameralnej grupy maksymalnie 4-osobowej i obejmuje 25 spotkań po 100 minut. Mała grupa daje motywację wspólnej pracy, a jednocześnie pozwala zachować indywidualne podejście.',
   },
   {
     q: 'Czy trzeba kupować podręcznik?',
@@ -201,9 +201,9 @@ useHead({
     jsonLdScript(
       buildOfferPageJsonLd({
         pageUrl,
-        name: 'Oferta i cennik angielskiego w Rumi',
+        name: 'Oferta i cennik zajęć z angielskiego w Rumi',
         description:
-          'Oferta i cennik lekcji angielskiego Talkateria w Rumi: pakiety roczne, pakiet MINI, zajęcia indywidualne, DUO i kurs egzaminacyjny.',
+          'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO, kursy egzaminacyjne, pakiet MINI i lekcje okazjonalne.',
         plans,
         faqs,
       }),
@@ -217,7 +217,7 @@ useHead({
     <section class="mx-auto max-w-3xl px-6 py-16 text-center md:py-24">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
       <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-        Oferta lekcji angielskiego w Rumi.
+        Cennik i oferta zajęć z angielskiego w Rumi.
       </h1>
       <p class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
         Każdy uczy się inaczej, dlatego oferuję różne formy zajęć. Wybierz kurs

@@ -118,10 +118,10 @@ const toggleFaq = (index) => {
 }
 
 useSeoMeta({
-  title: 'Zajęcia zdalne z angielskiego',
+  title: 'Angielski online – zajęcia zdalne',
   description:
-    'Zajęcia zdalne z angielskiego w Talkaterii w Rumi: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem.',
-  ogTitle: 'Zajęcia zdalne z angielskiego | Talkateria',
+    'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
+  ogTitle: 'Angielski online – zajęcia zdalne | Talkateria',
   ogDescription:
     'Angielski online bez dojazdów, z całej Polski: wygodnie, regularnie i z takim samym indywidualnym podejściem jak w studiu.',
 })
@@ -137,10 +137,10 @@ useHead({
     jsonLdScript(
       buildServicePageJsonLd({
         pageUrl,
-        pageName: 'Zajęcia zdalne z angielskiego',
+        pageName: 'Angielski online – zajęcia zdalne',
         pageDescription:
-          'Zajęcia zdalne z angielskiego w Talkaterii w Rumi: lekcje online na Zoomie z całej Polski, bez dojazdów, z indywidualnym planem.',
-        serviceName: 'Zajęcia zdalne z angielskiego',
+          'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
+        serviceName: 'Lekcje angielskiego online',
         serviceType: 'Lekcje języka angielskiego online',
         serviceDescription:
           'Indywidualne i kameralne zajęcia z języka angielskiego online na platformie Zoom, prowadzone przez studio w Rumi.',
@@ -179,7 +179,7 @@ useHead({
             Angielski online na Zoomie
           </span>
           <h1 class="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
-            Zajęcia zdalne z angielskiego bez dojazdów i bez tracenia jakości.
+            Angielski online bez dojazdów i bez tracenia jakości.
           </h1>
           <p class="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-primary-foreground/88">
             Uczysz się tam, gdzie jest Ci wygodnie, a lekcja nadal ma jasny

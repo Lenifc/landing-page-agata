@@ -6,12 +6,12 @@ const pageRoute = ROUTES.home
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
-  title: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
+  title: 'Angielski Rumia - zajęcia dla dorosłych i młodzieży, stacjonarne oraz online',
   description:
-    'Kameralne lekcje angielskiego w Rumi dla młodzieży i dorosłych z Rumi i okolic. Indywidualnie, w duecie lub małej grupie, z naciskiem na mówienie.',
-  ogTitle: 'Talkateria | Angielski Rumia - lekcje dla dorosłych i młodzieży',
+    'Kameralne lekcje angielskiego w Rumi dla młodzieży oraz dorosłych. Indywidualnie, w duecie lub małej grupie, z naciskiem na swobodne mówienie.',
+  ogTitle: 'Angielski w Rumi i online | Talkateria',
   ogDescription:
-    'Kameralne zajęcia z angielskiego dla osób z Rumi i okolic. Mniej stresu, więcej mówienia i praktyki.',
+    'Kameralne zajęcia z angielskiego w Rumi i online dla młodzieży oraz dorosłych. Mniej stresu, więcej mówienia i praktyki.',
 })
 
 const features = [

@@ -8,9 +8,9 @@ const pageRoute = ROUTES.contact
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
-  title: 'Kontakt – angielski Rumia',
+  title: 'Kontakt - zajęcia z angielskiego w Rumi',
   description:
-    'Skontaktuj się z Talkaterią w Rumi. Kameralne studio języka angielskiego przy ul. Wrocławskiej 2.',
+    'Skontaktuj się z Talkaterią w Rumi i zapytaj o lekcje angielskiego stacjonarnie lub online. Telefon, e-mail i formularz zgłoszeniowy.',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
     'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
@@ -86,10 +86,10 @@ useHead({
       <div class="mb-12 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
         <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-          Kontakt i lokalizacja studia.
+          Kontakt - zajęcia z angielskiego w Rumi.
         </h1>
         <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
-          Nie prowadzę stacjonarnego biura - kontakt odbywa się telefonicznie,
+          Nie prowadzę stacjonarnego sekretariatu - kontakt odbywa się telefonicznie,
           mailowo lub online.
         </p>
         <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
