@@ -176,15 +176,15 @@ useHead({
         <div class="max-w-2xl">
           <span
             class="inline-flex rounded-full bg-background/92 px-4 py-1.5 text-sm font-medium text-primary shadow-sm">
-            Angielski online na Zoomie
+            Angielski online
           </span>
           <h1 class="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
-            Angielski online bez dojazdów i bez tracenia jakości.
+            Angielski online: bez dojazdów i bez straty na jakości.
           </h1>
           <p class="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-primary-foreground/88">
-            Uczysz się tam, gdzie jest Ci wygodnie, a lekcja nadal ma jasny
-            plan, aktywną rozmowę, indywidualną informację zwrotną i materiały
-            dopasowane do Twojego celu. Bez dojazdów, także wtedy, gdy mieszkasz
+            Uczysz się tam, gdzie jest Ci najwygodniej, a lekcje nadal mają jasny plan, opierają się na
+            aktywnej rozmowie, indywidualnej informacji zwrotnej i materiałach dopasowanych do
+            Twojego celu. Oszczędzasz czas na dojazdy – to idealna opcja również wtedy, gdy mieszkasz
             daleko od Rumi.
           </p>
           <div class="mt-7 flex flex-wrap gap-4">
@@ -203,31 +203,43 @@ useHead({
 
     <section class="border-b border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-12">
-        <div class="grid gap-5 md:grid-cols-4">
-          <div>
-            <p class="font-serif text-3xl font-semibold text-primary">Zoom</p>
-            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-              lekcje online w stałym, prostym formacie
+        <div class="grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <div class="flex flex-col">
+            <h2 class="font-serif text-xl font-semibold leading-snug text-primary">
+              Zajęcia dla dorosłych
+            </h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Przełamywanie bariery, angielski na co dzień i do pracy (Business English). Koncentrujemy się
+              na mówieniu i aktywnej komunikacji bez nudnej teorii.
             </p>
           </div>
-          <div>
-            <p class="font-serif text-3xl font-semibold text-primary">
-              1:1 / DUO
-            </p>
-            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-              indywidualnie albo w parze
-            </p>
-          </div>
-          <div>
-            <p class="font-serif text-3xl font-semibold text-primary">Rumia+</p>
-            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-              wygodnie dla osób z całej Polski
+          <div class="flex flex-col">
+            <h2 class="font-serif text-xl font-semibold leading-snug text-primary">
+              Przygotowanie do egzaminów
+            </h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Egzamin ósmoklasisty i matura (podstawa/rozszerzenie). Omawiamy zadania egzaminacyjne,
+              poznajemy pewniaki testowe i budujemy pewność siebie.
             </p>
           </div>
-          <div>
-            <p class="font-serif text-3xl font-semibold text-primary">Plan</p>
-            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-              materiały i tempo dopasowane do celu nauki
+          <div class="flex flex-col">
+            <h2 class="font-serif text-xl font-semibold leading-snug text-primary">
+              Materiał szkolny
+            </h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Pomoc z bieżącym materiałem szkolnym i przygotowanie do sprawdzianów w szkole.
+              Nadrabiamy zaległości, poprawiamy oceny i zdejmujemy szkolny stres.
+            </p>
+          </div>
+          <div class="flex flex-col">
+            <h2 class="font-serif text-xl font-semibold leading-snug text-primary">
+              Nauka bez wychodzenia z domu
+            </h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Zajęcia zdalne w Talkaterii nie są „gorszą wersją” spotkania w studiu. To wygodna forma
+              pracy dla osób, które chcą uczyć się regularnie, mówić więcej i nie dokładać do nauki
+              kolejnej logistyki: dojazdów, odwoływania zajęć przy drobnym spadku formy czy rezygnacji z
+              kursu tylko dlatego, że mieszkają dalej.
             </p>
           </div>
         </div>
@@ -268,7 +280,7 @@ useHead({
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
-            Kiedy online się przydaje?
+            Kiedy najbardziej docenisz naukę online?
           </span>
           <h2 class="mt-4 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
             Zdalne zajęcia pomagają utrzymać kurs, gdy życie robi swoje.

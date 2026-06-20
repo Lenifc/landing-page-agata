@@ -8,24 +8,28 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 
 const focusAreas = [
   {
-    title: 'Poziom podstawowy i rozszerzony',
-    body: 'Dobieramy zakres pracy do celu ucznia: zdania egzaminacyjnego, progu punktowego, kierunku studiów albo potrzeby uporządkowania podstaw.',
-  },
-  {
-    title: 'Pisanie i mówienie',
-    body: 'Ćwiczymy wypowiedzi pisemne, argumentację, spójność tekstu oraz swobodne reagowanie w zadaniach ustnych.',
-  },
-  {
     title: 'Praca na arkuszach',
-    body: 'Uczeń oswaja format matury, uczy się strategii i regularnie dostaje informację zwrotną po zadaniach.',
+    body: `Uczniowie dokładnie poznają strukturę egzaminu i rozwiązują zadania z poprzednich lat.
+Wspólnie analizujemy błędy i na bieżąco wyjaśniam, z czego one wynikają. Dzięki temu
+uczniowie doskonale wiedzą, czego się spodziewać i nic ich nie zaskoczy.`,
+  },
+  {
+    title: 'Strategie egzaminacyjne',
+    body: `Pokażę, jak radzić sobie z pułapkami CKE, skutecznie zarządzać czasem i unikać
+błędów, które najczęściej zabierają punkty.`,
+  },
+  {
+    title: 'Mówienie',
+    body: 'Przełamujemy barierę językową i ćwiczymy płynną argumentację, aby egzamin ustny minął bez stresu i z pełną swobodą.',
   },
 ]
 
 const skills = [
-  'rozumienie ze słuchu i tekstów pisanych',
-  'środki językowe i typowe pułapki gramatyczne',
-  'wypowiedź pisemna z korektą i omówieniem',
-  'strategie rozwiązywania zadań pod presją czasu',
+  'Rozumienie ze słuchu i tekstów pisanych',
+  'Środki językowe i typowe pułapki gramatyczne',
+  'Wypowiedź pisemna z korektą i omówieniem',
+  'Mówienie i płynna argumentacja',
+  'Strategie rozwiązywania zadań egzaminacyjnych',
 ]
 
 const priceOptions = getPricingPlans('maturaExam')
@@ -33,7 +37,11 @@ const priceOptions = getPricingPlans('maturaExam')
 const faqs = [
   {
     q: 'Czy przygotowanie obejmuje poziom podstawowy i rozszerzony?',
-    a: 'Tak. Zakres pracy dobieram do poziomu matury, celu punktowego i tego, które obszary najmocniej wpływają na wynik: arkusze, słownictwo, gramatykę, pisanie albo strategie.',
+    a: `Tak, jak najbardziej. Przygotowuję do matury pisemnej zarówno na poziomie podstawowym,
+jak i rozszerzonym, a także do obowiązkowego egzaminu ustnego. Na zajęciach przerabiamy
+niezbędne pewniaki egzaminacyjne, oswajamy strukturę arkuszy oraz ćwiczymy tworzenie
+wypowiedzi pisemnych i swobodne mówienie, dzięki czemu na egzamin idziesz z pełnym
+spokojem.`,
   },
   {
     q: 'Czy na zajęciach są sprawdzane prace pisemne i ćwiczone konwersacje?',
@@ -41,7 +49,12 @@ const faqs = [
   },
   {
     q: 'Czy można zacząć przygotowanie w trakcie roku szkolnego?',
-    a: 'Tak, jeśli są dostępne terminy. Wtedy zaczynamy od diagnozy i ustalenia priorytetów, żeby skupić się na zadaniach, które dadzą najbardziej odczuwalną poprawę.',
+    a: `Tak, oba te elementy są kluczowe w przygotowaniu do matury. Regularnie ćwiczymy
+konwersacje pod kątem egzaminu ustnego (np. opisywanie ilustracji czy rozmowa z
+odgrywaniem roli), aby zyskać płynność i pewność siebie. Równie dużą wagę przykładamy do
+form pisemnych – wspólnie analizujemy błędy i sprawdzamy Twoje teksty (takie jak e-maile,
+wpisy na bloga czy rozprawki) pod kątem oficjalnych kryteriów oceniania arkusza
+maturalnego.`
   },
 ]
 
@@ -92,29 +105,36 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:pb-24">
       <div class="space-y-6">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Egzamin maturalny
         </span>
         <h1
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-          Przygotowanie do matury z angielskiego w Rumi.
+          Egzamin maturalny bez stresu? To możliwe!
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
-          Zajęcia w Rumi pomagają przełożyć wiedzę na wynik: porządkujemy
-          gramatykę, rozwijamy słownictwo, ćwiczymy arkusze i pracujemy nad
-          pisaniem oraz mówieniem. Program dopasowuję do poziomu podstawowego
-          lub rozszerzonego.
+          Kursy przygotowawcze dopasowane do Twoich potrzeb. Przygotowuję
+          kompleksowo do matury na poziomie podstawowym oraz rozszerzonym, a także do egzaminu
+          ustnego w studiu w Rumi lub online. Ucz się indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w
+          małej,
+          kameralnej grupie (do 4 osób). Stawiam na systematyczność, zrozumienie wymagań
+          egzaminacyjnych i regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
+          przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
+          <br><br>
+          Razem pracujemy na wysoki wynik, który otworzy Ci drzwi na wymarzone studia. Dbam o to,
+          by egzamin dojrzałości był dla Ciebie spokojnym podsumowaniem Twojej wiedzy i pewnym
+          krokiem w przyszłość, a nie źródłem paraliżującego lęku.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink :to="ROUTES.contact"
             class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
-            Umów konsultację
+            Skontaktuj się
           </NuxtLink>
           <NuxtLink :to="ROUTES.prices"
             class="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
-            Sprawdź ceny
+            Sprawdź cennik
           </NuxtLink>
         </div>
       </div>
@@ -129,12 +149,13 @@ useHead({
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Matura z angielskiego bez przypadkowych powtórek.
+            Kompleksowe przygotowanie do matury z angielskiego
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Najpierw sprawdzamy, co działa, a co zabiera punkty. Potem układamy
-            plan: arkusze, słownictwo, struktury, pisanie i strategie. Dzięki
-            temu uczeń wie, po co robi każde zadanie i jak mierzyć postęp.
+            Zapraszam zarówno tegorocznych maturzystów, jak i uczniów, którzy maturę zdają dopiero za
+            rok i chcą już teraz spokojnie rozpocząć przygotowania. Dobieram metody nauki i typy zadań
+            indywidualnie do ucznia lub grupy, aby maksymalnie wykorzystać potencjał i pozwolić uczniom
+            osiągnąć jak najlepszy wynik.
           </p>
         </div>
 
@@ -155,12 +176,17 @@ useHead({
     <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2">
       <div>
         <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-          Co ćwiczymy na zajęciach?
+          Jak wyglądają zajęcia?
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Zakres zależy od poziomu i celu maturzysty. Jeśli trzeba, wracamy do
-          fundamentów. Jeśli poziom jest wysoki, pracujemy nad precyzją,
-          bogatszym językiem i unikaniem typowych strat punktów.
+          Zajęcia odbywają się indywidualnie, w duecie lub w małych, kameralnych grupach do 4 osób, co
+          pozwala na pełne dopasowanie tempa i sposobu pracy do potrzeb każdego ucznia. Podczas
+          lekcji stawiamy na aktywne działanie i zero teorii do szuflady - duży nacisk kładę na praktyczną
+          naukę, systematyczne powtórki oraz bieżące omawianie pracy. Nie tylko wspólnie rozwiązujemy
+          zadania, ale od razu wyjaśniamy każdą wątpliwość. Dzięki stałej informacji zwrotnej cały proces
+          jest maksymalnie uporządkowany, uczeń dokładnie wie, na czym stoi, a jego postępy są jasno
+          widoczne z lekcji na lekcję.
+
         </p>
       </div>
 
@@ -187,14 +213,10 @@ useHead({
               Ile kosztuje przygotowanie do matury z angielskiego?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Przygotowanie do matury może odbywać się w kursie egzaminacyjnym
-              w kameralnej grupie maksymalnie 4-osobowej, obejmującym 25 spotkań
-              po 100 minut za {{ priceOptions[0].price }}. Dostępne są też
-              roczne pakiety 1:1: 30 lekcji po 50 minut, zwykle raz w tygodniu,
-              od {{ priceOptions[1].price }}, albo 60 lekcji po 50 minut, zwykle
-              w 30 cotygodniowych blokach po 2 × 50 minut, za
-              {{ priceOptions[2].price }}. Krótszy pakiet MINI obejmuje 20
-              lekcji po 50 minut i kosztuje {{ priceOptions[3].price }}.
+              Koszt kursu zależy od wybranej formy zajęć (lekcje 1:1, w duecie lub w mini grupie) oraz od
+              całkowitej liczby godzin w danym pakiecie. Harmonogram zawsze układamy tak, aby bez
+              pośpiechu zrealizować wszystkie zaplanowane lekcje i cały niezbędny materiał jeszcze przed
+              samym egzaminem.
             </p>
             <NuxtLink :to="ROUTES.prices"
               class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -267,11 +289,12 @@ useHead({
         <div
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
           <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
-            Potrzebujesz planu do matury?
+            Potrzebujesz pomocy w przygotowaniu do matury?
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
-            Napisz, czy chodzi o poziom podstawowy czy rozszerzony oraz ile
-            czasu zostało do egzaminu. Dobierzemy sensowny rytm pracy.
+            Napisz do mnie, czy przygotowujesz się do poziomu podstawowego czy rozszerzonego oraz ile
+            czasu zostało Ci do egzaminu. Wspólnie dobierzemy sensowny rytm pracy, który pozwoli Ci
+            powtórzyć cały materiał, oswoić arkusze i podejść do matury z pełnym spokojem.
           </p>
           <NuxtLink :to="ROUTES.contact"
             class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">

@@ -22,10 +22,12 @@ const needs = [
 ]
 
 const benefits = [
-  'tempo dopasowane do dorosłego kursanta',
-  'materiały dobrane do celu, nie przypadkowe rozdziały z podręcznika',
-  'możliwość nauki stacjonarnie w Rumi albo online',
-  'duży nacisk na praktyczne użycie języka',
+  'Praktyczne użycie języka',
+  'Materiały dobrane do celu, nie przypadkowe rozdziały z podręcznika',
+  'Jasne wyjaśnienie zagadnień',
+  'Możliwość nauki stacjonarnie w Rumi albo online',
+  'Naturalna komunikacja',
+  'Duży nacisk na praktyczne użycie języka',
 ]
 
 const priceOptions = getPricingPlans('adultClasses')
@@ -33,15 +35,25 @@ const priceOptions = getPricingPlans('adultClasses')
 const faqs = [
   {
     q: 'Czy mogę zacząć od podstaw?',
-    a: 'Tak. Zajęcia mogą być prowadzone od zera albo jako spokojny powrót po dłuższej przerwie. Tempo, materiały i zakres dobieram do aktualnego poziomu.',
+    a: `Tak! Zajęcia mogą być prowadzone całkowicie od zera albo jako spokojny, bezstresowy powrót
+do nauki po dłuższej przerwie. Nie musisz się niczym martwić – tempo pracy, materiały oraz
+zakres materiału zawsze dobieram indywidualnie do Twojego aktualnego poziomu i
+możliwości.`,
   },
   {
     q: 'Czy zajęcia mogą być głównie konwersacyjne?',
-    a: 'Tak. Jeśli celem jest swobodniejsze mówienie, lekcje opieramy na rozmowie, praktycznych reakcjach, poprawianiu błędów i słownictwie potrzebnym w realnych sytuacjach.',
+    a: `Tak, jak najbardziej! Jeśli Twoim głównym celem jest przełamanie bariery i swobodne
+dogadywanie się w podróży lub w pracy, możemy skupić się przede wszystkim na mówieniu.
+Lekcje opieramy wtedy na naturalnych dyskusjach i symulacjach życiowych sytuacji, a
+gramatykę czy nowe słownictwo wprowadzamy "w locie", w trakcie praktycznej rozmowy.
+`,
   },
   {
     q: 'Czy można uczyć się online?',
-    a: 'Tak. Dorośli często wybierają online, kiedy trudno pogodzić naukę z pracą, dojazdami albo domowym grafikiem. Można też łączyć zajęcia stacjonarne i zdalne, jeśli pozwala na to plan.',
+    a: `Tak. Dorośli często wybierają formę online, kiedy trudno pogodzić naukę z pracą, dojazdami
+albo napiętym domowym grafikiem. Co ważne, nie musisz sztywno trzymać się jednego
+rozwiązania - jeśli Twój plan w danym tygodniu tego wymaga, możemy elastycznie łączyć
+zajęcia stacjonarne ze zdalnymi.`,
   },
 ]
 
@@ -106,7 +118,7 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:pb-24">
       <div class="space-y-6">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Zajęcia dla dorosłych
@@ -116,15 +128,15 @@ useHead({
           Angielski dla dorosłych w Rumi, bez presji i szkolnego stresu.
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
-          Jeśli chcesz wrócić do angielskiego, przełamać barierę mówienia albo
-          poczuć się pewniej w pracy i podróży, zajęcia dla dorosłych w Rumi są
-          układane wokół Twojego celu. Praktycznie, spokojnie i w tempie, które
-          da się połączyć z codziennym życiem.
+          Nigdy nie jest za późno, aby zacząć mówić swobodnie. Ten kurs jest stworzony dla osób, które
+          chcą przełamać barierę językową, odświeżyć wiedzę po latach lub potrzebują angielskiego do
+          celów zawodowych i codziennej komunikacji. Program dopasowuję do Twojego tempa życia,
+          celów oraz aktualnego poziomu – bez stresu, szkolnego oceniania i w przyjaznej atmosferze.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink :to="ROUTES.contact"
             class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
-            Umów lekcję
+            Skontaktuj się
           </NuxtLink>
           <NuxtLink :to="ROUTES.prices"
             class="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -170,12 +182,18 @@ useHead({
     <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2">
       <div>
         <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-          Jak może wyglądać nauka?
+          Jak wyglądają zajęcia?
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Możemy skupić się na konwersacjach, powrocie do podstaw, angielskim do
-          pracy albo bieżących sytuacjach z życia. Zajęcia mogą odbywać się
-          indywidualnie, w parze lub online.
+          Zajęcia prowadzę indywidualnie lub w duetach (w parze), co pozwala w pełni dopasować formę
+          pracy do potrzeb i celów ucznia. Lekcje mogą odbywać się stacjonarnie w moim studio w Rumi
+          lub w wygodnej formie online. Każda lekcja jest starannie zaplanowana pod kątem tematyki
+          oraz tempa nauki, tak aby wspierać rozwój kompetencji językowych w obszarach
+          najważniejszych dla ucznia - w życiu codziennym lub zawodowym.
+          <br><br>
+          Podczas zajęć koncentrujemy się na praktycznym użyciu języka, naturalnej komunikacji oraz
+          jasnym wyjaśnianiu zagadnień. Dzięki spokojnej, wspierającej atmosferze uczniowie stopniowo
+          przełamują barierę językową i budują pewność w swobodnym posługiwaniu się angielskim.
         </p>
       </div>
 
@@ -202,12 +220,9 @@ useHead({
               Ile kosztuje angielski dla dorosłych?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Zajęcia indywidualne w pakiecie rocznym zaczynają się od
-              {{ priceOptions[0].price }} za 30 spotkań po 50 minut raz w
-              tygodniu. Przy dwóch lekcjach tygodniowo pakiet roczny obejmuje 60
-              spotkań i kosztuje {{ priceOptions[1].price }}. Jeśli chcesz uczyć
-              się z drugą osobą, dostępne są też pakiety DUO, pakiet MINI i
-              lekcje okazjonalne.
+              Koszt zajęć zależy od liczby lekcji w pakiecie oraz wybranej formy nauki – indywidualnie lub w
+              parze. Dzięki elastycznej ofercie możesz dopasować kurs do swojego tempa nauki, celów oraz
+              możliwości finansowych.
             </p>
             <NuxtLink :to="ROUTES.prices"
               class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -278,11 +293,11 @@ useHead({
         <div
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
           <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
-            Chcesz wrócić do angielskiego po przerwie?
+            Chcesz swobodnie mówić po angielsku?
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
-            Napisz, do czego potrzebujesz języka. Dobierzemy spokojny plan,
-            który będzie pasował do Twojego celu i czasu.
+            Napisz, do czego potrzebujesz języka, a wspólnie ułożymy spokojny plan dopasowany do
+            Twojego celu i czasu, którym dysponujesz.
           </p>
           <NuxtLink :to="ROUTES.contact"
             class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">

@@ -214,7 +214,7 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-3xl px-6 py-16 text-center md:py-24">
+    <section class="mx-auto max-w-3xl px-6 py-16 text-center md:pb-24">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
       <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
         Cennik i oferta zajęć z angielskiego w Rumi.
@@ -412,7 +412,7 @@ useHead({
               <div
                 class="mt-2 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]">
                 <div
-                  class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid">
+                  class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(244,246,248,0.95),rgba(255,255,255,0.98),rgba(247,248,250,0.98))] md:grid">
                   <div class="px-5 py-3 text-sm font-semibold text-foreground">
                     Rodzaj zajęć
                   </div>
@@ -427,7 +427,7 @@ useHead({
                 <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
                   class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
                   :class="plan.featured
-                    ? 'bg-[linear-gradient(90deg,rgba(218,235,255,0.46),rgba(255,255,255,0.98),rgba(239,252,247,0.98))]'
+                    ? 'bg-[linear-gradient(90deg,rgba(244,246,248,0.7),rgba(255,255,255,0.98),rgba(247,248,250,0.98))]'
                     : 'bg-card'
                     ">
                   <div class="px-4 py-3.5 md:px-5">
@@ -479,7 +479,7 @@ useHead({
           <div v-else
             class="mt-5 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]">
             <div
-              class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(218,235,255,0.9),rgba(248,252,255,0.98),rgba(239,252,247,0.98))] md:grid">
+              class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(244,246,248,0.95),rgba(255,255,255,0.98),rgba(247,248,250,0.98))] md:grid">
               <div class="px-5 py-3 text-sm font-semibold text-foreground">
                 Rodzaj zajęć
               </div>

@@ -105,23 +105,23 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
-      <div class="space-y-6">
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-12 md:grid-cols-2 md:pb-24">
+      <div class="flex flex-col gap-6">
         <span
-          class="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm">
+          class="order-3 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1">
           Przygotowanie do egzaminów • Pomoc z materiałem szkolnym • Konwersacje
         </span>
         <h1
-          class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
+          class="order-1 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:order-2 md:text-5xl">
           Talkateria - English Studio
         </h1>
-        <p class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p class="order-2 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground md:order-3">
           Kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i
           dorosłym rozwijać pewność siebie w mówieniu po angielsku, przygotować
           się do matury i egzaminu ósmoklasisty oraz skutecznie radzić sobie z
           materiałem szkolnym.
         </p>
-        <div class="flex flex-wrap items-center gap-4">
+        <div class="order-4 flex flex-wrap items-center gap-4">
           <NuxtLink :to="ROUTES.contact"
             class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.22)] transition-all hover:-translate-y-0.5 hover:opacity-90">
             Zapisz się teraz →

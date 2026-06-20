@@ -8,40 +8,69 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 
 const focusAreas = [
   {
-    title: 'Arkusze i typy zadań',
-    body: 'Ćwiczymy czytanie, słuchanie, funkcje językowe, środki językowe oraz wypowiedź pisemną na zadaniach podobnych do egzaminacyjnych.',
+    title: 'Arkusze i typy zadań bez stresu',
+    body: `Od pierwszych zajęć pracujemy na autentycznych zadaniach w formacie egzaminacyjnym.
+Ćwiczymy czytanie, słuchanie, środki i funkcje językowe oraz wypowiedź pisemną, dzięki czemu
+uczeń dokładnie wie, czego się spodziewać na egzaminie.`,
   },
   {
-    title: 'Strategie egzaminacyjne',
-    body: 'Uczeń uczy się, jak czytać polecenia, zarządzać czasem, eliminować błędne odpowiedzi i sprawdzać pracę przed oddaniem.',
+    title: 'Skuteczne strategie egzaminacyjne',
+    body: `Uczę, jak krok po kroku rozwiązywać zadania, dobrze analizować polecenia i świadomie
+zarządzać czasem. Pokazuję sprawdzone metody eliminowania błędnych odpowiedzi oraz
+skutecznego sprawdzania arkusza przed oddaniem.`,
   },
   {
-    title: 'Gramatyka i słownictwo',
-    body: 'Porządkujemy najważniejsze struktury oraz słownictwo wymagane na egzaminie ósmoklasisty z języka angielskiego.',
+    title: 'Uporządkowana gramatyka i słownictwo',
+    body: `Porządkujemy i utrwalamy najważniejsze struktury oraz słownictwo wymagane na egzaminie.
+Uczniowie uczą się, jak wykorzystać swoją wiedzę w praktyce i zdobywać maksymalną liczbę
+punktów.`,
   },
 ]
 
 const steps = [
-  'Diagnoza poziomu i obszarów wymagających pracy.',
-  'Regularna praca na zadaniach egzaminacyjnych.',
-  'Powtórki gramatyczno-leksykalne wplecione w praktykę.',
-  'Ćwiczenie krótkich form pisemnych z jasną informacją zwrotną.',
+  {
+    title: 'Diagnoza poziomu',
+    body: 'Na początku sprawdzam poziom ucznia oraz obszary wymagające pracy, aby dopasować materiały i tempo nauki.',
+  },
+  {
+    title: 'Praca na zadaniach egzaminacyjnych',
+    body: 'Regularnie ćwiczymy zadania w formacie egzaminu ósmoklasisty, oswajając się z jego strukturą i wymaganiami.',
+  },
+  {
+    title: 'Powtórki w praktyce',
+    body: 'Gramatyka i słownictwo są utrwalane w trakcie pracy z zadaniami, dzięki czemu wiedza jest od razu stosowana w praktyce.',
+  },
+  {
+    title: 'Ćwiczenie wypowiedzi pisemnych',
+    body: 'Tworzymy krótkie formy pisemne i omawiamy je z jasną informacją zwrotną, co pozwala szybko poprawiać błędy i robić postępy.',
+  },
 ]
 
 const priceOptions = getPricingPlans('eighthGradeExam')
 
 const faqs = [
   {
-    q: 'Kiedy najlepiej zacząć przygotowania do egzaminu?',
-    a: 'Najwygodniej zacząć w 7. klasie albo na początku 8. klasy, bo wtedy jest czas na spokojną diagnozę, powtórki i regularne arkusze. Jeśli do egzaminu zostało mniej czasu, można ułożyć bardziej intensywny plan pracy.',
+    q: 'Kiedy najlepiej zacząć przygotowania do egzaminu ósmoklasisty?',
+    a: `Im wcześniej, tym spokojniej i skuteczniej. Najlepszy moment to 7. klasa lub początek 8. klasy –
+daje to czas na spokojne poznanie poziomu ucznia, systematyczne powtórki oraz regularną
+pracę z arkuszami egzaminacyjnymi.\n
+Jeśli do egzaminu pozostało niewiele czasu, spokojnie – układam intensywny plan pracy i
+skupiam się z uczniem na najważniejszych typach zadań oraz kluczowych zagadnieniach
+egzaminacyjnych, tak aby maksymalnie wykorzystać każdy pozostały tydzień.`,
   },
   {
     q: 'Czy zajęcia pomagają też przy zaległościach szkolnych?',
-    a: 'Tak. Przygotowanie egzaminacyjne często łączymy z porządkowaniem podstaw: gramatyki, słownictwa i typowych zadań, które sprawiają uczniowi najwięcej trudności w szkole.',
+    a: `Tak, jak najbardziej. Egzamin ósmoklasisty sprawdza materiał z całej szkoły podstawowej,
+dlatego przygotowanie do niego naturalnie łączymy z nadrabianiem zaległości. Wracamy do
+podstaw gramatyki, uzupełniamy słownictwo i wspólnie przerabiamy te tematy, które sprawiają
+uczniowi najwięcej trudności na bieżących lekcjach w szkole. Dzięki temu oceny również idą w
+górę!`,
   },
   {
-    q: 'Czy uczeń dostaje informację zwrotną po zadaniach?',
-    a: 'Tak. Omawiamy błędy, zapisujemy najważniejsze rzeczy do poprawy i wracamy do nich na kolejnych lekcjach, żeby uczeń widział, co już działa, a co wymaga powtórki.',
+    q: 'Czy uczeń dostaje informację zwrotną po wykonaniu zadań?',
+    a: `Oczywiście! Informacja zwrotna to istotny element moich zajęć. Dokładnie omawiamy wykonane
+zadania i analizujemy popełnione błędy. Dzięki temu uczeń zawsze wie, które zagadnienia już
+opanował, a nad czym powinien jeszcze popracować.`,
   },
 ]
 
@@ -93,20 +122,23 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:pb-24">
       <div class="space-y-6">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Egzamin ósmoklasisty
         </span>
         <h1
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-          Przygotowanie do egzaminu ósmoklasisty z angielskiego w Rumi.
+          Egzamin ósmoklasisty bez stresu? To możliwe!
         </h1>
         <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
-          Zajęcia w Rumi pomagają uporządkować materiał, oswoić arkusze i
-          zbudować pewność przed egzaminem. Pracujemy spokojnie, regularnie i
-          konkretnie: na zadaniach, strategiach oraz tych obszarach, które
-          najbardziej wpływają na wynik.
+          Kursy przygotowawcze dopasowane do Twoich potrzeb prowadzone w studiu w Rumi lub online - ucz się
+          indywidualnie,
+          w duecie z przyjacielem lub przyjaciółką albo w małej, kameralnej grupie (do 4 osób). Stawiamy
+          na systematyczność i regularne powtórki, dzięki czemu uczniowie płynnie przyswajają wiedzę i
+          oswajają formułę tego testu. Razem pracujemy na wysoki wynik, dbając jednocześnie o to, by
+          ten ważny dzień był dla nastolatka spokojnym podsumowaniem jego sukcesów, a nie źródłem
+          lęku.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink :to="ROUTES.contact"
@@ -133,10 +165,10 @@ useHead({
             Co obejmuje przygotowanie?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Program zajęć dopasowuję do poziomu ucznia, terminu egzaminu i tego,
-            co wymaga najwięcej powtórek. Dzięki temu nauka nie jest chaotyczna,
-            tylko prowadzi od diagnozy do coraz pewniejszego rozwiązywania
-            zadań.
+            Program zajęć oraz metody pracy dobieram indywidualnie do potrzeb każdego ucznia lub grupy,
+            biorąc pod uwagę poziom startowy, termin egzaminu i zagadnienia, które wymagają najwięcej
+            powtórek. Dzięki temu nauka nie jest chaotyczna, lecz prowadzi - od wstępnej diagnozy - do
+            coraz pewniejszego i samodzielnego rozwiązywania zadań.
           </p>
         </div>
 
@@ -151,36 +183,51 @@ useHead({
             </p>
           </article>
         </div>
+        <div class="max-w-3xl">
+          <p class="pt-8 text-pretty leading-relaxed text-muted-foreground">
+            Efekt? Uczeń podchodzi do egzaminu spokojnie, świadomy swoich umiejętności i dobrze
+            przygotowany - bez stresu, za to z realną szansą na wysoki wyni
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2">
-      <div>
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <div class="max-w-3xl">
         <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-          Dla kogo są te zajęcia?
+          Dla kogo przeznaczone są zajęcia?
         </h2>
         <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Dla uczniów klas 7 i 8, którzy chcą spokojnie przygotować się do
-          egzaminu ósmoklasisty z angielskiego. Zajęcia sprawdzą się zarówno
-          wtedy, gdy trzeba nadrobić zaległości, jak i wtedy, gdy celem jest
-          wyższy wynik oraz większa swoboda w pracy z arkuszem.
+          Dla uczniów klas 7 i 8, którzy chcą dobrze przygotować się do egzaminu ósmoklasisty z języka
+          angielskiego i podejść do niego bez stresu. To idealne rozwiązanie zarówno dla osób, które
+          chcą nadrobić zaległości, jak i dla tych, które celują w wysoki wynik i większą pewność w pracy
+          z arkuszem egzaminacyjnym.
         </p>
       </div>
 
-      <div class="rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <h2 class="font-serif text-2xl font-semibold text-foreground">
-          Jak pracujemy krok po kroku
+      <div class="mt-14 max-w-3xl">
+        <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
+          Jak wyglądają zajęcia?
         </h2>
-        <ul class="mt-5 space-y-4">
-          <li v-for="(step, index) in steps" :key="step" class="flex gap-4 text-muted-foreground">
+      </div>
+
+      <ol class="mt-10 grid gap-5 md:grid-cols-2">
+        <li v-for="(step, index) in steps" :key="step.title"
+          class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div class="flex items-center gap-4">
             <span
-              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-sm">
               {{ index + 1 }}
             </span>
-            <span class="pt-1 leading-relaxed">{{ step }}</span>
-          </li>
-        </ul>
-      </div>
+            <h3 class="font-serif text-xl font-semibold text-foreground">
+              {{ step.title }}
+            </h3>
+          </div>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            {{ step.body }}
+          </p>
+        </li>
+      </ol>
     </section>
 
     <section class="border-y border-border bg-secondary">
@@ -194,14 +241,10 @@ useHead({
               Ile kosztuje przygotowanie do egzaminu ósmoklasisty?
             </h2>
             <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              Najczęściej wybieraną formą przygotowań jest kurs egzaminacyjny
-              w kameralnej grupie maksymalnie 4-osobowej, obejmujący 25 spotkań
-              po 100 minut za {{ priceOptions[0].price }}. Dostępne są też
-              roczne pakiety 1:1: 30 lekcji po 50 minut, zwykle raz w tygodniu,
-              od {{ priceOptions[1].price }}, albo 60 lekcji po 50 minut, zwykle
-              w 30 cotygodniowych blokach po 2 × 50 minut, za
-              {{ priceOptions[2].price }}. Krótszy pakiet MINI obejmuje 20
-              lekcji po 50 minut i kosztuje {{ priceOptions[3].price }}.
+              Cena kursu zależy od liczby uczestników oraz wybranej liczby lekcji w pakiecie. Oferuję
+              warianty, które pozwalają dopasować formę oraz intensywność zajęć do indywidualnych potrzeb
+              ucznia. Harmonogram układam tak, aby bez pośpiechu zrealizować cały materiał przed
+              egzaminem.
             </p>
             <NuxtLink :to="ROUTES.prices"
               class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -262,7 +305,7 @@ useHead({
             </button>
           </h3>
           <p :id="`exam-faq-answer-${index}`" v-show="openFaqIndex === index"
-            class="pb-6 text-pretty leading-relaxed text-muted-foreground">
+            class="whitespace-pre-line pb-6 text-pretty leading-relaxed text-muted-foreground">
             {{ faq.a }}
           </p>
         </div>

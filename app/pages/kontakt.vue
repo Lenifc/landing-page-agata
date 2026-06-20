@@ -82,7 +82,7 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+    <section class="mx-auto max-w-6xl px-6 py-16 md:pb-24">
       <div class="mb-12 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
         <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
