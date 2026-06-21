@@ -170,17 +170,16 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="relative isolate overflow-hidden border-b border-border bg-foreground text-primary-foreground">
-      <img src="/photos/online-hero-960.webp"
-        srcset="/photos/online-hero-640.webp 640w, /photos/online-hero-960.webp 960w, /photos/online-hero-1280.webp 1280w, /photos/online-hero-1600.webp 1600w"
-        sizes="(min-width: 1280px) 60vw, (min-width: 768px) 70vw, 100vw"
-        alt="Osoba uczestnicząca w lekcji angielskiego online przy laptopie"
-        class="absolute inset-0 -z-20 h-full w-full object-cover md:object-contain md:object-right" width="960"
-        height="640" fetchpriority="high" />
+    <section
+      class="relative isolate overflow-hidden border-b border-border bg-foreground text-primary-foreground lg:h-[650px]">
+      <img src="/photos/online-hero-960.webp" alt="Osoba uczestnicząca w lekcji angielskiego online przy laptopie"
+        class="online-hero-image absolute inset-y-0 right-0 -z-20 h-full w-full object-cover object-[25%_center] md:w-[70%] md:object-contain md:object-right lg:w-auto lg:max-w-none"
+        width="974" height="650" fetchpriority="high" />
       <div
-        class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(17,31,55,0.88),rgba(17,31,55,0.64),rgba(17,31,55,0.2))]" />
+        class="absolute inset-0 -z-10 bg-foreground/75 md:bg-transparent md:bg-[linear-gradient(90deg,#111f37_0%,#111f37_34%,rgba(17,31,55,0.92)_40%,rgba(17,31,55,0.74)_48%,rgba(17,31,55,0.5)_57%,rgba(17,31,55,0.28)_66%,rgba(17,31,55,0.12)_76%,transparent_86%)] lg:hidden" />
 
-      <div class="mx-auto flex min-h-[68svh] max-w-6xl items-center px-6 py-14 md:min-h-[70svh] md:py-20">
+      <div
+        class="mx-auto flex min-h-[68svh] max-w-6xl items-center px-6 py-14 md:min-h-[70svh] md:py-20 lg:h-full lg:min-h-0 lg:py-16">
         <div class="max-w-2xl">
           <span
             class="inline-flex rounded-full bg-background/92 px-4 py-1.5 text-sm font-medium text-primary shadow-sm">
@@ -445,3 +444,24 @@ useHead({
     </section>
   </main>
 </template>
+
+<style scoped>
+@media (min-width: 1024px) {
+  .online-hero-image {
+    -webkit-mask-image: linear-gradient(to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.35) 10%,
+        rgba(0, 0, 0, 0.7) 22%,
+        rgba(0, 0, 0, 0.9) 32%,
+        #000 40%);
+    mask-image: linear-gradient(to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.35) 10%,
+        rgba(0, 0, 0, 0.7) 22%,
+        rgba(0, 0, 0, 0.9) 32%,
+        #000 40%);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+}
+</style>
