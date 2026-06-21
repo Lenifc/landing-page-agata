@@ -4,6 +4,7 @@ import { SITE_URL } from './routes'
 export const BUSINESS_ID = `${SITE_URL}/#talkateria`
 export const BUSINESS_NAME = 'Talkateria'
 export const BUSINESS_LEGAL_NAME = 'English Coaching Agata Pionke'
+export const BUSINESS_NIP = '5871737427'
 export const BUSINESS_LOGO = Object.freeze({
   '@type': 'ImageObject',
   url: `${SITE_URL}/talkateria-logo.png`,

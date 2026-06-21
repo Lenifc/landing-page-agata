@@ -131,10 +131,10 @@ useHead({
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
           Egzamin ósmoklasisty bez stresu? To możliwe!
         </h1>
-        <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p class="text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           Kursy przygotowawcze dopasowane do Twoich potrzeb prowadzone w studiu w Rumi lub online - ucz się
           indywidualnie,
-          w duecie z przyjacielem lub przyjaciółką albo w małej, kameralnej grupie (do 4 osób). Stawiamy
+          w duecie z przyjacielem lub przyjaciółką albo w małej, kameralnej grupie (do 4 osób).<br><br> Stawiam
           na systematyczność i regularne powtórki, dzięki czemu uczniowie płynnie przyswajają wiedzę i
           oswajają formułę tego testu. Razem pracujemy na wysoki wynik, dbając jednocześnie o to, by
           ten ważny dzień był dla nastolatka spokojnym podsumowaniem jego sukcesów, a nie źródłem
@@ -153,8 +153,11 @@ useHead({
       </div>
 
       <div class="overflow-hidden rounded-[2rem] border border-border shadow-sm">
-        <img src="/lesson-2.webp" alt="Materiały i notatki do nauki angielskiego przed egzaminem ósmoklasisty"
-          class="h-full w-full object-cover" width="1024" height="1024" loading="eager" />
+        <img src="/photos/egzamin-osmoklasisty-hero-800.webp"
+          srcset="/photos/egzamin-osmoklasisty-hero-400.webp 400w, /photos/egzamin-osmoklasisty-hero-800.webp 800w, /photos/egzamin-osmoklasisty-hero-1200.webp 1200w"
+          sizes="(min-width: 1152px) 528px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 48px)"
+          alt="Materiały i notatki do nauki angielskiego przed egzaminem ósmoklasisty"
+          class="h-full w-full object-cover" width="800" height="800" loading="eager" />
       </div>
     </section>
 
@@ -186,7 +189,7 @@ useHead({
         <div class="max-w-3xl">
           <p class="pt-8 text-pretty leading-relaxed text-muted-foreground">
             Efekt? Uczeń podchodzi do egzaminu spokojnie, świadomy swoich umiejętności i dobrze
-            przygotowany - bez stresu, za to z realną szansą na wysoki wyni
+            przygotowany - bez stresu, za to z realną szansą na wysoki wynik.
           </p>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import {
   BUSINESS_LEGAL_NAME,
   BUSINESS_NAME,
+  BUSINESS_NIP,
   BUSINESS_REFERENCE,
 } from '~/config/business'
 import { CONTACT } from '~/config/contact'
@@ -9,7 +10,7 @@ import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.privacyPolicy
 const pageUrl = `${SITE_URL}${pageRoute}`
-const updatedAt = '11 czerwca 2026 r.'
+const updatedAt = '21 czerwca 2026 r.'
 
 useSeoMeta({
   title: 'Polityka prywatności',
@@ -61,7 +62,8 @@ useHead({
         <h2 class="text-xl font-semibold">1. Administrator danych</h2>
         <p>
           Administratorem danych osobowych jest {{ BUSINESS_LEGAL_NAME }},
-          prowadząca studio języka angielskiego {{ BUSINESS_NAME }} w Rumi.
+          prowadząca studio języka angielskiego {{ BUSINESS_NAME }} w Rumi,
+          NIP: {{ BUSINESS_NIP }}.
         </p>
         <p>Adres studia: {{ CONTACT.addressShort }}.</p>
         <p>
@@ -71,10 +73,7 @@ useHead({
         </p>
         <p>
           Kontakt w sprawach związanych z danymi osobowymi:
-          <a
-            :href="`mailto:${CONTACT.email}`"
-            class="text-primary underline underline-offset-4"
-          >
+          <a :href="`mailto:${CONTACT.email}`" class="text-primary underline underline-offset-4">
             {{ CONTACT.email }}
           </a>
           lub tel. {{ CONTACT.phoneNumber }}.
@@ -148,28 +147,22 @@ useHead({
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">5. Usługi Google</h2>
         <p>
-          Na stronie może być osadzony formularz Google Forms. Wypełnienie
+          Na stronie jest osadzony formularz Google Forms. Wypełnienie
           formularza jest dobrowolne. Dane wpisane w formularzu mogą być
           przetwarzane także przez Google Ireland Limited jako dostawcę
           narzędzia.
         </p>
         <p>
-          W przyszłości na stronie może pojawić się także mapa Google z
-          lokalizacją studia. Po otwarciu formularza lub mapy Google może
-          przetwarzać dane techniczne, takie jak adres IP, informacje o
-          przeglądarce, urządzeniu, aktywności oraz lokalizacji, zależnie od
-          ustawień użytkownika i usług Google.
+          Na stronie jest także osadzona mapa Google z lokalizacją studia. Po
+          otwarciu formularza lub mapy Google może przetwarzać dane techniczne,
+          takie jak adres IP, informacje o przeglądarce, urządzeniu, aktywności
+          oraz lokalizacji, zależnie od ustawień użytkownika i usług Google.
         </p>
         <p>
           Zasady przetwarzania danych przez Google opisuje
-          <a
-            href="https://policies.google.com/privacy?hl=pl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-primary underline underline-offset-4"
-          >
-            Polityka prywatności Google</a
-          >.
+          <a href="https://policies.google.com/privacy?hl=pl" target="_blank" rel="noopener noreferrer"
+            class="text-primary underline underline-offset-4">
+            Polityka prywatności Google</a>.
         </p>
         <p>
           Zamiast formularza możesz skontaktować się bezpośrednio mailowo,

@@ -53,25 +53,12 @@ const usefulWhen = [
 ]
 
 const lessonFlow = [
-  'spotykamy się na Zoomie o ustalonej godzinie',
-  'pracujemy na rozmowie, wspólnych materiałach i zadaniach dopasowanych do celu',
-  'po lekcji możesz dostać krótką powtórkę, zadanie lub materiały do utrwalenia',
-  'kolejne spotkanie zaczynamy od sprawdzenia, co zostało w głowie i co wymaga powrotu',
-]
-
-const forWhom = [
-  {
-    title: 'Dorośli',
-    body: 'Dla osób, które chcą wrócić do angielskiego, mówić swobodniej albo uczyć się języka do pracy i podróży bez dokładania dojazdów do planu dnia.',
-  },
-  {
-    title: 'Uczniowie i maturzyści',
-    body: 'Dla uczniów, którzy potrzebują regularnego wsparcia, powtórek, przygotowania do sprawdzianów, egzaminu ósmoklasisty albo matury.',
-  },
-  {
-    title: 'Osoby spoza Rumi',
-    body: 'Dla kursantów z innych miast i całej Polski, którzy chcą uczyć się w Talkaterii, ale nie mogą lub nie chcą regularnie dojeżdżać do studia.',
-  },
+  'Otrzymasz link do spotkania, w który wystarczy kliknąć o umówionej porze — nie musisz nic instalować ani zakładać konta.',
+  'Spotykamy się na Zoomie o ustalonej godzinie',
+  'Pracujemy poprzez rozmowę, ćwiczenia i materiały dopasowane do Twojego celu.',
+  'Po lekcji możesz zapisać na czacie najważniejsze notatki z zajęć lub otrzymać dostęp do materiałów, zadań i linków omawianych podczas lekcji.',
+  'Jeśli masz pytania lub dodatkowe potrzeby, omawiamy je podczas lekcji.',
+  'Uczysz się w swoim tempie, a plan zajęć na bieżąco dopasowujemy do Twoich potrzeb.'
 ]
 
 const priceOptions = getPricingPlans('onlineClasses')
@@ -91,15 +78,27 @@ const faqs = [
   },
   {
     q: 'Czego potrzebuję do lekcji online?',
-    a: 'Wystarczy stabilne połączenie internetowe, komputer lub tablet, kamerka, mikrofon i spokojne miejsce do rozmowy. Link do spotkania dostajesz przed zajęciami.',
+    a: `Wystarczy stabilne połączenie internetowe, komputer lub tablet, kamerka oraz mikrofon.
+Wiele osób chętnie korzysta też ze słuchawek, co pomaga lepiej się skupić i odciąć od
+otoczenia. Przyda się również spokojne miejsce do rozmowy oraz – jeśli lubisz taką formę –
+tradycyjny zeszyt lub kartka do robienia własnych notatek. Link do spotkania dostajesz ode
+mnie przed zajęciami, więc nie musisz niczego wcześniej instalować.
+`,
   },
   {
     q: 'Czy online można przygotować się do egzaminu?',
-    a: 'Tak. Zdalnie można pracować na arkuszach, strategiach, słuchaniu, czytaniu, gramatyce i pisaniu. To dobra forma zarówno do egzaminu ósmoklasisty, jak i matury z angielskiego.',
+    a: `Zajęcia online świetnie sprawdzają się w przygotowaniu do egzaminów. Pracujemy na
+arkuszach, rozwijamy strategie egzaminacyjne oraz ćwiczymy słuchanie, czytanie, gramatykę
+i pisanie. To skuteczna forma nauki zarówno do egzaminu ósmoklasisty, jak i matury z języka
+angielskiego - szczególnie przy napiętym harmonogramie maturzysty.`,
   },
   {
     q: 'Czy mogę łączyć zajęcia zdalne ze stacjonarnymi?',
-    a: 'Tak, jeśli pozwala na to grafik. Część kursantów uczy się głównie w studiu, a pojedyncze lekcje robi online, gdy dojazd danego dnia jest niewygodny.',
+    a: `Tak, jeśli pozwala na to grafik. Możesz łączyć zajęcia stacjonarne w studiu z lekcjami online.
+Wielu kursantów uczy się głównie stacjonarnie, a online korzysta okazjonalnie, gdy wygodniej
+zostać w domu. To wygodne rozwiązanie, które pozwala utrzymać regularność nauki bez
+rezygnowania z elastyczności i dopasować formę zajęć do Twoich aktualnych potrzeb i planu
+dnia.`,
   },
   {
     q: 'Czy zajęcia online są dostępne tylko dla osób z okolic Rumi?',
@@ -107,7 +106,12 @@ const faqs = [
   },
   {
     q: 'Co jeśli gorzej się czuję w dniu lekcji?',
-    a: 'Jeśli choroba wymaga odpoczynku, lepiej przełożyć zajęcia. Jeśli jednak czujesz się wystarczająco dobrze na spokojną pracę, lekcja online pozwala zostać w domu i nie wypaść z rytmu nauki.',
+    a:
+      'Jeśli czujesz, że coś Cię „bierze”, nawet lekko, najbezpieczniej zostać w domu i odpocząć. ' +
+      'W takiej sytuacji możesz też przejść na lekcję online i uczyć się bez wychodzenia z domu - ' +
+      'dzięki temu nie tracisz zajęć i pozostajesz w rytmie nauki.\n\n' +
+      'Jeśli nie dasz rady wziąć udziału w lekcji, możesz ją odwołać najpóźniej dzień wcześniej. ' +
+      'W innym przypadku lekcja przepada.',
   },
 ]
 
@@ -167,8 +171,12 @@ useHead({
 <template>
   <main id="main-content">
     <section class="relative isolate overflow-hidden border-b border-border bg-foreground text-primary-foreground">
-      <img src="/lesson-1.webp" alt="Kursanci ćwiczący rozmowę po angielsku podczas zajęć"
-        class="absolute inset-0 -z-20 h-full w-full object-cover" width="1024" height="1024" fetchpriority="high" />
+      <img src="/photos/online-hero-960.webp"
+        srcset="/photos/online-hero-640.webp 640w, /photos/online-hero-960.webp 960w, /photos/online-hero-1280.webp 1280w, /photos/online-hero-1600.webp 1600w"
+        sizes="(min-width: 1280px) 60vw, (min-width: 768px) 70vw, 100vw"
+        alt="Osoba uczestnicząca w lekcji angielskiego online przy laptopie"
+        class="absolute inset-0 -z-20 h-full w-full object-cover md:object-contain md:object-right" width="960"
+        height="640" fetchpriority="high" />
       <div
         class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(17,31,55,0.88),rgba(17,31,55,0.64),rgba(17,31,55,0.2))]" />
 
@@ -181,7 +189,7 @@ useHead({
           <h1 class="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
             Angielski online: bez dojazdów i bez straty na jakości.
           </h1>
-          <p class="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-primary-foreground/88">
+          <p class="mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-primary-foreground/88">
             Uczysz się tam, gdzie jest Ci najwygodniej, a lekcje nadal mają jasny plan, opierają się na
             aktywnej rozmowie, indywidualnej informacji zwrotnej i materiałach dopasowanych do
             Twojego celu. Oszczędzasz czas na dojazdy – to idealna opcja również wtedy, gdy mieszkasz
@@ -316,16 +324,16 @@ useHead({
             Jak wyglądają zajęcia online?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Pracujemy podobnie jak w studiu: dużo rozmowy, jasne zadania,
-            korekta błędów i regularne wracanie do materiału. Różnica polega na
-            tym, że spotykamy się przez ekran, a wszystkie potrzebne materiały
-            są dostępne cyfrowo. Jeśli danego dnia potrzebujesz spokojniejszego
-            tempa, też da się to uwzględnić.
+            Pracujemy dokładnie tak samo jak w studiu, dlatego wybierając lekcje przez internet, nic nie
+            tracisz. Przebieg spotkań zawsze zależy od Twojego celu - niezależnie od tego, czy szlifujemy
+            konwersacje, przygotowujemy się do egzaminu, czy nadrabiamy szkolny materiał. Różnica
+            polega jedynie na tym, że widzimy się przez ekran, a wszystkie potrzebne materiały masz pod
+            ręką w wersji cyfrowej.
           </p>
         </div>
 
         <div class="rounded-2xl border border-border bg-card p-6 shadow-sm">
-          <ul class="space-y-5">
+          <ul class="space-y-3">
             <li v-for="(step, index) in lessonFlow" :key="step" class="flex gap-4 text-muted-foreground">
               <span
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
@@ -338,38 +346,7 @@ useHead({
       </div>
     </section>
 
-    <section class="border-y border-border bg-secondary">
-      <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-        <div class="max-w-3xl">
-          <span class="text-sm font-medium uppercase tracking-widest text-primary">
-            Dla kogo?
-          </span>
-          <h2 class="mt-4 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Dobra opcja, gdy liczy się elastyczność i regularność.
-          </h2>
-          <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Zajęcia online są dla osób, które chcą mieć stały kontakt z
-            językiem, ale nie zawsze mogą lub chcą pojawiać się w studiu.
-            Sprawdzają się zarówno jako podstawowa forma kursu, jak i elastyczne
-            uzupełnienie lekcji stacjonarnych.
-          </p>
-        </div>
-
-        <div class="mt-10 grid gap-5 md:grid-cols-3">
-          <article v-for="group in forWhom" :key="group.title"
-            class="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <h3 class="font-serif text-xl font-semibold text-foreground">
-              {{ group.title }}
-            </h3>
-            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              {{ group.body }}
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="border-b border-border">
+    <section class="border-b border-border bg-secondary">
       <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.85fr_1.15fr] md:py-20">
         <div>
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
@@ -379,9 +356,11 @@ useHead({
             Ile kosztują zajęcia zdalne?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Zajęcia online korzystają z tych samych pakietów co pozostałe formy
-            nauki. Możesz wybrać pakiet roczny, krótszy pakiet MINI, lekcję
-            okazjonalną albo naukę w parze.
+            Cena zależy od wybranego pakietu lekcji oraz formy nauki - indywidualnie lub w parze.<br><br>
+            Standardowy cennik dotyczy zajęć w godzinach popołudniowo-wieczornych.<br><br>
+            Jeśli masz możliwość nauki rano (do godziny 12:00), możesz skorzystać z <b>20% zniżki na
+              zajęcia online</b>. To świetna opcja dla osób z elastycznym grafikiem, które chcą uczyć się w
+            spokojniejszych godzinach dnia.
           </p>
           <NuxtLink :to="ROUTES.prices"
             class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -414,7 +393,7 @@ useHead({
       </div>
     </section>
 
-    <section id="faq" class="scroll-mt-24 border-y border-border bg-secondary">
+    <section id="faq" class="scroll-mt-24 border-y border-border">
       <div class="mx-auto max-w-3xl px-6 py-16">
         <h2 class="text-balance text-center font-serif text-3xl font-semibold tracking-tight text-foreground">
           Najczęstsze pytania o zajęcia zdalne
@@ -440,7 +419,7 @@ useHead({
               </button>
             </h3>
             <p :id="`faq-answer-${index}`" v-show="openFaqIndex === index"
-              class="pb-6 text-pretty leading-relaxed text-muted-foreground">
+              class="whitespace-pre-line pb-6 text-pretty leading-relaxed text-muted-foreground">
               {{ faq.a }}
             </p>
           </div>
@@ -448,15 +427,15 @@ useHead({
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-5 py-16">
+    <section class="mx-auto px-5 py-16 bg-secondary">
       <div
         class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
         <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
-          Chcesz uczyć się angielskiego bez dojazdów?
+          Chcesz uczyć się angielskiego online?
         </h2>
         <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
-          Napisz, jaki jest Twój cel i czy wolisz zajęcia 1:1, DUO czy
-          przygotowanie egzaminacyjne. Dobierzemy formę i termin online.
+          Napisz, jaki jest Twój cel. Wspólnie dobierzemy
+          idealną formę i dogodny termin.
         </p>
         <NuxtLink :to="ROUTES.contact"
           class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">

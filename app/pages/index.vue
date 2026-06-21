@@ -115,7 +115,7 @@ useHead({
           class="order-1 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:order-2 md:text-5xl">
           Talkateria - English Studio
         </h1>
-        <p class="order-2 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground md:order-3">
+        <p class="order-2 max-w-md text-pretty text-justify text-lg leading-relaxed text-muted-foreground md:order-3">
           Kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i
           dorosłym rozwijać pewność siebie w mówieniu po angielsku, przygotować
           się do matury i egzaminu ósmoklasisty oraz skutecznie radzić sobie z

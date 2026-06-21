@@ -9,6 +9,7 @@ export const ROUTES = Object.freeze({
   adultClasses: '/zajecia-dla-doroslych',
   onlineClasses: '/zajecia-zdalne',
   prices: '/oferta#cennik',
+  promotionRules: '/regulamin-promocji',
   privacyPolicy: '/polityka-prywatnosci',
 })
 

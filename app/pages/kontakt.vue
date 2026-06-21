@@ -88,17 +88,17 @@ useHead({
         <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
           Kontakt - zajęcia z angielskiego w Rumi.
         </h1>
-        <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
-          Nie prowadzę stacjonarnego sekretariatu - kontakt odbywa się telefonicznie,
-          mailowo lub online.
+        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+          Nie prowadzę stacjonarnego sekretariatu - kontakt odbywa się
+          telefonicznie, mailowo lub online.
         </p>
-        <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           Możesz napisać wiadomość lub skontaktować się telefonicznie. W
           wiadomości warto podać kilka informacji, takich jak wiek ucznia,
           poziom języka oraz rodzaj zajęć, który Cię interesuje – ułatwi to
           szybkie dopasowanie odpowiedniej formy nauki.
         </p>
-        <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           Najwygodniejszą i najszybszą formą zapisu na zajęcia jest krótki
           formularz zgłoszeniowy - pozwala on sprawnie dopasować kurs oraz
           dostępne terminy.
@@ -174,6 +174,32 @@ useHead({
             <img src="/studio-space.webp" alt="Studio Talkateria w Rumi z tablicą i monitorem."
               class="h-64 w-full object-cover" width="1024" height="1024" loading="lazy" />
           </div>
+        </div>
+      </div>
+
+      <div class="mt-12 md:mt-16">
+        <div class="mb-6 max-w-2xl">
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">Dojazd</span>
+          <h2 class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            Zobacz lokalizację studia na mapie.
+          </h2>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+          <ClientOnly>
+            <iframe src="https://www.google.com/maps?cid=9730163744970894561&amp;output=embed&amp;hl=pl"
+              title="Mapa dojazdu do studia Talkateria przy ul. Wrocławskiej 2 w Rumi"
+              class="h-[420px] w-full border-0 md:h-[520px]" loading="lazy" allowfullscreen>
+            </iframe>
+
+            <template #fallback>
+              <div
+                class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[520px]"
+                role="status">
+                Ładowanie mapy…
+              </div>
+            </template>
+          </ClientOnly>
         </div>
       </div>
     </section>

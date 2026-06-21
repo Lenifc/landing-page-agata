@@ -22,12 +22,12 @@ const needs = [
 ]
 
 const benefits = [
-  'Praktyczne użycie języka',
-  'Materiały dobrane do celu, nie przypadkowe rozdziały z podręcznika',
-  'Jasne wyjaśnienie zagadnień',
-  'Możliwość nauki stacjonarnie w Rumi albo online',
   'Naturalna komunikacja',
-  'Duży nacisk na praktyczne użycie języka',
+  'Praktyczne użycie języka',
+  'Jasne wyjaśnienie zagadnień',
+  'Indywidualne tempo',
+  'Bezstresowa atmosfera',
+  'Możliwość nauki stacjonarnie w Rumi albo online',
 ]
 
 const priceOptions = getPricingPlans('adultClasses')
@@ -127,7 +127,7 @@ useHead({
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
           Angielski dla dorosłych w Rumi, bez presji i szkolnego stresu.
         </h1>
-        <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p class="text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           Nigdy nie jest za późno, aby zacząć mówić swobodnie. Ten kurs jest stworzony dla osób, które
           chcą przełamać barierę językową, odświeżyć wiedzę po latach lub potrzebują angielskiego do
           celów zawodowych i codziennej komunikacji. Program dopasowuję do Twojego tempa życia,
@@ -146,8 +146,11 @@ useHead({
       </div>
 
       <div class="overflow-hidden rounded-[2rem] border border-border shadow-sm">
-        <img src="/studio-space.webp" alt="Kameralne studio języka angielskiego dla dorosłych w Rumi"
-          class="h-full w-full object-cover" width="1024" height="1024" loading="eager" />
+        <img src="/photos/dorosli-hero-800.webp"
+          srcset="/photos/dorosli-hero-400.webp 400w, /photos/dorosli-hero-800.webp 800w, /photos/dorosli-hero-1200.webp 1200w"
+          sizes="(min-width: 1152px) 528px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 48px)"
+          alt="Dorosły kursant podczas lekcji języka angielskiego"
+          class="h-full w-full object-cover" width="800" height="800" loading="eager" />
       </div>
     </section>
 
@@ -293,8 +296,7 @@ useHead({
         <div
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
           <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
-            Chcesz swobodnie mówić po angielsku?
-          </h2>
+            Porozmawiajmy o Twoim angielskim! </h2>
           <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
             Napisz, do czego potrzebujesz języka, a wspólnie ułożymy spokojny plan dopasowany do
             Twojego celu i czasu, którym dysponujesz.

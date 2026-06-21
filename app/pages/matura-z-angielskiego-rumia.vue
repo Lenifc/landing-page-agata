@@ -114,12 +114,12 @@ useHead({
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
           Egzamin maturalny bez stresu? To możliwe!
         </h1>
-        <p class="text-pretty text-lg leading-relaxed text-muted-foreground">
+        <p class="text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           Kursy przygotowawcze dopasowane do Twoich potrzeb. Przygotowuję
           kompleksowo do matury na poziomie podstawowym oraz rozszerzonym, a także do egzaminu
           ustnego w studiu w Rumi lub online. Ucz się indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w
           małej,
-          kameralnej grupie (do 4 osób). Stawiam na systematyczność, zrozumienie wymagań
+          kameralnej grupie (do 4 osób).<br><br> Stawiam na systematyczność, zrozumienie wymagań
           egzaminacyjnych i regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
           przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
           <br><br>
@@ -140,8 +140,11 @@ useHead({
       </div>
 
       <div class="overflow-hidden rounded-[2rem] border border-border shadow-sm">
-        <img src="/lesson-1.webp" alt="Uczniowie ćwiczący komunikację po angielsku przed maturą"
-          class="h-full w-full object-cover" width="1024" height="1024" loading="eager" />
+        <img src="/photos/matura-hero-800.webp"
+          srcset="/photos/matura-hero-400.webp 400w, /photos/matura-hero-800.webp 800w, /photos/matura-hero-1200.webp 1200w"
+          sizes="(min-width: 1152px) 528px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 48px)"
+          alt="Uczniowie rozwiązujący zadania podczas przygotowań do matury z angielskiego"
+          class="h-full w-full object-cover" width="800" height="800" loading="eager" />
       </div>
     </section>
 

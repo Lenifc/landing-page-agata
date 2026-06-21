@@ -17,6 +17,24 @@ useSeoMeta({
 
 const plans = getPricingPlans('offer')
 
+const promotions = [
+  {
+    title: '–10% na cały grupowy kurs egzaminacyjny',
+    description:
+      'Zaoszczędź 300 zł na całym kursie! Promocja obowiązuje osoby zapisujące się na kurs egzaminacyjny (ósmoklasisty lub maturalny) przy podpisaniu umowy do 31 lipca 2026 r.',
+  },
+  {
+    title: '–20% na pierwszą lekcję',
+    description:
+      'Promocja dotyczy zarówno zajęć stacjonarnych w studiu w Rumi, jak i lekcji online. To idealna okazja, aby sprawdzić, czy odpowiada Ci moja metoda nauczania, zanim zdecydujesz o dalszej kontynuacji.',
+  },
+  {
+    title: '–20% na poranne lekcje online',
+    description:
+      'Masz czas przed szkołą, pracą lub Twój grafik jest bardziej elastyczny? Poranne godziny to świetna okazja na spokojną, efektywną naukę, zanim dzień na dobre się rozpędzi. Wybierz zajęcia online do godziny 12:00 i zgarnij stałą zniżkę.',
+  },
+]
+
 const pricingSections = [
   {
     id: 'pakiety-roczne',
@@ -219,7 +237,7 @@ useHead({
       <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
         Cennik i oferta zajęć z angielskiego w Rumi.
       </h1>
-      <p class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
+      <p class="mx-auto mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
         Każdy uczy się inaczej, dlatego oferuję różne formy zajęć. Wybierz kurs
         dopasowany do swoich celów, tempa nauki i możliwości czasowych.
       </p>
@@ -374,6 +392,32 @@ useHead({
           W ofercie znajdują się pakiety roczne, pakiety MINI oraz pojedyncze
           lekcje. Koszt zajęć zależy od wybranego wariantu, częstotliwości
           spotkań i formy nauki.
+        </p>
+      </div>
+
+      <div class="mb-12 rounded-[2rem] border border-primary/20 bg-primary/5 p-6 md:p-8">
+        <h3 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
+          Zniżki i promocje
+        </h3>
+
+        <div class="mt-6 grid gap-5 md:grid-cols-3">
+          <article v-for="promotion in promotions" :key="promotion.title"
+            class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <h4 class="font-serif text-xl font-semibold text-primary">
+              {{ promotion.title }}
+            </h4>
+            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+              {{ promotion.description }}
+            </p>
+          </article>
+        </div>
+
+        <p class="mt-5 text-xs text-muted-foreground">
+          Promocje są przeznaczone dla nowych klientów i nie łączą się ze sobą.
+          <NuxtLink :to="ROUTES.promotionRules"
+            class="font-medium text-primary underline underline-offset-4 transition-colors hover:text-foreground">
+            Sprawdź regulamin promocji
+          </NuxtLink>.
         </p>
       </div>
 

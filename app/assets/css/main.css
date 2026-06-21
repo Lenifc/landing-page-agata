@@ -48,6 +48,12 @@
   --radius: 0.625rem;
 }
 
+@layer base {
+  p {
+    text-align: justify;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
