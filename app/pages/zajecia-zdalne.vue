@@ -261,13 +261,6 @@ useHead({
         <h2 class="mt-4 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
           Online ma sens, kiedy lekcja jest dobrze zaplanowana.
         </h2>
-        <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Zajęcia zdalne w Talkaterii nie są „gorszą wersją” spotkania w studiu.
-          To wygodna forma pracy dla osób, które chcą uczyć się regularnie,
-          mówić więcej i nie dokładać do nauki kolejnej logistyki: dojazdów,
-          odwoływania zajęć przy drobnym spadku formy czy rezygnacji z kursu
-          tylko dlatego, że mieszkają dalej.
-        </p>
       </div>
 
       <div class="mt-10 grid gap-5 md:grid-cols-2">
