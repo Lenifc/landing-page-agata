@@ -235,11 +235,11 @@ useHead({
     <section class="mx-auto max-w-3xl px-6 py-16 text-center md:pb-24">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
       <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-        Cennik i oferta zajęć z angielskiego w Rumi.
+        Angielski w Rumi oraz online - oferta i cennik zajęć
       </h1>
       <p class="mx-auto mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-        Każdy uczy się inaczej, dlatego oferuję różne formy zajęć. Wybierz kurs
-        dopasowany do swoich celów, tempa nauki i możliwości czasowych.
+        Każdy uczy się inaczej, dlatego oferuję elastyczne formy nauki. Wybierz kurs dopasowany do swoich celów, tempa i
+        możliwości czasowych - stacjonarnie w kameralnym studiu w Rumi (Janowo) lub wygodnie online z dowolnego miejsca.
       </p>
     </section>
 
