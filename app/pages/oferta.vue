@@ -41,7 +41,7 @@ const pricingSections = [
     title: 'Pakiety roczne i egzaminacyjne',
     badge: 'Stała cena',
     description: [
-      'Kompleksowe cykle nauki z gwarancją stałej ceny. Płatność rozłożona jest na 10 równych, wygodnych rat miesięcznych.',
+      'Kompleksowe cykle nauki z gwarancją stałej ceny. Pakiety roczne są rozłożone na 10 równych rat miesięcznych, a grupowy kurs egzaminacyjny na 8 równych.',
       'Wysokość rat pozostaje stała niezależnie od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych.',
     ],
     groups: [
@@ -179,7 +179,7 @@ const faqs = [
   },
   {
     q: 'Jak wygląda płatność za kurs?',
-    a: 'Pakiety roczne i kurs egzaminacyjny są płatne w 10 stałych ratach miesięcznych, a pakiet MINI w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami.',
+    a: 'Pakiety roczne są płatne w 10 stałych ratach miesięcznych. Grupowy kurs egzaminacyjny oraz pakiet MINI w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami.',
   },
   {
     q: 'Co w przypadku nieobecności?',

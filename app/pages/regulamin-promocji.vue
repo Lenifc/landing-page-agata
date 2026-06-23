@@ -9,7 +9,7 @@ import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.promotionRules
 const pageUrl = `${SITE_URL}${pageRoute}`
-const updatedAt = '21 czerwca 2026 r.'
+const updatedAt = '23 czerwca 2026 r.'
 
 useSeoMeta({
   title: 'Regulamin promocji',
@@ -107,8 +107,8 @@ useHead({
             zł za osobę. Oznacza to oszczędność 300 zł.
           </li>
           <li>
-            Płatność promocyjna jest rozłożona na 10 równych rat po 270 zł za
-            osobę.
+            Płatność promocyjna jest rozłożona na 8 równych rat po 337,50 zł
+            za osobę.
           </li>
           <li>
             Promocja nie obejmuje alternatywnej formy zajęć zaproponowanej w
