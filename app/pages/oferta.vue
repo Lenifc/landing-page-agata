@@ -232,10 +232,14 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-3xl px-6 py-16 text-center md:pb-24">
+    <section class="mx-auto max-w-4xl px-6 py-16 text-center md:pb-24">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
-      <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-        Angielski w Rumi oraz online - oferta i cennik zajęć
+      <h1
+        class="mx-auto mt-4 max-w-[52rem] font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-4xl sm:leading-[1.08] md:text-5xl">
+        <span class="block sm:whitespace-nowrap">
+          Angielski w Rumi oraz online -
+        </span>
+        <span class="block">oferta i cennik zajęć</span>
       </h1>
       <p class="mx-auto mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
         Każdy uczy się inaczej, dlatego oferuję elastyczne formy nauki. Wybierz kurs dopasowany do swoich celów, tempa i
