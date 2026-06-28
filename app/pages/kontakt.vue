@@ -8,7 +8,7 @@ const pageRoute = ROUTES.contact
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
-  title: 'Kontakt - zajęcia z angielskiego w Rumi',
+  title: 'Kontakt - zajęcia z angielskiego w Rumi oraz online',
   description:
     'Skontaktuj się z Talkaterią w Rumi i zapytaj o lekcje angielskiego stacjonarnie lub online. Telefon, e-mail i formularz zgłoszeniowy.',
   ogTitle: 'Talkateria | Kontakt',
@@ -86,22 +86,24 @@ useHead({
       <div class="mb-12 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
         <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-          Kontakt - zajęcia z angielskiego w Rumi.
+          Kontakt - Angielski w Rumi oraz online.
         </h1>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           Nie prowadzę stacjonarnego sekretariatu - kontakt odbywa się
           telefonicznie, mailowo lub online.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Możesz napisać wiadomość lub skontaktować się telefonicznie. W
-          wiadomości warto podać kilka informacji, takich jak wiek ucznia,
-          poziom języka oraz rodzaj zajęć, który Cię interesuje – ułatwi to
-          szybkie dopasowanie odpowiedniej formy nauki.
+          W przypadku chęci zapisu na zajęcia (lub zwykłego zapytania) warto od razu krótko
+          określić wiek ucznia, poziom języka, rodzaj kursu (np. konwersacje, pomoc z
+          materiałem szkolnym, przygotowanie do egzaminów) oraz to, czy interesują Cię lekcje
+          indywidualne, czy w grupie. Ułatwi to sprawne dopasowanie odpowiedniej formy nauki.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Najwygodniejszą i najszybszą formą zapisu na zajęcia jest krótki
-          formularz zgłoszeniowy - pozwala on sprawnie dopasować kurs oraz
-          dostępne terminy.
+          Zachęcam również do skorzystania z krótkiego formularza zgłoszeniowego - to
+          najwygodniejsza forma zapisu, która oszczędza czas, ponieważ od razu zbiera
+          wszystkie potrzebne informacje i pozwala sprawnie dobrać kurs oraz dostępne terminy.
+          Wszystkie informacje kontaktowe oraz formularz zgłoszeniowy znajdziesz poniżej. Do
+          usłyszenia
         </p>
         <a href="#formularz"
           class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">

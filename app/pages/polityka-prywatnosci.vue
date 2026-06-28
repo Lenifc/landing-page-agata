@@ -10,12 +10,12 @@ import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.privacyPolicy
 const pageUrl = `${SITE_URL}${pageRoute}`
-const updatedAt = '21 czerwca 2026 r.'
+const updatedAt = '28 czerwca 2026 r.'
 
 useSeoMeta({
   title: 'Polityka prywatności',
   description:
-    'Polityka prywatności Talkaterii: zasady przetwarzania danych osobowych, kontaktu, usług Google i plików cookies.',
+    'Polityka prywatności Talkaterii: zasady przetwarzania danych osobowych, kontaktu, usług Google, Zoom i plików cookies.',
   robots: 'noindex, follow',
   ogTitle: 'Talkateria | Polityka prywatności',
   ogDescription:
@@ -41,7 +41,7 @@ useHead({
             name: 'Polityka prywatności Talkateria',
             url: pageUrl,
             publisher: BUSINESS_REFERENCE,
-            dateModified: '2026-06-11',
+            dateModified: '2026-06-28',
           },
         ],
       }),
@@ -109,43 +109,63 @@ useHead({
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">3. Cele przetwarzania danych</h2>
-        <p>Dane są przetwarzane w celu:</p>
-        <ul class="list-disc space-y-1 pl-6">
-          <li>odpowiedzi na zapytanie,</li>
-          <li>ustalenia terminu i formy zajęć,</li>
-          <li>organizacji lekcji języka angielskiego,</li>
-          <li>prowadzenia rozliczeń, jeżeli dojdzie do współpracy,</li>
-          <li>dochodzenia lub obrony ewentualnych roszczeń.</li>
-        </ul>
+        <h2 class="text-xl font-semibold">
+          3. Cele i podstawy prawne przetwarzania
+        </h2>
+        <p>
+          Dane są przetwarzane wyłącznie w zakresie potrzebnym do obsługi
+          kontaktu, organizacji zajęć, realizacji umowy, rozliczeń oraz ochrony
+          praw administratora.
+        </p>
+        <div class="overflow-x-auto rounded-xl border border-border">
+          <table class="w-full min-w-[38rem] text-left text-sm">
+            <thead class="bg-secondary text-foreground">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Cel</th>
+                <th class="px-4 py-3 font-semibold">Podstawa prawna</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border">
+              <tr>
+                <td class="px-4 py-3">odpowiedź na wiadomość</td>
+                <td class="px-4 py-3">art. 6 ust. 1 lit. f RODO</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">
+                  ustalenie szczegółów zajęć przed umową
+                </td>
+                <td class="px-4 py-3">art. 6 ust. 1 lit. b RODO</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">realizacja zajęć lub umowy</td>
+                <td class="px-4 py-3">art. 6 ust. 1 lit. b RODO</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">rozliczenia podatkowe i księgowe</td>
+                <td class="px-4 py-3">art. 6 ust. 1 lit. c RODO</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">dochodzenie lub obrona roszczeń</td>
+                <td class="px-4 py-3">art. 6 ust. 1 lit. f RODO</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">formularz lub zgoda, jeśli dotyczy</td>
+                <td class="px-4 py-3">art. 6 ust. 1 lit. a RODO</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Jeżeli dane są przetwarzane na podstawie zgody, masz prawo cofnąć
+          zgodę w dowolnym momencie. Cofnięcie zgody nie wpływa na zgodność z
+          prawem przetwarzania dokonanego przed jej cofnięciem.
+        </p>
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">4. Podstawa prawna</h2>
-        <p>Dane są przetwarzane na podstawie:</p>
-        <ul class="list-disc space-y-1 pl-6">
-          <li>
-            art. 6 ust. 1 lit. b RODO - podjęcie działań przed zawarciem umowy
-            lub wykonanie umowy,
-          </li>
-          <li>
-            art. 6 ust. 1 lit. c RODO - obowiązki wynikające z przepisów prawa,
-            w szczególności podatkowych i rachunkowych,
-          </li>
-          <li>
-            art. 6 ust. 1 lit. f RODO - prawnie uzasadniony interes
-            administratora, czyli obsługa kontaktu, organizacja zajęć oraz
-            dochodzenie lub obrona ewentualnych roszczeń,
-          </li>
-          <li>
-            art. 6 ust. 1 lit. a RODO - zgoda, jeżeli konkretna funkcja lub
-            forma kontaktu jej wymaga.
-          </li>
-        </ul>
-      </section>
-
-      <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">5. Usługi Google</h2>
+        <h2 class="text-xl font-semibold">
+          4. Usługi Google i narzędzia wideokonferencyjne
+        </h2>
         <p>
           Na stronie jest osadzony formularz Google Forms. Wypełnienie
           formularza jest dobrowolne. Dane wpisane w formularzu mogą być
@@ -165,24 +185,37 @@ useHead({
             Polityka prywatności Google</a>.
         </p>
         <p>
+          W przypadku zajęć online mogą być wykorzystywane narzędzia do
+          wideokonferencji, np. Zoom. W takim zakresie dane techniczne i
+          identyfikacyjne mogą być przetwarzane również przez dostawcę
+          narzędzia, zgodnie z jego zasadami prywatności.
+        </p>
+        <p>
+          Korzystanie z narzędzi zewnętrznych może wiązać się z przetwarzaniem
+          danych poza Europejskim Obszarem Gospodarczym, jeżeli dany dostawca
+          realizuje taką operację zgodnie ze swoimi zasadami i stosowanymi
+          zabezpieczeniami.
+        </p>
+        <p>
           Zamiast formularza możesz skontaktować się bezpośrednio mailowo,
           telefonicznie lub SMS-em.
         </p>
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">6. Odbiorcy danych</h2>
+        <h2 class="text-xl font-semibold">5. Odbiorcy danych</h2>
         <p>
           Dane mogą być przekazywane podmiotom wspierającym obsługę strony,
-          poczty e-mail, formularzy, narzędzi komunikacyjnych, usług księgowych,
-          hostingu oraz podmiotom uprawnionym na podstawie przepisów prawa.
+          poczty e-mail, formularzy, narzędzi komunikacyjnych i
+          wideokonferencyjnych, usług księgowych, hostingu oraz podmiotom
+          uprawnionym na podstawie przepisów prawa.
         </p>
         <p>Dane nie są sprzedawane innym podmiotom.</p>
       </section>
 
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">
-          7. Profilowanie i zautomatyzowane decyzje
+          6. Profilowanie i zautomatyzowane decyzje
         </h2>
         <p>
           Dane przekazane administratorowi nie są wykorzystywane do
@@ -193,21 +226,26 @@ useHead({
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">8. Czas przechowywania danych</h2>
+        <h2 class="text-xl font-semibold">7. Czas przechowywania danych</h2>
         <p>
           Dane z zapytań kontaktowych są przechowywane przez czas potrzebny do
-          obsługi kontaktu i organizacji zajęć, a następnie przez okres
-          niezbędny do zabezpieczenia ewentualnych roszczeń.
+          obsługi zapytania, a następnie maksymalnie do 12 miesięcy od
+          ostatniego kontaktu, chyba że dojdzie do zawarcia umowy lub istnieje
+          potrzeba zabezpieczenia roszczeń.
         </p>
         <p>
-          Dane związane z rozliczeniami są przechowywane przez okres wymagany
-          przepisami podatkowymi i rachunkowymi.
+          Dane związane z umową i rozliczeniami są przechowywane przez okres
+          wymagany przepisami podatkowymi i rachunkowymi.
+        </p>
+        <p>
+          Dane potrzebne do dochodzenia lub obrony roszczeń są przechowywane do
+          czasu przedawnienia roszczeń.
         </p>
       </section>
 
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">
-          9. Prawa osoby, której dane dotyczą
+          8. Prawa osoby, której dane dotyczą
         </h2>
         <p>Masz prawo do:</p>
         <ul class="list-disc space-y-1 pl-6">
@@ -222,7 +260,7 @@ useHead({
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">10. Pliki cookies</h2>
+        <h2 class="text-xl font-semibold">9. Pliki cookies</h2>
         <p>
           Strona może korzystać z plików cookies potrzebnych do prawidłowego
           działania serwisu. Elementy zewnętrzne, takie jak formularz Google lub
@@ -236,7 +274,7 @@ useHead({
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">11. Zmiany polityki prywatności</h2>
+        <h2 class="text-xl font-semibold">10. Zmiany polityki prywatności</h2>
         <p>
           Polityka prywatności może zostać zaktualizowana, jeżeli zmienią się
           funkcje strony, wykorzystywane narzędzia lub obowiązujące przepisy.

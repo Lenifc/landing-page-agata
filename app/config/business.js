@@ -40,7 +40,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   description:
     'Kameralne lekcje języka angielskiego w Rumi Janowie dla młodzieży i dorosłych z Rumi i okolic.',
   address: BUSINESS_ADDRESS,
-  priceRange: '80-512 PLN',
+  priceRange: '48-110 PLN',
   currenciesAccepted: 'PLN',
   contactPoint: {
     '@type': 'ContactPoint',

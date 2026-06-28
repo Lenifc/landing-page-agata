@@ -1,77 +1,147 @@
 <script setup>
-import { getPricingPlans } from '~/config/pricing'
+import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.onlineClasses
 const pageUrl = `${SITE_URL}${pageRoute}`
 
-const benefits = [
-  {
-    title: 'Zero dojazdów',
-    body: 'Nie tracisz czasu na korki, szukanie parkingu, przesiadki ani pogodowe niespodzianki. Wystarczy komputer lub tablet, spokojne miejsce i kilka minut na przygotowanie przed lekcją.',
-  },
-  {
-    title: 'Nie wypadasz z rytmu tak łatwo',
-    body: 'Jeśli w dniu zajęć czujesz się gorzej, ale nadal masz siłę na spokojną pracę, nie musisz od razu przenosić lekcji. Możesz zostać w domu, mieć koc i herbatę obok, a mimo to utrzymać kontakt z językiem.',
-  },
-  {
-    title: 'Odległość przestaje mieć znaczenie',
-    body: 'Mieszkasz dalej niż Rumia? Żaden problem. Zajęcia zdalne są dostępne z całej Polski, więc możesz uczyć się w Talkaterii bez organizowania dojazdów.',
-  },
-  {
-    title: 'Łatwiej dopasować naukę do dnia',
-    body: 'Online sprawdza się przy pracy zmianowej, napiętym planie lekcji, opiece nad dzieckiem albo wtedy, gdy po prostu trudno wcisnąć dojazd między kolejne obowiązki.',
-  },
-  {
-    title: 'Materiały są zawsze pod ręką',
-    body: 'Notatki, linki, ćwiczenia i powtórki mogą trafiać w jedno cyfrowe miejsce, więc łatwiej wracać do nich między lekcjami i nadrabiać drobne zaległości.',
-  },
-  {
-    title: 'Komfort sprzyja mówieniu',
-    body: 'Własne biurko i spokojne otoczenie często pomagają przełamać barierę językową. Nadal pracujemy aktywnie: rozmawiamy, poprawiamy błędy i ćwiczymy reakcje.',
-  },
-]
-
-const usefulWhen = [
-  {
-    title: 'Kiedy dojazd zabiera więcej energii niż sama nauka',
-    body: 'Po szkole, pracy albo dodatkowych zajęciach czasem najtrudniejsza jest logistyka. Online skraca drogę do lekcji do jednego kliknięcia.',
-  },
-  {
-    title: 'Kiedy pogoda, korki albo choroba mieszają w planie',
-    body: 'Nie każda gorsza dyspozycja oznacza, że trzeba odwoływać zajęcia. Jeśli możesz pracować, spotykamy się zdalnie i robimy lekcję w spokojniejszym tempie.',
-  },
-  {
-    title: 'Kiedy mieszkasz poza Trójmiastem',
-    body: 'Zdalnie możesz uczyć się z małej miejscowości, innego województwa albo z miejsca, do którego trudno byłoby regularnie dojeżdżać do studia.',
-  },
-  {
-    title: 'Kiedy jesteś w podróży lub zmieniasz miejsce pobytu',
-    body: 'Wyjazd rodzinny, delegacja czy czasowy pobyt poza domem nie muszą przerywać kursu, jeśli masz internet i spokojną przestrzeń do rozmowy.',
-  },
-]
-
-const lessonFlow = [
-  'Otrzymasz link do spotkania, w który wystarczy kliknąć o umówionej porze — nie musisz nic instalować ani zakładać konta.',
-  'Spotykamy się na Zoomie o ustalonej godzinie',
-  'Pracujemy poprzez rozmowę, ćwiczenia i materiały dopasowane do Twojego celu.',
-  'Po lekcji możesz zapisać na czacie najważniejsze notatki z zajęć lub otrzymać dostęp do materiałów, zadań i linków omawianych podczas lekcji.',
-  'Jeśli masz pytania lub dodatkowe potrzeby, omawiamy je podczas lekcji.',
-  'Uczysz się w swoim tempie, a plan zajęć na bieżąco dopasowujemy do Twoich potrzeb.'
-]
-
 const priceOptions = getPricingPlans('onlineClasses')
-const highlightedPrices = priceOptions.filter((option) =>
-  [
-    'individualAnnualWeekly',
-    'duoAnnualWeekly',
-    'miniIndividual',
-    'occasionalIndividual',
-  ].includes(option.id),
+const morningOnlinePromotion = getPricingPromotion('morningOnline')
+const getPriceOption = (id) => priceOptions.find((option) => option.id === id)
+const individualAnnualStandard = priceOptions.find(
+  (option) => option.id === 'individualAnnualWeekly',
 )
+const individualAnnualIntense = priceOptions.find(
+  (option) => option.id === 'individualAnnualTwiceWeekly',
+)
+const duoAnnualStandard = priceOptions.find(
+  (option) => option.id === 'duoAnnualWeekly',
+)
+const duoAnnualIntense = priceOptions.find(
+  (option) => option.id === 'duoAnnualTwiceWeekly',
+)
+const miniIndividual = getPriceOption('miniIndividual')
+const occasionalIndividual = getPriceOption('occasionalIndividual')
+const morningOnlineOptions = getPricingPlans('morningOnline')
+const morningOnlineIndividualStandard = morningOnlineOptions.find(
+  (option) => option.id === 'onlineMorningIndividualAnnualWeekly',
+)
+const morningOnlineIndividualIntense = morningOnlineOptions.find(
+  (option) => option.id === 'onlineMorningIndividualAnnualTwiceWeekly',
+)
+const morningOnlineDuoStandard = morningOnlineOptions.find(
+  (option) => option.id === 'onlineMorningDuoAnnualWeekly',
+)
+const morningOnlineDuoIntense = morningOnlineOptions.find(
+  (option) => option.id === 'onlineMorningDuoAnnualTwiceWeekly',
+)
+const morningOnlineOccasionalIndividual = morningOnlineOptions.find(
+  (option) => option.id === 'occasionalMorningOnlineIndividual',
+)
+const morningOnlineOccasionalDuo = morningOnlineOptions.find(
+  (option) => option.id === 'occasionalMorningOnlineDuo',
+)
+const paymentWithoutPrefix = (value) => value.replace(/^miesięcznie:\s*/, '')
+const formatPriceValue = (value) => {
+  const formatted = value.toFixed(2).replace('.', ',')
+  return `${formatted.endsWith(',00') ? formatted.slice(0, -3) : formatted} zł`
+}
+
+const lessonPriceFromInstallments = (plan) => {
+  const installments = Number.parseInt(plan.price, 10)
+  const lessons = Number.parseInt(plan.frequency, 10)
+
+  return formatPriceValue((installments * Number(plan.schemaPrice)) / lessons)
+}
+
+const buildPaymentLine = (label, plan, morningPlan = plan) => ({
+  standard: `${label}: ${paymentWithoutPrefix(plan.paymentNote)}`,
+  morning: `${label}: ${paymentWithoutPrefix(morningPlan.paymentNote)}`,
+})
+const personPrice = (value) => value.replace(' / osoba', ' za osobę')
+const priceWithContext = (plan) =>
+  `${personPrice(plan.fromPrice)} ${plan.fromPriceContext}`
+const individualAnnualPrice = priceWithContext(individualAnnualIntense)
+const individualAnnualPaymentLines = [
+  buildPaymentLine(
+    '32 lekcje',
+    individualAnnualStandard,
+    morningOnlineIndividualStandard,
+  ),
+  buildPaymentLine(
+    '64 lekcje',
+    individualAnnualIntense,
+    morningOnlineIndividualIntense,
+  ),
+]
+const duoAnnualPaymentLines = [
+  buildPaymentLine('32 lekcje', duoAnnualStandard, morningOnlineDuoStandard),
+  buildPaymentLine('64 lekcje', duoAnnualIntense, morningOnlineDuoIntense),
+]
+const morningOnlinePrices = {
+  individual: morningOnlineIndividualIntense.fromPrice,
+  duo: morningOnlineDuoIntense.fromPrice,
+  occasionalIndividual: morningOnlineOccasionalIndividual.price,
+  occasionalDuo: morningOnlineOccasionalDuo.price,
+}
+
+const highlightedPrices = [
+  {
+    ...individualAnnualIntense,
+    name: 'Pakiety 1:1 online',
+    frequency: '32 lub 64 lekcje',
+    pricePrefix: 'od',
+    standardLessonPrice: individualAnnualIntense.fromPrice,
+    morningLessonPrice: morningOnlineIndividualIntense.fromPrice,
+    lessonPriceContext: individualAnnualIntense.fromPriceContext,
+    paymentLines: individualAnnualPaymentLines,
+    details:
+      'Pakiet roczny Standard lub Intense dla osób, które chcą uczyć się online regularnie, z programem dopasowanym do celu.',
+  },
+  {
+    ...duoAnnualIntense,
+    name: 'Pakiety DUO online',
+    frequency: '32 lub 64 lekcje',
+    pricePrefix: 'od',
+    standardLessonPrice: duoAnnualIntense.fromPrice,
+    morningLessonPrice: morningOnlineDuoIntense.fromPrice,
+    lessonPriceContext: duoAnnualIntense.fromPriceContext,
+    paymentLines: duoAnnualPaymentLines,
+    details:
+      'Pakiet roczny Standard lub Intense dla dwóch osób uczących się razem online w podobnym rytmie.',
+  },
+  {
+    ...miniIndividual,
+    standardLessonPrice: lessonPriceFromInstallments(miniIndividual),
+    morningLessonPrice: lessonPriceFromInstallments(miniIndividual),
+    lessonPriceContext: `za lekcję ${miniIndividual.duration}`,
+    paymentLines: [
+      {
+        standard: miniIndividual.price,
+        morning: miniIndividual.price,
+      },
+    ],
+  },
+  {
+    ...occasionalIndividual,
+    standardLessonPrice: occasionalIndividual.price,
+    morningLessonPrice: morningOnlineOccasionalIndividual.price,
+    lessonPriceContext: `za lekcję ${occasionalIndividual.duration}`,
+    paymentLines: [
+      {
+        standard: 'płatność za pojedynczą lekcję',
+        morning: 'płatność za pojedynczą lekcję',
+      },
+    ],
+  },
+]
 
 const faqs = [
+  {
+    q: 'Ile kosztują lekcje angielskiego online?',
+    a: `Popołudniowo-wieczorne pakiety 1:1 online zaczynają się od ${individualAnnualPrice}. Poranny wariant online do godziny ${morningOnlinePromotion.deadlineHour} zaczyna się od ${morningOnlinePrices.individual} za lekcję 50 min w pakiecie 1:1 oraz od ${morningOnlinePrices.duo} za lekcję 50 min w pakiecie DUO. Lekcja okazjonalna w porannym wariancie online kosztuje ${morningOnlinePrices.occasionalIndividual} w formule 1:1 albo ${personPrice(morningOnlinePrices.occasionalDuo)} w DUO. Pod ceną podana jest miesięczna płatność i liczba rat, np. w pakiecie 1:1 Standard: 32 lekcje - ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}, a w pakiecie 1:1 Intense: 64 lekcje - ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}.`,
+  },
   {
     q: 'Czy zajęcia zdalne są tak samo skuteczne jak stacjonarne?',
     a: 'Tak, jeśli są dobrze prowadzone i regularne. Program, tempo pracy i informacja zwrotna pozostają takie same jak w studiu, a forma online daje dodatkowo wygodę, oszczędność czasu i większą odporność na codzienne zmiany planu.',
@@ -116,9 +186,17 @@ dnia.`,
 ]
 
 const openFaqIndex = ref(null)
+const selectedOnlineTime = ref('afternoon')
 
 const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
+const toggleOnlineTime = () => {
+  if (selectedOnlineTime.value === 'morning') {
+    selectedOnlineTime.value = 'afternoon'
+    return
+  }
+  selectedOnlineTime.value = 'morning'
 }
 
 useSeoMeta({
@@ -189,17 +267,18 @@ useHead({
             Angielski online: bez dojazdów i bez straty na jakości.
           </h1>
           <p class="mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-primary-foreground/88">
-            Uczysz się tam, gdzie jest Ci najwygodniej, a lekcje nadal mają jasny plan, opierają się na
-            aktywnej rozmowie, indywidualnej informacji zwrotnej i materiałach dopasowanych do
-            Twojego celu. Oszczędzasz czas na dojazdy – to idealna opcja również wtedy, gdy mieszkasz
-            daleko od Rumi.
+            Uczysz się tam, gdzie jest Ci najwygodniej, a lekcje nadal mają
+            jasny plan, opierają się na aktywnej rozmowie, indywidualnej
+            informacji zwrotnej i materiałach dopasowanych do Twojego celu.
+            Oszczędzasz czas na dojazdy – to idealna opcja również wtedy, gdy
+            mieszkasz daleko od Rumi.
           </p>
           <div class="mt-7 flex flex-wrap gap-4">
             <NuxtLink :to="ROUTES.contact"
               class="inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground shadow-[0_16px_35px_rgba(0,0,0,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
               Zapytaj o zajęcia online
             </NuxtLink>
-            <NuxtLink :to="ROUTES.prices"
+            <NuxtLink :to="ROUTES.pricesIndividual"
               class="inline-flex items-center justify-center rounded-full border border-primary-foreground/45 bg-primary-foreground/10 px-6 py-3 text-sm font-medium text-primary-foreground backdrop-blur transition-colors hover:bg-primary-foreground/18">
               Zobacz cennik
             </NuxtLink>
@@ -216,8 +295,9 @@ useHead({
               Zajęcia dla dorosłych
             </h2>
             <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Przełamywanie bariery, angielski na co dzień i do pracy (Business English). Koncentrujemy się
-              na mówieniu i aktywnej komunikacji bez nudnej teorii.
+              Przełamywanie bariery, angielski na co dzień i do pracy (Business
+              English). Koncentrujemy się na mówieniu i aktywnej komunikacji bez
+              nudnej teorii.
             </p>
           </div>
           <div class="flex flex-col">
@@ -225,8 +305,9 @@ useHead({
               Przygotowanie do egzaminów
             </h2>
             <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Egzamin ósmoklasisty i matura (podstawa/rozszerzenie). Omawiamy zadania egzaminacyjne,
-              poznajemy pewniaki testowe i budujemy pewność siebie.
+              Egzamin ósmoklasisty i matura (podstawa/rozszerzenie). Omawiamy
+              zadania egzaminacyjne, poznajemy pewniaki testowe i budujemy
+              pewność siebie.
             </p>
           </div>
           <div class="flex flex-col">
@@ -234,8 +315,9 @@ useHead({
               Materiał szkolny
             </h2>
             <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Pomoc z bieżącym materiałem szkolnym i przygotowanie do sprawdzianów w szkole.
-              Nadrabiamy zaległości, poprawiamy oceny i zdejmujemy szkolny stres.
+              Pomoc z bieżącym materiałem szkolnym i przygotowanie do
+              sprawdzianów w szkole. Nadrabiamy zaległości, poprawiamy oceny i
+              zdejmujemy szkolny stres.
             </p>
           </div>
           <div class="flex flex-col">
@@ -243,10 +325,11 @@ useHead({
               Nauka bez wychodzenia z domu
             </h2>
             <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Zajęcia zdalne w Talkaterii nie są „gorszą wersją” spotkania w studiu. To wygodna forma
-              pracy dla osób, które chcą uczyć się regularnie, mówić więcej i nie dokładać do nauki
-              kolejnej logistyki: dojazdów, odwoływania zajęć przy drobnym spadku formy czy rezygnacji z
-              kursu tylko dlatego, że mieszkają dalej.
+              Zajęcia zdalne w Talkaterii nie są „gorszą wersją” spotkania w
+              studiu. To wygodna forma pracy dla osób, które chcą uczyć się
+              regularnie, mówić więcej i nie dokładać do nauki kolejnej
+              logistyki: dojazdów, odwoływania zajęć przy drobnym spadku formy
+              czy rezygnacji z kursu tylko dlatego, że mieszkają dalej.
             </p>
           </div>
         </div>
@@ -259,18 +342,70 @@ useHead({
           Zalety zajęć zdalnych
         </span>
         <h2 class="mt-4 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-          Online ma sens, kiedy lekcja jest dobrze zaplanowana.
+          Dlaczego warto wybrać zajęcia online?
         </h2>
       </div>
 
       <div class="mt-10 grid gap-5 md:grid-cols-2">
-        <article v-for="benefit in benefits" :key="benefit.title"
-          class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
           <h3 class="font-serif text-xl font-semibold text-foreground">
-            {{ benefit.title }}
+            Zero dojazdów
           </h3>
           <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            {{ benefit.body }}
+            Nie tracisz czasu na korki, szukanie parkingu, przesiadki ani
+            pogodowe niespodzianki. Wystarczy komputer lub tablet, spokojne
+            miejsce i kilka minut na przygotowanie przed lekcją.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 class="font-serif text-xl font-semibold text-foreground">
+            Nie wypadasz z rytmu tak łatwo
+          </h3>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Jeśli w dniu zajęć czujesz się gorzej, ale nadal masz siłę na
+            spokojną pracę, nie musisz od razu przenosić lekcji. Możesz zostać w
+            domu, mieć koc i herbatę obok, a mimo to utrzymać kontakt z
+            językiem.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 class="font-serif text-xl font-semibold text-foreground">
+            Odległość przestaje mieć znaczenie
+          </h3>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Mieszkasz dalej niż Rumia? Żaden problem. Zajęcia zdalne są dostępne
+            z całej Polski, więc możesz uczyć się w Talkaterii bez organizowania
+            dojazdów.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 class="font-serif text-xl font-semibold text-foreground">
+            Łatwiej dopasować naukę do dnia
+          </h3>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Online sprawdza się przy pracy zmianowej, napiętym planie lekcji,
+            opiece nad dzieckiem albo wtedy, gdy po prostu trudno wcisnąć dojazd
+            między kolejne obowiązki.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 class="font-serif text-xl font-semibold text-foreground">
+            Materiały są zawsze pod ręką
+          </h3>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Notatki, linki, ćwiczenia i powtórki mogą trafiać w jedno cyfrowe
+            miejsce, więc łatwiej wracać do nich między lekcjami i nadrabiać
+            drobne zaległości.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 class="font-serif text-xl font-semibold text-foreground">
+            Komfort sprzyja mówieniu
+          </h3>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Własne biurko i spokojne otoczenie często pomagają przełamać barierę
+            językową. Nadal pracujemy aktywnie: rozmawiamy, poprawiamy błędy i
+            ćwiczymy reakcje.
           </p>
         </article>
       </div>
@@ -293,13 +428,44 @@ useHead({
         </div>
 
         <div class="mt-10 grid gap-5 md:grid-cols-2">
-          <article v-for="situation in usefulWhen" :key="situation.title"
-            class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h3 class="font-serif text-xl font-semibold text-foreground">
-              {{ situation.title }}
+              Kiedy dojazd zabiera więcej energii niż sama nauka
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              {{ situation.body }}
+              Po szkole, pracy albo dodatkowych zajęciach czasem najtrudniejsza
+              jest logistyka. Online skraca drogę do lekcji do jednego
+              kliknięcia.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <h3 class="font-serif text-xl font-semibold text-foreground">
+              Kiedy pogoda, korki albo choroba mieszają w planie
+            </h3>
+            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+              Nie każda gorsza dyspozycja oznacza, że trzeba odwoływać zajęcia.
+              Jeśli możesz pracować, spotykamy się zdalnie i robimy lekcję w
+              spokojniejszym tempie.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <h3 class="font-serif text-xl font-semibold text-foreground">
+              Kiedy mieszkasz poza Trójmiastem
+            </h3>
+            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+              Zdalnie możesz uczyć się z małej miejscowości, innego województwa
+              albo z miejsca, do którego trudno byłoby regularnie dojeżdżać do
+              studia.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <h3 class="font-serif text-xl font-semibold text-foreground">
+              Kiedy jesteś w podróży lub zmieniasz miejsce pobytu
+            </h3>
+            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+              Wyjazd rodzinny, delegacja czy czasowy pobyt poza domem nie muszą
+              przerywać kursu, jeśli masz internet i spokojną przestrzeń do
+              rozmowy.
             </p>
           </article>
         </div>
@@ -316,22 +482,76 @@ useHead({
             Jak wyglądają zajęcia online?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Pracujemy dokładnie tak samo jak w studiu, dlatego wybierając lekcje przez internet, nic nie
-            tracisz. Przebieg spotkań zawsze zależy od Twojego celu - niezależnie od tego, czy szlifujemy
-            konwersacje, przygotowujemy się do egzaminu, czy nadrabiamy szkolny materiał. Różnica
-            polega jedynie na tym, że widzimy się przez ekran, a wszystkie potrzebne materiały masz pod
-            ręką w wersji cyfrowej.
+            Pracujemy dokładnie tak samo jak w studiu, dlatego wybierając lekcje
+            przez internet, nic nie tracisz. Przebieg spotkań zawsze zależy od
+            Twojego celu - niezależnie od tego, czy szlifujemy konwersacje,
+            przygotowujemy się do egzaminu, czy nadrabiamy szkolny materiał.
+            Różnica polega jedynie na tym, że widzimy się przez ekran, a
+            wszystkie potrzebne materiały masz pod ręką w wersji cyfrowej.
           </p>
         </div>
 
         <div class="rounded-2xl border border-border bg-card p-6 shadow-sm">
           <ul class="space-y-3">
-            <li v-for="(step, index) in lessonFlow" :key="step" class="flex gap-4 text-muted-foreground">
+            <li class="flex gap-4 text-muted-foreground">
               <span
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-                {{ index + 1 }}
+                1
               </span>
-              <span class="pt-1 leading-relaxed">{{ step }}</span>
+              <span class="pt-1 leading-relaxed">
+                Otrzymasz link do spotkania, w który wystarczy kliknąć o
+                umówionej porze - nie musisz nic instalować ani zakładać konta.
+              </span>
+            </li>
+            <li class="flex gap-4 text-muted-foreground">
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                2
+              </span>
+              <span class="pt-1 leading-relaxed">
+                Spotykamy się na Zoomie o ustalonej godzinie.
+              </span>
+            </li>
+            <li class="flex gap-4 text-muted-foreground">
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                3
+              </span>
+              <span class="pt-1 leading-relaxed">
+                Pracujemy poprzez rozmowę, ćwiczenia i materiały dopasowane do
+                Twojego celu.
+              </span>
+            </li>
+            <li class="flex gap-4 text-muted-foreground">
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                4
+              </span>
+              <span class="pt-1 leading-relaxed">
+                Po lekcji możesz zapisać na czacie najważniejsze notatki z zajęć
+                lub otrzymać dostęp do materiałów, zadań i linków omawianych
+                podczas lekcji.
+              </span>
+            </li>
+            <li class="flex gap-4 text-muted-foreground">
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                5
+              </span>
+              <span class="pt-1 leading-relaxed">
+                Jeśli masz pytania lub dodatkowe potrzeby, omawiamy je podczas
+                lekcji.
+              </span>
+            </li>
+            <li class="flex gap-4 text-muted-foreground">
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                6
+              </span>
+              <span class="pt-1 leading-relaxed">
+                Uczysz się w swoim tempie, a plan zajęć na bieżąco dopasowujemy
+                do Twoich potrzeb.
+              </span>
             </li>
           </ul>
         </div>
@@ -339,8 +559,8 @@ useHead({
     </section>
 
     <section class="border-b border-border bg-secondary">
-      <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.85fr_1.15fr] md:py-20">
-        <div>
+      <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
             Ceny
           </span>
@@ -348,28 +568,47 @@ useHead({
             Ile kosztują zajęcia zdalne?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Cena zależy od wybranego pakietu lekcji oraz formy nauki - indywidualnie lub w parze.<br><br>
-            Standardowy cennik dotyczy zajęć w godzinach popołudniowo-wieczornych.<br><br>
-            Jeśli masz możliwość nauki rano (do godziny 12:00), możesz skorzystać z <b>20% zniżki na
-              zajęcia online</b>. To świetna opcja dla osób z elastycznym grafikiem, które chcą uczyć się w
-            spokojniejszych godzinach dnia.
+            Cena zależy od wybranego pakietu lekcji oraz formy nauki -
+            indywidualnie lub w parze.
           </p>
-          <NuxtLink :to="ROUTES.prices"
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Standardowy cennik dotyczy zajęć w godzinach
+            popołudniowo-wieczornych.
+          </p>
+          <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+            Jeśli masz możliwość nauki rano (do godziny
+            {{ morningOnlinePromotion.deadlineHour }}), możesz wybrać poranny
+            wariant zajęć online. To świetna opcja dla osób z elastycznym
+            grafikiem, które chcą uczyć się w spokojniejszych godzinach dnia.
+          </p>
+          <NuxtLink :to="ROUTES.pricesIndividual"
             class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
             Zobacz pełny cennik
           </NuxtLink>
         </div>
 
-        <div class="grid gap-4 sm:grid-cols-2">
+        <div class="mt-10 inline-flex rounded-full border border-border bg-card p-1 shadow-sm"
+          aria-label="Wybierz porę zajęć online">
+          <button type="button" class="rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer"
+            :class="selectedOnlineTime === 'morning'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+              " :aria-pressed="selectedOnlineTime === 'morning'" @click="toggleOnlineTime">
+            Zajęcia rano
+          </button>
+          <button type="button" class="rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer"
+            :class="selectedOnlineTime === 'afternoon'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+              " :aria-pressed="selectedOnlineTime === 'afternoon'" @click="toggleOnlineTime">
+            Po południu
+          </button>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
           <article v-for="option in highlightedPrices" :key="option.name"
-            class="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <h3 class="font-serif text-xl font-semibold text-foreground">
-              {{ option.name }}
-            </h3>
-            <p class="mt-2 text-lg font-semibold text-primary">
-              {{ option.price }}
-            </p>
-            <div class="mt-3 flex flex-wrap gap-2">
+            class="flex min-h-[20rem] flex-col rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div class="flex flex-wrap gap-2">
               <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                 {{ option.frequency }}
               </span>
@@ -377,7 +616,56 @@ useHead({
                 {{ option.duration }}
               </span>
             </div>
-            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <h3 class="mt-4 font-serif text-xl font-semibold text-foreground">
+              {{ option.name }}
+            </h3>
+            <div class="mt-4 border-t border-border pt-4">
+              <div v-show="selectedOnlineTime === 'afternoon'">
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  Cena standardowa
+                </p>
+                <p class="mt-1 font-serif text-2xl font-semibold text-primary">
+                  <span v-if="option.pricePrefix">{{ option.pricePrefix }}
+                  </span>
+                  {{ option.standardLessonPrice }}
+                </p>
+                <p class="mt-1 text-sm text-muted-foreground">
+                  {{ option.lessonPriceContext }}
+                </p>
+              </div>
+              <div v-show="selectedOnlineTime === 'morning'">
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  Poranny wariant online
+                </p>
+                <p class="mt-1 font-serif text-2xl font-semibold text-primary">
+                  <span v-if="option.pricePrefix">{{ option.pricePrefix }}
+                  </span>
+                  {{ option.morningLessonPrice }}
+                </p>
+                <p class="mt-1 text-sm text-muted-foreground">
+                  {{ option.lessonPriceContext }} do godziny
+                  {{ morningOnlinePromotion.deadlineHour }}
+                </p>
+              </div>
+            </div>
+            <div class="mt-4 rounded-xl bg-muted px-4 py-3">
+              <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Płatność
+              </p>
+              <div v-show="selectedOnlineTime === 'afternoon'">
+                <p v-for="line in option.paymentLines" :key="line.standard"
+                  class="mt-1 text-sm font-semibold leading-relaxed text-foreground">
+                  {{ line.standard }}
+                </p>
+              </div>
+              <div v-show="selectedOnlineTime === 'morning'">
+                <p v-for="line in option.paymentLines" :key="line.morning"
+                  class="mt-1 text-sm font-semibold leading-relaxed text-foreground">
+                  {{ line.morning }}
+                </p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-muted-foreground">
               {{ option.details }}
             </p>
           </article>
@@ -426,8 +714,8 @@ useHead({
           Chcesz uczyć się angielskiego online?
         </h2>
         <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
-          Napisz, jaki jest Twój cel. Wspólnie dobierzemy
-          idealną formę i dogodny termin.
+          Napisz, jaki jest Twój cel. Wspólnie dobierzemy idealną formę i
+          dogodny termin.
         </p>
         <NuxtLink :to="ROUTES.contact"
           class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">

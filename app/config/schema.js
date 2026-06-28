@@ -50,7 +50,33 @@ const getOfferId = (pageUrl, plan) => `${pageUrl}#offer-${plan.id}`
 
 const getPlanPrice = (plan) => plan.schemaPrice ?? plan.price.match(/\d+/)?.[0]
 
-const buildPriceDescription = (plan) => `Cena: ${plan.price}.`
+const sentenceCase = (value) =>
+  value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : value
+
+const buildLessonPriceDescription = (plan) => {
+  if (!plan.fromPrice) return undefined
+
+  const lessonContext = plan.fromPriceContext?.replace(/^za lekcję\s*/i, '')
+
+  return `Cena za lekcję: ${plan.fromPrice}${
+    lessonContext ? ` (${lessonContext})` : ''
+  }.`
+}
+
+const buildPriceDescription = (plan) =>
+  plan.fromPrice || plan.paymentNote
+    ? [
+        buildLessonPriceDescription(plan),
+        plan.paymentNote
+          ? `${sentenceCase(plan.paymentNote)}.`
+          : `Płatność: ${plan.price}.`,
+        plan.fromPrice && plan.promo
+          ? `${plan.promo.label}: ${plan.promo.price}.`
+          : undefined,
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : `Cena: ${plan.price}.`
 
 const buildWebPageNode = ({
   pageUrl,
@@ -131,7 +157,7 @@ const buildOfferNode = (
     '@type': 'Offer',
     '@id': getOfferId(pageUrl, plan),
     name: `${plan.name} - ${plan.frequency}`,
-    description: `${plan.price}. ${plan.details}`,
+    description: `${buildPriceDescription(plan)} ${plan.details}`,
     category,
     url: pageUrl,
     availability: 'https://schema.org/LimitedAvailability',

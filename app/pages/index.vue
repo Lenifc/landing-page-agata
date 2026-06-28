@@ -6,7 +6,8 @@ const pageRoute = ROUTES.home
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 useSeoMeta({
-  title: 'Angielski Rumia - zajęcia dla dorosłych i młodzieży, stacjonarne oraz online',
+  title:
+    'Angielski Rumia - zajęcia dla dorosłych i młodzieży, stacjonarne oraz online',
   description:
     'Kameralne lekcje angielskiego w Rumi dla młodzieży oraz dorosłych. Indywidualnie, w duecie lub małej grupie, z naciskiem na swobodne mówienie.',
   ogTitle: 'Angielski w Rumi i online | Talkateria',
@@ -26,6 +27,25 @@ const features = [
   {
     title: 'Kameralność',
     body: 'Pracuję wyłącznie indywidualnie i w małych grupach. Dzięki temu każdy aktywnie uczestniczy w zajęciach, a nauka jest bardziej skuteczna i przynosi lepsze efekty.',
+  },
+]
+
+const whyTalkateria = [
+  {
+    title: 'Uczysz się z jednym lektorem',
+    body: 'Zajęcia prowadzę osobiście, znam Twój poziom, cel i sposób pracy. Nie zaczynasz od nowa co kilka tygodni.',
+  },
+  {
+    title: 'Małe grupy i dużo mówienia',
+    body: 'Na lekcji nie chowasz się w tłumie. Każdy kursant ma realny czas na rozmowę, korektę i zadanie pytań.',
+  },
+  {
+    title: 'Spokojne tempo bez presji',
+    body: 'Najpierw porządkujemy podstawy, a potem dokładamy kolejne elementy, żeby nauka dawała poczucie kontroli zamiast chaosu.',
+  },
+  {
+    title: 'Jasny cel każdej lekcji',
+    body: 'Wiesz, co dana lekcja ma Ci dać: pewniejsze mówienie, lepszy wynik, odblokowanie konkretnego tematu albo praktyczne słownictwo.',
   },
 ]
 
@@ -109,7 +129,7 @@ useHead({
       <div class="flex flex-col gap-6">
         <span
           class="order-3 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1">
-          Przygotowanie do egzaminów • Pomoc z materiałem szkolnym • Konwersacje
+          Konwersacje • Materiał szkolny • Egzaminy
         </span>
         <h1
           class="order-1 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:order-2 md:text-5xl">
@@ -195,29 +215,51 @@ useHead({
     </section>
 
     <section class="border-y border-border bg-secondary">
-      <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 md:grid-cols-[0.9fr_1.1fr]">
-        <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
-          <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
-            class="h-full w-full object-cover" width="1024" height="1024" loading="lazy" />
+      <div class="mx-auto max-w-6xl px-6 py-20">
+        <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
+          <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
+            <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
+              class="h-full w-full object-cover" width="1024" height="1024" loading="lazy" />
+          </div>
+          <div class="space-y-5">
+            <span class="text-sm font-medium uppercase tracking-widest text-primary">Jestem Agata i to właśnie ja
+              stworzyłam Talkaterię.</span>
+
+            <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
+              <p>
+                Jestem magistrem filologii angielskiej oraz lektorką z ponad 8-letnim doświadczeniem w
+                nauczaniu dzieci, młodzieży i dorosłych. Pomagam przełamywać barierę mówienia,
+                przygotowywać się do egzaminów, poprawiać wyniki w szkole oraz rozwijać praktyczne
+                umiejętności językowe.
+
+              </p>
+              <p>
+                Ukończyłam również studia podyplomowe z coachingu z elementami psychologii, dzięki czemu
+                skuteczniej wspieram uczniów w procesie nauki, budowaniu motywacji oraz radzeniu sobie ze
+                stresem. Każde zajęcia dostosowuję do indywidualnych potrzeb kursanta, dbając o kameralną
+                atmosferę, efektywną naukę i rozwijanie pewności siebie w komunikacji w języku angielskim.
+
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="space-y-5">
-          <span class="text-sm font-medium uppercase tracking-widest text-primary">Cześć, tu Agata</span>
-          <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
-            <p>
-              Jestem magistrem filologii angielskiej oraz lektorką z ponad
-              8-letnim doświadczeniem w nauczaniu dzieci, młodzieży i dorosłych.
-              Pomagam przełamywać barierę mówienia, przygotowywać się do
-              egzaminów, poprawiać wyniki w szkole oraz rozwijać praktyczne
-              umiejętności językowe.
-            </p>
-            <p>
-              Ukończyłam również studia podyplomowe z coachingu z elementami
-              psychologii, dzięki czemu skuteczniej wspieram uczniów w procesie
-              nauki, budowaniu motywacji oraz radzeniu sobie ze stresem. Każde
-              zajęcia dostosowuję do indywidualnych potrzeb kursanta, dbając o
-              kameralną atmosferę, efektywną naukę i rozwijanie pewności siebie
-              w komunikacji w języku angielskim.
-            </p>
+
+        <div class="mt-14">
+          <div class="max-w-3xl">
+            <h2 class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              Dlaczego Talkateria?
+            </h2>
+          </div>
+          <div class="mt-8 grid gap-5 md:grid-cols-4">
+            <article v-for="reason in whyTalkateria" :key="reason.title"
+              class="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h3 class="font-serif text-xl font-semibold text-foreground">
+                {{ reason.title }}
+              </h3>
+              <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+                {{ reason.body }}
+              </p>
+            </article>
           </div>
         </div>
       </div>
@@ -290,8 +332,9 @@ useHead({
           dobrym miejscem dla Ciebie.
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla młodzieży i dorosłych, którzy chcą uporządkować wiedzę, nabrać
-          pewności w mówieniu i zacząć swobodnie używać angielskiego w praktyce, w spokojnej i przyjaznej atmosferze
+          To propozycja dla młodzieży i dorosłych, którzy chcą uporządkować
+          wiedzę, nabrać pewności w mówieniu i zacząć swobodnie używać
+          angielskiego w praktyce, w spokojnej i przyjaznej atmosferze
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
           Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co

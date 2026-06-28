@@ -5,19 +5,24 @@ import {
   BUSINESS_NIP,
 } from '~/config/business'
 import { CONTACT } from '~/config/contact'
+import { getPricingPlan, getPricingPromotion } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.promotionRules
 const pageUrl = `${SITE_URL}${pageRoute}`
 const updatedAt = '23 czerwca 2026 r.'
+const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const occasionalIndividual = getPricingPlan('occasionalIndividual')
+const occasionalDuo = getPricingPlan('occasionalDuo')
+const personPrice = (value) => value.replace(' / osoba', ' za osobę')
 
 useSeoMeta({
   title: 'Regulamin promocji',
   description:
-    'Uproszczone zasady promocji na kursy egzaminacyjne, pierwszą lekcję oraz poranne zajęcia online w Talkaterii.',
+    'Zasady promocji na kursy egzaminacyjne oraz jednorazowej lekcji dla nowych kursantów w Talkaterii.',
   robots: 'noindex, follow',
   ogTitle: 'Talkateria | Regulamin promocji',
-  ogDescription: 'Sprawdź warunki aktualnych zniżek i promocji w Talkaterii.',
+  ogDescription: 'Sprawdź warunki aktualnych zniżek i ofert specjalnych w Talkaterii.',
 })
 
 useHead({
@@ -34,16 +39,16 @@ useHead({
   <main id="main-content">
     <article class="mx-auto max-w-3xl px-6 py-12 text-foreground md:py-16">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">
-        Zniżki i promocje
+        Zniżki i oferty specjalne
       </span>
       <h1 class="mt-3 font-serif text-4xl font-semibold tracking-tight">
-        Uproszczony regulamin promocji
+        Regulamin promocji
       </h1>
       <p class="mt-3 text-sm text-muted-foreground">
         Ostatnia aktualizacja: {{ updatedAt }}
       </p>
       <p class="mt-6 leading-relaxed text-muted-foreground">
-        Poniższe zasady opisują aktualne promocje dostępne w Talkaterii. Przed
+        Poniższe zasady opisują aktualne promocje i oferty specjalne dostępne w Talkaterii. Przed
         zapisem zapoznaj się również z wybraną ofertą i warunkami umowy.
       </p>
 
@@ -67,20 +72,22 @@ useHead({
         <h2 class="text-xl font-semibold">2. Zasady wspólne</h2>
         <ul class="list-disc space-y-2 pl-6">
           <li>
-            Promocje są przeznaczone wyłącznie dla nowych klientów, którzy nie
-            korzystali wcześniej z odpłatnych zajęć w Talkaterii.
+            Nowy klient oznacza kursanta, który wcześniej nie korzystał z
+            odpłatnych zajęć w Talkaterii. W przypadku osób niepełnoletnich
+            promocja dotyczy kursanta, a formalności mogą być prowadzone przez
+            rodzica lub opiekuna prawnego.
           </li>
           <li>
-            Jeden klient może skorzystać tylko z jednej spośród opisanych
-            promocji.
+            Jeden kursant może skorzystać tylko z jednej spośród opisanych
+            promocji lub ofert specjalnych.
           </li>
           <li>
-            Promocje nie łączą się ze sobą ani z innymi rabatami, zniżkami lub
+            Promocje i oferty specjalne nie łączą się ze sobą ani z innymi rabatami, zniżkami lub
             ofertami specjalnymi, chyba że wyraźnie wskazano inaczej.
           </li>
           <li>
-            Rabat nie podlega wymianie na gotówkę, nie działa wstecz i jest
-            naliczany po potwierdzeniu spełnienia warunków promocji.
+            Rabat lub cena specjalna nie podlega wymianie na gotówkę, nie działa
+            wstecz i jest naliczana po potwierdzeniu spełnienia warunków.
           </li>
           <li>
             Możliwość zapisu zależy od dostępności terminów, a w przypadku kursu
@@ -91,7 +98,7 @@ useHead({
 
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">
-          3. –10% na cały grupowy kurs egzaminacyjny
+          3. {{ examEarlyBirdPromotion.label }}
         </h2>
         <ul class="list-disc space-y-2 pl-6">
           <li>
@@ -99,16 +106,18 @@ useHead({
             ósmoklasisty albo matury z języka angielskiego.
           </li>
           <li>
-            Warunkiem skorzystania z promocji jest podpisanie umowy do 31 lipca
-            2026 r.
+            Warunkiem skorzystania z promocji jest podpisanie umowy do
+            {{ examEarlyBirdPromotion.deadline }}.
           </li>
           <li>
-            Cena regularna kursu wynosi 3000 zł za osobę, a cena po rabacie 2700
-            zł za osobę. Oznacza to oszczędność 300 zł.
+            Cena regularna kursu wynosi
+            {{ personPrice(examEarlyBirdPromotion.regularTotalPrice) }}, a cena
+            po rabacie {{ personPrice(examEarlyBirdPromotion.promoTotalPrice) }}.
+            Oznacza to oszczędność {{ examEarlyBirdPromotion.savings }}.
           </li>
           <li>
-            Płatność promocyjna jest rozłożona na 8 równych rat po 337,50 zł
-            za osobę.
+            Płatność promocyjna jest rozłożona na 8 równych rat po
+            {{ examEarlyBirdPromotion.installmentPrice }} za osobę.
           </li>
           <li>
             Promocja nie obejmuje alternatywnej formy zajęć zaproponowanej w
@@ -118,69 +127,50 @@ useHead({
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">4. –20% na pierwszą lekcję</h2>
+        <h2 class="text-xl font-semibold">4. Jednorazowa lekcja dla nowych kursantów</h2>
         <ul class="list-disc space-y-2 pl-6">
           <li>
-            Promocja obejmuje pierwszą pojedynczą lekcję okazjonalną 1:1 albo
-            DUO, realizowaną stacjonarnie w studiu w Rumi lub online.
-          </li>
-          <li>
-            Z promocji można skorzystać jeden raz. Kolejne lekcje są rozliczane
-            zgodnie z aktualnym cennikiem lub wybranym pakietem.
-          </li>
-          <li>
-            Cena pierwszej lekcji 1:1 po rabacie wynosi 88 zł zamiast 110 zł.
-          </li>
-          <li>
-            Cena pierwszej lekcji DUO po rabacie wynosi 64 zł za osobę zamiast
-            80 zł za osobę.
-          </li>
-        </ul>
-      </section>
-
-      <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">5. –20% na poranne lekcje online</h2>
-        <ul class="list-disc space-y-2 pl-6">
-          <li>
-            Promocja dotyczy lekcji online rozpoczynających się najpóźniej o
-            godzinie 12:00.
-          </li>
-          <li>
-            Rabat wynosi 20% od standardowej ceny wybranego wariantu zajęć
+            Oferta obejmuje jednorazową lekcję okazjonalną 1:1 albo DUO dla
+            nowych kursantów, realizowaną stacjonarnie w studiu w Rumi lub
             online.
           </li>
           <li>
-            Zniżka obowiązuje dla lekcji realizowanych w kwalifikujących się
-            godzinach i zależy od dostępności porannych terminów.
+            Z oferty można skorzystać jeden raz. Kolejne lekcje są rozliczane
+            zgodnie z aktualnym cennikiem lub wybranym pakietem.
           </li>
           <li>
-            Przeniesienie lekcji na późniejszą godzinę może oznaczać rozliczenie
-            jej według ceny bez rabatu.
+            Cena jednorazowej lekcji 1:1 dla nowych kursantów wynosi
+            {{ occasionalIndividual.promo.price }}.
+          </li>
+          <li>
+            Cena jednorazowej lekcji DUO dla nowych kursantów wynosi
+            {{ personPrice(occasionalDuo.promo.price) }}.
           </li>
         </ul>
       </section>
 
       <section class="mt-8 space-y-3">
-        <h2 class="text-xl font-semibold">6. Czas obowiązywania</h2>
+        <h2 class="text-xl font-semibold">5. Czas obowiązywania</h2>
         <p>
-          Promocje obowiązują w okresie, w którym są opublikowane na stronie
+          Promocje i oferty specjalne obowiązują w okresie, w którym są opublikowane na stronie
           Cennika. Wyjątkiem jest promocja na grupowy kurs egzaminacyjny, w
-          której umowę należy podpisać najpóźniej 31 lipca 2026 r.
+          której umowę należy podpisać najpóźniej
+          {{ examEarlyBirdPromotion.deadline }}.
         </p>
         <p>
-          Organizator zastrzega sobie prawo do zakończenia promocji lub zmiany
+          Organizator zastrzega sobie prawo do zakończenia promocji, oferty specjalnej lub zmiany
           jej warunków w dowolnym momencie. Nie narusza to praw osób, które
           nabyły uprawnienie do zniżki przed dniem wejścia w życie zmiany
-          regulaminu lub zakończenia promocji.
+          regulaminu, promocji albo oferty specjalnej.
         </p>
       </section>
 
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">
-          7. Reklamacje i postanowienia końcowe
+          6. Reklamacje i postanowienia końcowe
         </h2>
         <p>
-          Pytania lub reklamacje dotyczące promocji można zgłaszać mailowo na
+          Pytania lub reklamacje dotyczące promocji i ofert specjalnych można zgłaszać mailowo na
           adres
           <a :href="`mailto:${CONTACT.email}`" class="text-primary underline underline-offset-4 hover:text-foreground">
             {{ CONTACT.email }}</a>.

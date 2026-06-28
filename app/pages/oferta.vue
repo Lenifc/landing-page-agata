@@ -1,10 +1,41 @@
 <script setup>
-import { getPricingPlans } from '~/config/pricing'
+import {
+  getPricingPlan,
+  getPricingPlans,
+  getPricingPromotion,
+} from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildOfferPageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.offer
 const pageUrl = `${SITE_URL}${pageRoute}`
+const plans = getPricingPlans('offer')
+const morningOnlinePlans = getPricingPlans('morningOnline')
+const morningOnlineIndividualPlans = morningOnlinePlans.filter(
+  (plan) => plan.id.includes('Annual') && plan.id.includes('Individual'),
+)
+const morningOnlineDuoPlans = morningOnlinePlans.filter(
+  (plan) => plan.id.includes('Annual') && plan.id.includes('Duo'),
+)
+const offerCatalogPlans = plans.map((plan) =>
+  Object.fromEntries(
+    Object.entries(plan).filter(
+      ([key]) => !['fromPrice', 'fromPriceContext'].includes(key),
+    ),
+  ),
+)
+const individualAnnualStandard = getPricingPlan('individualAnnualWeekly')
+const individualAnnualIntense = getPricingPlan('individualAnnualTwiceWeekly')
+const duoAnnualIntense = getPricingPlan('duoAnnualTwiceWeekly')
+const examGroup = getPricingPlan('examGroup')
+const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const personPrice = (value) => value.replace(' / osoba', ' za osobę')
+const priceWithContext = (plan) =>
+  `${personPrice(plan.fromPrice)} ${plan.fromPriceContext}`
+const individualAnnualPrice = priceWithContext(individualAnnualIntense)
+const duoAnnualPrice = priceWithContext(duoAnnualIntense)
+const examGroupPrice = priceWithContext(examGroup)
+const offerPricingFaqAnswer = `W pakietach rocznych i egzaminacyjnych ceny są przeliczone na koszt jednej lekcji. Cena „od” dotyczy wyboru wariantu pakietu: 1:1 od ${individualAnnualPrice} przy pakiecie rocznym i DUO od ${duoAnnualPrice} przy pakiecie rocznym. Grupowy kurs egzaminacyjny ma stałą cenę ${examGroupPrice}. Pod taką ceną znajdziesz też miesięczną płatność i liczbę rat, np. ${individualAnnualStandard.price} albo ${personPrice(examGroup.price)}.`
 
 useSeoMeta({
   title: 'Oferta oraz cennik zajęć z angielskiego w Rumi',
@@ -15,33 +46,42 @@ useSeoMeta({
     'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, kurs egzaminacyjny i lekcje okazjonalne.',
 })
 
-const plans = getPricingPlans('offer')
-
 const promotions = [
   {
     title: '–10% na cały grupowy kurs egzaminacyjny',
-    description:
-      'Zaoszczędź 300 zł na całym kursie! Promocja obowiązuje osoby zapisujące się na kurs egzaminacyjny (ósmoklasisty lub maturalny) przy podpisaniu umowy do 31 lipca 2026 r.',
-  },
-  {
-    title: '–20% na pierwszą lekcję',
-    description:
-      'Promocja dotyczy zarówno zajęć stacjonarnych w studiu w Rumi, jak i lekcji online. To idealna okazja, aby sprawdzić, czy odpowiada Ci moja metoda nauczania, zanim zdecydujesz o dalszej kontynuacji.',
-  },
-  {
-    title: '–20% na poranne lekcje online',
-    description:
-      'Masz czas przed szkołą, pracą lub Twój grafik jest bardziej elastyczny? Poranne godziny to świetna okazja na spokojną, efektywną naukę, zanim dzień na dobre się rozpędzi. Wybierz zajęcia online do godziny 12:00 i zgarnij stałą zniżkę.',
+    description: `Zaoszczędź ${examEarlyBirdPromotion.savings} na całym kursie! Cena regularna całego kursu to ${personPrice(examEarlyBirdPromotion.regularTotalPrice)}, a cena obniżona to ${personPrice(examEarlyBirdPromotion.promoTotalPrice)}. Promocja obowiązuje osoby zapisujące się na kurs egzaminacyjny (ósmoklasisty lub maturalny) przy podpisaniu umowy do ${examEarlyBirdPromotion.deadline}`,
   },
 ]
 
 const pricingSections = [
   {
+    id: 'poranne-zajecia-online',
+    navLabel: 'Online rano',
+    title: 'Poranne zajęcia online',
+    badge: 'Do 12:00',
+    description: [
+      'Osobny wariant zajęć online dla osób, które mogą uczyć się rano, do godziny 12:00.',
+      'Ceny są rozłożone na 10 równych rat miesięcznych i dotyczą pakietów rocznych 1:1 oraz DUO.',
+    ],
+    groups: [
+      {
+        id: 'poranne-online-indywidualne',
+        title: 'Poranne online 1:1',
+        plans: morningOnlineIndividualPlans,
+      },
+      {
+        id: 'poranne-online-duo',
+        title: 'Poranne online DUO',
+        plans: morningOnlineDuoPlans,
+      },
+    ],
+  },
+  {
     id: 'pakiety-roczne',
-    title: 'Pakiety roczne i egzaminacyjne',
+    title: 'Pakiety indywidualne, DUO i egzaminacyjne',
     badge: 'Stała cena',
     description: [
-      'Kompleksowe cykle nauki z gwarancją stałej ceny. Pakiety roczne są rozłożone na 10 równych rat miesięcznych, a grupowy kurs egzaminacyjny na 8 równych.',
+      'Kompleksowe cykle nauki z gwarancją stałej ceny. Pakiety Standard i Intense są rozłożone na 10 równych rat miesięcznych, a pakiet MINI i grupowy kurs egzaminacyjny na 8 równych rat.',
       'Wysokość rat pozostaje stała niezależnie od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych.',
     ],
     groups: [
@@ -49,13 +89,16 @@ const pricingSections = [
         id: 'zajecia-indywidualne',
         navLabel: '1:1',
         title: 'Zajęcia indywidualne (1:1)',
-        plans: getPricingPlans('annualIndividual'),
+        plans: [
+          getPricingPlan('miniIndividual'),
+          ...getPricingPlans('annualIndividual'),
+        ],
       },
       {
         id: 'zajecia-duo',
         navLabel: 'DUO',
         title: 'Zajęcia w parze (DUO)',
-        plans: getPricingPlans('annualDuo'),
+        plans: [getPricingPlan('miniDuo'), ...getPricingPlans('annualDuo')],
       },
       {
         id: 'pakiet-egzaminacyjny',
@@ -66,26 +109,13 @@ const pricingSections = [
     ],
   },
   {
-    id: 'pakiet-mini',
-    navLabel: 'Pakiet MINI',
-    title: 'Pakiet MINI',
-    badge: '8 rat',
-    description: [
-      'Krótsza i bardziej elastyczna forma nauki - dobra opcja dla osób, które nie chcą zobowiązywać się do długiego cyklu od września do czerwca.',
-      `Pakiet sprawdza się zarówno jako intensywne wsparcie przed egzaminem ósmoklasisty lub
-      maturą (do końca kwietnia), jak i jako krótszy kurs konwersacyjny dla osób, które chcą skupić
-      się na praktycznym użyciu języka bez długoterminowego zobowiązania.`,
-      'Płatność w 8 równych ratach miesięcznych, niezależnie od przerw świątecznych i ferii.',
-    ],
-    plans: getPricingPlans('mini'),
-  },
-  {
     id: 'lekcje-okazjonalne',
     navLabel: 'Lekcje okazjonalne',
     title: 'Lekcje okazjonalne - bez zobowiązań',
     badge: 'Płatność z góry',
     description: [
-      'Doraźna pomoc, nadrabianie materiału lub konsultacje przed sprawdzianem bez długoterminowych umów. Pierwsza lekcja okazjonalna jest objęta promocją -20%.',
+      'Doraźna pomoc, nadrabianie materiału lub konsultacje przed sprawdzianem bez długoterminowych umów. Dla nowych kursantów dostępna jest jednorazowa lekcja w osobnej cenie wskazanej w cenniku.',
+      'W tej sekcji znajdziesz też poranny wariant online do godziny 12:00.',
       'Płatność odbywa się z góry przed zajęciami.',
     ],
     plans: getPricingPlans('occasional'),
@@ -167,7 +197,7 @@ const faqs = [
   },
   {
     q: 'Jak długo trwa kurs?',
-    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Pakiety roczne obejmują 30 lekcji w wersji Standard albo 60 lekcji w wersji Intense. Wariant Intense jest zwykle realizowany w 30 cotygodniowych blokach 2 × 50 minut. Kurs egzaminacyjny obejmuje 25 spotkań po 100 minut, a pakiet MINI obejmuje 20 lekcji po 50 minut.',
+    a: 'Czas trwania kursu zależy od jego rodzaju oraz celu językowego. Pakiety roczne obejmują 32 lekcje w wersji Standard albo 64 lekcje w wersji Intense. Wariant Intense jest zwykle realizowany w 32 cotygodniowych blokach 2 × 50 minut. Kurs egzaminacyjny obejmuje 25 spotkań po 100 minut, a pakiet MINI obejmuje 24 lekcje po 50 minut.',
   },
   {
     q: 'Jak wygląda nauka w DUO i kursie egzaminacyjnym?',
@@ -179,7 +209,7 @@ const faqs = [
   },
   {
     q: 'Jak wygląda płatność za kurs?',
-    a: 'Pakiety roczne są płatne w 10 stałych ratach miesięcznych. Grupowy kurs egzaminacyjny oraz pakiet MINI w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami.',
+    a: 'Pakiety Standard i Intense są płatne w 10 stałych ratach miesięcznych. Grupowy kurs egzaminacyjny i pakiet MINI są płatne w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami.',
   },
   {
     q: 'Co w przypadku nieobecności?',
@@ -222,7 +252,7 @@ useHead({
         name: 'Oferta i cennik zajęć z angielskiego w Rumi',
         description:
           'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO, kursy egzaminacyjne, pakiet MINI i lekcje okazjonalne.',
-        plans,
+        plans: offerCatalogPlans,
         faqs,
       }),
     ),
@@ -242,9 +272,43 @@ useHead({
         <span class="block">oferta i cennik zajęć</span>
       </h1>
       <p class="mx-auto mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-        Każdy uczy się inaczej, dlatego oferuję elastyczne formy nauki. Wybierz kurs dopasowany do swoich celów, tempa i
-        możliwości czasowych - stacjonarnie w kameralnym studiu w Rumi (Janowo) lub wygodnie online z dowolnego miejsca.
+        Każdy uczy się inaczej, dlatego oferuję elastyczne formy nauki. Wybierz
+        kurs dopasowany do swoich celów, tempa i możliwości czasowych -
+        stacjonarnie w kameralnym studiu w Rumi (Janowo) lub wygodnie online z
+        dowolnego miejsca.
       </p>
+    </section>
+
+    <section class="border-y border-border bg-primary/5">
+      <div class="mx-auto max-w-6xl px-6 py-12 md:py-14">
+        <div class="max-w-3xl">
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">
+            Promocje
+          </span>
+          <h2 class="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            Niższy próg wejścia na start
+          </h2>
+        </div>
+
+        <div class="mt-7 grid gap-5 md:grid-cols-3">
+          <article v-for="promotion in promotions" :key="promotion.title"
+            class="rounded-2xl border border-primary/15 bg-card p-6 shadow-sm">
+            <h3 class="font-serif text-xl font-semibold text-primary">
+              {{ promotion.title }}
+            </h3>
+            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
+              {{ promotion.description }}
+            </p>
+          </article>
+        </div>
+
+        <p class="mt-5 text-xs text-muted-foreground">
+          Promocje dotyczą nowych kursantów i nie łączą się ze sobą.
+          <NuxtLink :to="ROUTES.promotionRules"
+            class="font-medium text-primary underline underline-offset-4 transition-colors hover:text-foreground">
+            Sprawdź regulamin promocji </NuxtLink>.
+        </p>
+      </div>
     </section>
 
     <section class="border-y border-border bg-secondary">
@@ -397,31 +461,10 @@ useHead({
           lekcje. Koszt zajęć zależy od wybranego wariantu, częstotliwości
           spotkań i formy nauki.
         </p>
-      </div>
-
-      <div class="mb-12 rounded-[2rem] border border-primary/20 bg-primary/5 p-6 md:p-8">
-        <h3 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-          Zniżki i promocje
-        </h3>
-
-        <div class="mt-6 grid gap-5 md:grid-cols-3">
-          <article v-for="promotion in promotions" :key="promotion.title"
-            class="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <h4 class="font-serif text-xl font-semibold text-primary">
-              {{ promotion.title }}
-            </h4>
-            <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              {{ promotion.description }}
-            </p>
-          </article>
-        </div>
-
-        <p class="mt-5 text-xs text-muted-foreground">
-          Promocje są przeznaczone dla nowych klientów i nie łączą się ze sobą.
-          <NuxtLink :to="ROUTES.promotionRules"
-            class="font-medium text-primary underline underline-offset-4 transition-colors hover:text-foreground">
-            Sprawdź regulamin promocji
-          </NuxtLink>.
+        <p class="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
+          Jeśli liczba zajęć w gotowych pakietach nie odpowiada Twoim potrzebom,
+          możliwa jest indywidualna wycena po krótkiej rozmowie o celu nauki,
+          terminach i preferowanej formie zajęć.
         </p>
       </div>
 
@@ -461,13 +504,13 @@ useHead({
                 class="mt-2 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]">
                 <div
                   class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(244,246,248,0.95),rgba(255,255,255,0.98),rgba(247,248,250,0.98))] md:grid">
-                  <div class="px-5 py-3 text-sm font-semibold text-foreground">
+                  <div class="px-4 py-2.5 text-xs font-semibold text-foreground">
                     Rodzaj zajęć
                   </div>
-                  <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
+                  <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
                     Czas trwania
                   </div>
-                  <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
+                  <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
                     Cena
                   </div>
                 </div>
@@ -475,12 +518,12 @@ useHead({
                 <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
                   class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
                   :class="plan.featured
-                    ? 'bg-[linear-gradient(90deg,rgba(244,246,248,0.7),rgba(255,255,255,0.98),rgba(247,248,250,0.98))]'
-                    : 'bg-card'
+                      ? 'bg-[linear-gradient(90deg,rgba(244,246,248,0.7),rgba(255,255,255,0.98),rgba(247,248,250,0.98))]'
+                      : 'bg-card'
                     ">
-                  <div class="px-4 py-3.5 md:px-5">
-                    <div class="flex flex-wrap items-center gap-3">
-                      <h5 class="text-lg font-semibold text-foreground">
+                  <div class="px-4 py-3 md:px-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h5 class="text-base font-semibold text-foreground">
                         {{ plan.name }}
                       </h5>
                       <span v-if="plan.featured"
@@ -488,7 +531,7 @@ useHead({
                         Najczęściej wybierane
                       </span>
                     </div>
-                    <p class="mt-0.5 text-sm text-foreground/80">
+                    <p class="mt-0.5 text-xs text-foreground/80">
                       {{ plan.frequency }}
                     </p>
                     <p class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
@@ -496,25 +539,25 @@ useHead({
                     </p>
                   </div>
 
-                  <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+                  <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
                     <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                       Czas trwania
                     </p>
-                    <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
+                    <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                       {{ plan.duration }}
                     </p>
                   </div>
 
-                  <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+                  <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
                     <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                       Cena
                     </p>
-                    <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
+                    <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                       {{ plan.price }}
                     </p>
                     <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
                       {{ plan.promo.label }}:<br />
-                      <span class="font-serif text-lg font-semibold">
+                      <span class="font-serif text-base font-semibold">
                         {{ plan.promo.price }}
                       </span>
                     </p>
@@ -528,24 +571,24 @@ useHead({
             class="mt-5 overflow-hidden rounded-xl border border-[#d9e7f7] bg-card shadow-[0_14px_34px_rgba(24,55,110,0.05)]">
             <div
               class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-[linear-gradient(90deg,rgba(244,246,248,0.95),rgba(255,255,255,0.98),rgba(247,248,250,0.98))] md:grid">
-              <div class="px-5 py-3 text-sm font-semibold text-foreground">
+              <div class="px-4 py-2.5 text-xs font-semibold text-foreground">
                 Rodzaj zajęć
               </div>
-              <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
+              <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
                 Czas trwania
               </div>
-              <div class="border-l border-border/80 px-5 py-3 text-center text-sm font-semibold text-foreground">
+              <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
                 Cena
               </div>
             </div>
 
             <div v-for="plan in section.plans" :key="`${section.title}-${plan.name}-${plan.frequency}`"
               class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70">
-              <div class="px-4 py-3.5 md:px-5">
-                <h4 class="text-lg font-semibold text-foreground">
+              <div class="px-4 py-3 md:px-4">
+                <h4 class="text-base font-semibold text-foreground">
                   {{ plan.name }}
                 </h4>
-                <p class="mt-0.5 text-sm text-foreground/80">
+                <p class="mt-0.5 text-xs text-foreground/80">
                   {{ plan.frequency }}
                 </p>
                 <p class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
@@ -553,25 +596,25 @@ useHead({
                 </p>
               </div>
 
-              <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+              <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
                 <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                   Czas trwania
                 </p>
-                <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
+                <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                   {{ plan.duration }}
                 </p>
               </div>
 
-              <div class="border-t border-border/70 px-4 py-3.5 md:border-l md:border-t-0 md:px-5 md:text-center">
+              <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
                 <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
                   Cena
                 </p>
-                <p class="mt-1.5 font-serif text-xl font-semibold text-foreground md:mt-0">
+                <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                   {{ plan.price }}
                 </p>
                 <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
                   {{ plan.promo.label }}:<br />
-                  <span class="font-serif text-lg font-semibold">
+                  <span class="font-serif text-base font-semibold">
                     {{ plan.promo.price }}
                   </span>
                 </p>
