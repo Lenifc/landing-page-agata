@@ -10,7 +10,7 @@ import { ROUTES, SITE_URL } from '~/config/routes'
 
 const pageRoute = ROUTES.promotionRules
 const pageUrl = `${SITE_URL}${pageRoute}`
-const updatedAt = '23 czerwca 2026 r.'
+const updatedAt = '28 czerwca 2026 r.'
 const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
 const occasionalIndividual = getPricingPlan('occasionalIndividual')
 const occasionalDuo = getPricingPlan('occasionalDuo')
@@ -107,13 +107,17 @@ useHead({
           </li>
           <li>
             Warunkiem skorzystania z promocji jest podpisanie umowy do
-            {{ examEarlyBirdPromotion.deadline }}.
+            {{ examEarlyBirdPromotion.deadline }}
           </li>
           <li>
             Cena regularna kursu wynosi
             {{ personPrice(examEarlyBirdPromotion.regularTotalPrice) }}, a cena
             po rabacie {{ personPrice(examEarlyBirdPromotion.promoTotalPrice) }}.
             Oznacza to oszczędność {{ examEarlyBirdPromotion.savings }}.
+          </li>
+          <li>
+            Najniższa cena kursu z 30 dni przed obniżką wynosi
+            {{ personPrice(examEarlyBirdPromotion.lowestPriceLast30Days) }}.
           </li>
           <li>
             Płatność promocyjna jest rozłożona na 8 równych rat po
@@ -155,7 +159,7 @@ useHead({
           Promocje i oferty specjalne obowiązują w okresie, w którym są opublikowane na stronie
           Cennika. Wyjątkiem jest promocja na grupowy kurs egzaminacyjny, w
           której umowę należy podpisać najpóźniej
-          {{ examEarlyBirdPromotion.deadline }}.
+          {{ examEarlyBirdPromotion.deadline }}
         </p>
         <p>
           Organizator zastrzega sobie prawo do zakończenia promocji, oferty specjalnej lub zmiany

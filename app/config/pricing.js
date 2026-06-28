@@ -8,6 +8,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '300',
       fromPrice: '93,75 zł',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '3000 zł',
+        lessonPrice: '93,75 zł za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 300 zł',
       details:
         'Kurs obejmuje 32 lekcje po 50 minut, odbywające się zazwyczaj raz w tygodniu.',
@@ -35,6 +39,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '544',
       fromPrice: '85 zł',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '5440 zł',
+        lessonPrice: '85 zł za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 544 zł',
       details:
         'Kurs składa się z 64 lekcji po 50 minut, odbywających się zwykle raz w tygodniu w bloku zajęć (jedna po drugiej).',
@@ -62,6 +70,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '210',
       fromPrice: '65,63 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '2100 zł / osoba',
+        lessonPrice: '65,63 zł / osoba za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 210 zł / osoba',
       details:
         'Kurs dla osób uczących się w parze. 32 spotkania po 50 minut, odbywające się zazwyczaj raz w tygodniu.',
@@ -81,6 +93,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '385',
       fromPrice: '60,16 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '3850 zł / osoba',
+        lessonPrice: '60,16 zł / osoba za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 385 zł / osoba',
       details:
         'Kurs dla osób uczących się w parze. 64 spotkania po 50 minut, odbywające się zazwyczaj w bloku zajęć (jedna po drugiej).',
@@ -100,6 +116,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '240',
       fromPrice: '75 zł',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '2400 zł',
+        lessonPrice: '75 zł za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 240 zł',
       details:
         '32 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
@@ -113,6 +133,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '435.20',
       fromPrice: '68 zł',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '4352 zł',
+        lessonPrice: '68 zł za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 435,20 zł',
       details:
         '64 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
@@ -126,6 +150,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '168',
       fromPrice: '52,50 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '1680 zł / osoba',
+        lessonPrice: '52,50 zł / osoba za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 168 zł / osoba',
       details:
         '32 lekcje po 50 min w porannym wariancie online dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku.',
@@ -139,6 +167,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '308',
       fromPrice: '48,13 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '3080 zł / osoba',
+        lessonPrice: '48,13 zł / osoba za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 10 rat × 308 zł / osoba',
       details:
         '64 lekcje po 50 min w porannym wariancie online dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku.',
@@ -152,6 +184,10 @@ export const PRICING = Object.freeze({
       schemaPrice: '365',
       fromPrice: '58,40 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '2920 zł / osoba',
+        lessonPrice: '58,40 zł / osoba za lekcję 50 min',
+      },
       paymentNote: 'miesięcznie: 8 rat × 365 zł / osoba',
       details: `Kurs egzaminacyjny dla uczniów klasy 8 oraz maturzystów obejmuje 25 spotkań po 100 minut w
         kameralnej grupie maksymalnie 4-osobowej. Zajęcia odbywają się raz w tygodniu w bloku
@@ -175,6 +211,10 @@ export const PRICING = Object.freeze({
       duration: '50 min',
       price: '8 rat × 300 zł',
       schemaPrice: '300',
+      priceDetails: {
+        totalPrice: '2400 zł',
+        lessonPrice: '100 zł za lekcję 50 min',
+      },
       details: `Kurs obejmuje 24 spotkania po 50 minut, odbywające się zazwyczaj raz w tygodniu.
         To krótszy cykl nauki z płatnością rozłożoną na 8 rat.`,
       featured: false,
@@ -199,6 +239,10 @@ export const PRICING = Object.freeze({
       duration: '50 min',
       price: '8 rat × 210 zł / osoba',
       schemaPrice: '210',
+      priceDetails: {
+        totalPrice: '1680 zł / osoba',
+        lessonPrice: '70 zł / osoba za lekcję 50 min',
+      },
       details:
         'Pakiet MINI DUO obejmuje 24 lekcje po 50 min dla dwóch osób. To krótszy cykl nauki z płatnością rozłożoną na 8 rat.',
       featured: false,
@@ -339,6 +383,7 @@ export const PRICING = Object.freeze({
       deadline: '31 lipca 2026 r.',
       regularTotalPrice: '2920 zł / osoba',
       promoTotalPrice: '2628 zł / osoba',
+      lowestPriceLast30Days: '2920 zł / osoba',
       savings: '292 zł',
       installmentPrice: '328,50 zł',
       paymentNote: '8 rat × 328,50 zł / osoba',

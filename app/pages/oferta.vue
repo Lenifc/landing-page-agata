@@ -50,6 +50,7 @@ const promotions = [
   {
     title: '–10% na cały grupowy kurs egzaminacyjny',
     description: `Zaoszczędź ${examEarlyBirdPromotion.savings} na całym kursie! Cena regularna całego kursu to ${personPrice(examEarlyBirdPromotion.regularTotalPrice)}, a cena obniżona to ${personPrice(examEarlyBirdPromotion.promoTotalPrice)}. Promocja obowiązuje osoby zapisujące się na kurs egzaminacyjny (ósmoklasisty lub maturalny) przy podpisaniu umowy do ${examEarlyBirdPromotion.deadline}`,
+    finePrint: `Najniższa cena z 30 dni przed obniżką: ${personPrice(examEarlyBirdPromotion.lowestPriceLast30Days)}.`,
   },
 ]
 
@@ -233,9 +234,16 @@ const faqs = [
 ]
 
 const openFaqIndex = ref(null)
+const openPriceDetailsId = ref(null)
 
 const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
+
+const isPriceDetailsOpen = (planId) => openPriceDetailsId.value === planId
+
+const togglePriceDetails = (planId) => {
+  openPriceDetailsId.value = isPriceDetailsOpen(planId) ? null : planId
 }
 
 useHead({
@@ -298,6 +306,9 @@ useHead({
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
               {{ promotion.description }}
+            </p>
+            <p v-if="promotion.finePrint" class="mt-3 text-xs leading-relaxed text-muted-foreground/80">
+              {{ promotion.finePrint }}
             </p>
           </article>
         </div>
@@ -555,6 +566,36 @@ useHead({
                     <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                       {{ plan.price }}
                     </p>
+                    <div v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice"
+                      class="mt-1 text-left text-xs leading-snug text-muted-foreground">
+                      <button type="button"
+                        class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
+                        :aria-expanded="isPriceDetailsOpen(plan.id)" :aria-controls="`price-details-${plan.id}`"
+                        @click="togglePriceDetails(plan.id)">
+                        <span>Szczegóły ceny</span>
+                        <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
+                          :class="{ 'rotate-180': isPriceDetailsOpen(plan.id) }" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          aria-hidden="true">
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </button>
+                      <div :id="`price-details-${plan.id}`" v-show="isPriceDetailsOpen(plan.id)"
+                        class="mt-1 max-w-[13rem] space-y-0.5 text-left">
+                        <p v-if="plan.priceDetails.totalPrice">
+                          <span class="font-medium text-foreground/75">
+                            Cena całkowita:
+                          </span>
+                          {{ plan.priceDetails.totalPrice }}
+                        </p>
+                        <p v-if="plan.priceDetails.lessonPrice">
+                          <span class="font-medium text-foreground/75">
+                            Cena za lekcję:
+                          </span>
+                          {{ plan.priceDetails.lessonPrice }}
+                        </p>
+                      </div>
+                    </div>
                     <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
                       {{ plan.promo.label }}:<br />
                       <span class="font-serif text-base font-semibold">
@@ -612,6 +653,36 @@ useHead({
                 <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                   {{ plan.price }}
                 </p>
+                <div v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice"
+                  class="mt-1 text-left text-xs leading-snug text-muted-foreground">
+                  <button type="button"
+                    class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
+                    :aria-expanded="isPriceDetailsOpen(plan.id)" :aria-controls="`price-details-${plan.id}`"
+                    @click="togglePriceDetails(plan.id)">
+                    <span>Szczegóły ceny</span>
+                    <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
+                      :class="{ 'rotate-180': isPriceDetailsOpen(plan.id) }" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      aria-hidden="true">
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                  <div :id="`price-details-${plan.id}`" v-show="isPriceDetailsOpen(plan.id)"
+                    class="mt-1 max-w-[13rem] space-y-0.5 text-left">
+                    <p v-if="plan.priceDetails.totalPrice">
+                      <span class="font-medium text-foreground/75">
+                        Cena całkowita:
+                      </span>
+                      {{ plan.priceDetails.totalPrice }}
+                    </p>
+                    <p v-if="plan.priceDetails.lessonPrice">
+                      <span class="font-medium text-foreground/75">
+                        Cena za lekcję:
+                      </span>
+                      {{ plan.priceDetails.lessonPrice }}
+                    </p>
+                  </div>
+                </div>
                 <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
                   {{ plan.promo.label }}:<br />
                   <span class="font-serif text-base font-semibold">
