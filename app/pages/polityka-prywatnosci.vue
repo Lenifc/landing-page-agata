@@ -185,10 +185,28 @@ useHead({
             Polityka prywatności Google</a>.
         </p>
         <p>
-          W przypadku zajęć online mogą być wykorzystywane narzędzia do
-          wideokonferencji, np. Zoom. W takim zakresie dane techniczne i
-          identyfikacyjne mogą być przetwarzane również przez dostawcę
-          narzędzia, zgodnie z jego zasadami prywatności.
+          W przypadku zajęć online korzystam z narzędzia wideokonferencyjnego
+          Zoom. Dołączenie do spotkania może wymagać podania imienia lub nazwy
+          widocznej dla uczestników oraz wiązać się z przetwarzaniem danych
+          technicznych, takich jak adres IP, informacje o urządzeniu,
+          przeglądarce lub aplikacji, ustawienia audio/wideo oraz dane o
+          przebiegu połączenia.
+        </p>
+        <p>
+          Podczas lekcji Zoom może przetwarzać obraz z kamery, głos z
+          mikrofonu, treść czatu, udostępniany ekran lub przesyłane pliki, ale
+          tylko w zakresie, w jakim korzystasz z tych funkcji albo jest to
+          potrzebne do przeprowadzenia zajęć online. Kamera i mikrofon są
+          wykorzystywane po udzieleniu dostępu w urządzeniu lub przeglądarce.
+          Lekcje nie są nagrywane bez wcześniejszej informacji.
+        </p>
+        <p>
+          Dane związane z korzystaniem z Zoom mogą być przetwarzane także przez
+          Zoom Communications, Inc. lub podmioty z grupy Zoom zgodnie z ich
+          zasadami prywatności. Zasady przetwarzania danych przez Zoom opisuje
+          <a href="https://www.zoom.com/en/trust/privacy/privacy-statement/" target="_blank" rel="noopener noreferrer"
+            class="text-primary underline underline-offset-4">
+            Zoom Privacy Statement</a>.
         </p>
         <p>
           Korzystanie z narzędzi zewnętrznych może wiązać się z przetwarzaniem

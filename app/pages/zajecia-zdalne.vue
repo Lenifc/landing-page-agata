@@ -22,6 +22,7 @@ const duoAnnualIntense = priceOptions.find(
   (option) => option.id === 'duoAnnualTwiceWeekly',
 )
 const miniIndividual = getPriceOption('miniIndividual')
+const miniDuo = getPriceOption('miniDuo')
 const occasionalIndividual = getPriceOption('occasionalIndividual')
 const morningOnlineOptions = getPricingPlans('morningOnline')
 const morningOnlineIndividualStandard = morningOnlineOptions.find(
@@ -48,22 +49,87 @@ const formatPriceValue = (value) => {
   return `${formatted.endsWith(',00') ? formatted.slice(0, -3) : formatted} zł`
 }
 
-const lessonPriceFromInstallments = (plan) => {
+const totalPriceFromInstallments = (
+  plan,
+  installmentPrice = Number(plan.schemaPrice),
+) => {
   const installments = Number.parseInt(plan.price, 10)
-  const lessons = Number.parseInt(plan.frequency, 10)
+  const suffix = plan.price.includes('/ osoba') ? ' / osoba' : ''
 
-  return formatPriceValue((installments * Number(plan.schemaPrice)) / lessons)
+  return `${formatPriceValue(installments * installmentPrice)}${suffix}`
 }
 
+const installmentPaymentLine = (
+  plan,
+  installmentPrice = Number(plan.schemaPrice),
+) => {
+  const suffix = plan.price.includes('/ osoba') ? ' / osoba' : ''
+
+  return `${Number.parseInt(plan.price, 10)} rat × ${formatPriceValue(
+    installmentPrice,
+  )}${suffix}`
+}
+
+const priceDetailLine = (
+  plan,
+  payment = plan.price,
+  totalPrice = plan.priceDetails?.totalPrice ?? plan.price,
+) => ({
+  payment,
+  totalPrice,
+})
+
 const buildPaymentLine = (label, plan, morningPlan = plan) => ({
-  standard: `${label}: ${paymentWithoutPrefix(plan.paymentNote)}`,
-  morning: `${label}: ${paymentWithoutPrefix(morningPlan.paymentNote)}`,
+  standard: priceDetailLine(
+    plan,
+    `${label}: ${paymentWithoutPrefix(plan.paymentNote)}`,
+  ),
+  morning: priceDetailLine(
+    morningPlan,
+    `${label}: ${paymentWithoutPrefix(morningPlan.paymentNote)}`,
+  ),
 })
 const personPrice = (value) => value.replace(' / osoba', ' za osobę')
 const priceWithContext = (plan) =>
   `${personPrice(plan.fromPrice)} ${plan.fromPriceContext}`
 const individualAnnualPrice = priceWithContext(individualAnnualIntense)
+const morningOnlinePriceRatio =
+  Number(morningOnlineIndividualStandard.schemaPrice) /
+  Number(individualAnnualStandard.schemaPrice)
+const miniIndividualMorningInstallment =
+  Number(miniIndividual.schemaPrice) * morningOnlinePriceRatio
+const miniDuoMorningInstallment =
+  Number(miniDuo.schemaPrice) * morningOnlinePriceRatio
+const miniIndividualPaymentLine = {
+  standard: priceDetailLine(
+    miniIndividual,
+    `24 lekcje: ${miniIndividual.price}`,
+  ),
+  morning: priceDetailLine(
+    miniIndividual,
+    `24 lekcje: ${installmentPaymentLine(
+      miniIndividual,
+      miniIndividualMorningInstallment,
+    )}`,
+    totalPriceFromInstallments(
+      miniIndividual,
+      miniIndividualMorningInstallment,
+    ),
+  ),
+}
+const miniDuoPaymentLine = {
+  standard: priceDetailLine(miniDuo, `24 lekcje: ${miniDuo.price}`),
+  morning: priceDetailLine(
+    miniDuo,
+    `24 lekcje: ${installmentPaymentLine(
+      miniDuo,
+      miniDuoMorningInstallment,
+    )}`,
+    totalPriceFromInstallments(miniDuo, miniDuoMorningInstallment),
+  ),
+}
 const individualAnnualPaymentLines = [
+  miniIndividualPaymentLine,
   buildPaymentLine(
     '32 lekcje',
     individualAnnualStandard,
@@ -76,6 +142,7 @@ const individualAnnualPaymentLines = [
   ),
 ]
 const duoAnnualPaymentLines = [
+  miniDuoPaymentLine,
   buildPaymentLine('32 lekcje', duoAnnualStandard, morningOnlineDuoStandard),
   buildPaymentLine('64 lekcje', duoAnnualIntense, morningOnlineDuoIntense),
 ]
@@ -90,38 +157,26 @@ const highlightedPrices = [
   {
     ...individualAnnualIntense,
     name: 'Pakiety 1:1 online',
-    frequency: '32 lub 64 lekcje',
+    frequency: '24/32/64 lekcje',
     pricePrefix: 'od',
     standardLessonPrice: individualAnnualIntense.fromPrice,
     morningLessonPrice: morningOnlineIndividualIntense.fromPrice,
     lessonPriceContext: individualAnnualIntense.fromPriceContext,
     paymentLines: individualAnnualPaymentLines,
     details:
-      'Pakiet roczny Standard lub Intense dla osób, które chcą uczyć się online regularnie, z programem dopasowanym do celu.',
+      'Pakiet MINI, Standard lub Intense dla osób, które chcą uczyć się online regularnie, z programem dopasowanym do celu.',
   },
   {
     ...duoAnnualIntense,
     name: 'Pakiety DUO online',
-    frequency: '32 lub 64 lekcje',
+    frequency: '24/32/64 lekcje',
     pricePrefix: 'od',
     standardLessonPrice: duoAnnualIntense.fromPrice,
     morningLessonPrice: morningOnlineDuoIntense.fromPrice,
     lessonPriceContext: duoAnnualIntense.fromPriceContext,
     paymentLines: duoAnnualPaymentLines,
     details:
-      'Pakiet roczny Standard lub Intense dla dwóch osób uczących się razem online w podobnym rytmie.',
-  },
-  {
-    ...miniIndividual,
-    standardLessonPrice: lessonPriceFromInstallments(miniIndividual),
-    morningLessonPrice: lessonPriceFromInstallments(miniIndividual),
-    lessonPriceContext: `za lekcję ${miniIndividual.duration}`,
-    paymentLines: [
-      {
-        standard: miniIndividual.price,
-        morning: miniIndividual.price,
-      },
-    ],
+      'Pakiet MINI, Standard lub Intense dla dwóch osób uczących się razem online w podobnym rytmie.',
   },
   {
     ...occasionalIndividual,
@@ -130,8 +185,14 @@ const highlightedPrices = [
     lessonPriceContext: `za lekcję ${occasionalIndividual.duration}`,
     paymentLines: [
       {
-        standard: 'płatność za pojedynczą lekcję',
-        morning: 'płatność za pojedynczą lekcję',
+        standard: priceDetailLine(
+          occasionalIndividual,
+          'płatność za pojedynczą lekcję',
+        ),
+        morning: priceDetailLine(
+          morningOnlineOccasionalIndividual,
+          'płatność za pojedynczą lekcję',
+        ),
       },
     ],
   },
@@ -187,16 +248,30 @@ dnia.`,
 
 const openFaqIndex = ref(null)
 const selectedOnlineTime = ref('afternoon')
+const openPriceDetailsId = ref(null)
 
 const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
 }
 const toggleOnlineTime = () => {
+  openPriceDetailsId.value = null
+
   if (selectedOnlineTime.value === 'morning') {
     selectedOnlineTime.value = 'afternoon'
     return
   }
   selectedOnlineTime.value = 'morning'
+}
+
+const getOnlinePriceDetailsId = (option) =>
+  `online-price-details-${option.id}-${selectedOnlineTime.value}`
+
+const isOccasionalPriceOption = (option) => option.id.startsWith('occasional')
+
+const isPriceDetailsOpen = (detailsId) => openPriceDetailsId.value === detailsId
+
+const togglePriceDetails = (detailsId) => {
+  openPriceDetailsId.value = isPriceDetailsOpen(detailsId) ? null : detailsId
 }
 
 useSeoMeta({
@@ -649,20 +724,58 @@ useHead({
               </div>
             </div>
             <div class="mt-4 rounded-xl bg-muted px-4 py-3">
-              <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                Płatność
+              <p v-if="isOccasionalPriceOption(option)"
+                class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Szczegóły ceny
               </p>
-              <div v-show="selectedOnlineTime === 'afternoon'">
-                <p v-for="line in option.paymentLines" :key="line.standard"
-                  class="mt-1 text-sm font-semibold leading-relaxed text-foreground">
-                  {{ line.standard }}
-                </p>
-              </div>
-              <div v-show="selectedOnlineTime === 'morning'">
-                <p v-for="line in option.paymentLines" :key="line.morning"
-                  class="mt-1 text-sm font-semibold leading-relaxed text-foreground">
-                  {{ line.morning }}
-                </p>
+              <button v-else type="button"
+                class="inline-flex cursor-pointer items-center gap-1 text-xs font-semibold leading-none text-primary transition-colors hover:text-foreground"
+                :aria-expanded="isPriceDetailsOpen(getOnlinePriceDetailsId(option))"
+                :aria-controls="getOnlinePriceDetailsId(option)"
+                @click="togglePriceDetails(getOnlinePriceDetailsId(option))">
+                <span>Szczegóły ceny</span>
+                <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
+                  :class="{ 'rotate-180': isPriceDetailsOpen(getOnlinePriceDetailsId(option)) }" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div :id="getOnlinePriceDetailsId(option)"
+                v-show="isOccasionalPriceOption(option) || isPriceDetailsOpen(getOnlinePriceDetailsId(option))"
+                class="mt-1 text-xs leading-snug text-muted-foreground">
+                <div v-show="selectedOnlineTime === 'afternoon'" class="space-y-1.5">
+                  <div v-for="line in option.paymentLines" :key="line.standard.payment" class="space-y-0.5">
+                    <p>
+                      <span class="font-medium text-foreground/75">
+                        Płatność:
+                      </span>
+                      {{ line.standard.payment }}
+                    </p>
+                    <p v-if="line.standard.totalPrice">
+                      <span class="font-medium text-foreground/75">
+                        Cena całkowita:
+                      </span>
+                      {{ line.standard.totalPrice }}
+                    </p>
+                  </div>
+                </div>
+                <div v-show="selectedOnlineTime === 'morning'" class="space-y-1.5">
+                  <div v-for="line in option.paymentLines" :key="line.morning.payment" class="space-y-0.5">
+                    <p>
+                      <span class="font-medium text-foreground/75">
+                        Płatność:
+                      </span>
+                      {{ line.morning.payment }}
+                    </p>
+                    <p v-if="line.morning.totalPrice">
+                      <span class="font-medium text-foreground/75">
+                        Cena całkowita:
+                      </span>
+                      {{ line.morning.totalPrice }}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
             <p class="mt-4 text-sm leading-relaxed text-muted-foreground">

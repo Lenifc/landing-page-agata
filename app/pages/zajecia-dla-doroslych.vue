@@ -29,73 +29,70 @@ const personPrice = (value) => value.replace(' / osoba', ' za osobę')
 const priceWithContext = (plan) =>
   `${personPrice(plan.fromPrice)} ${plan.fromPriceContext}`
 const paymentWithoutPrefix = (value) => value.replace(/^miesięcznie:\s*/, '')
-const formatPriceValue = (value) => {
-  const formatted = value.toFixed(2).replace('.', ',')
-  return `${formatted.endsWith(',00') ? formatted.slice(0, -3) : formatted} zł`
-}
 
-const lessonPriceFromInstallments = (plan) => {
-  const installments = Number.parseInt(plan.price, 10)
-  const lessons = Number.parseInt(plan.frequency, 10)
-  const suffix = plan.price.includes('/ osoba') ? ' / osoba' : ''
-
-  return `${formatPriceValue(
-    (installments * Number(plan.schemaPrice)) / lessons,
-  )}${suffix}`
-}
+const priceDetailLine = (plan, payment = plan.price) => ({
+  payment,
+  totalPrice: plan.priceDetails?.totalPrice ?? plan.price,
+})
 
 const landingPriceOptions = [
   {
     ...individualAnnualIntense,
     name: 'Pakiety 1:1',
-    frequency: '32 lub 64 lekcje',
+    frequency: '24/32/64 lekcje',
     displayPrefix: 'od',
     displayPrice: individualAnnualIntense.fromPrice,
     displayPriceContext: individualAnnualIntense.fromPriceContext,
     paymentLines: [
-      `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
-      `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
+      priceDetailLine(miniIndividual, `24 lekcje: ${miniIndividual.price}`),
+      priceDetailLine(
+        individualAnnualStandard,
+        `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
+      ),
+      priceDetailLine(
+        individualAnnualIntense,
+        `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
+      ),
     ],
     details:
-      'Pakiet roczny Standard lub Intense dla dorosłych, którzy chcą uczyć się regularnie, z programem dopasowanym do celu.',
+      'Pakiet MINI, Standard lub Intense dla dorosłych, którzy chcą uczyć się regularnie, z programem dopasowanym do celu.',
   },
   {
     ...duoAnnualIntense,
     name: 'Pakiety DUO',
-    frequency: '32 lub 64 lekcje',
+    frequency: '24/32/64 lekcje',
     displayPrefix: 'od',
     displayPrice: duoAnnualIntense.fromPrice,
     displayPriceContext: duoAnnualIntense.fromPriceContext,
     paymentLines: [
-      `32 lekcje: ${paymentWithoutPrefix(duoAnnualStandard.paymentNote)}`,
-      `64 lekcje: ${paymentWithoutPrefix(duoAnnualIntense.paymentNote)}`,
+      priceDetailLine(miniDuo, `24 lekcje: ${miniDuo.price}`),
+      priceDetailLine(
+        duoAnnualStandard,
+        `32 lekcje: ${paymentWithoutPrefix(duoAnnualStandard.paymentNote)}`,
+      ),
+      priceDetailLine(
+        duoAnnualIntense,
+        `64 lekcje: ${paymentWithoutPrefix(duoAnnualIntense.paymentNote)}`,
+      ),
     ],
     details:
-      'Pakiet roczny Standard lub Intense dla dwóch osób uczących się razem w podobnym rytmie.',
-  },
-  {
-    ...miniIndividual,
-    displayPrice: lessonPriceFromInstallments(miniIndividual),
-    displayPriceContext: `za lekcję ${miniIndividual.duration}`,
-    paymentLines: [miniIndividual.price],
-  },
-  {
-    ...miniDuo,
-    displayPrice: lessonPriceFromInstallments(miniDuo),
-    displayPriceContext: `za lekcję ${miniDuo.duration}`,
-    paymentLines: [miniDuo.price],
+      'Pakiet MINI, Standard lub Intense dla dwóch osób uczących się razem w podobnym rytmie.',
   },
   {
     ...occasionalIndividual,
     displayPrice: occasionalIndividual.price,
     displayPriceContext: `za lekcję ${occasionalIndividual.duration}`,
-    paymentLines: ['płatność za pojedynczą lekcję'],
+    paymentLines: [
+      priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
+    ],
   },
   {
     ...occasionalDuo,
     displayPrice: occasionalDuo.price,
     displayPriceContext: `za lekcję ${occasionalDuo.duration}`,
-    paymentLines: ['płatność za pojedynczą lekcję'],
+    paymentLines: [
+      priceDetailLine(occasionalDuo, 'płatność za pojedynczą lekcję'),
+    ],
   },
 ]
 const individualAnnualPrice = priceWithContext(individualAnnualIntense)
@@ -132,9 +129,18 @@ zajęcia stacjonarne ze zdalnymi.`,
 ]
 
 const openFaqIndex = ref(null)
+const openPriceDetailsId = ref(null)
 
 const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
+
+const isOccasionalPriceOption = (option) => option.id.startsWith('occasional')
+
+const isPriceDetailsOpen = (optionId) => openPriceDetailsId.value === optionId
+
+const togglePriceDetails = (optionId) => {
+  openPriceDetailsId.value = isPriceDetailsOpen(optionId) ? null : optionId
 }
 
 useSeoMeta({
@@ -400,13 +406,40 @@ useHead({
               </p>
             </div>
             <div class="mt-4 rounded-xl bg-muted px-4 py-3">
-              <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                Płatność
+              <p v-if="isOccasionalPriceOption(option)"
+                class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Szczegóły ceny
               </p>
-              <p v-for="line in option.paymentLines" :key="line"
-                class="mt-1 text-sm font-semibold leading-relaxed text-foreground">
-                {{ line }}
-              </p>
+              <button v-else type="button"
+                class="inline-flex cursor-pointer items-center gap-1 text-xs font-semibold leading-none text-primary transition-colors hover:text-foreground"
+                :aria-expanded="isPriceDetailsOpen(option.id)" :aria-controls="`adult-price-details-${option.id}`"
+                @click="togglePriceDetails(option.id)">
+                <span>Szczegóły ceny</span>
+                <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
+                  :class="{ 'rotate-180': isPriceDetailsOpen(option.id) }" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div :id="`adult-price-details-${option.id}`"
+                v-show="isOccasionalPriceOption(option) || isPriceDetailsOpen(option.id)"
+                class="mt-1 space-y-1.5 text-xs leading-snug text-muted-foreground">
+                <div v-for="line in option.paymentLines" :key="line.payment" class="space-y-0.5">
+                  <p>
+                    <span class="font-medium text-foreground/75">
+                      Płatność:
+                    </span>
+                    {{ line.payment }}
+                  </p>
+                  <p v-if="line.totalPrice">
+                    <span class="font-medium text-foreground/75">
+                      Cena całkowita:
+                    </span>
+                    {{ line.totalPrice }}
+                  </p>
+                </div>
+              </div>
             </div>
             <p class="mt-4 text-sm leading-relaxed text-muted-foreground">
               {{ option.details }}

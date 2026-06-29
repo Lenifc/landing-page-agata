@@ -20,17 +20,11 @@ const occasionalIndividual = getPriceOption('occasionalIndividual')
 const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
 const personPrice = (value) => value.replace(' / osoba', ' za osobę')
 const paymentWithoutPrefix = (value) => value.replace(/^miesięcznie:\s*/, '')
-const formatPriceValue = (value) => {
-  const formatted = value.toFixed(2).replace('.', ',')
-  return `${formatted.endsWith(',00') ? formatted.slice(0, -3) : formatted} zł`
-}
 
-const lessonPriceFromInstallments = (plan) => {
-  const installments = Number.parseInt(plan.price, 10)
-  const lessons = Number.parseInt(plan.frequency, 10)
-
-  return formatPriceValue((installments * Number(plan.schemaPrice)) / lessons)
-}
+const priceDetailLine = (plan, payment = plan.price) => ({
+  payment,
+  totalPrice: plan.priceDetails?.totalPrice ?? plan.price,
+})
 
 const landingPriceOptions = [
   {
@@ -38,37 +32,46 @@ const landingPriceOptions = [
     displayPrice: examGroup.fromPrice,
     displayPriceContext: examGroup.fromPriceContext,
     paymentLines: [
-      `standardowo: ${personPrice(paymentWithoutPrefix(examGroup.paymentNote))}`,
-      `promocja do ${examEarlyBirdPromotion.deadline}: ${personPrice(
-        examEarlyBirdPromotion.paymentNote,
-      )}`,
+      priceDetailLine(
+        examGroup,
+        `standardowo: ${personPrice(paymentWithoutPrefix(examGroup.paymentNote))}`,
+      ),
+      {
+        payment: `przy zapisie do ${examEarlyBirdPromotion.deadline}: ${personPrice(
+          examEarlyBirdPromotion.paymentNote,
+        )}`,
+        totalPrice: examEarlyBirdPromotion.promoTotalPrice,
+      },
     ],
   },
   {
     ...individualAnnualIntense,
     name: 'Pakiety 1:1',
-    frequency: '32 lub 64 lekcje',
+    frequency: '24/32/64 lekcje',
     displayPrefix: 'od',
     displayPrice: individualAnnualIntense.fromPrice,
     displayPriceContext: individualAnnualIntense.fromPriceContext,
     paymentLines: [
-      `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
-      `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
+      priceDetailLine(miniIndividual, `24 lekcje: ${miniIndividual.price}`),
+      priceDetailLine(
+        individualAnnualStandard,
+        `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
+      ),
+      priceDetailLine(
+        individualAnnualIntense,
+        `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
+      ),
     ],
     details:
-      'Pakiet roczny Standard lub Intense dla uczniów, którzy potrzebują indywidualnego przygotowania do egzaminu.',
-  },
-  {
-    ...miniIndividual,
-    displayPrice: lessonPriceFromInstallments(miniIndividual),
-    displayPriceContext: `za lekcję ${miniIndividual.duration}`,
-    paymentLines: [miniIndividual.price],
+      'Pakiet MINI, Standard lub Intense dla uczniów, którzy potrzebują indywidualnego przygotowania do egzaminu.',
   },
   {
     ...occasionalIndividual,
     displayPrice: occasionalIndividual.price,
     displayPriceContext: `za lekcję ${occasionalIndividual.duration}`,
-    paymentLines: ['płatność za pojedynczą lekcję'],
+    paymentLines: [
+      priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
+    ],
   },
 ]
 const examGroupPrice = `${personPrice(examGroup.fromPrice)} ${examGroup.fromPriceContext}`
@@ -76,7 +79,7 @@ const examGroupPayment = personPrice(
   paymentWithoutPrefix(examGroup.paymentNote),
 )
 const individualAnnualPrice = `${individualAnnualIntense.fromPrice} ${individualAnnualIntense.fromPriceContext}`
-const examPriceFaqAnswer = `Grupowy kurs egzaminacyjny ma stałą cenę ${examGroupPrice}. Miesięczna płatność w standardowej cenie to ${examGroupPayment}, a promocja do ${examEarlyBirdPromotion.deadline} obniża ratę do ${examEarlyBirdPromotion.installmentPrice} za osobę. Przy wyborze pakietu rocznego 1:1 cena w przeliczeniu zaczyna się od ${individualAnnualPrice}.`
+const examPriceFaqAnswer = `Grupowy kurs egzaminacyjny ma stałą cenę ${examGroupPrice}. Miesięczna płatność w standardowej cenie to ${examGroupPayment}, a przy zapisie do ${examEarlyBirdPromotion.deadline} rata jest obniżona do ${examEarlyBirdPromotion.installmentPrice} za osobę. Przy wyborze pakietu rocznego 1:1 cena w przeliczeniu zaczyna się od ${individualAnnualPrice}.`
 
 const faqs = [
   {
@@ -109,9 +112,18 @@ opanował, a nad czym powinien jeszcze popracować.`,
 ]
 
 const openFaqIndex = ref(null)
+const openPriceDetailsId = ref(null)
 
 const toggleFaq = (index) => {
   openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
+
+const isOccasionalPriceOption = (option) => option.id.startsWith('occasional')
+
+const isPriceDetailsOpen = (optionId) => openPriceDetailsId.value === optionId
+
+const togglePriceDetails = (optionId) => {
+  openPriceDetailsId.value = isPriceDetailsOpen(optionId) ? null : optionId
 }
 
 useSeoMeta({
@@ -391,13 +403,40 @@ useHead({
               </p>
             </div>
             <div class="mt-4 rounded-xl bg-muted px-4 py-3">
-              <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                Płatność
+              <p v-if="isOccasionalPriceOption(option)"
+                class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Szczegóły ceny
               </p>
-              <p v-for="line in option.paymentLines" :key="line"
-                class="mt-1 text-sm font-semibold leading-relaxed text-foreground">
-                {{ line }}
-              </p>
+              <button v-else type="button"
+                class="inline-flex cursor-pointer items-center gap-1 text-xs font-semibold leading-none text-primary transition-colors hover:text-foreground"
+                :aria-expanded="isPriceDetailsOpen(option.id)" :aria-controls="`exam-price-details-${option.id}`"
+                @click="togglePriceDetails(option.id)">
+                <span>Szczegóły ceny</span>
+                <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
+                  :class="{ 'rotate-180': isPriceDetailsOpen(option.id) }" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+              <div :id="`exam-price-details-${option.id}`"
+                v-show="isOccasionalPriceOption(option) || isPriceDetailsOpen(option.id)"
+                class="mt-1 space-y-1.5 text-xs leading-snug text-muted-foreground">
+                <div v-for="line in option.paymentLines" :key="line.payment" class="space-y-0.5">
+                  <p>
+                    <span class="font-medium text-foreground/75">
+                      Płatność:
+                    </span>
+                    {{ line.payment }}
+                  </p>
+                  <p v-if="line.totalPrice">
+                    <span class="font-medium text-foreground/75">
+                      Cena całkowita:
+                    </span>
+                    {{ line.totalPrice }}
+                  </p>
+                </div>
+              </div>
             </div>
             <p class="mt-4 text-sm leading-relaxed text-muted-foreground">
               {{ option.details }}

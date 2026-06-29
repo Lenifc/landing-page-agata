@@ -29,6 +29,12 @@ const individualAnnualIntense = getPricingPlan('individualAnnualTwiceWeekly')
 const duoAnnualIntense = getPricingPlan('duoAnnualTwiceWeekly')
 const examGroup = getPricingPlan('examGroup')
 const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const morningOnlineIndividualHighlight = morningOnlineIndividualPlans.find(
+  (plan) => plan.id === 'onlineMorningIndividualAnnualTwiceWeekly',
+)
+const morningOnlineDuoHighlight = morningOnlineDuoPlans.find(
+  (plan) => plan.id === 'onlineMorningDuoAnnualTwiceWeekly',
+)
 const personPrice = (value) => value.replace(' / osoba', ' za osobę')
 const priceWithContext = (plan) =>
   `${personPrice(plan.fromPrice)} ${plan.fromPriceContext}`
@@ -46,11 +52,21 @@ useSeoMeta({
     'Zobacz aktualne pakiety i ceny lekcji angielskiego w Rumi: 1:1, DUO, kurs egzaminacyjny i lekcje okazjonalne.',
 })
 
-const promotions = [
+const offerHighlights = [
   {
     title: '–10% na cały grupowy kurs egzaminacyjny',
     description: `Zaoszczędź ${examEarlyBirdPromotion.savings} na całym kursie! Cena regularna całego kursu to ${personPrice(examEarlyBirdPromotion.regularTotalPrice)}, a cena obniżona to ${personPrice(examEarlyBirdPromotion.promoTotalPrice)}. Promocja obowiązuje osoby zapisujące się na kurs egzaminacyjny (ósmoklasisty lub maturalny) przy podpisaniu umowy do ${examEarlyBirdPromotion.deadline}`,
     finePrint: `Najniższa cena z 30 dni przed obniżką: ${personPrice(examEarlyBirdPromotion.lowestPriceLast30Days)}.`,
+  },
+  {
+    title: 'Poranne lekcje online do 12:00',
+    description: `Jeśli możesz uczyć się rano od poniedziałku do piątku, możesz wybrać stały wariant poranny online: 1:1 od ${morningOnlineIndividualHighlight.fromPrice} za lekcję 50 min albo DUO od ${personPrice(morningOnlineDuoHighlight.fromPrice)} za lekcję 50 min.`,
+    cta: {
+      label: 'Pełny cennik',
+      href: '#poranne-zajecia-online',
+    },
+    finePrint:
+      'To osobny wariant cenowy dla zajęć online rano, nie czasowa obniżka ceny.',
   },
 ]
 
@@ -290,31 +306,32 @@ useHead({
     <section class="border-y border-border bg-primary/5">
       <div class="mx-auto max-w-6xl px-6 py-12 md:py-14">
         <div class="max-w-3xl">
-          <span class="text-sm font-medium uppercase tracking-widest text-primary">
-            Promocje
-          </span>
           <h2 class="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Niższy próg wejścia na start
+            Może Cię zainteresować
           </h2>
         </div>
 
-        <div class="mt-7 grid gap-5 md:grid-cols-3">
-          <article v-for="promotion in promotions" :key="promotion.title"
-            class="rounded-2xl border border-primary/15 bg-card p-6 shadow-sm">
+        <div class="mt-7 grid gap-5 md:grid-cols-2">
+          <article v-for="promotion in offerHighlights" :key="promotion.title"
+            class="flex flex-col rounded-2xl border border-primary/15 bg-card p-6 shadow-sm">
             <h3 class="font-serif text-xl font-semibold text-primary">
               {{ promotion.title }}
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
               {{ promotion.description }}
             </p>
-            <p v-if="promotion.finePrint" class="mt-3 text-xs leading-relaxed text-muted-foreground/80">
+            <a v-if="promotion.cta" :href="promotion.cta.href"
+              class="mt-4 inline-flex w-fit items-center justify-center rounded-full border border-primary/30 px-4 py-2 text-sm font-medium text-primary transition-colors hover:border-primary hover:bg-primary/5 hover:text-foreground">
+              {{ promotion.cta.label }}
+            </a>
+            <p v-if="promotion.finePrint" class="mt-auto pt-4 text-xs leading-relaxed text-muted-foreground/80">
               {{ promotion.finePrint }}
             </p>
           </article>
         </div>
 
         <p class="mt-5 text-xs text-muted-foreground">
-          Promocje dotyczą nowych kursantów i nie łączą się ze sobą.
+          Promocja egzaminacyjna dotyczy nowych kursantów i nie łączy się z innymi rabatami.
           <NuxtLink :to="ROUTES.promotionRules"
             class="font-medium text-primary underline underline-offset-4 transition-colors hover:text-foreground">
             Sprawdź regulamin promocji </NuxtLink>.
@@ -529,8 +546,8 @@ useHead({
                 <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
                   class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
                   :class="plan.featured
-                      ? 'bg-[linear-gradient(90deg,rgba(244,246,248,0.7),rgba(255,255,255,0.98),rgba(247,248,250,0.98))]'
-                      : 'bg-card'
+                    ? 'bg-[linear-gradient(90deg,rgba(244,246,248,0.7),rgba(255,255,255,0.98),rgba(247,248,250,0.98))]'
+                    : 'bg-card'
                     ">
                   <div class="px-4 py-3 md:px-4">
                     <div class="flex flex-wrap items-center gap-2">

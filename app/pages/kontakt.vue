@@ -103,7 +103,7 @@ useHead({
           najwygodniejsza forma zapisu, która oszczędza czas, ponieważ od razu zbiera
           wszystkie potrzebne informacje i pozwala sprawnie dobrać kurs oraz dostępne terminy.
           Wszystkie informacje kontaktowe oraz formularz zgłoszeniowy znajdziesz poniżej. Do
-          usłyszenia
+          usłyszenia!
         </p>
         <a href="#formularz"
           class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">

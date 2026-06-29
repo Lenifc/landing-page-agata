@@ -192,16 +192,16 @@ export const PRICING = Object.freeze({
       details: `Kurs egzaminacyjny dla uczniów klasy 8 oraz maturzystów obejmuje 25 spotkań po 100 minut w
         kameralnej grupie maksymalnie 4-osobowej. Zajęcia odbywają się raz w tygodniu w bloku
         (jedna po drugiej). W sumie to ponad 41 godzin nauki, a kurs kończy się przed terminem
-        egzaminu. Płatność jest rozłożona na 8 równych rat po 365 zł za osobę.`,
+        egzaminu. Płatność jest rozłożona na 8 równych rat.`,
       featured: false,
       contexts: {
         eighthGradeExam: {
           details:
-            '50 lekcji (25 spotkań po 100min) w kameralnej grupie maksymalnie 4-osobowej. Program obejmuje arkusze, strategie i najważniejsze powtórki przed egzaminem. Płatność jest rozłożona na 8 równych rat po 365 zł za osobę.',
+            '50 lekcji (25 spotkań po 100min) w kameralnej grupie maksymalnie 4-osobowej. Program obejmuje arkusze, strategie i najważniejsze powtórki przed egzaminem. Płatność jest rozłożona na 8 równych rat.',
         },
         maturaExam: {
           details:
-            '50 lekcji (25 spotkań po 100min) w kameralnej grupie maksymalnie 4-osobowej, z pracą na arkuszach, strategiach i najważniejszych obszarach do poprawy. Płatność jest rozłożona na 8 równych rat po 365 zł za osobę.',
+            '50 lekcji (25 spotkań po 100min) w kameralnej grupie maksymalnie 4-osobowej, z pracą na arkuszach, strategiach i najważniejszych obszarach do poprawy. Płatność jest rozłożona na 8 równych rat.',
         },
       },
     },
