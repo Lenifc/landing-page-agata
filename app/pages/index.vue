@@ -51,17 +51,13 @@ const whyTalkateria = [
 
 const photos = [
   {
-    src: '/studio-space.webp',
-    alt: 'Przestrzeń do nauki z okrągłym stołem i tablicą',
-    class: 'col-span-2 row-span-2',
-  },
-  {
     src: '/lesson-1.webp',
-    alt: 'Kursanci podczas swobodnej rozmowy po angielsku',
+    class: 'col-span-2 row-span-2',
+    alt: 'Sala Talkaterii z zieloną ścianą, stołem do zajęć i materiałami do nauki',
   },
   {
     src: '/lesson-2.webp',
-    alt: 'Notatki i słownictwo przygotowywane na zajęciach',
+    alt: 'Wejście do studia Talkateria z poczekalnią dla kursantów',
   },
 ]
 
