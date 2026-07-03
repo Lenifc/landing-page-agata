@@ -173,8 +173,8 @@ useHead({
 
         <div class="space-y-6">
           <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
-            <img src="/studio-space.webp" alt="Studio Talkateria w Rumi z tablicą i monitorem."
-              class="h-64 w-full object-cover" width="1024" height="1024" loading="lazy" />
+            <img src="/contact.webp" alt="Studio Talkateria w Rumi z widoczną salą zajęć."
+              class="block h-auto w-full object-contain" width="1195" height="896" loading="lazy" />
           </div>
         </div>
       </div>
@@ -187,16 +187,16 @@ useHead({
           </h2>
         </div>
 
-        <div class="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+        <div class="mx-auto overflow-hidden rounded-3xl border border-border bg-card shadow-sm md:w-3/4">
           <ClientOnly>
             <iframe src="https://www.google.com/maps?cid=9730163744970894561&amp;output=embed&amp;hl=pl"
               title="Mapa dojazdu do studia Talkateria przy ul. Wrocławskiej 2 w Rumi"
-              class="h-[420px] w-full border-0 md:h-[520px]" loading="lazy" allowfullscreen>
+              class="h-[420px] w-full border-0 md:h-[390px]" loading="lazy" allowfullscreen>
             </iframe>
 
             <template #fallback>
               <div
-                class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[520px]"
+                class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[390px]"
                 role="status">
                 Ładowanie mapy…
               </div>

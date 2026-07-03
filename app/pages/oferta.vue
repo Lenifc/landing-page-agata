@@ -716,7 +716,7 @@ useHead({
     <section class="border-y border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-10">
         <div
-          class="rounded-[2rem] border border-border bg-card px-8 py-10 shadow-sm md:flex md:items-center md:justify-between md:gap-8">
+          class="flex flex-col items-center rounded-[2rem] border border-border bg-card px-8 py-10 text-center shadow-sm">
           <div class="max-w-2xl">
             <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
               Masz pytania?
@@ -727,7 +727,7 @@ useHead({
             </p>
           </div>
           <NuxtLink :to="ROUTES.contact"
-            class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90 md:mt-0">
+            class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
             Skontaktuj się →
           </NuxtLink>
         </div>

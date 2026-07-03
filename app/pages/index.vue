@@ -159,11 +159,6 @@ useHead({
           <img src="/studio-hero.webp" alt="Jasne i przytulne wnętrze studia Talkateria"
             class="h-full w-full object-cover" width="1024" height="1024" fetchpriority="high" />
         </div>
-        <div
-          class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card px-5 py-4 shadow-md sm:block">
-          <p class="font-serif text-3xl font-semibold text-primary">8+</p>
-          <p class="text-sm text-muted-foreground">lat doświadczenia</p>
-        </div>
       </div>
     </section>
 
@@ -217,9 +212,16 @@ useHead({
     <section class="border-y border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
-          <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
-            <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
-              class="h-full w-full object-cover" width="1024" height="1024" loading="lazy" />
+          <div class="relative mx-auto max-w-[18rem] sm:max-w-[20rem] md:mx-0 md:max-w-none">
+            <div class="aspect-square overflow-hidden rounded-full border border-border shadow-sm">
+              <img src="/teacher-portrait.webp" alt="Portret Agaty, lektorki i założycielki studia"
+                class="h-full w-full rounded-full object-cover" width="1024" height="1024" loading="lazy" />
+            </div>
+            <div
+              class="absolute bottom-4 right-2 inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-border bg-card/95 px-4 py-2 text-center shadow-sm backdrop-blur-sm sm:bottom-5 sm:right-3 sm:px-5 sm:py-2.5 md:right-4">
+              <span class="font-serif text-2xl font-semibold leading-none text-primary sm:text-3xl">8+</span>
+              <span class="text-xs font-medium leading-tight text-muted-foreground sm:text-sm">lat doświadczenia</span>
+            </div>
           </div>
           <div class="space-y-5">
             <span class="text-sm font-medium uppercase tracking-widest text-primary">Jestem Agata i to właśnie ja
@@ -306,10 +308,10 @@ useHead({
         <div
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16">
           <h2
-            class="mx-auto max-w-2xl text-balance font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
+            class="mx-auto max-w-2xl text-balance text-center font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
             Masz pytania?
           </h2>
-          <p class="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-primary-foreground/80">
+          <p class="mx-auto mt-4 max-w-md text-pretty text-center leading-relaxed text-primary-foreground/80">
             Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
           </p>
           <NuxtLink :to="ROUTES.contact"
