@@ -74,7 +74,7 @@ const pricingSections = [
   {
     id: 'poranne-zajecia-online',
     navLabel: 'Online rano',
-    title: 'Poranne zajęcia online',
+    title: 'Pakiet porannych zajęć online',
     badge: 'Do 12:00',
     description: [
       'Osobny wariant zajęć online dla osób, które mogą uczyć się rano, do godziny 12:00.',
@@ -226,7 +226,7 @@ const faqs = [
   },
   {
     q: 'Jak wygląda płatność za kurs?',
-    a: 'Pakiety Standard i Intense są płatne w 10 stałych ratach miesięcznych. Grupowy kurs egzaminacyjny i pakiet MINI są płatne w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami.',
+    a: 'Pakiety Standard i Intense są płatne w 10 stałych ratach miesięcznych. Grupowy kurs egzaminacyjny i pakiet MINI są płatne w 8 ratach miesięcznych. Raty są stałe i niezależne od liczby zajęć w danym miesiącu oraz przerw świątecznych i feryjnych. Lekcje okazjonalne są płatne z góry przed zajęciami. W przypadku rezygnacji przy pakietach obowiązuje 1-miesięczny okres wypowiedzenia.',
   },
   {
     q: 'Co w przypadku nieobecności?',
@@ -598,7 +598,7 @@ useHead({
                         </svg>
                       </button>
                       <div :id="`price-details-${plan.id}`" v-show="isPriceDetailsOpen(plan.id)"
-                        class="mt-1 max-w-[13rem] space-y-0.5 text-left">
+                        class="mt-1 max-w-[14rem] space-y-0.5 text-left">
                         <p v-if="plan.priceDetails.totalPrice">
                           <span class="font-medium text-foreground/75">
                             Cena całkowita:
@@ -685,7 +685,7 @@ useHead({
                     </svg>
                   </button>
                   <div :id="`price-details-${plan.id}`" v-show="isPriceDetailsOpen(plan.id)"
-                    class="mt-1 max-w-[13rem] space-y-0.5 text-left">
+                    class="mt-1 max-w-[14rem] space-y-0.5 text-left">
                     <p v-if="plan.priceDetails.totalPrice">
                       <span class="font-medium text-foreground/75">
                         Cena całkowita:
