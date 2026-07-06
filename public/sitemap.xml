@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://talkateria.pl/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-06</lastmod>
   </url>
   <url>
     <loc>https://talkateria.pl/oferta</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-06</lastmod>
   </url>
   <url>
     <loc>https://talkateria.pl/egzamin-osmoklasisty-rumia</loc>
@@ -15,6 +15,10 @@
   <url>
     <loc>https://talkateria.pl/matura-z-angielskiego-rumia</loc>
     <lastmod>2026-06-19</lastmod>
+  </url>
+  <url>
+    <loc>https://talkateria.pl/korepetycje</loc>
+    <lastmod>2026-07-06</lastmod>
   </url>
   <url>
     <loc>https://talkateria.pl/zajecia-dla-doroslych</loc>

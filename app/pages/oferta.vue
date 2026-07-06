@@ -372,7 +372,11 @@ useHead({
                   egzaminu ósmoklasisty</NuxtLink>,
                 <NuxtLink :to="ROUTES.maturaExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
-                  matury z języka angielskiego</NuxtLink>, poprawiających wyniki w szkole, a także dla tych, którzy chcą
+                  matury z języka angielskiego</NuxtLink>, albo potrzebujących
+                <NuxtLink :to="ROUTES.schoolSupport"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  korepetycji z angielskiego</NuxtLink>
+                przy poprawie wyników w szkole, a także dla tych, którzy chcą
                 rozwijać umiejętności konwersacyjne i swobodniej komunikować się
                 po angielsku. Dzięki pełnemu skupieniu na jednym kursancie nauka
                 jest bardziej efektywna, a postępy widoczne szybciej. Dorośli
@@ -404,7 +408,10 @@ useHead({
                   egzaminu ósmoklasisty</NuxtLink>,
                 <NuxtLink :to="ROUTES.maturaExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
-                  matury</NuxtLink>, wsparcie w nauce szkolnej, rozwijanie umiejętności
+                  matury</NuxtLink>,
+                <NuxtLink :to="ROUTES.schoolSupport"
+                  class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
+                  korepetycje z angielskiego</NuxtLink>, wsparcie w nauce szkolnej, rozwijanie umiejętności
                 konwersacyjnych lub praktyczną naukę
                 <NuxtLink :to="ROUTES.adultClasses"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">

@@ -8,6 +8,7 @@ const route = useRoute()
 
 const primaryLinks = [
   { to: ROUTES.offer, label: 'Oferta' },
+  { to: ROUTES.schoolSupport, label: 'Korepetycje' },
   { to: ROUTES.onlineClasses, label: 'Online' },
 ]
 

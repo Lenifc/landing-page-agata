@@ -6,6 +6,7 @@ export const ROUTES = Object.freeze({
   contact: '/kontakt',
   eighthGradeExam: '/egzamin-osmoklasisty-rumia',
   maturaExam: '/matura-z-angielskiego-rumia',
+  schoolSupport: '/korepetycje',
   adultClasses: '/zajecia-dla-doroslych',
   onlineClasses: '/zajecia-zdalne',
   prices: '/oferta#cennik',

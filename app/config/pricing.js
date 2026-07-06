@@ -29,6 +29,10 @@ export const PRICING = Object.freeze({
           details:
             '32 lekcje po 50 min w pakiecie rocznym 1:1 Standard, z tempem i materiałami dopasowanymi do celu dorosłego kursanta.',
         },
+        schoolSupport: {
+          details:
+            '32 lekcje po 50 min w pakiecie rocznym 1:1 Standard, z bieżącym wsparciem w materiale szkolnym lub akademickim.',
+        },
       },
     },
     individualAnnualTwiceWeekly: {
@@ -60,6 +64,10 @@ export const PRICING = Object.freeze({
           details:
             '64 lekcje po 50 min w pakiecie rocznym 1:1 Intense dla dorosłych, którzy chcą szybciej wrócić do angielskiego lub utrzymać mocniejszy rytm nauki.',
         },
+        schoolSupport: {
+          details:
+            '64 lekcje po 50 min w pakiecie rocznym 1:1 Intense dla uczniów i studentów, którzy potrzebują mocniejszego rytmu nauki.',
+        },
       },
     },
     duoAnnualWeekly: {
@@ -83,6 +91,10 @@ export const PRICING = Object.freeze({
           details:
             '32 lekcje po 50 min w pakiecie rocznym DUO Standard dla dwóch osób uczących się razem.',
         },
+        schoolSupport: {
+          details:
+            '32 lekcje po 50 min w pakiecie rocznym DUO Standard dla dwóch uczniów o podobnym poziomie i zbliżonych celach.',
+        },
       },
     },
     duoAnnualTwiceWeekly: {
@@ -105,6 +117,10 @@ export const PRICING = Object.freeze({
         adultClasses: {
           details:
             '64 lekcje po 50 min w pakiecie rocznym DUO Intense dla dwóch osób uczących się razem.',
+        },
+        schoolSupport: {
+          details:
+            '64 lekcje po 50 min w pakiecie rocznym DUO Intense dla dwóch uczniów, którzy chcą regularnie nadrabiać materiał i rozwijać komunikację.',
         },
       },
     },
@@ -231,6 +247,10 @@ export const PRICING = Object.freeze({
           details:
             '24 lekcje po 50 min w pakiecie MINI 1:1, jeśli potrzebujesz krótszego cyklu nauki bez zobowiązania od września do czerwca.',
         },
+        schoolSupport: {
+          details:
+            '24 lekcje po 50 min w pakiecie MINI 1:1, dobrym jako krótszy cykl wsparcia w materiale szkolnym, sprawdzianach lub zaliczeniach.',
+        },
       },
     },
     miniDuo: {
@@ -250,6 +270,10 @@ export const PRICING = Object.freeze({
         adultClasses: {
           details:
             '24 lekcje po 50 min w pakiecie MINI DUO dla dwóch osób, które chcą uczyć się razem w krótszym cyklu.',
+        },
+        schoolSupport: {
+          details:
+            '24 lekcje po 50 min w pakiecie MINI DUO dla dwóch uczniów, którzy chcą wspólnie uporządkować materiał w krótszym cyklu.',
         },
       },
     },
@@ -352,6 +376,16 @@ export const PRICING = Object.freeze({
       'individualAnnualTwiceWeekly',
       'miniIndividual',
       'occasionalIndividual',
+    ],
+    schoolSupport: [
+      'miniIndividual',
+      'individualAnnualWeekly',
+      'individualAnnualTwiceWeekly',
+      'miniDuo',
+      'duoAnnualWeekly',
+      'duoAnnualTwiceWeekly',
+      'occasionalIndividual',
+      'occasionalDuo',
     ],
     adultClasses: [
       'miniIndividual',

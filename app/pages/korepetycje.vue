@@ -1,24 +1,32 @@
 <script setup>
-import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
+import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
-const pageRoute = ROUTES.maturaExam
+const pageRoute = ROUTES.schoolSupport
 const pageUrl = `${SITE_URL}${pageRoute}`
 
-const priceOptions = getPricingPlans('maturaExam')
+const priceOptions = getPricingPlans('schoolSupport')
 const getPriceOption = (id) => priceOptions.find((option) => option.id === id)
-const examGroup = getPriceOption('examGroup')
 const individualAnnualStandard = priceOptions.find(
   (option) => option.id === 'individualAnnualWeekly',
 )
 const individualAnnualIntense = priceOptions.find(
   (option) => option.id === 'individualAnnualTwiceWeekly',
 )
+const duoAnnualStandard = priceOptions.find(
+  (option) => option.id === 'duoAnnualWeekly',
+)
+const duoAnnualIntense = priceOptions.find(
+  (option) => option.id === 'duoAnnualTwiceWeekly',
+)
 const miniIndividual = getPriceOption('miniIndividual')
+const miniDuo = getPriceOption('miniDuo')
 const occasionalIndividual = getPriceOption('occasionalIndividual')
-const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const occasionalDuo = getPriceOption('occasionalDuo')
 const personPrice = (value) => value.replace(' / osoba', ' za osobę')
+const priceWithContext = (plan) =>
+  `${personPrice(plan.fromPrice)} ${plan.fromPriceContext}`
 const paymentWithoutPrefix = (value) => value.replace(/^miesięcznie:\s*/, '')
 
 const priceDetailLine = (plan, payment = plan.price) => ({
@@ -27,23 +35,6 @@ const priceDetailLine = (plan, payment = plan.price) => ({
 })
 
 const landingPriceOptions = [
-  {
-    ...examGroup,
-    displayPrice: examGroup.fromPrice,
-    displayPriceContext: examGroup.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(
-        examGroup,
-        `standardowo: ${personPrice(paymentWithoutPrefix(examGroup.paymentNote))}`,
-      ),
-      {
-        payment: `przy zapisie do ${examEarlyBirdPromotion.deadline}: ${personPrice(
-          examEarlyBirdPromotion.paymentNote,
-        )}`,
-        totalPrice: examEarlyBirdPromotion.promoTotalPrice,
-      },
-    ],
-  },
   {
     ...individualAnnualIntense,
     name: 'Pakiety 1:1',
@@ -63,7 +54,28 @@ const landingPriceOptions = [
       ),
     ],
     details:
-      'Pakiet MINI, Standard lub Intense dla maturzystów, którzy potrzebują indywidualnego przygotowania do egzaminu.',
+      'Pakiet MINI, Standard lub Intense dla uczniów i studentów, którzy potrzebują regularnego, spokojnego wsparcia w bieżącym materiale.',
+  },
+  {
+    ...duoAnnualIntense,
+    name: 'Pakiety DUO',
+    frequency: '24/32/64 lekcje',
+    displayPrefix: 'od',
+    displayPrice: duoAnnualIntense.fromPrice,
+    displayPriceContext: duoAnnualIntense.fromPriceContext,
+    paymentLines: [
+      priceDetailLine(miniDuo, `24 lekcje: ${miniDuo.price}`),
+      priceDetailLine(
+        duoAnnualStandard,
+        `32 lekcje: ${paymentWithoutPrefix(duoAnnualStandard.paymentNote)}`,
+      ),
+      priceDetailLine(
+        duoAnnualIntense,
+        `64 lekcje: ${paymentWithoutPrefix(duoAnnualIntense.paymentNote)}`,
+      ),
+    ],
+    details:
+      'Pakiet MINI, Standard lub Intense dla dwóch osób o podobnym poziomie, które chcą wspólnie nadrabiać materiał i ćwiczyć komunikację.',
   },
   {
     ...occasionalIndividual,
@@ -73,38 +85,38 @@ const landingPriceOptions = [
       priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
     ],
   },
+  {
+    ...occasionalDuo,
+    displayPrice: occasionalDuo.price,
+    displayPriceContext: `za lekcję ${occasionalDuo.duration}`,
+    paymentLines: [
+      priceDetailLine(occasionalDuo, 'płatność za pojedynczą lekcję'),
+    ],
+  },
 ]
-const examGroupPrice = `${personPrice(examGroup.fromPrice)} ${examGroup.fromPriceContext}`
-const examGroupPayment = personPrice(
-  paymentWithoutPrefix(examGroup.paymentNote),
-)
-const individualAnnualPrice = `${individualAnnualIntense.fromPrice} ${individualAnnualIntense.fromPriceContext}`
+const individualAnnualPrice = priceWithContext(individualAnnualIntense)
+const duoAnnualPrice = priceWithContext(duoAnnualIntense)
 
 const faqs = [
   {
-    q: 'Ile kosztuje przygotowanie do matury z angielskiego?',
-    a: `Grupowy kurs maturalny ma stałą cenę ${examGroupPrice}. Miesięczna płatność w standardowej cenie to ${examGroupPayment}, a przy zapisie do ${examEarlyBirdPromotion.deadline} rata jest obniżona do ${examEarlyBirdPromotion.installmentPrice} za osobę. Przy wyborze pakietu rocznego 1:1 cena w przeliczeniu zaczyna się od ${individualAnnualPrice}.`,
+    q: 'Dla kogo są korepetycje z angielskiego?',
+    a: 'Korepetycje kieruję do uczniów od klasy 6 szkoły podstawowej, uczniów szkół ponadpodstawowych oraz studentów. Pomagam zarówno przy bieżącym materiale, jak i przy nadrabianiu zaległości, przygotowaniu do sprawdzianów, kartkówek oraz zaliczeń.',
   },
   {
-    q: 'Czy przygotowanie obejmuje poziom podstawowy i rozszerzony?',
-    a: `Tak, jak najbardziej. Przygotowuję do matury pisemnej zarówno na poziomie podstawowym,
-jak i rozszerzonym, a także do obowiązkowego egzaminu ustnego. Na zajęciach przerabiamy
-niezbędne pewniaki egzaminacyjne, oswajamy strukturę arkuszy oraz ćwiczymy tworzenie
-wypowiedzi pisemnych i swobodne mówienie, dzięki czemu na egzamin idziesz z pełnym
-spokojem.`,
+    q: 'Czy korepetycje pomagają przy gramatyce i słownictwie?',
+    a: 'Tak. Podczas lekcji spokojnie wyjaśniam trudniejsze zagadnienia, porządkuję gramatykę, utrwalam słownictwo i pokazuję, jak używać materiału w praktyce. Pracujemy tak, aby uczeń rozumiał, z czego wynikają odpowiedzi, a nie tylko uczył się ich na pamięć.',
   },
   {
-    q: 'Czy na zajęciach są sprawdzane prace pisemne i ćwiczone konwersacje?',
-    a: 'Tak. Sprawdzamy wypowiedzi pisemne z informacją zwrotną: treść, spójność, słownictwo, gramatykę i typowe miejsca utraty punktów. Na zajęciach ćwiczymy też konwersacje, reagowanie językowe i swobodniejsze mówienie po angielsku.',
+    q: 'Czy można przygotować się do sprawdzianu lub kartkówki?',
+    a: 'Tak. Możemy skupić się na konkretnym dziale, powtórzyć wymagane struktury, przećwiczyć typowe zadania i omówić błędy, które najczęściej pojawiają się w pracach szkolnych. Przy większych zaległościach układam też spokojny plan nadrabiania materiału.',
   },
   {
-    q: 'Czy można zacząć przygotowanie w trakcie roku szkolnego?',
-    a: `Tak, oba te elementy są kluczowe w przygotowaniu do matury. Regularnie ćwiczymy
-konwersacje pod kątem egzaminu ustnego (np. opisywanie ilustracji czy rozmowa z
-odgrywaniem roli), aby zyskać płynność i pewność siebie. Równie dużą wagę przykładamy do
-form pisemnych – wspólnie analizujemy błędy i sprawdzamy Twoje teksty (takie jak e-maile,
-wpisy na bloga czy rozprawki) pod kątem oficjalnych kryteriów oceniania arkusza
-maturalnego.`,
+    q: 'Czy zajęcia mogą odbywać się w parze?',
+    a: 'Tak, jeśli dwie osoby mają podobny poziom i zbliżone potrzeby. DUO dobrze sprawdza się u kolegów lub koleżanek z klasy, którzy chcą wspólnie nadrabiać materiał, ćwiczyć rozmowę i motywować się do systematycznej pracy.',
+  },
+  {
+    q: 'Czy oferta jest skierowana także dla uczniów szkół wyższych?',
+    a: 'Tak. Studenci mogą pracować nad materiałem z zajęć, gramatyką, słownictwem specjalistycznym na poziomie dopasowanym do potrzeb albo przygotowaniem do zaliczenia. Zakres ustalam indywidualnie po krótkiej rozmowie o celu i wymaganiach.',
   },
 ]
 
@@ -124,12 +136,12 @@ const togglePriceDetails = (optionId) => {
 }
 
 useSeoMeta({
-  title: 'Matura z angielskiego Rumia – przygotowanie',
+  title: 'Korepetycje z angielskiego Rumia',
   description:
-    'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony dla uczniów z całej Polski.',
-  ogTitle: 'Matura z angielskiego Rumia | Talkateria',
+    'Wsparcie w materiale szkolnym z angielskiego w Rumi i online dla uczniów od 6 klasy, szkół ponadpodstawowych oraz studentów. Materiał szkolny, sprawdziany i zaległości.',
+  ogTitle: 'Korepetycje z angielskiego w Rumi | Talkateria',
   ogDescription:
-    'Kameralne lekcje przygotowujące do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',
+    'Wsparcie w materiale szkolnym z angielskiego: gramatyka, słownictwo, sprawdziany, zaległości i większa pewność siebie.',
 })
 
 useHead({
@@ -143,18 +155,42 @@ useHead({
     jsonLdScript(
       buildServicePageJsonLd({
         pageUrl,
-        pageName: 'Przygotowanie do matury z angielskiego w Rumi',
+        pageName: 'Korepetycje z angielskiego w Rumi',
         pageDescription:
-          'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony, arkusze, pisanie, mówienie oraz strategie egzaminacyjne.',
-        serviceName: 'Przygotowanie do matury z angielskiego',
-        serviceType: 'Przygotowanie do matury z języka angielskiego',
+          'Wsparcie w materiale szkolnym z angielskiego w Rumi i online dla uczniów od 6 klasy szkoły podstawowej, uczniów szkół ponadpodstawowych oraz studentów.',
+        serviceName: 'Korepetycje z angielskiego',
+        serviceType: 'Korepetycje z języka angielskiego',
         serviceDescription:
-          'Zajęcia przygotowujące do matury z języka angielskiego na poziomie podstawowym i rozszerzonym w Rumi.',
+          'Indywidualne i kameralne zajęcia z języka angielskiego pomagające uczniom i studentom lepiej rozumieć bieżący materiał, nadrabiać zaległości oraz przygotowywać się do sprawdzianów i zaliczeń.',
         priceOptions,
-        audience: {
-          '@type': 'EducationalAudience',
-          educationalRole: 'uczeń szkoły średniej',
-        },
+        audience: [
+          {
+            '@type': 'EducationalAudience',
+            educationalRole: 'uczeń od klasy 6 szkoły podstawowej',
+          },
+          {
+            '@type': 'EducationalAudience',
+            educationalRole: 'uczeń szkoły ponadpodstawowej',
+          },
+          {
+            '@type': 'EducationalAudience',
+            educationalRole: 'student',
+          },
+        ],
+        availableChannel: [
+          {
+            '@type': 'ServiceChannel',
+            name: 'Zajęcia stacjonarne',
+            serviceLocation: {
+              '@id': 'https://talkateria.pl/#talkateria',
+            },
+          },
+          {
+            '@type': 'ServiceChannel',
+            name: 'Zajęcia online',
+            serviceUrl: pageUrl,
+          },
+        ],
         faqs,
       }),
     ),
@@ -167,47 +203,38 @@ useHead({
     <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="space-y-6">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
-          Egzamin maturalny
+          Materiał szkolny i studia
         </span>
         <h1
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
-          Egzamin maturalny bez stresu? To możliwe!
+          Korepetycje z angielskiego dla uczniów i studentów.
         </h1>
         <p class="text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Kursy przygotowawcze dopasowane do Twoich potrzeb. Przygotowuję
-          kompleksowo do matury na poziomie podstawowym oraz rozszerzonym, a
-          także do egzaminu ustnego w studiu w Rumi lub online. Ucz się
-          indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w małej,
-          kameralnej grupie (do 4 osób).<br /><br />
-          Stawiam na systematyczność, zrozumienie wymagań egzaminacyjnych i
-          regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
-          przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
-          <br /><br />
-          Razem pracujemy na wysoki wynik, który otworzy Ci drzwi na wymarzone
-          studia. Dbam o to, by egzamin dojrzałości był dla Ciebie spokojnym
-          podsumowaniem Twojej wiedzy i pewnym krokiem w przyszłość, a nie
-          źródłem paraliżującego lęku.
+          Pomagam uczniom lepiej rozumieć materiał i osiągać lepsze wyniki w
+          szkole. Wsparcie kieruję do uczniów od klasy 6 szkoły podstawowej,
+          uczniów szkół ponadpodstawowych oraz studentów, którzy potrzebują
+          spokojnego uporządkowania gramatyki, słownictwa i bieżących tematów.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink :to="ROUTES.contact"
             class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
             Skontaktuj się
           </NuxtLink>
-          <NuxtLink :to="ROUTES.pricesExam"
+          <NuxtLink :to="ROUTES.pricesIndividual"
             class="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
-            Sprawdź cennik
+            Zobacz cennik
           </NuxtLink>
         </div>
       </div>
 
       <div class="overflow-hidden rounded-[2rem] border border-border shadow-sm">
-        <img src="/photos/matura-hero-800.webp" srcset="
-            /photos/matura-hero-400.webp   400w,
-            /photos/matura-hero-800.webp   800w,
-            /photos/matura-hero-1200.webp 1200w
+        <img src="/photos/material-szkolny-800.webp" srcset="
+            /photos/material-szkolny-400.webp   400w,
+            /photos/material-szkolny-800.webp   800w,
+            /photos/material-szkolny-1200.webp 1200w
           " sizes="(min-width: 1152px) 528px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 48px)"
-          alt="Uczniowie rozwiązujący zadania podczas przygotowań do matury z angielskiego"
-          class="h-full w-full object-cover" width="800" height="800" loading="eager" />
+          alt="Uczeń odpoczywający nad książkami podczas nauki materiału szkolnego" class="h-full w-full object-cover"
+          width="800" height="800" loading="eager" />
       </div>
     </section>
 
@@ -215,99 +242,117 @@ useHead({
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Kompleksowe przygotowanie do matury z angielskiego
+            Gdy tempo w szkole jest szybsze niż potrzeby ucznia.
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Zapraszam zarówno tegorocznych maturzystów, jak i uczniów, którzy
-            maturę zdają dopiero za rok i chcą już teraz spokojnie rozpocząć
-            przygotowania. Dobieram metody nauki i typy zadań indywidualnie do
-            ucznia lub grupy, aby maksymalnie wykorzystać potencjał i pozwolić
-            uczniom osiągnąć jak najlepszy wynik.
+            Duże klasy, ograniczona liczba godzin języka obcego i tempo
+            realizacji programu sprawiają, że nauczyciel w szkole nie zawsze ma
+            możliwość poświęcić każdemu uczniowi tyle uwagi, ile naprawdę
+            potrzebuje. W efekcie nawet niewielkie zaległości mogą z czasem
+            przerodzić się w większe trudności i zniechęcenie do nauki.
           </p>
         </div>
 
         <div class="mt-10 grid gap-5 md:grid-cols-3">
           <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h3 class="font-serif text-xl font-semibold text-foreground">
-              Praca na arkuszach
+              Nadrabianie zaległości
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Uczniowie dokładnie poznają strukturę egzaminu i rozwiązują
-              zadania z poprzednich lat. Wspólnie analizujemy błędy i na bieżąco
-              wyjaśniam, z czego one wynikają. Dzięki temu uczniowie doskonale
-              wiedzą, czego się spodziewać i nic ich nie zaskoczy.
+              Wracamy do tematów, które wymagały więcej czasu: gramatyki,
+              słownictwa, czytania ze zrozumieniem i zadań pisemnych.
             </p>
           </article>
           <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h3 class="font-serif text-xl font-semibold text-foreground">
-              Strategie egzaminacyjne
+              Przygotowanie do sprawdzianów
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Pokażę, jak radzić sobie z pułapkami CKE, skutecznie zarządzać
-              czasem i unikać błędów, które najczęściej zabierają punkty.
+              Porządkujemy materiał z lekcji, ćwiczymy typowe zadania i
+              sprawdzamy, które elementy wymagają dodatkowego utrwalenia.
             </p>
           </article>
           <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h3 class="font-serif text-xl font-semibold text-foreground">
-              Mówienie
+              Większa pewność siebie
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Przełamujemy barierę językową i ćwiczymy płynną argumentację, aby
-              egzamin ustny minął bez stresu i z pełną swobodą.
+              Pracujemy w spokojnej atmosferze, bez krytyki i presji, aby uczeń
+              przestał bać się pytać i stopniowo odzyskiwał sprawczość.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2">
+    <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:py-20">
       <div>
-        <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-          Jak wyglądają zajęcia?
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">
+          Jak pomagam
+        </span>
+        <h2 class="mt-4 font-serif text-3xl font-semibold tracking-tight text-foreground">
+          Spokojnie wyjaśniam to, co w szkole zostało za szybko.
         </h2>
-        <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Zajęcia odbywają się indywidualnie, w duecie lub w małych, kameralnych
-          grupach do 4 osób, co pozwala na pełne dopasowanie tempa i sposobu
-          pracy do potrzeb każdego ucznia. Podczas lekcji stawiamy na aktywne
-          działanie i zero teorii do szuflady - duży nacisk kładę na praktyczną
-          naukę, systematyczne powtórki oraz bieżące omawianie pracy. Nie tylko
-          wspólnie rozwiązujemy zadania, ale od razu wyjaśniam każdą
-          wątpliwość. Dzięki stałej informacji zwrotnej cały proces jest
-          maksymalnie uporządkowany, uczeń dokładnie wie, na czym stoi, a jego
-          postępy są jasno widoczne z lekcji na lekcję.
-        </p>
+        <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
+          <p>
+            Jeśli zauważają Państwo, że dziecko nie nadąża za materiałem, ma
+            problem ze zrozumieniem gramatyki, słownictwa lub obawia się
+            sprawdzianów, chętnie pomogę. Podczas zajęć spokojnie wyjaśniam
+            trudniejsze zagadnienia, utrwalam bieżący materiał i wspieram ucznia
+            w rozwijaniu pewności siebie oraz umiejętności językowych.
+          </p>
+          <p>
+            Każdy uczeń ma inne potrzeby i inaczej przyswaja wiedzę. Dlatego
+            dopasowuję sposób prowadzenia zajęć do jego poziomu, tempa pracy
+            oraz zagadnień, które wymagają dodatkowego wyjaśnienia. Nie oceniam
+            i nie krytykuję. Zależy mi na tym, aby uczeń nie tylko lepiej radził
+            sobie w szkole, ale przede wszystkim rozumiał materiał i z większą
+            pewnością korzystał z języka.
+          </p>
+        </div>
       </div>
 
       <div class="rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <ul class="space-y-4">
+        <h3 class="font-serif text-xl font-semibold text-foreground">
+          Dlaczego warto mi zaufać?
+        </h3>
+        <ul class="mt-5 space-y-4">
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              Lepiej rozumiesz nagrania i teksty pod wymagania CKE
+              zajęcia dopasowuję do programu szkolnego i indywidualnych potrzeb
+              ucznia,
             </span>
           </li>
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              Wiesz, które pułapki gramatyczne najczęściej zabierają punkty
+              tłumaczę materiał w prosty i zrozumiały sposób,
             </span>
           </li>
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              Piszesz prace zgodne z kryteriami, z konkretną informacją zwrotną
+              pomagam uporządkować wiedzę i systematycznie ją utrwalać,
             </span>
           </li>
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              Mówisz pełniejszymi zdaniami i swobodniej argumentujesz
+              wspieram w przygotowaniu do sprawdzianów, kartkówek i egzaminów,
             </span>
           </li>
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              Masz plan działania na arkusz, zamiast działać przypadkowo
+              tworzę przyjazną atmosferę, w której dziecko czuje się swobodnie i
+              nie boi się zadawać pytań,
+            </span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+            <span class="text-pretty leading-relaxed text-muted-foreground">
+              wspieram lepsze wyniki, pewność siebie i samodzielność w nauce.
             </span>
           </li>
         </ul>
@@ -315,22 +360,48 @@ useHead({
     </section>
 
     <section class="border-y border-border bg-secondary">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
+        <div>
+          <span class="text-sm font-medium uppercase tracking-widest text-primary">
+            Zajęcia w duecie
+          </span>
+          <h2 class="mt-4 font-serif text-3xl font-semibold tracking-tight text-foreground">
+            Nauka z kolegą lub koleżanką z klasy.
+          </h2>
+        </div>
+        <div class="space-y-4 text-pretty leading-relaxed text-muted-foreground">
+          <p>
+            Jeśli Państwa dziecko lepiej czuje się w towarzystwie kolegi lub
+            koleżanki, istnieje możliwość nauki w duecie. To świetne rozwiązanie
+            dla uczniów o podobnym poziomie zaawansowania i zbliżonych celach.
+          </p>
+          <p>
+            Praca w parze sprzyja rozwijaniu umiejętności komunikacyjnych, daje
+            więcej okazji do rozmowy i wzajemnej motywacji, a jednocześnie
+            pozwala zachować indywidualny charakter zajęć. To dobra opcja dla
+            osób z tej samej klasy, które chcą wspólnie nadrabiać materiał i
+            rozwijać swoje umiejętności językowe.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-b border-border">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
             Ceny
           </span>
           <h2 class="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground">
-            Ile kosztuje przygotowanie do matury z angielskiego?
+            Ile kosztują korepetycje z angielskiego?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Koszt kursu zależy od wybranej formy zajęć (lekcje 1:1, w duecie lub
-            w mini grupie) oraz od całkowitej liczby godzin w danym pakiecie.
-            Harmonogram zawsze układamy tak, aby bez pośpiechu zrealizować
-            wszystkie zaplanowane lekcje i cały niezbędny materiał jeszcze przed
-            samym egzaminem.
+            Cena zależy od wybranej formy nauki: indywidualnie, w duecie lub w
+            krótszym pakiecie. Przy regularnych zajęciach łatwiej spokojnie
+            uzupełniać zaległości i utrwalać bieżące tematy zamiast uczyć się
+            dopiero tuż przed sprawdzianem.
           </p>
-          <NuxtLink :to="ROUTES.pricesExam"
+          <NuxtLink :to="ROUTES.pricesIndividual"
             class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
             Zobacz pełny cennik
           </NuxtLink>
@@ -370,7 +441,7 @@ useHead({
               </p>
               <button v-else type="button"
                 class="inline-flex cursor-pointer items-center gap-1 text-xs font-semibold leading-none text-primary transition-colors hover:text-foreground"
-                :aria-expanded="isPriceDetailsOpen(option.id)" :aria-controls="`matura-price-details-${option.id}`"
+                :aria-expanded="isPriceDetailsOpen(option.id)" :aria-controls="`school-price-details-${option.id}`"
                 @click="togglePriceDetails(option.id)">
                 <span>Szczegóły ceny</span>
                 <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
@@ -380,9 +451,9 @@ useHead({
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </button>
-              <div :id="`matura-price-details-${option.id}`"
-                v-show="isOccasionalPriceOption(option) || isPriceDetailsOpen(option.id)"
-                class="mt-1 space-y-1.5 text-xs leading-snug text-muted-foreground">
+              <div :id="`school-price-details-${option.id}`" v-show="isOccasionalPriceOption(option) ||
+                isPriceDetailsOpen(option.id)
+                " class="mt-1 space-y-1.5 text-xs leading-snug text-muted-foreground">
                 <div v-for="line in option.paymentLines" :key="line.payment" class="space-y-0.5">
                   <p>
                     <span class="font-medium text-foreground/75">
@@ -409,14 +480,14 @@ useHead({
 
     <section id="faq" class="mx-auto max-w-3xl scroll-mt-24 px-6 py-16">
       <h2 class="text-balance text-center font-serif text-3xl font-semibold tracking-tight text-foreground">
-        Mini FAQ o maturze z angielskiego
+        Mini FAQ o korepetycjach z angielskiego
       </h2>
       <div class="mt-10 divide-y divide-border border-y border-border">
         <div v-for="(faq, index) in faqs" :key="faq.q">
           <h3>
             <button type="button"
               class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
-              :aria-expanded="openFaqIndex === index" :aria-controls="`matura-faq-answer-${index}`" :aria-label="(openFaqIndex === index ? 'Zwiń' : 'Rozwiń') +
+              :aria-expanded="openFaqIndex === index" :aria-controls="`school-faq-answer-${index}`" :aria-label="(openFaqIndex === index ? 'Zwiń' : 'Rozwiń') +
                 ' odpowiedź: ' +
                 faq.q
                 " @click="toggleFaq(index)">
@@ -431,7 +502,7 @@ useHead({
               </span>
             </button>
           </h3>
-          <p :id="`matura-faq-answer-${index}`" v-show="openFaqIndex === index"
+          <p :id="`school-faq-answer-${index}`" v-show="openFaqIndex === index"
             class="pb-6 text-pretty leading-relaxed text-muted-foreground">
             {{ faq.a }}
           </p>
@@ -444,13 +515,13 @@ useHead({
         <div
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-12 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)]">
           <h2 class="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-primary-foreground">
-            Potrzebujesz pomocy w przygotowaniu do matury?
+            Wspólnie zadbajmy o rozwój Państwa dziecka.
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-pretty leading-relaxed text-primary-foreground/85">
-            Napisz do mnie, czy przygotowujesz się do poziomu podstawowego czy
-            rozszerzonego oraz ile czasu zostało Ci do egzaminu. Wspólnie
-            dobierzemy sensowny rytm pracy, który pozwoli Ci powtórzyć cały
-            materiał, oswoić arkusze i podejść do matury z pełnym spokojem.
+            Regularne zajęcia pomagają uzupełnić zaległości, lepiej zrozumieć
+            materiał i odzyskać pewność siebie podczas lekcji w szkole. Chętnie
+            doradzę, jaka forma wsparcia będzie najlepsza, i odpowiem na
+            wszystkie pytania.
           </p>
           <NuxtLink :to="ROUTES.contact"
             class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">

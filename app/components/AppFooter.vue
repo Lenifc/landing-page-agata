@@ -7,6 +7,7 @@ const email = ref(CONTACT.obfuscatedEmail)
 const links = [
   { to: ROUTES.home, label: 'Strona główna' },
   { to: ROUTES.offer, label: 'Oferta' },
+  { to: ROUTES.schoolSupport, label: 'Korepetycje' },
   { to: ROUTES.eighthGradeExam, label: 'Egzamin ósmoklasisty' },
   { to: ROUTES.maturaExam, label: 'Matura z angielskiego' },
   { to: ROUTES.adultClasses, label: 'Zajęcia dla dorosłych' },
