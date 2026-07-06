@@ -286,7 +286,7 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-4xl px-6 py-16 text-center md:pb-24">
+    <section class="mx-auto max-w-4xl px-6 py-14 text-center md:pb-24">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
       <h1
         class="mx-auto mt-4 max-w-[52rem] font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-4xl sm:leading-[1.08] md:text-5xl">
@@ -339,7 +339,7 @@ useHead({
       </div>
     </section>
 
-    <section class="border-y border-border bg-secondary">
+    <section class="border-b border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">Formy zajęć</span>
@@ -474,7 +474,7 @@ useHead({
       </div>
     </section>
 
-    <section id="cennik" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-14">
+    <section id="cennik" class=" mx-auto max-w-6xl scroll-mt-24 px-6 py-14">
       <div class="mb-7 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Cennik</span>
         <h2 class="mt-3 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">

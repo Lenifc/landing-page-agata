@@ -41,11 +41,12 @@ const whyTalkateria = [
   },
   {
     title: 'Spokojne tempo bez presji',
-    body: 'Najpierw porządkujemy podstawy, a potem dokładamy kolejne elementy, żeby nauka dawała poczucie kontroli zamiast chaosu.',
+    body: `Zajęcia prowadzone są w spokojnym tempie, bez presji, tak aby uczeń czuł się
+swobodnie i miał czas na zrozumienie materiału.`,
   },
   {
-    title: 'Jasny cel każdej lekcji',
-    body: 'Wiesz, co dana lekcja ma Ci dać: pewniejsze mówienie, lepszy wynik, odblokowanie konkretnego tematu albo praktyczne słownictwo.',
+    title: 'Nauka języka dopasowana do Twojego celu',
+    body: `Każde zajęcia dopasowuję indywidualnie do celu i potrzeb każdego ucznia.`,
   },
 ]
 
@@ -121,7 +122,7 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-12 md:grid-cols-2 md:pb-24">
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="flex flex-col gap-6">
         <span
           class="order-3 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1">
@@ -192,7 +193,7 @@ useHead({
       </div>
     </section>
 
-    <section class="border-b border-border">
+    <section class="features">
       <div class="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-3">
         <div v-for="feature in features" :key="feature.title" class="space-y-3">
           <h2 class="font-serif text-xl font-semibold text-foreground">
@@ -205,7 +206,7 @@ useHead({
       </div>
     </section>
 
-    <section class="border-y border-border bg-secondary">
+    <section class="border-y border-border bg-secondary about-me">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div class="relative mx-auto max-w-[18rem] sm:max-w-[20rem] md:mx-0 md:max-w-none">
@@ -263,9 +264,9 @@ useHead({
       </div>
     </section>
 
-    <section class="border-b border-border">
+    <section class="localization">
       <div class="mx-auto max-w-6xl px-6 py-20">
-        <div class="mb-10 max-w-xl space-y-3">
+        <div class="mx-auto mb-10 max-w-4xl space-y-3 text-center">
           <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
             Lokalizacja
           </h2>
@@ -300,6 +301,28 @@ useHead({
     </section>
 
     <section class="border-y border-border bg-secondary">
+      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+        <h2 class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+          Dla kogo są zajęcia w Talkaterii?
+        </h2>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          Jeżeli chcesz zacząć swobodnie mówić po angielsku, potrzebujesz wsparcia w nauce
+          szkolnej, przygotowaniu do egzaminów lub szukasz zajęć dopasowanych do swojego
+          tempa i potrzeb, Talkateria będzie dobrym miejscem dla Ciebie.
+        </p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          To propozycja dla uczniów od klasy 6 szkoły podstawowej, młodzieży oraz dorosłych,
+          którzy chcą uporządkować wiedzę, nabrać pewności w mówieniu i zacząć swobodnie
+          używać angielskiego w praktyce, w spokojnej i przyjaznej atmosferze.
+        </p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co pozwala na pełne
+          dopasowanie do ucznia i komfortową naukę.
+        </p>
+      </div>
+    </section>
+
+    <section class="cta-contact">
       <div class="mx-auto max-w-6xl px-5 py-16">
         <div
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16">
@@ -315,29 +338,6 @@ useHead({
             Skontaktuj się →
           </NuxtLink>
         </div>
-      </div>
-    </section>
-
-    <section class="border-t border-border">
-      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
-        <h2 class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-          Dla kogo są zajęcia w Talkaterii?
-        </h2>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Jeżeli chcesz zacząć swobodnie mówić po angielsku, potrzebujesz
-          wsparcia w nauce szkolnej lub przygotowaniu do egzaminów i szukasz
-          zajęć dopasowanych do swojego tempa i potrzeb, Talkateria będzie
-          dobrym miejscem dla Ciebie.
-        </p>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla młodzieży i dorosłych, którzy chcą uporządkować
-          wiedzę, nabrać pewności w mówieniu i zacząć swobodnie używać
-          angielskiego w praktyce, w spokojnej i przyjaznej atmosferze
-        </p>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co
-          pozwala na pełne dopasowanie do ucznia i komfortową naukę.
-        </p>
       </div>
     </section>
   </main>

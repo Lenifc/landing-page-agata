@@ -168,7 +168,7 @@ useHead({
 
 <template>
   <main id="main-content">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:pb-24">
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="space-y-6">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Egzamin ósmoklasisty

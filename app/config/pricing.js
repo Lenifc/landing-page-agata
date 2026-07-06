@@ -380,7 +380,7 @@ export const PRICING = Object.freeze({
   promotions: {
     examEarlyBird: {
       label: '-10% na cały grupowy kurs egzaminacyjny',
-      deadline: '31 lipca 2026 r.',
+      deadline: '15 sierpnia 2026 r.',
       regularTotalPrice: '2920 zł / osoba',
       promoTotalPrice: '2628 zł / osoba',
       lowestPriceLast30Days: '2920 zł / osoba',

@@ -3,6 +3,7 @@ import { ROUTES } from '~/config/routes'
 
 const open = ref(false)
 const examMenuOpen = ref(false)
+const scrollPosition = ref(0)
 const route = useRoute()
 
 const primaryLinks = [
@@ -27,6 +28,12 @@ const examMenuLabel = computed(() =>
   examMenuOpen.value ? 'Zwiń menu egzaminów' : 'Rozwiń menu egzaminów',
 )
 
+const showBottomBorder = computed(() => scrollPosition.value > 0)
+
+const updateScrollPosition = () => {
+  scrollPosition.value = window.scrollY || document.documentElement.scrollTop || 0
+}
+
 const closeExamMenu = () => {
   examMenuOpen.value = false
 }
@@ -50,10 +57,21 @@ const handleExamFocusout = (event) => {
     closeExamMenu()
   }
 }
+
+onMounted(() => {
+  updateScrollPosition()
+  window.addEventListener('scroll', updateScrollPosition, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateScrollPosition)
+})
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-xl">
+  <header
+    class="sticky top-0 z-50 border-b bg-background/85 backdrop-blur-xl transition-[border-color,box-shadow] duration-200"
+    :class="showBottomBorder ? 'border-border/80 shadow-sm' : 'border-transparent'">
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
       <NuxtLink :to="ROUTES.home" class="flex items-center" aria-label="Talkateria - strona główna" @click="closeMenus">
         <img src="/talkateria-logo-color.svg" alt="Talkateria - angielski w Rumi" class="h-11 w-auto sm:h-12"
