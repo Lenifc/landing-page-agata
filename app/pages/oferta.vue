@@ -77,7 +77,7 @@ const pricingSections = [
     title: 'Pakiet porannych zajęć online',
     badge: 'Do 12:00',
     description: [
-      'Osobny wariant zajęć online dla osób, które mogą uczyć się rano, do godziny 12:00.',
+      'Osobny wariant zajęć online dla osób, które mogą uczyć się rano od poniedziałku do piątku do godziny 12:00.',
       'Ceny są rozłożone na 10 równych rat miesięcznych i dotyczą pakietów rocznych 1:1 oraz DUO.',
     ],
     groups: [

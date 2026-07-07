@@ -36,6 +36,12 @@ const details = computed(() => [
     icon: 'phone',
   },
   {
+    label: 'Facebook',
+    value: 'Talkateria na Facebooku',
+    href: CONTACT.facebookUrl,
+    icon: 'facebook',
+  },
+  {
     label: 'Lokalizacja',
     value: CONTACT.addressWithOnline,
     icon: 'mapPin',
@@ -46,6 +52,9 @@ const icons = {
   mail: ['M4 6h16v12H4V6Z', 'm4 7 8 6 8-6'],
   phone: [
     'M6.6 4.5 9 4l1.2 4-2.1 1.4a13 13 0 0 0 6.5 6.5L16 13.8l4 1.2-.5 2.4c-.2 1-1 1.6-2 1.6A14.5 14.5 0 0 1 5 6.5c0-1 .6-1.8 1.6-2Z',
+  ],
+  facebook: [
+    'M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v6h3v-6h2.5l.5-3h-3V9c0-.6.4-1 1-1Z',
   ],
   mapPin: [
     'M12 21s7-6.1 7-12a7 7 0 0 0-14 0c0 5.9 7 12 7 12Z',
@@ -93,17 +102,18 @@ useHead({
           telefonicznie, mailowo lub online.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          W przypadku chęci zapisu na zajęcia (lub zwykłego zapytania) warto od razu krótko
-          określić wiek ucznia, poziom języka, rodzaj kursu (np. konwersacje, pomoc z
-          materiałem szkolnym, przygotowanie do egzaminów) oraz to, czy interesują Cię lekcje
-          indywidualne, czy w grupie. Ułatwi to sprawne dopasowanie odpowiedniej formy nauki.
+          W przypadku chęci zapisu na zajęcia (lub zwykłego zapytania) warto od
+          razu krótko określić wiek ucznia, poziom języka, rodzaj kursu (np.
+          konwersacje, pomoc z materiałem szkolnym, przygotowanie do egzaminów)
+          oraz to, czy interesują Cię lekcje indywidualne, czy w grupie. Ułatwi
+          to sprawne dopasowanie odpowiedniej formy nauki.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Zachęcam również do skorzystania z krótkiego formularza zgłoszeniowego - to
-          najwygodniejsza forma zapisu, która oszczędza czas, ponieważ od razu zbiera
-          wszystkie potrzebne informacje i pozwala sprawnie dobrać kurs oraz dostępne terminy.
-          Wszystkie informacje kontaktowe oraz formularz zgłoszeniowy znajdziesz poniżej. Do
-          usłyszenia!
+          Zachęcam również do skorzystania z krótkiego formularza zgłoszeniowego
+          - to najwygodniejsza forma zapisu, która oszczędza czas, ponieważ od
+          razu zbiera wszystkie potrzebne informacje i pozwala sprawnie dobrać
+          kurs oraz dostępne terminy. Wszystkie informacje kontaktowe oraz
+          formularz zgłoszeniowy znajdziesz poniżej. Do usłyszenia!
         </p>
         <a href="#formularz"
           class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
@@ -123,7 +133,8 @@ useHead({
             <span
               class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
               aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              <svg viewBox="0 0 24 24" :fill="item.icon === 'facebook' ? 'currentColor' : 'none'"
+                :stroke="item.icon === 'facebook' ? 'none' : 'currentColor'" stroke-width="1.8" stroke-linecap="round"
                 stroke-linejoin="round" class="h-5 w-5">
                 <path v-for="path in icons[item.icon]" :key="path" :d="path" />
               </svg>
@@ -159,12 +170,12 @@ useHead({
               </div>
               <component :is="item.href ? 'a' : 'p'" v-else :href="item.href"
                 :target="item.href?.startsWith('http') ? '_blank' : undefined" :rel="item.href?.startsWith('http')
-                  ? 'noopener noreferrer'
-                  : undefined
+                    ? 'noopener noreferrer'
+                    : undefined
                   " class="break-words text-foreground" :class="item.href
                     ? 'font-medium transition-colors hover:text-primary'
                     : ''
-                    ">
+                  ">
                 {{ item.value }}
               </component>
             </div>

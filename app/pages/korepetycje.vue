@@ -284,30 +284,25 @@ useHead({
 
     <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center md:py-20">
       <div>
-        <span class="text-sm font-medium uppercase tracking-widest text-primary">
-          Każdy uczy się w swoim tempie
-        </span>
         <h2 class="mt-4 font-serif text-3xl font-semibold tracking-tight text-foreground">
-          Spokojnie wyjaśniam to, co w szkole zostało za szybko.
+          Każdy uczy się w swoim tempie
         </h2>
         <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
           <p>
-            Dłuższa nieobecność w szkole z powodu choroby, trudniejszy dział w podręczniku albo
-            po prostu zbyt szybkie tempo narzucone na lekcjach - powody, dla których angielski
-            zaczyna sprawiać trudności, bywają różne. Jeśli zauważają Państwo, że dziecko
-            przestaje nadążać za materiałem, gubi się w gramatyce lub zaczyna stresować się
-            sprawdzianami, chętnie pomogę. Moje wsparcie kieruję także do studentów, którzy z
-            podobnych przyczyn potrzebują spokojnego poukładania wiedzy przed akademickimi
-            zaliczeniami.
+            Nie zawsze łatwo nadążyć za materiałem z języka angielskiego. Czasem wystarczy dłuższa nieobecność w szkole,
+            bardziej wymagający dział w podręczniku albo zbyt szybkie tempo pracy na lekcjach, by pojawiły się
+            zaległości. Jeśli widzą Państwo, że dziecko zaczyna mieć trudności z gramatyką, słownictwem lub coraz
+            bardziej stresuje się kartkówkami i sprawdzianami, chętnie pomogę. Wspieram również studentów, którzy chcą
+            uporządkować wiedzę i spokojnie przygotować się do zaliczeń czy egzaminów.
           </p>
+          <p>Na zajęciach tłumaczę zagadnienia w sposób prosty i zrozumiały, wracamy do tematów, które sprawiają
+            trudność, uzupełniamy zaległości i utrwalamy bieżący materiał. Każdy uczy się inaczej, dlatego dopasowuję
+            tempo i sposób pracy do indywidualnych potrzeb oraz poziomu ucznia lub studenta.</p>
           <p>
-            Podczas zajęć bez pośpiechu wyjaśniam to, co na lekcjach zostało potraktowane po
-            łebkach, uzupełniam luki po nieobecnościach i utrwalam bieżący materiał. Każdy z nas
-            ma inne potrzeby i inaczej przyswaja wiedzę, dlatego dopasowuję sposób pracy do
-            indywidualnego poziomu i tempa ucznia czy studenta. Nie oceniam i nie krytykuję -
-            tworzę bezpieczną atmosferę, w której wspólnie budujemy pewność siebie. Zależy mi
-            na tym, aby angielski przestał być szkolnym obowiązkiem, a stał się zrozumiałym i
-            przydatnym narzędziem.
+            Zależy mi na stworzeniu spokojnej i wspierającej atmosfery, w której można swobodnie zadawać pytania i
+            popełniać błędy - bo to naturalna część nauki. Moim celem jest nie tylko poprawa ocen czy wyników na
+            egzaminach, ale przede wszystkim sprawienie, aby angielski stał się bardziej zrozumiały i dawał większą
+            pewność w codziennym korzystaniu z języka.
           </p>
         </div>
       </div>

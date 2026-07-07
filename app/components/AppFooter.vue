@@ -70,6 +70,16 @@ onMounted(() => {
               możliwe.
             </span>
           </li>
+          <li>
+            <a :href="CONTACT.facebookUrl" target="_blank" rel="noopener noreferrer"
+              class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-primary transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              aria-label="Facebook Talkaterii">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" stroke="none"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v6h3v-6h2.5l.5-3h-3V9c0-.6.4-1 1-1Z" />
+              </svg>
+            </a>
+          </li>
           <li>{{ CONTACT.addressShort }}</li>
         </ul>
       </div>
