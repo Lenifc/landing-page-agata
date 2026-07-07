@@ -203,7 +203,7 @@ useHead({
     <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="space-y-6">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
-          Materiał szkolny i studia
+          Pomoc w opanowaniu materiału szkolnego
         </span>
         <h1
           class="text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl">
@@ -242,14 +242,11 @@ useHead({
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Gdy tempo w szkole jest szybsze niż potrzeby ucznia.
+            Lekcje dopasowane w 100% do Twojego celu
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Duże klasy, ograniczona liczba godzin języka obcego i tempo
-            realizacji programu sprawiają, że nauczyciel w szkole nie zawsze ma
-            możliwość poświęcić każdemu uczniowi tyle uwagi, ile naprawdę
-            potrzebuje. W efekcie nawet niewielkie zaległości mogą z czasem
-            przerodzić się w większe trudności i zniechęcenie do nauki.
+            Bez sztywnego programu i bez pośpiechu. Wyznaczasz cel, a ja dobieram tempo i
+            proste metody, aby osiągnąć go w przyjaznej, bezstresowej atmosferze.
           </p>
         </div>
 
@@ -259,8 +256,8 @@ useHead({
               Nadrabianie zaległości
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Wracamy do tematów, które wymagały więcej czasu: gramatyki,
-              słownictwa, czytania ze zrozumieniem i zadań pisemnych.
+              Bez pośpiechu wracamy do trudniejszych tematów, uzupełniamy braki i budujemy
+              solidne podstawy do dalszej nauki.
             </p>
           </article>
           <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -268,8 +265,8 @@ useHead({
               Przygotowanie do sprawdzianów
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Porządkujemy materiał z lekcji, ćwiczymy typowe zadania i
-              sprawdzamy, które elementy wymagają dodatkowego utrwalenia.
+              Wspólnie powtarzamy materiał, utrwalamy najważniejsze zagadnienia i rozwiewamy
+              ostatnie wątpliwości, aby uczeń podszedł do sprawdzianu przygotowany i osiągnął jak najlepszy wynik.
             </p>
           </article>
           <article class="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -277,37 +274,40 @@ useHead({
               Większa pewność siebie
             </h3>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Pracujemy w spokojnej atmosferze, bez krytyki i presji, aby uczeń
-              przestał bać się pytać i stopniowo odzyskiwał sprawczość.
+              Systematyczna praca i zrozumienie materiału pomagają uczniowi odzyskać wiarę we
+              własne możliwości i z większą motywacją podchodzić do nauki.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:py-20">
+    <section class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center md:py-20">
       <div>
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
-          Jak pomagam
+          Każdy uczy się w swoim tempie
         </span>
         <h2 class="mt-4 font-serif text-3xl font-semibold tracking-tight text-foreground">
           Spokojnie wyjaśniam to, co w szkole zostało za szybko.
         </h2>
         <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
           <p>
-            Jeśli zauważają Państwo, że dziecko nie nadąża za materiałem, ma
-            problem ze zrozumieniem gramatyki, słownictwa lub obawia się
-            sprawdzianów, chętnie pomogę. Podczas zajęć spokojnie wyjaśniam
-            trudniejsze zagadnienia, utrwalam bieżący materiał i wspieram ucznia
-            w rozwijaniu pewności siebie oraz umiejętności językowych.
+            Dłuższa nieobecność w szkole z powodu choroby, trudniejszy dział w podręczniku albo
+            po prostu zbyt szybkie tempo narzucone na lekcjach - powody, dla których angielski
+            zaczyna sprawiać trudności, bywają różne. Jeśli zauważają Państwo, że dziecko
+            przestaje nadążać za materiałem, gubi się w gramatyce lub zaczyna stresować się
+            sprawdzianami, chętnie pomogę. Moje wsparcie kieruję także do studentów, którzy z
+            podobnych przyczyn potrzebują spokojnego poukładania wiedzy przed akademickimi
+            zaliczeniami.
           </p>
           <p>
-            Każdy uczeń ma inne potrzeby i inaczej przyswaja wiedzę. Dlatego
-            dopasowuję sposób prowadzenia zajęć do jego poziomu, tempa pracy
-            oraz zagadnień, które wymagają dodatkowego wyjaśnienia. Nie oceniam
-            i nie krytykuję. Zależy mi na tym, aby uczeń nie tylko lepiej radził
-            sobie w szkole, ale przede wszystkim rozumiał materiał i z większą
-            pewnością korzystał z języka.
+            Podczas zajęć bez pośpiechu wyjaśniam to, co na lekcjach zostało potraktowane po
+            łebkach, uzupełniam luki po nieobecnościach i utrwalam bieżący materiał. Każdy z nas
+            ma inne potrzeby i inaczej przyswaja wiedzę, dlatego dopasowuję sposób pracy do
+            indywidualnego poziomu i tempa ucznia czy studenta. Nie oceniam i nie krytykuję -
+            tworzę bezpieczną atmosferę, w której wspólnie budujemy pewność siebie. Zależy mi
+            na tym, aby angielski przestał być szkolnym obowiązkiem, a stał się zrozumiałym i
+            przydatnym narzędziem.
           </p>
         </div>
       </div>
@@ -396,10 +396,10 @@ useHead({
             Ile kosztują korepetycje z angielskiego?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Cena zależy od wybranej formy nauki: indywidualnie, w duecie lub w
-            krótszym pakiecie. Przy regularnych zajęciach łatwiej spokojnie
-            uzupełniać zaległości i utrwalać bieżące tematy zamiast uczyć się
-            dopiero tuż przed sprawdzianem.
+            Cena zależy od formy nauki - indywidualnie lub w parze - oraz od liczby lekcji w
+            pakiecie. W przypadku nadrabiania zaległości lub przygotowań do ważnych zaliczeń,
+            sugeruję wybór regularnych zajęć. Dzięki nim na bieżąco i bez stresu opanujesz
+            materiał, zamiast uczyć się w ostatniej chwili przed sprawdzianem czy kolokwium.
           </p>
           <NuxtLink :to="ROUTES.pricesIndividual"
             class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
