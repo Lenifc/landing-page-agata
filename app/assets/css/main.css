@@ -59,7 +59,9 @@
 }
 
 html {
+  --anchor-offset: 6rem;
   scroll-behavior: smooth;
+  scroll-padding-top: var(--anchor-offset);
 }
 
 body {
@@ -88,5 +90,9 @@ button {
 }
 
 #main-content {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: var(--anchor-offset);
+}
+
+[id] {
+  scroll-margin-top: var(--anchor-offset);
 }

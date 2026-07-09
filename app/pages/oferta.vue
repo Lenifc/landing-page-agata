@@ -12,10 +12,10 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 const plans = getPricingPlans('offer')
 const morningOnlinePlans = getPricingPlans('morningOnline')
 const morningOnlineIndividualPlans = morningOnlinePlans.filter(
-  (plan) => plan.id.includes('Annual') && plan.id.includes('Individual'),
+  (plan) => plan.id.startsWith('onlineMorningIndividual'),
 )
 const morningOnlineDuoPlans = morningOnlinePlans.filter(
-  (plan) => plan.id.includes('Annual') && plan.id.includes('Duo'),
+  (plan) => plan.id.startsWith('onlineMorningDuo'),
 )
 const offerCatalogPlans = plans.map((plan) =>
   Object.fromEntries(
@@ -496,7 +496,7 @@ useHead({
           lekcje. Koszt zajęć zależy od wybranego wariantu, częstotliwości
           spotkań i formy nauki.
         </p>
-        <p class="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
+        <p class="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground" id="cennik-sekcje">
           Jeśli liczba zajęć w gotowych pakietach nie odpowiada Twoim potrzebom,
           możliwa jest indywidualna wycena po krótkiej rozmowie o celu nauki,
           terminach i preferowanej formie zajęć.
@@ -590,7 +590,8 @@ useHead({
                     <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                       {{ plan.price }}
                     </p>
-                    <div v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice"
+                    <div
+                      v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice || plan.priceDetails?.savings"
                       class="mt-1 text-left text-xs leading-snug text-muted-foreground">
                       <button type="button"
                         class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
@@ -617,6 +618,12 @@ useHead({
                             Cena za lekcję:
                           </span>
                           {{ plan.priceDetails.lessonPrice }}
+                        </p>
+                        <p v-if="plan.priceDetails.savings">
+                          <span class="font-medium text-foreground/75">
+                            Oszczędność:
+                          </span>
+                          {{ plan.priceDetails.savings }}
                         </p>
                       </div>
                     </div>
@@ -677,7 +684,8 @@ useHead({
                 <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
                   {{ plan.price }}
                 </p>
-                <div v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice"
+                <div
+                  v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice || plan.priceDetails?.savings"
                   class="mt-1 text-left text-xs leading-snug text-muted-foreground">
                   <button type="button"
                     class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
@@ -704,6 +712,12 @@ useHead({
                         Cena za lekcję:
                       </span>
                       {{ plan.priceDetails.lessonPrice }}
+                    </p>
+                    <p v-if="plan.priceDetails.savings">
+                      <span class="font-medium text-foreground/75">
+                        Oszczędność:
+                      </span>
+                      {{ plan.priceDetails.savings }}
                     </p>
                   </div>
                 </div>

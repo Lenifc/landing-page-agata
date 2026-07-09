@@ -124,6 +124,23 @@ export const PRICING = Object.freeze({
         },
       },
     },
+    onlineMorningIndividualMini: {
+      name: 'Poranne online 1:1 - Mini',
+      frequency: '24 lekcje',
+      duration: '50 min',
+      price: '8 rat × 240 zł',
+      schemaPrice: '240',
+      fromPrice: '80 zł',
+      fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '1920 zł',
+        lessonPrice: '80 zł za lekcję 50 min',
+      },
+      paymentNote: 'miesięcznie: 8 rat × 240 zł',
+      details:
+        '24 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
+      featured: false,
+    },
     onlineMorningIndividualAnnualWeekly: {
       name: 'Poranne online 1:1 - Standard',
       frequency: '32 lekcje',
@@ -156,6 +173,23 @@ export const PRICING = Object.freeze({
       paymentNote: 'miesięcznie: 10 rat × 435,20 zł',
       details:
         '64 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
+      featured: false,
+    },
+    onlineMorningDuoMini: {
+      name: 'Poranne online DUO - Mini',
+      frequency: '24 lekcje',
+      duration: '50 min',
+      price: '8 rat × 168 zł / osoba',
+      schemaPrice: '168',
+      fromPrice: '56 zł / osoba',
+      fromPriceContext: 'za lekcję 50 min',
+      priceDetails: {
+        totalPrice: '1344 zł / osoba',
+        lessonPrice: '56 zł / osoba za lekcję 50 min',
+      },
+      paymentNote: 'miesięcznie: 8 rat × 168 zł / osoba',
+      details:
+        '24 lekcje po 50 min w porannym wariancie online dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku.',
       featured: false,
     },
     onlineMorningDuoAnnualWeekly: {
@@ -339,16 +373,20 @@ export const PRICING = Object.freeze({
       'occasionalMorningOnlineDuo',
     ],
     morningOnline: [
+      'onlineMorningIndividualMini',
       'onlineMorningIndividualAnnualWeekly',
       'onlineMorningIndividualAnnualTwiceWeekly',
+      'onlineMorningDuoMini',
       'onlineMorningDuoAnnualWeekly',
       'onlineMorningDuoAnnualTwiceWeekly',
       'occasionalMorningOnlineIndividual',
       'occasionalMorningOnlineDuo',
     ],
     offer: [
+      'onlineMorningIndividualMini',
       'onlineMorningIndividualAnnualWeekly',
       'onlineMorningIndividualAnnualTwiceWeekly',
+      'onlineMorningDuoMini',
       'onlineMorningDuoAnnualWeekly',
       'onlineMorningDuoAnnualTwiceWeekly',
       'miniIndividual',

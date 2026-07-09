@@ -247,7 +247,7 @@ dnia.`,
 ]
 
 const openFaqIndex = ref(null)
-const selectedOnlineTime = ref('afternoon')
+const selectedOnlineTime = ref('morning')
 const openPriceDetailsId = ref(null)
 
 const toggleFaq = (index) => {
@@ -353,7 +353,7 @@ useHead({
               class="inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground shadow-[0_16px_35px_rgba(0,0,0,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
               Zapytaj o zajęcia online
             </NuxtLink>
-            <NuxtLink :to="ROUTES.pricesIndividual"
+            <NuxtLink :to="ROUTES.pricesMenu"
               class="inline-flex items-center justify-center rounded-full border border-primary-foreground/45 bg-primary-foreground/10 px-6 py-3 text-sm font-medium text-primary-foreground backdrop-blur transition-colors hover:bg-primary-foreground/18">
               Zobacz cennik
             </NuxtLink>
@@ -643,20 +643,21 @@ useHead({
             Ile kosztują zajęcia zdalne?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Cena zależy od wybranego pakietu lekcji oraz formy nauki -
-            indywidualnie lub w parze.
+            Cena zależy od formy nauki - indywidualnie lub w parze - oraz od liczby lekcji w
+            pakiecie.
           </p>
           <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            Standardowy cennik dotyczy zajęć w godzinach
-            popołudniowo-wieczornych.
+            Standardowy cennik dotyczy zajęć w godzinach popołudniowo-wieczornych
+            oraz lekcji w weekendy.
           </p>
           <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            Jeśli masz możliwość nauki rano (do godziny
-            {{ morningOnlinePromotion.deadlineHour }}), możesz wybrać poranny
-            wariant zajęć online. To świetna opcja dla osób z elastycznym
-            grafikiem, które chcą uczyć się w spokojniejszych godzinach dnia.
+            Jeśli masz możliwość nauki rano, wybierz tańszy wariant zajęć online, który obowiązuje
+            od poniedziałku do piątku (do godziny
+            {{ morningOnlinePromotion.deadlineHour }}) To świetna opcja dla osób z elastycznym
+            grafikiem, które chcą uczyć się w spokojniejszych godzinach dnia i jednocześnie
+            oszczędzić.
           </p>
-          <NuxtLink :to="ROUTES.pricesIndividual"
+          <NuxtLink :to="ROUTES.pricesMenu"
             class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
             Zobacz pełny cennik
           </NuxtLink>
