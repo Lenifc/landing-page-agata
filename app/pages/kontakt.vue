@@ -123,7 +123,7 @@ useHead({
         </a>
       </div>
 
-      <div class="grid gap-12 lg:grid-cols-2">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
         <div class="space-y-5">
           <div v-for="item in details" :key="item.label"
             class="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm">
@@ -179,10 +179,11 @@ useHead({
           </div>
         </div>
 
-        <div class="space-y-6">
-          <div class="overflow-hidden rounded-3xl border border-border shadow-sm">
+        <div class="flex h-full min-h-0">
+          <div class="h-full w-full overflow-hidden rounded-3xl border border-border shadow-sm">
             <img src="/contact.webp" alt="Studio Talkateria w Rumi z widoczną salą zajęć."
-              class="block h-auto w-full object-contain" width="1195" height="896" loading="lazy" />
+              class="block h-full min-h-[22rem] w-full object-cover object-center lg:min-h-0" width="1200"
+              height="676" loading="lazy" />
           </div>
         </div>
       </div>

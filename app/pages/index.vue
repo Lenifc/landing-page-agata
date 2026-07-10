@@ -55,10 +55,27 @@ const photos = [
     src: '/lesson-1.webp',
     class: 'col-span-2 row-span-2',
     alt: 'Sala Talkaterii z zieloną ścianą, stołem do zajęć i materiałami do nauki',
+    width: 1200,
+    height: 900,
   },
   {
     src: '/lesson-2.webp',
+    alt: 'Kameralna przestrzeń zajęć w studiu Talkateria',
+    width: 1200,
+    height: 554,
+    imageClass: 'object-left',
+  },
+  {
+    src: '/lesson-3.webp',
     alt: 'Wejście do studia Talkateria z poczekalnią dla kursantów',
+    width: 760,
+    height: 570,
+  },
+  {
+    src: '/lesson-4.webp',
+    alt: 'Wnętrze studia Talkateria z materiałami do nauki języka angielskiego',
+    width: 1200,
+    height: 665,
   },
 ]
 
@@ -153,8 +170,11 @@ useHead({
       <div class="relative">
         <div
           class="overflow-hidden rounded-[2rem] border border-border bg-card shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
-          <img src="/studio-hero.webp" alt="Jasne i przytulne wnętrze studia Talkateria"
-            class="h-full w-full object-cover" width="1024" height="1024" fetchpriority="high" />
+          <img src="/studio-hero-1200.webp" srcset="
+              /studio-hero-800.webp   800w,
+              /studio-hero-1200.webp 1080w
+            " sizes="(min-width: 768px) 50vw, 100vw" alt="Jasne i przytulne wnętrze studia Talkateria"
+            class="block h-auto w-full object-contain" width="1080" height="616" fetchpriority="high" />
         </div>
       </div>
     </section>
@@ -294,7 +314,8 @@ useHead({
             class="group relative overflow-hidden rounded-2xl border border-border" :class="photo.class">
             <img :src="photo.src" :alt="photo.alt"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              width="1024" height="1024" loading="lazy" />
+              :class="photo.imageClass"
+              :width="photo.width" :height="photo.height" loading="lazy" />
           </div>
         </div>
       </div>
