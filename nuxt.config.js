@@ -3,6 +3,10 @@ import tailwindcss from '@tailwindcss/vite'
 import { CLARITY_PROJECT_ID } from './app/config/analytics.js'
 import { PRERENDER_ROUTES } from './app/config/routes.js'
 
+const SITE_URL = 'https://talkateria.pl'
+const OG_IMAGE_PATH = '/talkateria-logo-color.svg'
+const OG_IMAGE_URL = `${SITE_URL}${OG_IMAGE_PATH}`
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
@@ -59,6 +63,11 @@ export default defineNuxtConfig({
         { property: 'og:locale', content: 'pl_PL' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Talkateria' },
+        { property: 'og:image', content: OG_IMAGE_URL },
+        { property: 'og:image:url', content: OG_IMAGE_URL },
+        { property: 'og:image:secure_url', content: OG_IMAGE_URL },
+        { property: 'og:image:type', content: 'image/svg+xml' },
+        { property: 'og:image:alt', content: 'Logo Talkateria' },
         {
           property: 'og:title',
           content: 'Angielski w Rumi | Talkateria',
@@ -68,6 +77,15 @@ export default defineNuxtConfig({
           content:
             'Kameralne zajęcia z angielskiego w Rumi dla młodzieży oraz dorosłych. Bez stresu, z naciskiem na mówienie.',
         },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Angielski w Rumi | Talkateria' },
+        {
+          name: 'twitter:description',
+          content:
+            'Kameralne zajęcia z angielskiego w Rumi dla młodzieży oraz dorosłych. Bez stresu, z naciskiem na mówienie.',
+        },
+        { name: 'twitter:image', content: OG_IMAGE_URL },
+        { name: 'twitter:image:alt', content: 'Logo Talkateria' },
       ],
       link: [
         {

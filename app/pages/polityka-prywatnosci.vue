@@ -284,7 +284,6 @@ useHead({
           działania serwisu. Po wyrażeniu zgody w banerze cookies strona może
           korzystać z analitycznych plików cookies Microsoft Clarity w celu
           zbierania zagregowanych statystyk odwiedzin i interakcji ze stroną.
-          Nagrywanie sesji w Clarity jest wyłączone.
         </p>
         <p>
           Elementy zewnętrzne, takie jak formularz Google lub mapa Google,

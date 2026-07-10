@@ -58,6 +58,32 @@ export const useAnalyticsConsent = () => {
     return loaded
   }
 
+  const scheduleClarityActivation = () => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const activateWhenIdle = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => {
+          activateClarity()
+        })
+        return
+      }
+
+      window.setTimeout(() => {
+        activateClarity()
+      }, 1500)
+    }
+
+    if (document.readyState === 'complete') {
+      activateWhenIdle()
+      return
+    }
+
+    window.addEventListener('load', activateWhenIdle, { once: true })
+  }
+
   const initializeConsent = async () => {
     const storedConsent = readStoredConsent()
     consent.value = storedConsent

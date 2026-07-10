@@ -95,25 +95,22 @@ useHead({
       <div class="mb-12 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
         <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-          Kontakt - Angielski w Rumi oraz online.
+          Napisz, jakich zajęć szukasz.
         </h1>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Nie prowadzę stacjonarnego sekretariatu - kontakt odbywa się
-          telefonicznie, mailowo lub online.
+          Najprościej wysłać formularz, e-mail lub SMS. Na podstawie krótkiej
+          wiadomości łatwiej dobrać odpowiednią formę zajęć i sprawdzić
+          dostępne terminy.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          W przypadku chęci zapisu na zajęcia (lub zwykłego zapytania) warto od
-          razu krótko określić wiek ucznia, poziom języka, rodzaj kursu (np.
-          konwersacje, pomoc z materiałem szkolnym, przygotowanie do egzaminów)
-          oraz to, czy interesują Cię lekcje indywidualne, czy w grupie. Ułatwi
-          to sprawne dopasowanie odpowiedniej formy nauki.
+          W wiadomości warto od razu podać wiek ucznia lub swój poziom,
+          rodzaj kursu, który Cię interesuje, oraz informację, czy szukasz
+          zajęć indywidualnych, w duecie, w grupie, stacjonarnie czy online.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Zachęcam również do skorzystania z krótkiego formularza zgłoszeniowego
-          - to najwygodniejsza forma zapisu, która oszczędza czas, ponieważ od
-          razu zbiera wszystkie potrzebne informacje i pozwala sprawnie dobrać
-          kurs oraz dostępne terminy. Wszystkie informacje kontaktowe oraz
-          formularz zgłoszeniowy znajdziesz poniżej. Do usłyszenia!
+          Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
+          wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
+          maila lub wiadomość SMS.
         </p>
         <a href="#formularz"
           class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
@@ -227,7 +224,7 @@ useHead({
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
             Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy
             interesują Cię spotkania w studiu, czy online. Dzięki temu łatwiej
-            dobrać termin oraz sposób pracy.
+            dobrać termin, poziom intensywności i sposób pracy.
           </p>
         </div>
 
@@ -245,6 +242,7 @@ useHead({
               <p class="leading-relaxed text-muted-foreground">
                 W wiadomości wystarczy krótko opisać wiek lub poziom ucznia, cel
                 nauki, preferowaną formę zajęć oraz dostępność w tygodniu.
+                Odpowiem z propozycją dalszego kroku.
               </p>
               <div class="flex flex-wrap gap-3 pt-2">
                 <a :href="`mailto:${CONTACT.email}`"

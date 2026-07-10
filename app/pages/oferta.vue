@@ -296,9 +296,9 @@ useHead({
         <span class="block">oferta i cennik zajęć</span>
       </h1>
       <p class="mx-auto mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-        Każdy uczy się inaczej, dlatego oferuję elastyczne formy nauki. Wybierz
-        kurs dopasowany do swoich celów, tempa i możliwości czasowych -
-        stacjonarnie w kameralnym studiu w Rumi (Janowo) lub wygodnie online z
+        W jednym miejscu znajdziesz formy zajęć, orientacyjne dopasowanie do
+        celu oraz pełny cennik. Dzięki temu łatwiej porównać opcje i wybrać
+        kurs odpowiedni do poziomu, tempa nauki i budżetu - stacjonarnie w kameralnym studiu w Rumi (Janowo) lub wygodnie online z
         dowolnego miejsca.
       </p>
     </section>
@@ -344,11 +344,11 @@ useHead({
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">Formy zajęć</span>
           <h2 class="mt-4 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
-            Znajdź zajęcia idealne dla siebie
+            Jak wybrać odpowiednią formę zajęć?
           </h2>
           <p class="mt-5 text-pretty text-lg leading-relaxed text-muted-foreground">
-            Możesz wybrać zajęcia indywidualne, naukę w parze, kurs
-            egzaminacyjny albo krótszy pakiet MINI.
+            Jeśli nie wiesz jeszcze, czy lepsze będą zajęcia 1:1, DUO czy kurs
+            egzaminacyjny, zacznij od tego krótkiego porównania.
           </p>
         </div>
 
@@ -359,14 +359,11 @@ useHead({
             </p>
             <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Indywidualne zajęcia to najbardziej elastyczna i
-                spersonalizowana forma nauki. Program, tempo pracy oraz
-                materiały są dostosowywane do potrzeb, poziomu i celów kursanta,
-                dzięki czemu każda lekcja koncentruje się na tym, co jest dla
-                niego najważniejsze.
+                To najlepszy wybór, jeśli zależy Ci na pełnym dopasowaniu
+                programu, tempa pracy i materiałów do jednej osoby.
               </p>
               <p>
-                To doskonałe rozwiązanie dla osób przygotowujących się do
+                Sprawdza się szczególnie u osób przygotowujących się do
                 <NuxtLink :to="ROUTES.eighthGradeExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   egzaminu ósmoklasisty</NuxtLink>,
@@ -376,10 +373,8 @@ useHead({
                 <NuxtLink :to="ROUTES.schoolSupport"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   korepetycji z angielskiego</NuxtLink>
-                przy poprawie wyników w szkole, a także dla tych, którzy chcą
-                rozwijać umiejętności konwersacyjne i swobodniej komunikować się
-                po angielsku. Dzięki pełnemu skupieniu na jednym kursancie nauka
-                jest bardziej efektywna, a postępy widoczne szybciej. Dorośli
+                przy poprawie wyników w szkole, a także u tych, którzy chcą
+                rozwijać konwersacje i szybciej widzieć postępy. Dorośli
                 kursanci mogą sprawdzić też
                 <NuxtLink :to="ROUTES.adultClasses"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
@@ -394,15 +389,12 @@ useHead({
             </p>
             <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
               <p>
-                Zajęcia DUO są przeznaczone dla dwóch osób, które chcą uczyć się
-                razem - z rodzeństwem, przyjacielem, partnerem lub inną bliską
-                osobą. To połączenie indywidualnego podejścia z zaletami nauki
-                we dwoje, takimi jak wzajemna motywacja, większa swoboda
-                komunikacji i możliwość wspólnego osiągania celów.
+                To dobra opcja dla dwóch osób - z rodzeństwem, przyjacielem, partnerem lub inną bliską
+                osobą, które chcą uczyć się razem i
+                mają podobny poziom oraz zbliżony cel nauki.
               </p>
               <p>
-                Program zajęć jest dopasowywany do poziomu i potrzeb
-                uczestników. Lekcje mogą obejmować przygotowanie do
+                Lekcje mogą obejmować przygotowanie do
                 <NuxtLink :to="ROUTES.eighthGradeExam"
                   class="font-medium text-primary underline-offset-4 transition-colors hover:underline">
                   egzaminu ósmoklasisty</NuxtLink>,
@@ -418,11 +410,8 @@ useHead({
                   języka dla dorosłych</NuxtLink>.
               </p>
               <p>
-                To świetna opcja dla osób, które cenią kameralną atmosferę,
-                regularny kontakt z językiem i aktywną pracę podczas zajęć, a
-                jednocześnie chcą uczyć się w towarzystwie osoby, z którą czują
-                się komfortowo. Dodatkowym atutem jest niższy koszt nauki w
-                porównaniu z zajęciami indywidualnymi.
+                DUO łączy większą motywację i niższy koszt z nadal kameralną
+                formą pracy.
               </p>
             </div>
           </article>
@@ -447,22 +436,13 @@ useHead({
                 spotkań po 100 minut.
               </p>
               <p>
-                Program kursu koncentruje się na wymaganiach egzaminacyjnych.
-                Podczas zajęć rozwijamy wszystkie sprawności językowe,
-                systematycznie pracujemy z arkuszami egzaminacyjnymi oraz
-                ćwiczymy strategie, które pomagają osiągnąć lepszy wynik i
-                zwiększają pewność siebie na egzaminie.
+                Program kursu koncentruje się na wymaganiach egzaminacyjnych:
+                arkuszach, strategiach, gramatyce, słownictwie i regularnych
+                powtórkach przed egzaminem.
               </p>
               <p>
-                Niewielka liczba uczestników pozwala na aktywny udział w
-                zajęciach, indywidualne wsparcie lektora oraz naukę w
-                motywującym środowisku rówieśników. Dzięki temu kursanci mogą
-                korzystać zarówno z zalet pracy grupowej, jak i uwagi
-                poświęconej ich własnym potrzebom.
-              </p>
-              <p>
-                Kurs obejmuje ponad 41 godzin nauki i kończy się przed terminem
-                egzaminu, pozostawiając czas na samodzielne powtórki.
+                Mała grupa do 4 osób pozwala jednocześnie korzystać z motywacji
+                pracy z innymi i zachować indywidualne wsparcie.
               </p>
               <p class="text-xs leading-relaxed text-muted-foreground/70">
                 Informacja organizacyjna: kursy egzaminacyjne są uruchamiane po
@@ -740,16 +720,17 @@ useHead({
           class="flex flex-col items-center rounded-[2rem] border border-border bg-card px-8 py-10 text-center shadow-sm">
           <div class="max-w-2xl">
             <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
-              Masz pytania?
+              Nie wiesz jeszcze, która opcja będzie najlepsza?
             </h2>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę
-              nauki.
+              Napisz, dla kogo mają być zajęcia i jaki jest cel nauki.
+              Podpowiem, czy lepiej sprawdzą się zajęcia 1:1, DUO, kurs
+              egzaminacyjny czy krótszy pakiet.
             </p>
           </div>
           <NuxtLink :to="ROUTES.contact"
             class="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
-            Skontaktuj się →
+            Przejdź do kontaktu →
           </NuxtLink>
         </div>
       </div>

@@ -25,8 +25,8 @@ const features = [
     body: 'Dobra atmosfera to podstawa skutecznej nauki. Dlatego dbam o to, aby każdy kursant czuł się swobodnie i mógł rozwijać swoje umiejętności bez zbędnej presji.',
   },
   {
-    title: 'Kameralność',
-    body: 'Pracuję wyłącznie indywidualnie i w małych grupach. Dzięki temu każdy aktywnie uczestniczy w zajęciach, a nauka jest bardziej skuteczna i przynosi lepsze efekty.',
+    title: 'Więcej mówienia, mniej chaosu',
+    body: 'Małe grupy i zajęcia indywidualne dają realny czas na rozmowę, pytania, korektę i spokojne wyjaśnienie trudniejszych tematów.',
   },
 ]
 
@@ -141,7 +141,7 @@ useHead({
         <div class="order-4 flex flex-wrap items-center gap-4">
           <NuxtLink :to="ROUTES.contact"
             class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.22)] transition-all hover:-translate-y-0.5 hover:opacity-90">
-            Zapisz się teraz →
+            Sprawdź wolne terminy →
           </NuxtLink>
           <NuxtLink :to="ROUTES.offer"
             class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -306,18 +306,18 @@ useHead({
           Dla kogo są zajęcia w Talkaterii?
         </h2>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Jeżeli chcesz zacząć swobodnie mówić po angielsku, potrzebujesz wsparcia w nauce
-          szkolnej, przygotowaniu do egzaminów lub szukasz zajęć dopasowanych do swojego
-          tempa i potrzeb, Talkateria będzie dobrym miejscem dla Ciebie.
+          Jeśli chcesz swobodniej mówić po angielsku, potrzebujesz wsparcia w
+          nauce szkolnej albo szukasz sensownego przygotowania do egzaminu,
+          znajdziesz tu zajęcia dopasowane do celu i poziomu.
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla uczniów od klasy 6 szkoły podstawowej, młodzieży oraz dorosłych,
-          którzy chcą uporządkować wiedzę, nabrać pewności w mówieniu i zacząć swobodnie
-          używać angielskiego w praktyce, w spokojnej i przyjaznej atmosferze.
+          To propozycja dla uczniów od klasy 6 szkoły podstawowej, młodzieży i
+          dorosłych, którzy chcą uporządkować wiedzę, mówić pewniej i uczyć się
+          w tempie, które naprawdę da się utrzymać.
         </p>
         <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Zajęcia prowadzę wyłącznie indywidualnie lub w mini grupach, co pozwala na pełne
-          dopasowanie do ucznia i komfortową naukę.
+          Zajęcia prowadzę indywidualnie, w duecie albo w małych grupach, dzięki
+          czemu łatwiej dopasować formę nauki do potrzeb i budżetu.
         </p>
       </div>
     </section>
@@ -328,14 +328,16 @@ useHead({
           class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 py-14 text-center shadow-[0_24px_60px_rgba(45,94,181,0.2)] md:px-16">
           <h2
             class="mx-auto max-w-2xl text-balance text-center font-serif text-4xl font-semibold leading-tight tracking-tight text-primary-foreground">
-            Masz pytania?
+            Szukasz zajęć dopasowanych do Twojego celu?
           </h2>
           <p class="mx-auto mt-4 max-w-md text-pretty text-center leading-relaxed text-primary-foreground/80">
-            Skontaktuj się ze mną, a wspólnie dobierzemy najlepszą formę nauki.
+            Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy
+            interesują Cię spotkania w studiu czy online. Otrzymasz propozycję
+            najlepszej formy pracy i dostępnych terminów.
           </p>
           <NuxtLink :to="ROUTES.contact"
             class="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
-            Skontaktuj się →
+            Przejdź do kontaktu →
           </NuxtLink>
         </div>
       </div>

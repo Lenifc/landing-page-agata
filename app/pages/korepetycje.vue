@@ -210,15 +210,15 @@ useHead({
           Korepetycje z angielskiego dla uczniów i studentów.
         </h1>
         <p class="text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Pomagam uczniom lepiej rozumieć materiał i osiągać lepsze wyniki w
-          szkole. Wsparcie kieruję do uczniów od klasy 6 szkoły podstawowej,
-          uczniów szkół ponadpodstawowych oraz studentów, którzy potrzebują
-          spokojnego uporządkowania gramatyki, słownictwa i bieżących tematów.
+          Pomagam uporządkować materiał, nadrobić zaległości i spokojnie
+          przygotować się do sprawdzianów, kartkówek, zaliczeń oraz egzaminów.
+          To wsparcie dla uczniów od klasy 6 szkoły podstawowej, młodzieży i
+          studentów, którzy potrzebują spokojnego uporządkowania gramatyki, słownictwa i bieżących tematów.
         </p>
         <div class="flex flex-wrap gap-4">
           <NuxtLink :to="ROUTES.contact"
             class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
-            Skontaktuj się
+            Zapytaj o pomoc w nauce
           </NuxtLink>
           <NuxtLink :to="ROUTES.pricesIndividual"
             class="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -242,11 +242,12 @@ useHead({
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Lekcje dopasowane w 100% do Twojego celu
+            Kiedy takie zajęcia sprawdzają się najlepiej?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Bez sztywnego programu i bez pośpiechu. Wyznaczasz cel, a ja dobieram tempo i
-            proste metody, aby osiągnąć go w przyjaznej, bezstresowej atmosferze.
+            Gdy materiał zaczyna uciekać, oceny spadają albo przed sprawdzianem
+            pojawia się chaos. Zajęcia pomagają odzyskać kontrolę nad nauką i
+            pracować regularnie zamiast działać w ostatniej chwili.
           </p>
         </div>
 
@@ -315,8 +316,8 @@ useHead({
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              zajęcia dopasowuję do programu szkolnego i indywidualnych potrzeb
-              ucznia,
+              zajęcia dopasowuję do programu szkolnego i konkretnych trudności
+              ucznia lub studenta,
             </span>
           </li>
           <li class="flex gap-3">
@@ -347,7 +348,7 @@ useHead({
           <li class="flex gap-3">
             <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
             <span class="text-pretty leading-relaxed text-muted-foreground">
-              wspieram lepsze wyniki, pewność siebie i samodzielność w nauce.
+              pomagam odzyskać pewność siebie i większy spokój w nauce.
             </span>
           </li>
         </ul>
@@ -391,10 +392,10 @@ useHead({
             Ile kosztują korepetycje z angielskiego?
           </h2>
           <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Cena zależy od formy nauki - indywidualnie lub w parze - oraz od liczby lekcji w
-            pakiecie. W przypadku nadrabiania zaległości lub przygotowań do ważnych zaliczeń,
-            sugeruję wybór regularnych zajęć. Dzięki nim na bieżąco i bez stresu opanujesz
-            materiał, zamiast uczyć się w ostatniej chwili przed sprawdzianem czy kolokwium.
+            Cena zależy od formy nauki, liczby lekcji i tego, czy wybierasz
+            zajęcia indywidualne czy w parze. Przy większych zaległościach albo
+            regularnej pomocy szkolnej najlepiej sprawdzają się stałe spotkania,
+            bo dają spokojny rytm pracy i widoczniejsze postępy.
           </p>
           <NuxtLink :to="ROUTES.pricesIndividual"
             class="mt-6 inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted">
@@ -520,7 +521,7 @@ useHead({
           </p>
           <NuxtLink :to="ROUTES.contact"
             class="mt-7 inline-flex items-center justify-center rounded-full bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity hover:opacity-90">
-            Skontaktuj się
+            Przejdź do kontaktu
           </NuxtLink>
         </div>
       </div>

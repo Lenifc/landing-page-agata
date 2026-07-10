@@ -99,12 +99,10 @@ spokojem.`,
   },
   {
     q: 'Czy można zacząć przygotowanie w trakcie roku szkolnego?',
-    a: `Tak, oba te elementy są kluczowe w przygotowaniu do matury. Regularnie ćwiczymy
-konwersacje pod kątem egzaminu ustnego (np. opisywanie ilustracji czy rozmowa z
-odgrywaniem roli), aby zyskać płynność i pewność siebie. Równie dużą wagę przykładamy do
-form pisemnych – wspólnie analizujemy błędy i sprawdzamy Twoje teksty (takie jak e-maile,
-wpisy na bloga czy rozprawki) pod kątem oficjalnych kryteriów oceniania arkusza
-maturalnego.`,
+    a: `Tak. Do przygotowań można dołączyć również w trakcie roku szkolnego. Im wcześniej
+zaczniesz, tym spokojniej rozłożymy materiał, ale nawet przy późniejszym starcie da się
+ułożyć sensowny plan pracy. Na początku sprawdzamy poziom, ustalamy priorytety i
+skupiamy się na tych obszarach, które najbardziej wpływają na wynik matury.`,
   },
 ]
 
