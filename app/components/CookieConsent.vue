@@ -7,6 +7,7 @@ const { acceptAnalytics, rejectAnalytics, showBanner } = useAnalyticsConsent()
 <template>
   <Teleport to="body">
     <aside
+      v-if="showBanner"
       class="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-card px-4 py-3 shadow-[0_-8px_30px_rgba(15,23,42,0.12)] sm:px-6"
       role="dialog"
       aria-live="polite"
@@ -30,14 +31,14 @@ const { acceptAnalytics, rejectAnalytics, showBanner } = useAnalyticsConsent()
         <div class="flex shrink-0 flex-wrap gap-2 sm:justify-end">
           <button
             type="button"
-            class="rounded-full border border-border bg-background px-3 py-1 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+            class="cursor-pointer rounded-full border border-border bg-background px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:bg-secondary"
             @click="rejectAnalytics"
           >
             Odrzuć
           </button>
           <button
             type="button"
-            class="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
+            class="cursor-pointer rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
             @click="acceptAnalytics"
           >
             Akceptuję
