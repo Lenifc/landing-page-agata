@@ -281,13 +281,21 @@ useHead({
         <h2 class="text-xl font-semibold">9. Pliki cookies</h2>
         <p>
           Strona może korzystać z plików cookies potrzebnych do prawidłowego
-          działania serwisu. Elementy zewnętrzne, takie jak formularz Google lub
-          mapa Google, mogą stosować własne pliki cookies i podobne technologie
-          zgodnie z zasadami dostawcy.
+          działania serwisu. Po wyrażeniu zgody w banerze cookies strona może
+          korzystać z analitycznych plików cookies Microsoft Clarity w celu
+          zbierania zagregowanych statystyk odwiedzin i interakcji ze stroną.
+          Nagrywanie sesji w Clarity jest wyłączone.
         </p>
         <p>
-          Ustawienia cookies możesz zmienić w swojej przeglądarce. Ograniczenie
-          cookies może wpłynąć na działanie niektórych elementów strony.
+          Elementy zewnętrzne, takie jak formularz Google lub mapa Google,
+          mogą stosować własne pliki cookies i podobne technologie zgodnie z
+          zasadami dostawcy.
+        </p>
+        <p>
+          Zgody na cookies analityczne możesz udzielić lub odrzucić w banerze
+          wyświetlanym na dole strony. Ustawienia cookies możesz też zmienić w
+          swojej przeglądarce. Ograniczenie cookies może wpłynąć na działanie
+          niektórych elementów strony.
         </p>
       </section>
 

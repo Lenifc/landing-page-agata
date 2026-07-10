@@ -1,10 +1,16 @@
 import tailwindcss from '@tailwindcss/vite'
 
+import { CLARITY_PROJECT_ID } from './app/config/analytics.js'
 import { PRERENDER_ROUTES } from './app/config/routes.js'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
+  runtimeConfig: {
+    public: {
+      clarityId: process.env.NUXT_PUBLIC_CLARITY_ID || CLARITY_PROJECT_ID,
+    },
+  },
   ssr: true,
   css: ['~/assets/css/main.css'],
   nitro: {

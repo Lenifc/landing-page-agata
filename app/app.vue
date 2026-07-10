@@ -22,5 +22,6 @@ useSeoMeta({
     <AppNav />
     <NuxtPage />
     <AppFooter />
+    <CookieConsent />
   </div>
 </template>
