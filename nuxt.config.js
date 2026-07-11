@@ -26,14 +26,33 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: PRERENDER_ROUTES,
     },
+    routeRules: {
+      '/_nuxt/**': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
+      '/fonts/**': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
+      '/**/*.webp': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
+      '/**/*.woff2': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
+    },
   },
   vite: {
     plugins: [tailwindcss()],
   },
   app: {
-    pageTransition: {
-      name: 'slide-left',
-    },
     head: {
       titleTemplate: '%s | Talkateria',
       title: 'Angielski w Rumi i online',

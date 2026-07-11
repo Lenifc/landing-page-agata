@@ -23,8 +23,10 @@ const pageUrl = computed(() => {
   return `${SITE_URL}${path}`
 })
 
+const allowPageTransition = useState('allow-page-transition', () => false)
+
 const pageTransition = computed(() => {
-  if (route.meta.pageTransition === false) {
+  if (!allowPageTransition.value || route.meta.pageTransition === false) {
     return false
   }
 

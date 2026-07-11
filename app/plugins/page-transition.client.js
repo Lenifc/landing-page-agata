@@ -22,12 +22,15 @@ const getRouteIndex = (path) => {
 
 export default defineNuxtPlugin(() => {
   const router = useRouter()
+  const allowPageTransition = useState('allow-page-transition', () => false)
 
   router.beforeEach((to, from) => {
     if (!from.name || normalizePath(to.path) === normalizePath(from.path)) {
       to.meta.pageTransition = false
       return
     }
+
+    allowPageTransition.value = true
 
     const toIndex = getRouteIndex(to.path)
     const fromIndex = getRouteIndex(from.path)

@@ -31,7 +31,7 @@
           class="overflow-hidden rounded-[2rem] border border-border bg-card shadow-card"
         >
           <img
-            src="/studio-hero-1200.webp"
+            src="/studio-hero-800.webp"
             srcset="
               /studio-hero-800.webp   800w,
               /studio-hero-1200.webp 1080w
@@ -42,6 +42,7 @@
             width="1080"
             height="616"
             fetchpriority="high"
+            decoding="async"
           />
         </div>
       </div>
@@ -373,7 +374,17 @@ const landingLinks = [
 ]
 
 useHead({
-  link: [{ rel: 'canonical', href: pageUrl }],
+  link: [
+    { rel: 'canonical', href: pageUrl },
+    {
+      rel: 'preload',
+      as: 'image',
+      href: '/studio-hero-800.webp',
+      imagesrcset: '/studio-hero-800.webp 800w, /studio-hero-1200.webp 1080w',
+      imagesizes: '(min-width: 768px) 50vw, 100vw',
+      fetchpriority: 'high',
+    },
+  ],
   script: [
     jsonLdScript(
       buildHomePageJsonLd({

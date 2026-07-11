@@ -98,7 +98,7 @@
         </li>
       </ul>
 
-      <UiButton :to="ROUTES.contact" class="hidden md:inline-flex">
+      <UiButton :to="ROUTES.contact" class="header-contact-button">
         Skontaktuj się
       </UiButton>
 
@@ -252,3 +252,15 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', updateScrollPosition)
 })
 </script>
+
+<style scoped>
+.header-contact-button {
+  display: none;
+}
+
+@media (min-width: 700px) {
+  .header-contact-button {
+    display: inline-flex;
+  }
+}
+</style>
