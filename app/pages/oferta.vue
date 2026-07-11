@@ -17,7 +17,7 @@
       </p>
     </section>
 
-    <section class="border-y border-border bg-primary/5">
+    <section id="moze-cie-zainteresowac" class="scroll-mt-24 border-y border-border bg-primary/5">
       <div class="mx-auto max-w-6xl px-6 py-12 md:py-14">
         <div class="max-w-3xl">
           <h2 class="mt-3 font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
