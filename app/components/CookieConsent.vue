@@ -1,14 +1,8 @@
-<script setup>
-import { ROUTES } from '~/config/routes'
-
-const { acceptAnalytics, rejectAnalytics, showBanner } = useAnalyticsConsent()
-</script>
-
 <template>
   <Teleport to="body">
     <aside
       v-if="showBanner"
-      class="cookie-consent fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-card px-4 py-3 shadow-[0_-8px_30px_rgba(15,23,42,0.12)] sm:px-6"
+      class="cookie-consent fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-card px-4 py-3 shadow-panel-top sm:px-6"
       role="region"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-description"
@@ -56,3 +50,9 @@ const { acceptAnalytics, rejectAnalytics, showBanner } = useAnalyticsConsent()
     </aside>
   </Teleport>
 </template>
+
+<script setup>
+import { ROUTES } from '~/config/routes'
+
+const { acceptAnalytics, rejectAnalytics, showBanner } = useAnalyticsConsent()
+</script>

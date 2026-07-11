@@ -1,55 +1,3 @@
-<script setup>
-import {
-  BUSINESS_LEGAL_NAME,
-  BUSINESS_NAME,
-  BUSINESS_NIP,
-  BUSINESS_REFERENCE,
-} from '~/config/business'
-import { CONTACT } from '~/config/contact'
-import { ROUTES, SITE_URL } from '~/config/routes'
-
-const pageRoute = ROUTES.privacyPolicy
-const pageUrl = `${SITE_URL}${pageRoute}`
-const updatedAt = '28 czerwca 2026 r.'
-
-useSeoMeta({
-  title: 'Polityka prywatności',
-  description:
-    'Polityka prywatności Talkaterii: zasady przetwarzania danych osobowych, kontaktu, usług Google, Zoom i plików cookies.',
-  robots: 'noindex, follow',
-  ogTitle: 'Talkateria | Polityka prywatności',
-  ogDescription:
-    'Informacje o przetwarzaniu danych osobowych przez Talkaterię.',
-})
-
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: pageUrl,
-    },
-  ],
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@graph': [
-          {
-            '@type': 'PrivacyPolicy',
-            '@id': `${pageUrl}#privacy-policy`,
-            name: 'Polityka prywatności Talkateria',
-            url: pageUrl,
-            publisher: BUSINESS_REFERENCE,
-            dateModified: '2026-06-28',
-          },
-        ],
-      }),
-    },
-  ],
-})
-</script>
-
 <template>
   <main id="main-content">
     <article class="mx-auto max-w-3xl px-6 py-12 text-foreground md:py-16">
@@ -308,3 +256,55 @@ useHead({
     </article>
   </main>
 </template>
+
+<script setup>
+import {
+  BUSINESS_LEGAL_NAME,
+  BUSINESS_NAME,
+  BUSINESS_NIP,
+  BUSINESS_REFERENCE,
+} from '~/config/business'
+import { CONTACT } from '~/config/contact'
+import { ROUTES, SITE_URL } from '~/config/routes'
+
+const pageRoute = ROUTES.privacyPolicy
+const pageUrl = `${SITE_URL}${pageRoute}`
+const updatedAt = '28 czerwca 2026 r.'
+
+useSeoMeta({
+  title: 'Polityka prywatności',
+  description:
+    'Polityka prywatności Talkaterii: zasady przetwarzania danych osobowych, kontaktu, usług Google, Zoom i plików cookies.',
+  robots: 'noindex, follow',
+  ogTitle: 'Talkateria | Polityka prywatności',
+  ogDescription:
+    'Informacje o przetwarzaniu danych osobowych przez Talkaterię.',
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageUrl,
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'PrivacyPolicy',
+            '@id': `${pageUrl}#privacy-policy`,
+            name: 'Polityka prywatności Talkateria',
+            url: pageUrl,
+            publisher: BUSINESS_REFERENCE,
+            dateModified: '2026-06-28',
+          },
+        ],
+      }),
+    },
+  ],
+})
+</script>

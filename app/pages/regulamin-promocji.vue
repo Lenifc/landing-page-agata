@@ -1,40 +1,3 @@
-<script setup>
-import {
-  BUSINESS_LEGAL_NAME,
-  BUSINESS_NAME,
-  BUSINESS_NIP,
-} from '~/config/business'
-import { CONTACT } from '~/config/contact'
-import { getPricingPlan, getPricingPromotion } from '~/config/pricing'
-import { ROUTES, SITE_URL } from '~/config/routes'
-
-const pageRoute = ROUTES.promotionRules
-const pageUrl = `${SITE_URL}${pageRoute}`
-const updatedAt = '28 czerwca 2026 r.'
-const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
-const occasionalIndividual = getPricingPlan('occasionalIndividual')
-const occasionalDuo = getPricingPlan('occasionalDuo')
-const personPrice = (value) => value.replace(' / osoba', ' za osobę')
-
-useSeoMeta({
-  title: 'Regulamin promocji',
-  description:
-    'Zasady promocji na kursy egzaminacyjne oraz jednorazowej lekcji dla nowych kursantów w Talkaterii.',
-  robots: 'noindex, follow',
-  ogTitle: 'Talkateria | Regulamin promocji',
-  ogDescription: 'Sprawdź warunki aktualnych zniżek i ofert specjalnych w Talkaterii.',
-})
-
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: pageUrl,
-    },
-  ],
-})
-</script>
-
 <template>
   <main id="main-content">
     <article class="mx-auto max-w-3xl px-6 py-12 text-foreground md:py-16">
@@ -192,3 +155,40 @@ useHead({
     </article>
   </main>
 </template>
+
+<script setup>
+import {
+  BUSINESS_LEGAL_NAME,
+  BUSINESS_NAME,
+  BUSINESS_NIP,
+} from '~/config/business'
+import { CONTACT } from '~/config/contact'
+import { getPricingPlan, getPricingPromotion } from '~/config/pricing'
+import { ROUTES, SITE_URL } from '~/config/routes'
+
+const pageRoute = ROUTES.promotionRules
+const pageUrl = `${SITE_URL}${pageRoute}`
+const updatedAt = '28 czerwca 2026 r.'
+const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const occasionalIndividual = getPricingPlan('occasionalIndividual')
+const occasionalDuo = getPricingPlan('occasionalDuo')
+const personPrice = (value) => value.replace(' / osoba', ' za osobę')
+
+useSeoMeta({
+  title: 'Regulamin promocji',
+  description:
+    'Zasady promocji na kursy egzaminacyjne oraz jednorazowej lekcji dla nowych kursantów w Talkaterii.',
+  robots: 'noindex, follow',
+  ogTitle: 'Talkateria | Regulamin promocji',
+  ogDescription: 'Sprawdź warunki aktualnych zniżek i ofert specjalnych w Talkaterii.',
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageUrl,
+    },
+  ],
+})
+</script>

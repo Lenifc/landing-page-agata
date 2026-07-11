@@ -31,6 +31,9 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   app: {
+    pageTransition: {
+      name: 'slide-left',
+    },
     head: {
       titleTemplate: '%s | Talkateria',
       title: 'Angielski w Rumi i online',

@@ -1,3 +1,267 @@
+<template>
+  <main id="main-content">
+    <section class="mx-auto max-w-6xl px-6 py-14 md:pb-24">
+      <div class="mb-12 max-w-2xl">
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">
+          Kontakt
+        </span>
+        <h1
+          class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground"
+        >
+          Napisz, jakich zajęć szukasz.
+        </h1>
+        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+          Najprościej wysłać formularz, e-mail lub SMS. Na podstawie krótkiej
+          wiadomości łatwiej dobrać odpowiednią formę zajęć i sprawdzić
+          dostępne terminy.
+        </p>
+        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+          W wiadomości warto od razu podać wiek ucznia lub swój poziom,
+          rodzaj kursu, który Cię interesuje, oraz informację, czy szukasz
+          zajęć indywidualnych, w duecie, w grupie, stacjonarnie czy online.
+        </p>
+        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+          Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
+          wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
+          maila lub wiadomość SMS.
+        </p>
+        <UiButton href="#formularz" class="mt-7 gap-2">
+          Przejdź do formularza
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 5v14" />
+            <path d="m19 12-7 7-7-7" />
+          </svg>
+        </UiButton>
+      </div>
+
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
+        <div class="space-y-5">
+          <div
+            v-for="item in details"
+            :key="item.label"
+            class="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm"
+          >
+            <span
+              class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                :fill="item.icon === 'facebook' ? 'currentColor' : 'none'"
+                :stroke="item.icon === 'facebook' ? 'none' : 'currentColor'"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5"
+              >
+                <path
+                  v-for="path in icons[item.icon]"
+                  :key="path"
+                  :d="path"
+                />
+              </svg>
+            </span>
+
+            <div class="min-w-0">
+              <p class="text-sm font-medium text-muted-foreground">
+                {{ item.label }}
+              </p>
+              <div
+                v-if="item.icon === 'phone'"
+                class="relative inline-flex max-w-full items-center gap-1.5"
+              >
+                <a
+                  :href="item.href"
+                  class="break-words font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  {{ item.value }}
+                </a>
+                <button
+                  type="button"
+                  class="peer inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  aria-label="Informacja o kontakcie telefonicznym"
+                  aria-describedby="contact-phone-tooltip"
+                >
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4" />
+                    <path d="M12 8h.01" />
+                  </svg>
+                </button>
+                <PhoneTooltip
+                  tooltip-id="contact-phone-tooltip"
+                  placement="contact"
+                />
+              </div>
+              <component
+                :is="item.href ? 'a' : 'p'"
+                v-else
+                :href="item.href"
+                :target="item.href?.startsWith('http') ? '_blank' : undefined"
+                :rel="
+                  item.href?.startsWith('http')
+                    ? 'noopener noreferrer'
+                    : undefined
+                "
+                class="break-words text-foreground"
+                :class="
+                  item.href
+                    ? 'font-medium transition-colors hover:text-primary'
+                    : ''
+                "
+              >
+                {{ item.value }}
+              </component>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex h-full min-h-0">
+          <div
+            class="h-full w-full overflow-hidden rounded-3xl border border-border shadow-sm"
+          >
+            <img
+              src="/contact.webp"
+              alt="Studio Talkateria w Rumi z widoczną salą zajęć."
+              class="block h-full min-h-[22rem] w-full object-cover object-center lg:min-h-0"
+              width="1200"
+              height="676"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 md:mt-16">
+        <div class="mb-6 max-w-2xl">
+          <UiSectionHeader
+            eyebrow="Dojazd"
+            title="Zobacz lokalizację studia na mapie."
+            title-tag="h2"
+            max-width="2xl"
+          />
+        </div>
+
+        <div
+          class="mx-auto overflow-hidden rounded-3xl border border-border bg-card shadow-sm md:w-3/4"
+        >
+          <ClientOnly>
+            <iframe
+              src="https://www.google.com/maps?cid=9730163744970894561&amp;output=embed&amp;hl=pl"
+              title="Mapa dojazdu do studia Talkateria przy ul. Wrocławskiej 2 w Rumi"
+              class="h-[420px] w-full border-0 md:h-[390px]"
+              loading="lazy"
+              allowfullscreen
+            />
+
+            <template #fallback>
+              <div
+                class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[390px]"
+                role="status"
+              >
+                Ładowanie mapy…
+              </div>
+            </template>
+          </ClientOnly>
+        </div>
+      </div>
+    </section>
+
+    <section id="formularz" class="border-t border-border bg-secondary">
+      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+        <div class="mb-8 max-w-2xl">
+          <UiSectionHeader
+            eyebrow="Formularz zgłoszeniowy"
+            title="Opisz krótko, jakich zajęć szukasz."
+            title-tag="h2"
+            max-width="2xl"
+          >
+            <template #description>
+              Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy
+              interesują Cię spotkania w studiu, czy online. Dzięki temu łatwiej
+              dobrać termin, poziom intensywności i sposób pracy.
+            </template>
+          </UiSectionHeader>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl bg-card">
+          <iframe
+            v-if="GOOGLE_FORM.isConfigured"
+            :src="GOOGLE_FORM.embedUrl"
+            title="Formularz zgłoszeniowy Talkateria"
+            class="h-[760px] w-full bg-background md:h-[820px]"
+            loading="lazy"
+          >
+            Ładowanie formularza...
+          </iframe>
+
+          <div v-else class="px-6 py-10 md:px-10">
+            <div class="max-w-2xl space-y-4">
+              <h3 class="font-serif text-2xl font-semibold text-foreground">
+                Wyślij zapytanie mailowo lub SMS-em.
+              </h3>
+              <p class="leading-relaxed text-muted-foreground">
+                W wiadomości wystarczy krótko opisać wiek lub poziom ucznia, cel
+                nauki, preferowaną formę zajęć oraz dostępność w tygodniu.
+                Odpowiem z propozycją dalszego kroku.
+              </p>
+              <div class="flex flex-wrap gap-3 pt-2">
+                <UiButton
+                  :href="`mailto:${CONTACT.email}`"
+                  class="px-5 py-2.5"
+                >
+                  Napisz maila
+                </UiButton>
+                <UiButton
+                  :href="CONTACT.phoneHref"
+                  variant="outline"
+                  class="px-5 py-2.5"
+                >
+                  Zadzwoń lub wyślij SMS
+                </UiButton>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p
+          v-if="GOOGLE_FORM.isConfigured"
+          class="mt-4 text-sm text-muted-foreground"
+        >
+          Jeśli formularz nie wyświetla się poprawnie,
+          <a
+            :href="GOOGLE_FORM.openUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            otwórz go w nowej karcie
+          </a>
+          .
+        </p>
+      </div>
+    </section>
+  </main>
+</template>
+
 <script setup>
 import { CONTACT } from '~/config/contact'
 import { GOOGLE_FORM } from '~/config/forms'
@@ -63,12 +327,7 @@ const icons = {
 }
 
 useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: pageUrl,
-    },
-  ],
+  link: [{ rel: 'canonical', href: pageUrl }],
   script: [
     jsonLdScript(
       buildContactPageJsonLd({
@@ -88,186 +347,3 @@ useHead({
   ],
 })
 </script>
-
-<template>
-  <main id="main-content">
-    <section class="mx-auto max-w-6xl px-6 py-14 md:pb-24">
-      <div class="mb-12 max-w-2xl">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary">Kontakt</span>
-        <h1 class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground">
-          Napisz, jakich zajęć szukasz.
-        </h1>
-        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Najprościej wysłać formularz, e-mail lub SMS. Na podstawie krótkiej
-          wiadomości łatwiej dobrać odpowiednią formę zajęć i sprawdzić
-          dostępne terminy.
-        </p>
-        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          W wiadomości warto od razu podać wiek ucznia lub swój poziom,
-          rodzaj kursu, który Cię interesuje, oraz informację, czy szukasz
-          zajęć indywidualnych, w duecie, w grupie, stacjonarnie czy online.
-        </p>
-        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
-          wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
-          maila lub wiadomość SMS.
-        </p>
-        <a href="#formularz"
-          class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[0_16px_35px_rgba(45,94,181,0.18)] transition-all hover:-translate-y-0.5 hover:opacity-90">
-          Przejdź do formularza
-          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14" />
-            <path d="m19 12-7 7-7-7" />
-          </svg>
-        </a>
-      </div>
-
-      <div class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
-        <div class="space-y-5">
-          <div v-for="item in details" :key="item.label"
-            class="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm">
-            <span
-              class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
-              aria-hidden="true">
-              <svg viewBox="0 0 24 24" :fill="item.icon === 'facebook' ? 'currentColor' : 'none'"
-                :stroke="item.icon === 'facebook' ? 'none' : 'currentColor'" stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round" class="h-5 w-5">
-                <path v-for="path in icons[item.icon]" :key="path" :d="path" />
-              </svg>
-            </span>
-
-            <div class="min-w-0">
-              <p class="text-sm font-medium text-muted-foreground">
-                {{ item.label }}
-              </p>
-              <div v-if="item.icon === 'phone'" class="relative inline-flex max-w-full items-center gap-1.5">
-                <a :href="item.href"
-                  class="break-words font-medium text-foreground transition-colors hover:text-primary">
-                  {{ item.value }}
-                </a>
-                <button type="button"
-                  class="peer inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  aria-label="Informacja o kontakcie telefonicznym" aria-describedby="contact-phone-tooltip">
-                  <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 16v-4" />
-                    <path d="M12 8h.01" />
-                  </svg>
-                </button>
-                <span id="contact-phone-tooltip" role="tooltip"
-                  class="pointer-events-none fixed bottom-6 left-6 right-6 z-50 rounded-lg border border-border bg-card px-4 py-3 text-left text-xs leading-relaxed text-foreground opacity-0 shadow-lg transition-opacity peer-hover:opacity-100 peer-focus:opacity-100 md:absolute md:bottom-full md:left-0 md:right-auto md:mb-3 md:w-[22rem]">
-                  Ze względu na charakter mojej pracy nie zawsze mogę odebrać
-                  telefon. Jeśli nie uda się Państwu ze mną skontaktować, proszę
-                  o wysłanie wiadomości SMS lub e-maila z krótką informacją
-                  dotyczącą celu kontaktu. Odpowiem lub oddzwonię najszybciej,
-                  jak to będzie możliwe.
-                </span>
-              </div>
-              <component :is="item.href ? 'a' : 'p'" v-else :href="item.href"
-                :target="item.href?.startsWith('http') ? '_blank' : undefined" :rel="item.href?.startsWith('http')
-                    ? 'noopener noreferrer'
-                    : undefined
-                  " class="break-words text-foreground" :class="item.href
-                    ? 'font-medium transition-colors hover:text-primary'
-                    : ''
-                  ">
-                {{ item.value }}
-              </component>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex h-full min-h-0">
-          <div class="h-full w-full overflow-hidden rounded-3xl border border-border shadow-sm">
-            <img src="/contact.webp" alt="Studio Talkateria w Rumi z widoczną salą zajęć."
-              class="block h-full min-h-[22rem] w-full object-cover object-center lg:min-h-0" width="1200"
-              height="676" loading="lazy" />
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-12 md:mt-16">
-        <div class="mb-6 max-w-2xl">
-          <span class="text-sm font-medium uppercase tracking-widest text-primary">Dojazd</span>
-          <h2 class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Zobacz lokalizację studia na mapie.
-          </h2>
-        </div>
-
-        <div class="mx-auto overflow-hidden rounded-3xl border border-border bg-card shadow-sm md:w-3/4">
-          <ClientOnly>
-            <iframe src="https://www.google.com/maps?cid=9730163744970894561&amp;output=embed&amp;hl=pl"
-              title="Mapa dojazdu do studia Talkateria przy ul. Wrocławskiej 2 w Rumi"
-              class="h-[420px] w-full border-0 md:h-[390px]" loading="lazy" allowfullscreen>
-            </iframe>
-
-            <template #fallback>
-              <div
-                class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[390px]"
-                role="status">
-                Ładowanie mapy…
-              </div>
-            </template>
-          </ClientOnly>
-        </div>
-      </div>
-    </section>
-
-    <section id="formularz" class="border-t border-border bg-secondary">
-      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
-        <div class="mb-8 max-w-2xl">
-          <span class="text-sm font-medium uppercase tracking-widest text-primary">Formularz zgłoszeniowy</span>
-          <h2 class="mt-3 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Opisz krótko, jakich zajęć szukasz.
-          </h2>
-          <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy
-            interesują Cię spotkania w studiu, czy online. Dzięki temu łatwiej
-            dobrać termin, poziom intensywności i sposób pracy.
-          </p>
-        </div>
-
-        <div class="overflow-hidden rounded-3xl bg-card">
-          <iframe v-if="GOOGLE_FORM.isConfigured" :src="GOOGLE_FORM.embedUrl" title="Formularz zgłoszeniowy Talkateria"
-            class="h-[760px] w-full bg-background md:h-[820px]" loading="lazy">
-            Ładowanie formularza...
-          </iframe>
-
-          <div v-else class="px-6 py-10 md:px-10">
-            <div class="max-w-2xl space-y-4">
-              <h3 class="font-serif text-2xl font-semibold text-foreground">
-                Wyślij zapytanie mailowo lub SMS-em.
-              </h3>
-              <p class="leading-relaxed text-muted-foreground">
-                W wiadomości wystarczy krótko opisać wiek lub poziom ucznia, cel
-                nauki, preferowaną formę zajęć oraz dostępność w tygodniu.
-                Odpowiem z propozycją dalszego kroku.
-              </p>
-              <div class="flex flex-wrap gap-3 pt-2">
-                <a :href="`mailto:${CONTACT.email}`"
-                  class="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90">
-                  Napisz maila
-                </a>
-                <a :href="CONTACT.phoneHref"
-                  class="inline-flex items-center justify-center rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted">
-                  Zadzwoń lub wyślij SMS
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p v-if="GOOGLE_FORM.isConfigured" class="mt-4 text-sm text-muted-foreground">
-          Jeśli formularz nie wyświetla się poprawnie,
-          <a :href="GOOGLE_FORM.openUrl" target="_blank" rel="noopener noreferrer"
-            class="font-medium text-primary underline-offset-4 hover:underline">
-            otwórz go w nowej karcie
-          </a>
-          .
-        </p>
-      </div>
-    </section>
-  </main>
-</template>
