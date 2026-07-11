@@ -9,7 +9,9 @@
       <NuxtPage :transition="pageTransition" />
     </div>
     <AppFooter />
-    <CookieConsent />
+    <ClientOnly>
+      <CookieConsent />
+    </ClientOnly>
   </div>
 </template>
 
