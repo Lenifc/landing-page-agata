@@ -203,11 +203,14 @@
           </p>
         </div>
         <div class="grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4">
-          <div
-            v-for="photo in photos"
+          <button
+            v-for="(photo, index) in photos"
             :key="photo.src"
-            class="group relative overflow-hidden rounded-2xl border border-border"
+            type="button"
+            class="group relative cursor-zoom-in overflow-hidden rounded-2xl border border-border text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             :class="photo.class"
+            :aria-label="`Powiększ zdjęcie: ${photo.alt}`"
+            @click="openPhoto(index)"
           >
             <img
               :src="photo.src"
@@ -218,8 +221,38 @@
               :height="photo.height"
               loading="lazy"
             />
-          </div>
+            <span
+              class="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-foreground/35 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              aria-hidden="true"
+            >
+              <span
+                class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-card/90 text-foreground shadow-sm"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                  <path d="M11 8v6" />
+                  <path d="M8 11h6" />
+                </svg>
+              </span>
+            </span>
+          </button>
         </div>
+
+        <PhotoLightbox
+          v-model:open="lightboxOpen"
+          v-model:index="lightboxIndex"
+          :photos="photos"
+        />
       </div>
     </section>
 
@@ -309,6 +342,14 @@ swobodnie i miał czas na zrozumienie materiału.`,
     body: `Każde zajęcia dopasowuję indywidualnie do celu i potrzeb każdego ucznia.`,
   },
 ]
+
+const lightboxOpen = ref(false)
+const lightboxIndex = ref(0)
+
+function openPhoto(index) {
+  lightboxIndex.value = index
+  lightboxOpen.value = true
+}
 
 const photos = [
   {
