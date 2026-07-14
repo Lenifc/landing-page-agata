@@ -24,7 +24,7 @@
       </template>
       <template #actions>
         <UiButton :to="ROUTES.contact">Skontaktuj się</UiButton>
-        <UiButton :to="ROUTES.pricesIndividual" variant="outline">
+        <UiButton :to="ROUTES.pricesPackages" variant="outline">
           Zobacz cennik
         </UiButton>
       </template>
@@ -98,10 +98,10 @@
           {{ morningOnlinePromotion.deadlineHour }}.
         </template>
       </UiSectionHeader>
-      <UiButton :to="ROUTES.pricesIndividual" variant="outline" class="mt-6">
+      <UiButton :to="ROUTES.prices" variant="outline" class="mt-6">
         Zobacz pełny cennik
       </UiButton>
-      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
         <LandingPriceCard
           v-for="option in landingPriceOptions"
           :key="option.name"

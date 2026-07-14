@@ -72,14 +72,14 @@ const maxWidthMap = {
 }
 
 const containerClasses = computed(() => {
-  const classes = ['mx-auto px-6', maxWidthMap[props.maxWidth] ?? 'max-w-6xl']
+  const classes = ['mx-auto px-4 md:px-6', maxWidthMap[props.maxWidth] ?? 'max-w-6xl']
 
   if (props.padding === 'sm') {
-    classes.push('py-14')
+    classes.push('py-11 md:py-14')
   } else if (props.padding === 'md') {
-    classes.push('py-16')
+    classes.push('py-12 md:py-16')
   } else if (props.padding === 'lg') {
-    classes.push('py-16 md:py-20')
+    classes.push('py-12 md:py-20')
   }
 
   return classes

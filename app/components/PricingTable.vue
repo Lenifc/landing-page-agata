@@ -1,0 +1,175 @@
+<template>
+  <div
+    class="overflow-hidden rounded-lg border border-table-border bg-card shadow-table max-md:space-y-2 max-md:overflow-visible max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:shadow-none md:rounded-xl"
+  >
+    <div
+      class="hidden border-b border-border/80 bg-secondary md:grid md:grid-cols-[minmax(0,29fr)_6fr_minmax(0,15fr)]"
+    >
+      <div
+        class="px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+      >
+        Rodzaj zajęć
+      </div>
+      <div
+        class="border-l border-border/80 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+      >
+        Czas trwania
+      </div>
+      <div
+        class="border-l border-border/80 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+      >
+        Cena
+      </div>
+    </div>
+
+    <div
+      v-for="plan in plans"
+      :key="planKey(plan)"
+      class="max-md:overflow-hidden max-md:rounded-lg max-md:border max-md:border-border max-md:shadow-sm md:grid md:grid-cols-[minmax(0,29fr)_6fr_minmax(0,15fr)] md:border-b md:border-border/70 md:shadow-none md:last:border-b-0"
+      :class="
+        plan.featured
+          ? 'max-md:bg-muted bg-muted/60 md:bg-muted'
+          : 'max-md:bg-card bg-card'
+      "
+    >
+      <div class="px-3.5 py-3 md:py-2.5">
+        <div class="flex items-start justify-between gap-3">
+          <h5 class="min-w-0 text-base font-semibold text-foreground">
+            {{ plan.name }}
+          </h5>
+          <div class="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
+            <span
+              class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
+            >
+              {{ plan.frequency }}
+            </span>
+            <span
+              v-if="plan.featured"
+              class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1"
+            >
+              Najczęściej wybierane
+            </span>
+          </div>
+        </div>
+        <p
+          v-if="plan.details"
+          class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground"
+        >
+          {{ plan.details }}
+        </p>
+      </div>
+
+      <div
+        class="grid grid-cols-[2fr_3fr] gap-px border-t border-border bg-border/50 max-md:border-border md:contents md:border-border/60 md:bg-border/50"
+      >
+        <div
+          class="bg-inherit px-3.5 py-2.5 md:border-l md:border-border/70 md:bg-transparent"
+        >
+          <p
+            class="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground md:hidden"
+          >
+            Czas trwania
+          </p>
+          <p
+            class="mt-0.5 font-serif text-lg font-semibold text-foreground md:mt-0"
+          >
+            {{ plan.duration }}
+          </p>
+        </div>
+
+        <div
+          class="bg-inherit px-3.5 py-2.5 md:border-l md:border-border/70 md:bg-transparent"
+        >
+          <p
+            class="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground md:hidden"
+          >
+            Cena
+          </p>
+          <p
+            class="mt-0.5 font-serif text-lg font-semibold text-foreground md:mt-0"
+          >
+            {{ plan.price }}
+          </p>
+
+          <div
+            v-if="hasPriceDetails(plan)"
+            class="mt-1.5 w-full text-left text-sm leading-snug text-muted-foreground"
+          >
+            <button
+              type="button"
+              class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
+              :aria-expanded="isPriceDetailsOpen(plan.id)"
+              :aria-controls="`price-details-${plan.id}`"
+              @click="togglePriceDetails(plan.id)"
+            >
+              <span>Szczegóły ceny</span>
+              <svg
+                class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
+                :class="{ 'rotate-180': isPriceDetailsOpen(plan.id) }"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <UiCollapse :open="isPriceDetailsOpen(plan.id)" class="w-full">
+              <div
+                :id="`price-details-${plan.id}`"
+                class="mt-1 w-full space-y-0.5 text-left"
+              >
+                <p v-if="plan.priceDetails.totalPrice">
+                  <span class="font-medium text-foreground/75">Cena całkowita:</span>
+                  {{ plan.priceDetails.totalPrice }}
+                </p>
+                <p v-if="plan.priceDetails.lessonPrice">
+                  <span class="font-medium text-foreground/75">Cena za lekcję:</span>
+                  {{ plan.priceDetails.lessonPrice }}
+                </p>
+                <p v-if="plan.priceDetails.savings">
+                  <span class="font-medium text-foreground/75">Oszczędność:</span>
+                  {{ plan.priceDetails.savings }}
+                </p>
+              </div>
+            </UiCollapse>
+          </div>
+
+          <p
+            v-if="plan.promo"
+            class="mt-2 text-left text-xs font-medium leading-relaxed text-primary"
+          >
+            {{ plan.promo.label }}:<br />
+            <span class="font-serif text-base font-semibold">
+              {{ plan.promo.price }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  plans: {
+    type: Array,
+    required: true,
+  },
+})
+
+const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
+
+const planKey = (plan) =>
+  plan.id ?? `${plan.name}-${plan.frequency}`
+
+const hasPriceDetails = (plan) =>
+  Boolean(
+    plan.priceDetails?.totalPrice
+      || plan.priceDetails?.lessonPrice
+      || plan.priceDetails?.savings,
+  )
+</script>

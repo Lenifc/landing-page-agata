@@ -1,31 +1,37 @@
 <template>
   <article
-    class="flex min-h-[20rem] flex-col rounded-2xl border border-border bg-card p-5 shadow-sm"
+    class="flex flex-col rounded-xl border border-border bg-card p-3.5 shadow-sm md:p-4"
   >
-    <div class="flex flex-wrap gap-2">
-      <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-        {{ option.frequency }}
-      </span>
-      <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-        {{ option.duration }}
-      </span>
+    <div
+      class="flex flex-col items-start gap-1.5 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-2.5 md:gap-y-1.5"
+    >
+      <h3
+        class="order-2 min-w-0 max-w-full font-serif text-lg font-semibold text-foreground md:order-1 md:max-w-[calc(100%-10rem)] md:text-xl"
+      >
+        {{ option.name }}
+      </h3>
+      <div class="order-1 flex shrink-0 flex-wrap gap-1.5 md:order-2">
+        <span class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+          {{ option.frequency }}
+        </span>
+        <span class="inline-flex rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+          {{ option.duration }}
+        </span>
+      </div>
     </div>
-    <h3 class="mt-4 font-serif text-xl font-semibold text-foreground">
-      {{ option.name }}
-    </h3>
-    <div class="mt-4 border-t border-border pt-4">
-      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+    <div class="mt-2.5 border-t border-border pt-2.5">
+      <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
         Cena za lekcję
       </p>
-      <p class="mt-1 font-serif text-2xl font-semibold text-primary">
+      <p class="mt-0.5 font-serif text-xl font-semibold text-primary md:text-2xl">
         <span v-if="option.displayPrefix">{{ option.displayPrefix }} </span>
         {{ option.displayPrice }}
       </p>
-      <p class="mt-1 text-sm text-muted-foreground">
+      <p class="mt-0.5 text-xs text-muted-foreground md:text-sm">
         {{ option.displayPriceContext }}
       </p>
     </div>
-    <div class="mt-4 rounded-xl bg-muted px-4 py-3">
+    <div class="mt-2.5 rounded-lg bg-muted px-3 py-2.5">
       <p
         v-if="isOccasional"
         class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground"
@@ -58,7 +64,7 @@
       <UiCollapse :open="isOccasional || detailsOpen">
         <div
           :id="detailsId"
-          class="mt-1 space-y-1.5 text-xs leading-snug text-muted-foreground"
+          class="mt-1 space-y-1 text-xs leading-snug text-muted-foreground"
         >
           <div
             v-for="line in option.paymentLines"
@@ -77,7 +83,7 @@
         </div>
       </UiCollapse>
     </div>
-    <p class="mt-4 text-sm leading-relaxed text-muted-foreground">
+    <p class="mt-2.5 text-xs leading-snug text-muted-foreground md:text-sm md:leading-relaxed">
       {{ option.details }}
     </p>
   </article>

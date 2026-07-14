@@ -53,7 +53,70 @@
       </div>
     </section>
 
-    <section class="border-b border-border bg-secondary">
+    <section id="cennik" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 md:px-6 md:py-14">
+      <div class="mb-5 max-w-2xl md:mb-7">
+        <span class="text-sm font-medium uppercase tracking-widest text-primary">Cennik</span>
+        <h2 class="mt-2 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:mt-3 md:text-4xl">
+          Cennik zajęć
+        </h2>
+        <p class="mt-3 text-pretty leading-relaxed text-muted-foreground md:mt-4">
+          Różne potrzeby wymagają różnych rozwiązań. Wybierz formę nauki
+          dopasowaną do swoich celów, tempa pracy i możliwości czasowych.
+        </p>
+        <p class="mt-2 text-pretty leading-relaxed text-muted-foreground md:mt-4">
+          W ofercie znajdują się pakiety roczne, pakiety MINI oraz pojedyncze
+          lekcje. Koszt zajęć zależy od wybranego wariantu, częstotliwości
+          spotkań i formy nauki.
+        </p>
+        <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3" id="cennik-sekcje">
+          Jeśli liczba zajęć w gotowych pakietach nie odpowiada Twoim potrzebom,
+          możliwa jest indywidualna wycena po krótkiej rozmowie o celu nauki,
+          terminach i preferowanej formie zajęć.
+        </p>
+      </div>
+
+      <nav class="mb-5 flex flex-wrap gap-1.5 md:mb-8 md:gap-2" aria-label="Sekcje cennika">
+        <a v-for="link in pricingLinks" :key="link.href" :href="link.href" :aria-label="link.label"
+          class="inline-flex rounded-full border border-border bg-card px-3 py-1 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary md:px-3.5 md:py-1.5">
+          {{ link.label }}
+        </a>
+      </nav>
+
+      <div class="space-y-6 md:space-y-8">
+        <article v-for="section in pricingSections" :id="section.id" :key="section.title"
+          class="scroll-mt-24 border-t border-border pt-5 first:border-t-0 first:pt-0 md:pt-6">
+          <div class="max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2 md:gap-3">
+              <h3 class="font-serif text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+                {{ section.title }}
+              </h3>
+              <span
+                class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1">
+                {{ section.badge }}
+              </span>
+            </div>
+            <div class="mt-2 space-y-1.5 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3 md:text-base">
+              <p v-for="paragraph in section.description" :key="paragraph">
+                {{ paragraph }}
+              </p>
+            </div>
+          </div>
+
+          <div v-if="section.groups" class="mt-4 space-y-4 md:mt-5 md:space-y-5">
+            <div v-for="group in section.groups" :id="group.id" :key="group.title" class="scroll-mt-24">
+              <h4 class="font-serif text-lg font-semibold text-foreground md:text-xl">
+                {{ group.title }}
+              </h4>
+              <PricingTable :plans="group.plans" class="mt-2" />
+            </div>
+          </div>
+
+          <PricingTable v-else :plans="section.plans" class="mt-4 md:mt-5" />
+        </article>
+      </div>
+    </section>
+
+    <section class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">Formy zajęć</span>
@@ -67,11 +130,11 @@
         </div>
 
         <div class="mt-12 grid gap-6">
-          <article class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8">
+          <article class="rounded-[1.5rem] border border-border bg-card p-4 shadow-sm md:p-5">
             <p class="text-sm font-medium uppercase tracking-widest text-primary">
               Zajęcia indywidualne (1:1)
             </p>
-            <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
+            <div class="mt-3 space-y-3 text-pretty leading-relaxed text-muted-foreground">
               <p>
                 To najlepszy wybór, jeśli zależy Ci na pełnym dopasowaniu
                 programu, tempa pracy i materiałów do jednej osoby.
@@ -97,11 +160,11 @@
             </div>
           </article>
 
-          <article class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8">
+          <article class="rounded-[1.5rem] border border-border bg-card p-4 shadow-sm md:p-5">
             <p class="text-sm font-medium uppercase tracking-widest text-primary">
               Zajęcia DUO w parach
             </p>
-            <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
+            <div class="mt-3 space-y-3 text-pretty leading-relaxed text-muted-foreground">
               <p>
                 To dobra opcja dla dwóch osób - z rodzeństwem, przyjacielem, partnerem lub inną bliską
                 osobą, które chcą uczyć się razem i
@@ -130,11 +193,11 @@
             </div>
           </article>
 
-          <article class="rounded-[1.5rem] border border-border bg-card p-6 shadow-sm md:p-8">
+          <article class="rounded-[1.5rem] border border-border bg-card p-4 shadow-sm md:p-5">
             <p class="text-sm font-medium uppercase tracking-widest text-primary">
               Kurs egzaminacyjny
             </p>
-            <div class="mt-4 space-y-4 text-pretty leading-relaxed text-muted-foreground">
+            <div class="mt-3 space-y-3 text-pretty leading-relaxed text-muted-foreground">
               <p>
                 Kursy egzaminacyjne są przeznaczone dla uczniów przygotowujących
                 się do
@@ -171,267 +234,6 @@
         <UiButton :href="ROUTES.prices" class="mt-8">
           Zobacz cennik
         </UiButton>
-      </div>
-    </section>
-
-    <section id="cennik" class=" mx-auto max-w-6xl scroll-mt-24 px-6 py-14">
-      <div class="mb-7 max-w-2xl">
-        <span class="text-sm font-medium uppercase tracking-widest text-primary">Cennik</span>
-        <h2 class="mt-3 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
-          Cennik zajęć
-        </h2>
-        <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Różne potrzeby wymagają różnych rozwiązań. Wybierz formę nauki
-          dopasowaną do swoich celów, tempa pracy i możliwości czasowych.
-        </p>
-        <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          W ofercie znajdują się pakiety roczne, pakiety MINI oraz pojedyncze
-          lekcje. Koszt zajęć zależy od wybranego wariantu, częstotliwości
-          spotkań i formy nauki.
-        </p>
-        <p class="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground" id="cennik-sekcje">
-          Jeśli liczba zajęć w gotowych pakietach nie odpowiada Twoim potrzebom,
-          możliwa jest indywidualna wycena po krótkiej rozmowie o celu nauki,
-          terminach i preferowanej formie zajęć.
-        </p>
-      </div>
-
-      <nav class="mb-8 flex flex-wrap gap-2" aria-label="Sekcje cennika">
-        <a v-for="link in pricingLinks" :key="link.href" :href="link.href" :aria-label="link.label"
-          class="inline-flex rounded-full border border-border bg-card px-3.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary">
-          {{ link.label }}
-        </a>
-      </nav>
-
-      <div class="space-y-9">
-        <article v-for="section in pricingSections" :id="section.id" :key="section.title"
-          class="scroll-mt-24 border-t border-border pt-8 first:border-t-0 first:pt-0">
-          <div class="max-w-3xl">
-            <div class="flex flex-wrap items-center gap-3">
-              <h3 class="font-serif text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                {{ section.title }}
-              </h3>
-              <span
-                class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-                {{ section.badge }}
-              </span>
-            </div>
-            <div class="mt-3 space-y-2.5 text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
-              <p v-for="paragraph in section.description" :key="paragraph">
-                {{ paragraph }}
-              </p>
-            </div>
-          </div>
-
-          <div v-if="section.groups" class="mt-6 space-y-6">
-            <div v-for="group in section.groups" :id="group.id" :key="group.title" class="scroll-mt-24">
-              <h4 class="font-serif text-xl font-semibold text-foreground">
-                {{ group.title }}
-              </h4>
-              <div
-                class="mt-2 overflow-hidden rounded-xl border border-table-border bg-card shadow-table">
-                <div
-                  class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-secondary md:grid">
-                  <div class="px-4 py-2.5 text-xs font-semibold text-foreground">
-                    Rodzaj zajęć
-                  </div>
-                  <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
-                    Czas trwania
-                  </div>
-                  <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
-                    Cena
-                  </div>
-                </div>
-
-                <div v-for="plan in group.plans" :key="`${group.title}-${plan.name}-${plan.frequency}`"
-                  class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70"
-                  :class="plan.featured
-                    ? 'bg-muted'
-                    : 'bg-card'
-                    ">
-                  <div class="px-4 py-3 md:px-4">
-                    <div class="flex flex-wrap items-center gap-2">
-                      <h5 class="text-base font-semibold text-foreground">
-                        {{ plan.name }}
-                      </h5>
-                      <span v-if="plan.featured"
-                        class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-primary">
-                        Najczęściej wybierane
-                      </span>
-                    </div>
-                    <p class="mt-0.5 text-xs text-foreground/80">
-                      {{ plan.frequency }}
-                    </p>
-                    <p class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                      {{ plan.details }}
-                    </p>
-                  </div>
-
-                  <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
-                    <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
-                      Czas trwania
-                    </p>
-                    <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
-                      {{ plan.duration }}
-                    </p>
-                  </div>
-
-                  <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
-                    <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
-                      Cena
-                    </p>
-                    <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
-                      {{ plan.price }}
-                    </p>
-                    <div
-                      v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice || plan.priceDetails?.savings"
-                      class="mt-1 text-left text-xs leading-snug text-muted-foreground">
-                      <button type="button"
-                        class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
-                        :aria-expanded="isPriceDetailsOpen(plan.id)" :aria-controls="`price-details-${plan.id}`"
-                        @click="togglePriceDetails(plan.id)">
-                        <span>Szczegóły ceny</span>
-                        <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
-                          :class="{ 'rotate-180': isPriceDetailsOpen(plan.id) }" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          aria-hidden="true">
-                          <path d="m6 9 6 6 6-6" />
-                        </svg>
-                      </button>
-                      <UiCollapse :open="isPriceDetailsOpen(plan.id)">
-                        <div
-                          :id="`price-details-${plan.id}`"
-                          class="mt-1 max-w-[14rem] space-y-0.5 text-left"
-                        >
-                          <p v-if="plan.priceDetails.totalPrice">
-                            <span class="font-medium text-foreground/75">
-                              Cena całkowita:
-                            </span>
-                            {{ plan.priceDetails.totalPrice }}
-                          </p>
-                          <p v-if="plan.priceDetails.lessonPrice">
-                            <span class="font-medium text-foreground/75">
-                              Cena za lekcję:
-                            </span>
-                            {{ plan.priceDetails.lessonPrice }}
-                          </p>
-                          <p v-if="plan.priceDetails.savings">
-                            <span class="font-medium text-foreground/75">
-                              Oszczędność:
-                            </span>
-                            {{ plan.priceDetails.savings }}
-                          </p>
-                        </div>
-                      </UiCollapse>
-                    </div>
-                    <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
-                      {{ plan.promo.label }}:<br />
-                      <span class="font-serif text-base font-semibold">
-                        {{ plan.promo.price }}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div v-else
-            class="mt-5 overflow-hidden rounded-xl border border-table-border bg-card shadow-table">
-            <div
-              class="hidden grid-cols-[1.3fr_1fr_1fr] border-b border-border/80 bg-secondary md:grid">
-              <div class="px-4 py-2.5 text-xs font-semibold text-foreground">
-                Rodzaj zajęć
-              </div>
-              <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
-                Czas trwania
-              </div>
-              <div class="border-l border-border/80 px-4 py-2.5 text-center text-xs font-semibold text-foreground">
-                Cena
-              </div>
-            </div>
-
-            <div v-for="plan in section.plans" :key="`${section.title}-${plan.name}-${plan.frequency}`"
-              class="grid border-b-4 border-border/80 last:border-b-0 md:grid-cols-[1.3fr_1fr_1fr] md:border-b md:border-border/70">
-              <div class="px-4 py-3 md:px-4">
-                <h4 class="text-base font-semibold text-foreground">
-                  {{ plan.name }}
-                </h4>
-                <p class="mt-0.5 text-xs text-foreground/80">
-                  {{ plan.frequency }}
-                </p>
-                <p class="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                  {{ plan.details }}
-                </p>
-              </div>
-
-              <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
-                <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
-                  Czas trwania
-                </p>
-                <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
-                  {{ plan.duration }}
-                </p>
-              </div>
-
-              <div class="border-t border-border/70 px-4 py-3 md:border-l md:border-t-0 md:px-4 md:text-center">
-                <p class="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground md:hidden">
-                  Cena
-                </p>
-                <p class="mt-1.5 font-serif text-lg font-semibold text-foreground md:mt-0">
-                  {{ plan.price }}
-                </p>
-                <div
-                  v-if="plan.priceDetails?.totalPrice || plan.priceDetails?.lessonPrice || plan.priceDetails?.savings"
-                  class="mt-1 text-left text-xs leading-snug text-muted-foreground">
-                  <button type="button"
-                    class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
-                    :aria-expanded="isPriceDetailsOpen(plan.id)" :aria-controls="`price-details-${plan.id}`"
-                    @click="togglePriceDetails(plan.id)">
-                    <span>Szczegóły ceny</span>
-                    <svg class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
-                      :class="{ 'rotate-180': isPriceDetailsOpen(plan.id) }" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      aria-hidden="true">
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
-                  </button>
-                  <UiCollapse :open="isPriceDetailsOpen(plan.id)">
-                    <div
-                      :id="`price-details-${plan.id}`"
-                      class="mt-1 max-w-[14rem] space-y-0.5 text-left"
-                    >
-                      <p v-if="plan.priceDetails.totalPrice">
-                        <span class="font-medium text-foreground/75">
-                          Cena całkowita:
-                        </span>
-                        {{ plan.priceDetails.totalPrice }}
-                      </p>
-                      <p v-if="plan.priceDetails.lessonPrice">
-                        <span class="font-medium text-foreground/75">
-                          Cena za lekcję:
-                        </span>
-                        {{ plan.priceDetails.lessonPrice }}
-                      </p>
-                      <p v-if="plan.priceDetails.savings">
-                        <span class="font-medium text-foreground/75">
-                          Oszczędność:
-                        </span>
-                        {{ plan.priceDetails.savings }}
-                      </p>
-                    </div>
-                  </UiCollapse>
-                </div>
-                <p v-if="plan.promo" class="mt-2 text-xs font-medium leading-relaxed text-primary">
-                  {{ plan.promo.label }}:<br />
-                  <span class="font-serif text-base font-semibold">
-                    {{ plan.promo.price }}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </article>
       </div>
     </section>
 
@@ -714,8 +516,6 @@ const faqs = [
     },
   },
 ]
-
-const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
 
 useHead({
   link: [
