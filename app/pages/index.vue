@@ -21,7 +21,7 @@
           materiałem szkolnym.
         </p>
         <div class="order-4 flex flex-wrap items-center gap-4">
-          <UiButton :to="ROUTES.contact">Sprawdź wolne terminy →</UiButton>
+          <UiButton :to="ROUTES.contact">Zapytaj o wolne terminy →</UiButton>
           <UiButton :to="ROUTES.offer" variant="outline">Zobacz ofertę</UiButton>
         </div>
       </div>
