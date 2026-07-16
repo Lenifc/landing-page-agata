@@ -3,25 +3,25 @@
     <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="flex flex-col gap-6">
         <span
-          class="order-3 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1"
+          class="order-4 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1"
         >
           Konwersacje • Materiał szkolny • Egzaminy
         </span>
         <h1
           class="order-1 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:order-2 md:text-5xl"
         >
-          Talkateria - English Studio
+          Angielski w Rumi - zajęcia dla młodzieży i dorosłych
         </h1>
         <p
-          class="order-2 max-w-md text-pretty text-justify text-lg leading-relaxed text-muted-foreground md:order-3"
+          class="order-3 max-w-md text-pretty text-justify text-lg leading-relaxed text-muted-foreground md:order-4"
         >
-          Kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i
+          Talkateria English Studio to kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i
           dorosłym rozwijać pewność siebie w mówieniu po angielsku, przygotować
           się do matury i egzaminu ósmoklasisty oraz skutecznie radzić sobie z
           materiałem szkolnym.
         </p>
-        <div class="order-4 flex flex-wrap items-center gap-4">
-          <UiButton :to="ROUTES.contact">Zapytaj o wolne terminy →</UiButton>
+        <div class="order-5 flex flex-wrap items-center gap-4 md:order-5">
+          <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
           <UiButton :to="ROUTES.offer" variant="outline">Zobacz ofertę</UiButton>
         </div>
       </div>
@@ -48,7 +48,7 @@
       </div>
     </section>
 
-    <section class="border-y border-border bg-secondary">
+    <section class="border-b border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14">
         <div class="mb-8 max-w-2xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
@@ -61,32 +61,62 @@
           </h2>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-4">
-          <NuxtLink
-            v-for="link in landingLinks"
-            :key="link.to"
-            :to="link.to"
-            class="group flex min-h-[210px] flex-col justify-start rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/45 hover:shadow-card-hover"
+        <div class="grid gap-3 sm:grid-cols-2">
+          <article
+            v-for="path in landingPaths"
+            :key="path.id"
+            class="group flex flex-col rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-card-hover"
           >
-            <span class="text-xs font-semibold uppercase text-primary">
-              {{ link.eyebrow }}
-            </span>
-            <span>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-semibold uppercase text-primary">
+                {{ path.eyebrow }}
+              </span>
               <span
-                class="flex min-h-[90px] items-center font-serif text-2xl font-semibold leading-tight text-foreground"
+                v-if="path.badge"
+                class="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary"
               >
-                {{ link.title }}
+                {{ path.badge }}
               </span>
-              <span class="mt-3 block text-sm leading-relaxed text-muted-foreground">
-                {{ link.body }}
-              </span>
-            </span>
-            <span
-              class="mt-auto pt-5 text-sm font-medium text-primary transition-transform group-hover:translate-x-1"
+            </div>
+            <h3 class="mt-2 font-serif text-xl font-semibold leading-snug text-foreground">
+              {{ path.title }}
+            </h3>
+            <p class="mt-1.5 text-sm leading-snug text-muted-foreground">
+              {{ path.body }}
+            </p>
+            <p
+              v-if="path.promoNote"
+              class="mt-2 text-xs leading-snug text-primary"
+            >
+              {{ path.promoNote }}
+              <NuxtLink
+                :to="ROUTES.promotionRules"
+                class="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
+              >
+                Regulamin promocji
+              </NuxtLink>.
+            </p>
+            <p class="mt-2.5 text-sm font-medium text-foreground">
+              od {{ path.priceFrom }}
+            </p>
+            <div v-if="path.links" class="mt-auto flex flex-wrap gap-3 pt-3">
+              <NuxtLink
+                v-for="link in path.links"
+                :key="link.to"
+                :to="link.to"
+                class="text-sm font-medium text-primary transition-colors hover:text-foreground"
+              >
+                {{ link.label }} →
+              </NuxtLink>
+            </div>
+            <NuxtLink
+              v-else
+              :to="path.to"
+              class="mt-auto pt-3 text-sm font-medium text-primary transition-transform group-hover:translate-x-1"
             >
               Zobacz szczegóły →
-            </span>
-          </NuxtLink>
+            </NuxtLink>
+          </article>
         </div>
       </div>
     </section>
@@ -104,7 +134,7 @@
       </div>
     </section>
 
-    <section class="border-y border-border bg-secondary about-me">
+    <section class="bg-secondary about-me">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div class="relative mx-auto max-w-[18rem] sm:max-w-[20rem] md:mx-0 md:max-w-none">
@@ -285,18 +315,26 @@
       section-variant="default"
       title="Szukasz zajęć dopasowanych do Twojego celu?"
       description="Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy interesują Cię spotkania w studiu czy online. Otrzymasz propozycję najlepszej formy pracy i dostępnych terminów."
-      button-label="Przejdź do kontaktu →"
-      :button-to="ROUTES.contact"
+      button-label="Zapytaj o zajęcia →"
+      :button-to="contactCtaPath"
     />
   </main>
 </template>
 
 <script setup>
+import { getPricingPlan, getPricingPromotion } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildHomePageJsonLd, jsonLdScript } from '~/config/schema'
 
 const pageRoute = ROUTES.home
 const pageUrl = `${SITE_URL}${pageRoute}`
+
+const contactCtaPath = useContactCtaPath()
+const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const examGroup = getPricingPlan('examGroup')
+const adultFromPlan = getPricingPlan('individualAnnualTwiceWeekly')
+const schoolFromPlan = getPricingPlan('individualAnnualTwiceWeekly')
+const onlineFromPlan = getPricingPlan('onlineMorningIndividualAnnualTwiceWeekly')
 
 useSeoMeta({
   title:
@@ -380,37 +418,43 @@ const photos = [
   },
 ]
 
-const landingLinks = [
+const landingPaths = [
   {
-    to: ROUTES.eighthGradeExam,
-    eyebrow: 'Dla klas 7-8',
-    title: 'Przygotowanie do egzaminu ósmoklasisty',
-    body: `Skuteczne przygotowanie do Egzaminu Ósmoklasisty z języka angielskiego. Zajęcia obejmują
-      powtórkę gramatyki i słownictwa, ćwiczenie typowych zadań egzaminacyjnych oraz naukę
-      strategii, które pomagają lepiej wykorzystać czas i osiągnąć jak najlepszy wynik.`,
+    id: 'exams',
+    eyebrow: 'Młodzież',
+    title: 'Egzamin ósmoklasisty i matura',
+    body: 'Przygotowanie do egzaminu ósmoklasisty i matury z angielskiego: arkusze, strategie, gramatyka i spokojne powtórki.',
+    promoNote: `–10% na cały kurs grupowy dla nowych kursantów przy zapisie do ${examEarlyBirdPromotion.deadline} (oszczędność ${examEarlyBirdPromotion.savings}).`,
+    priceFrom: `${personPrice(examGroup.fromPrice)} ${examGroup.fromPriceContext} (cena standardowa)`,
+    badge: '–10%',
+    links: [
+      { to: ROUTES.eighthGradeExamPrices, label: 'Ósmoklasista' },
+      { to: ROUTES.maturaExamPrices, label: 'Matura' },
+    ],
   },
   {
-    to: ROUTES.maturaExam,
-    eyebrow: 'Dla liceum i technikum',
-    title: 'Przygotowanie do matury',
-    body: `Kompleksowe przygotowanie do matury z języka angielskiego na poziomie podstawowym i
-      rozszerzonym. Obejmuje ćwiczenie wszystkich typów zadań egzaminacyjnych, rozwijanie
-      umiejętności językowych oraz poznawanie skutecznych strategii egzaminacyjnych.`,
+    id: 'school',
+    to: ROUTES.schoolSupportPrices,
+    eyebrow: 'Szkoła',
+    title: 'Korepetycje i materiał szkolny',
+    body: 'Nadrabianie zaległości, przygotowanie do sprawdzianów i spokojne uporządkowanie gramatyki oraz słownictwa.',
+    priceFrom: `${schoolFromPlan.fromPrice} ${schoolFromPlan.fromPriceContext}`,
   },
   {
-    to: ROUTES.adultClasses,
-    eyebrow: 'Dla dorosłych',
+    id: 'adults',
+    to: ROUTES.adultClassesPrices,
+    eyebrow: 'Dorośli',
     title: 'Zajęcia konwersacyjne',
-    body: `Praktyczne zajęcia nastawione na rozwijanie umiejętności mówienia. Obejmują swobodne
-      rozmowy, utrwalanie najważniejszych struktur gramatycznych oraz poszerzanie słownictwa,
-      dzięki czemu uczestnicy zyskują większą płynność i pewność siebie w komunikacji po
-      angielsku.`,
+    body: 'Praktyczne zajęcia nastawione na rozwijanie umiejętności mówienia, płynności i pewności siebie w komunikacji.',
+    priceFrom: `${adultFromPlan.fromPrice} ${adultFromPlan.fromPriceContext}`,
   },
   {
-    to: ROUTES.onlineClasses,
+    id: 'online',
+    to: ROUTES.onlineClassesPrices,
     eyebrow: 'Online',
     title: 'Lekcje języka angielskiego online',
     body: 'Ucz się angielskiego z dowolnego miejsca. Zajęcia online to wygodna i skuteczna forma nauki bez konieczności dojazdów.',
+    priceFrom: `${onlineFromPlan.fromPrice} ${onlineFromPlan.fromPriceContext} (1:1)`,
   },
 ]
 
@@ -430,7 +474,7 @@ useHead({
     jsonLdScript(
       buildHomePageJsonLd({
         pageUrl,
-        pageName: 'Angielski Rumia - lekcje dla dorosłych i młodzieży',
+        pageName: 'Angielski w Rumi — egzaminy, szkoła i konwersacje',
         pageDescription:
           'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych: zajęcia indywidualne, DUO, przygotowanie do egzaminów i konwersacje.',
         audience: {

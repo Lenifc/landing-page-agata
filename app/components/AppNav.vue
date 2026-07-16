@@ -98,8 +98,8 @@
         </li>
       </ul>
 
-      <UiButton :to="ROUTES.contact" class="header-contact-button">
-        Skontaktuj się
+      <UiButton :to="contactCtaPath" class="header-contact-button">
+        Zapytaj o zajęcia
       </UiButton>
 
       <button
@@ -173,8 +173,8 @@
           </NuxtLink>
         </li>
         <li class="pt-2 md:hidden">
-          <UiButton :to="ROUTES.contact" class="w-full justify-center">
-            Skontaktuj się
+          <UiButton :to="contactCtaPath" class="w-full justify-center">
+            Zapytaj o zajęcia
           </UiButton>
         </li>
       </ul>
@@ -185,6 +185,7 @@
 <script setup>
 import { ROUTES } from '~/config/routes'
 
+const contactCtaPath = useContactCtaPath()
 const open = ref(false)
 const examMenuOpen = ref(false)
 const scrollPosition = ref(0)
@@ -192,8 +193,8 @@ const route = useRoute()
 
 const primaryLinks = [
   { to: ROUTES.offer, label: 'Oferta' },
-  { to: ROUTES.schoolSupport, label: 'Korepetycje' },
   { to: ROUTES.onlineClasses, label: 'Online' },
+  { to: ROUTES.schoolSupport, label: 'Korepetycje' },
 ]
 
 const examLinks = [

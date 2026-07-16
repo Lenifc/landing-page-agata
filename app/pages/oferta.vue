@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content">
+  <main id="main-content" class="pb-20 md:pb-0">
     <section class="mx-auto max-w-4xl px-6 py-14 text-center md:pb-24">
       <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
       <h1
@@ -251,8 +251,8 @@
               egzaminacyjny czy krótszy pakiet.
             </p>
           </div>
-          <UiButton :to="ROUTES.contact" class="mt-6">
-            Przejdź do kontaktu →
+          <UiButton :to="contactCtaPath" class="mt-6">
+            Zapytaj o zajęcia →
           </UiButton>
         </div>
       </div>
@@ -264,6 +264,14 @@
       :faqs="faqs"
       padding="lg"
     />
+
+    <div
+      class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden"
+    >
+      <UiButton :to="contactCtaPath" class="w-full justify-center">
+        Zapytaj o zajęcia →
+      </UiButton>
+    </div>
   </main>
 </template>
 
@@ -276,6 +284,7 @@ import {
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildOfferPageJsonLd, jsonLdScript } from '~/config/schema'
 
+const contactCtaPath = useContactCtaPath()
 const pageRoute = ROUTES.offer
 const pageUrl = `${SITE_URL}${pageRoute}`
 const plans = getPricingPlans('offer')
@@ -509,7 +518,7 @@ const faqs = [
     a: 'Najprościej napisać wiadomość przez formularz lub mailowo. Można też zadzwonić lub wysłać SMS. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
     link: {
       label: 'formularz lub mailowo',
-      href: ROUTES.contact,
+      href: ROUTES.contactDetails,
       before: 'Najprościej napisać wiadomość przez ',
       after:
         '. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',

@@ -23,7 +23,7 @@
         przyjaznej atmosferze.
       </template>
       <template #actions>
-        <UiButton :to="ROUTES.contact">Skontaktuj się</UiButton>
+        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
         <UiButton :to="ROUTES.pricesPackages" variant="outline">
           Zobacz cennik
         </UiButton>
@@ -75,7 +75,7 @@
       </div>
     </UiSection>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" border="y" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztuje angielski dla dorosłych?"
@@ -123,8 +123,8 @@
     <CtaBanner
       title="Porozmawiajmy o Twoim angielskim!"
       description="Napisz, do czego potrzebujesz języka, a wspólnie ułożymy spokojny plan dopasowany do Twojego celu i czasu, którym dysponujesz."
-      button-label="Skontaktuj się"
-      :button-to="ROUTES.contact"
+      button-label="Zapytaj o zajęcia →"
+      :button-to="contactCtaPath"
     />
   </main>
 </template>
@@ -134,6 +134,7 @@ import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
+const contactCtaPath = useContactCtaPath()
 const pageRoute = ROUTES.adultClasses
 const pageUrl = `${SITE_URL}${pageRoute}`
 

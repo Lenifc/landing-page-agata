@@ -22,7 +22,7 @@
         słownictwa i bieżących tematów.
       </template>
       <template #actions>
-        <UiButton :to="ROUTES.contact">Zapytaj o pomoc w nauce</UiButton>
+        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
         <UiButton :to="ROUTES.pricesPackages" variant="outline">
           Zobacz cennik
         </UiButton>
@@ -110,7 +110,7 @@
       </div>
     </UiSection>
 
-    <UiSection padding="lg" border="y">
+    <UiSection id="cennik" padding="lg" border="y" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztują korepetycje z angielskiego?"
@@ -150,8 +150,8 @@
       section-variant="default"
       title="Wspólnie zadbajmy o rozwój Państwa dziecka."
       description="Regularne zajęcia pomagają uzupełnić zaległości, lepiej zrozumieć materiał i odzyskać pewność siebie podczas lekcji w szkole. Chętnie doradzę, jaka forma wsparcia będzie najlepsza, i odpowiem na wszystkie pytania."
-      button-label="Przejdź do kontaktu"
-      :button-to="ROUTES.contact"
+      button-label="Zapytaj o zajęcia →"
+      :button-to="contactCtaPath"
     />
   </main>
 </template>
@@ -161,6 +161,7 @@ import { getPricingPlans } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
+const contactCtaPath = useContactCtaPath()
 const pageRoute = ROUTES.schoolSupport
 const pageUrl = `${SITE_URL}${pageRoute}`
 

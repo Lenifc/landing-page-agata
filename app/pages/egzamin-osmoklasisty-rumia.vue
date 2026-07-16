@@ -25,7 +25,7 @@
         a nie źródłem lęku.
       </template>
       <template #actions>
-        <UiButton :to="ROUTES.contact">Skontaktuj się</UiButton>
+        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
         <UiButton :to="ROUTES.pricesExam" variant="outline">
           Zobacz cennik
         </UiButton>
@@ -75,7 +75,7 @@
       </div>
     </UiSection>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" border="y" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztuje przygotowanie do egzaminu ósmoklasisty?"
@@ -114,8 +114,8 @@
     <CtaBanner
       title="Chcesz sprawdzić, od czego zacząć przygotowania?"
       description="Napisz, w której klasie jest uczeń i jaki jest obecny poziom. Dobierzemy formę pracy i tempo przygotowań do egzaminu."
-      button-label="Skontaktuj się"
-      :button-to="ROUTES.contact"
+      button-label="Zapytaj o zajęcia →"
+      :button-to="contactCtaPath"
     />
   </main>
 </template>
@@ -125,6 +125,7 @@ import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
+const contactCtaPath = useContactCtaPath()
 const pageRoute = ROUTES.eighthGradeExam
 const pageUrl = `${SITE_URL}${pageRoute}`
 

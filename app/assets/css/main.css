@@ -1,4 +1,4 @@
-@import 'tailwindcss' source(none);
+@import 'tailwindcss';
 
 @source '../../**/*.{vue,js,ts}';
 
@@ -60,7 +60,13 @@
 
 @layer base {
   p {
-    text-align: justify;
+    text-align: start;
+  }
+
+  @media (min-width: 768px) {
+    p {
+      text-align: justify;
+    }
   }
 }
 

@@ -25,7 +25,10 @@
           wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
           maila lub wiadomość SMS.
         </p>
-        <UiButton href="#formularz" class="mt-7 gap-2">
+      </div>
+
+      <div id="dane-kontaktowe" class="scroll-mt-24 space-y-8 md:space-y-12">
+        <UiButton href="#formularz" class="gap-2">
           Przejdź do formularza
           <svg
             aria-hidden="true"
@@ -41,9 +44,8 @@
             <path d="m19 12-7 7-7-7" />
           </svg>
         </UiButton>
-      </div>
 
-      <div class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
+        <div class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
         <div class="space-y-5">
           <div
             v-for="item in details"
@@ -148,6 +150,7 @@
             />
           </div>
         </div>
+      </div>
       </div>
 
       <div class="mt-12 md:mt-16">
@@ -277,7 +280,7 @@ useSeoMeta({
     'Skontaktuj się z Talkaterią w Rumi i zapytaj o lekcje angielskiego stacjonarnie lub online. Telefon, e-mail i formularz zgłoszeniowy.',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
-    'Napisz i umów lekcję próbną lub zapytaj o najlepszą formę zajęć z angielskiego w Rumi.',
+    'Napisz i zapytaj o najlepszą formę zajęć z angielskiego w Rumi — studio lub online.',
 })
 
 const email = ref(CONTACT.obfuscatedEmail)

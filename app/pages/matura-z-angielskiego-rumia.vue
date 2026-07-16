@@ -30,7 +30,7 @@
         źródłem paraliżującego lęku.
       </template>
       <template #actions>
-        <UiButton :to="ROUTES.contact">Skontaktuj się</UiButton>
+        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
         <UiButton :to="ROUTES.pricesExam" variant="outline">
           Sprawdź cennik
         </UiButton>
@@ -74,7 +74,7 @@
       </div>
     </UiSection>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" border="y" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztuje przygotowanie do matury z angielskiego?"
@@ -113,8 +113,8 @@
     <CtaBanner
       title="Potrzebujesz pomocy w przygotowaniu do matury?"
       description="Napisz do mnie, czy przygotowujesz się do poziomu podstawowego czy rozszerzonego oraz ile czasu zostało Ci do egzaminu. Wspólnie dobierzemy sensowny rytm pracy, który pozwoli Ci powtórzyć cały materiał, oswoić arkusze i podejść do matury z pełnym spokojem."
-      button-label="Skontaktuj się"
-      :button-to="ROUTES.contact"
+      button-label="Zapytaj o zajęcia →"
+      :button-to="contactCtaPath"
     />
   </main>
 </template>
@@ -124,6 +124,7 @@ import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
+const contactCtaPath = useContactCtaPath()
 const pageRoute = ROUTES.maturaExam
 const pageUrl = `${SITE_URL}${pageRoute}`
 

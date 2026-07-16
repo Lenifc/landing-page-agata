@@ -27,6 +27,12 @@ export const AREA_SERVED = Object.freeze([
   { '@type': 'City', name: 'Reda' },
 ])
 
+export const BUSINESS_GEO = Object.freeze({
+  '@type': 'GeoCoordinates',
+  latitude: 54.565312360,
+  longitude: 18.408936081,
+})
+
 export const BUSINESS_ENTITY = Object.freeze({
   '@type': ['LocalBusiness', 'EducationalOrganization'],
   '@id': BUSINESS_ID,
@@ -40,6 +46,9 @@ export const BUSINESS_ENTITY = Object.freeze({
   description:
     'Kameralne lekcje języka angielskiego w Rumi Janowie dla młodzieży i dorosłych z Rumi i okolic.',
   address: BUSINESS_ADDRESS,
+  geo: BUSINESS_GEO,
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${BUSINESS_GEO.latitude}%2C${BUSINESS_GEO.longitude}`,
+  sameAs: [CONTACT.facebookUrl],
   priceRange: '48-110 PLN',
   currenciesAccepted: 'PLN',
   contactPoint: {
