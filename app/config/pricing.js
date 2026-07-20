@@ -27,7 +27,7 @@ export const PRICING = Object.freeze({
       fromPriceContext: 'za lekcję 50 min',
       paymentNote: '85 zł za lekcję 50 min',
       details:
-        'Lekcje indywidualne dwa razy w tygodniu. Niższa stawka przy regularnych dwóch terminach.',
+        'Lekcje indywidualne dwa razy w tygodniu. Niższa stawka przy regularnych dwóch lekcjach tygodniowo.',
       featured: false,
     },
     duoWeekly: {
@@ -53,7 +53,7 @@ export const PRICING = Object.freeze({
       fromPriceContext: 'za lekcję 50 min',
       paymentNote: '65 zł / osoba za lekcję 50 min',
       details:
-        'Zajęcia w parze dwa razy w tygodniu. Niższa stawka przy regularnych dwóch terminach.',
+        'Zajęcia w parze dwa razy w tygodniu. Niższa stawka przy regularnych dwóch lekcjach tygodniowo.',
       featured: false,
     },
     examGroup: {
