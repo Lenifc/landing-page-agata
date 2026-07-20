@@ -11,78 +11,101 @@
         {{ option.name }}
       </h3>
       <div class="order-1 flex shrink-0 flex-wrap gap-1.5 md:order-2">
-        <span class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-          {{ option.frequency }}
+        <span
+          v-if="!hasRateSwitch && frequencyLabel"
+          class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
+        >
+          {{ frequencyLabel }}
         </span>
         <span class="inline-flex rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
           {{ option.duration }}
         </span>
       </div>
     </div>
+
     <div class="mt-2.5 border-t border-border pt-2.5">
-      <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-        Cena za lekcję
-      </p>
-      <p class="mt-0.5 font-serif text-xl font-semibold text-primary md:text-2xl">
-        <span v-if="option.displayPrefix">{{ option.displayPrefix }} </span>
-        {{ option.displayPrice }}
-      </p>
-      <p class="mt-0.5 text-xs text-muted-foreground md:text-sm">
-        {{ option.displayPriceContext }}
-      </p>
-    </div>
-    <div class="mt-2.5 rounded-lg bg-muted px-3 py-2.5">
-      <p
-        v-if="isOccasional"
-        class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground"
-      >
-        Szczegóły ceny
-      </p>
-      <button
-        v-else
-        type="button"
-        class="inline-flex cursor-pointer items-center gap-1 text-xs font-semibold leading-none text-primary transition-colors hover:text-foreground"
-        :aria-expanded="detailsOpen"
-        :aria-controls="detailsId"
-        @click="$emit('toggle-details')"
-      >
-        <span>Szczegóły ceny</span>
-        <svg
-          class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform duration-300 ease-out motion-reduce:transition-none"
-          :class="{ 'rotate-180': detailsOpen }"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </button>
-      <UiCollapse :open="isOccasional || detailsOpen">
+      <div v-if="hasRateSwitch" class="mb-3">
+        <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+          Wybierz częstotliwość
+        </p>
         <div
-          :id="detailsId"
-          class="mt-1 space-y-1 text-xs leading-snug text-muted-foreground"
+          class="mt-2 grid grid-cols-2 gap-2"
+          role="group"
+          :aria-label="`Częstotliwość — ${option.name}`"
         >
-          <div
-            v-for="line in option.paymentLines"
-            :key="line.payment"
-            class="space-y-0.5"
+          <button
+            v-for="rate in option.rateOptions"
+            :key="rate.id"
+            type="button"
+            class="cursor-pointer rounded-xl border px-3 py-2.5 text-left transition-colors"
+            :class="
+              selectedRateId === rate.id
+                ? 'border-primary bg-primary/10 shadow-sm'
+                : 'border-border bg-background hover:border-primary/40'
+            "
+            :aria-pressed="selectedRateId === rate.id"
+            @click="selectedRateId = rate.id"
           >
-            <p>
-              <span class="font-medium text-foreground/75">Płatność:</span>
-              {{ line.payment }}
-            </p>
-            <p v-if="line.totalPrice">
-              <span class="font-medium text-foreground/75">Cena całkowita:</span>
-              {{ line.totalPrice }}
-            </p>
-          </div>
+            <span
+              class="block text-xs font-medium"
+              :class="
+                selectedRateId === rate.id
+                  ? 'text-primary'
+                  : 'text-muted-foreground'
+              "
+            >
+              {{ rate.frequency }}
+            </span>
+            <span class="mt-0.5 block font-serif text-lg font-semibold text-foreground">
+              {{ rate.price }}
+            </span>
+          </button>
         </div>
-      </UiCollapse>
+      </div>
+
+      <template v-else>
+        <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+          Cena za lekcję
+        </p>
+        <p class="mt-0.5 font-serif text-xl font-semibold text-primary md:text-2xl">
+          <span v-if="option.displayPrefix">{{ option.displayPrefix }} </span>
+          {{ displayPrice }}
+        </p>
+        <p class="mt-0.5 text-xs text-muted-foreground md:text-sm">
+          {{ displayPriceContext }}
+        </p>
+      </template>
+
+      <p
+        v-if="hasRateSwitch"
+        class="mt-2 text-xs text-muted-foreground md:text-sm"
+      >
+        {{ displayPriceContext }}
+      </p>
     </div>
+
+    <div
+      v-if="showDetailsBlock"
+      class="mt-2.5 rounded-lg bg-muted px-3 py-2.5"
+    >
+      <div class="space-y-1 text-xs leading-snug text-muted-foreground">
+        <div
+          v-for="line in option.paymentLines"
+          :key="line.payment"
+          class="space-y-0.5"
+        >
+          <p>
+            <span class="font-medium text-foreground/75">Płatność:</span>
+            {{ line.payment }}
+          </p>
+          <p v-if="line.totalPrice">
+            <span class="font-medium text-foreground/75">Cena całkowita:</span>
+            {{ line.totalPrice }}
+          </p>
+        </div>
+      </div>
+    </div>
+
     <p class="mt-2.5 text-xs leading-snug text-muted-foreground md:text-sm md:leading-relaxed">
       {{ option.details }}
     </p>
@@ -95,21 +118,43 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  detailsIdPrefix: {
-    type: String,
-    required: true,
-  },
-  detailsOpen: {
-    type: Boolean,
-    default: false,
-  },
 })
 
-defineEmits(['toggle-details'])
+const hasRateSwitch = computed(
+  () => (props.option.rateOptions?.length ?? 0) > 1,
+)
 
-const isOccasional = computed(() => isOccasionalPriceOption(props.option))
+const selectedRateId = ref(
+  props.option.defaultRateId ?? props.option.rateOptions?.[0]?.id ?? null,
+)
 
-const detailsId = computed(
-  () => `${props.detailsIdPrefix}-price-details-${props.option.id}`,
+watch(
+  () => props.option.rateOptions,
+  (rates) => {
+    if (!rates?.some((rate) => rate.id === selectedRateId.value)) {
+      selectedRateId.value =
+        props.option.defaultRateId ?? rates?.[0]?.id ?? null
+    }
+  },
+)
+
+const selectedRate = computed(() =>
+  props.option.rateOptions?.find((rate) => rate.id === selectedRateId.value),
+)
+
+const frequencyLabel = computed(
+  () => selectedRate.value?.frequency ?? props.option.frequency,
+)
+
+const displayPrice = computed(
+  () => selectedRate.value?.price ?? props.option.displayPrice,
+)
+
+const displayPriceContext = computed(
+  () => selectedRate.value?.priceContext ?? props.option.displayPriceContext,
+)
+
+const showDetailsBlock = computed(
+  () => (props.option.paymentLines?.length ?? 0) > 0,
 )
 </script>

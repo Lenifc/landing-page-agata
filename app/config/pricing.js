@@ -1,471 +1,187 @@
+const personPrice = (value) => value.replace(' / osoba', ' za osobę')
+const paymentWithoutPrefix = (value) =>
+  value.replace(/^miesięcznie:\s*/, '')
+
 export const PRICING = Object.freeze({
   plans: {
-    individualAnnualWeekly: {
-      name: 'Indywidualne (1:1) - Standard',
-      frequency: '32 lekcje',
+    individualWeekly: {
+      name: 'Indywidualne (1:1)',
+      frequency: '1× w tygodniu',
       duration: '50 min',
-      price: '10 rat × 300 zł',
-      schemaPrice: '300',
-      fromPrice: '93,75 zł',
+      price: '95 zł',
+      schemaPrice: '95',
+      fromPrice: '95 zł',
       fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '3000 zł',
-        lessonPrice: '93,75 zł za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 300 zł',
+      paymentNote: '95 zł za lekcję 50 min',
       details:
-        'Kurs obejmuje 32 lekcje po 50 minut, odbywające się zazwyczaj raz w tygodniu.',
+        'Lekcje indywidualne raz w tygodniu. Cena za pojedynczą lekcję 50 minut.',
       featured: true,
-      contexts: {
-        eighthGradeExam: {
-          details:
-            '32 lekcje po 50 min w pakiecie rocznym 1:1 Standard, z programem dopasowanym do potrzeb ucznia i terminu egzaminu.',
-        },
-        maturaExam: {
-          details:
-            '32 lekcje po 50 min w pakiecie rocznym 1:1 Standard, z planem pod poziom podstawowy lub rozszerzony.',
-        },
-        adultClasses: {
-          details:
-            '32 lekcje po 50 min w pakiecie rocznym 1:1 Standard, z tempem i materiałami dopasowanymi do celu dorosłego kursanta.',
-        },
-        schoolSupport: {
-          details:
-            '32 lekcje po 50 min w pakiecie rocznym 1:1 Standard, z bieżącym wsparciem w materiale szkolnym lub akademickim.',
-        },
-      },
     },
-    individualAnnualTwiceWeekly: {
-      name: 'Indywidualne (1:1) - Intense',
-      frequency: '64 lekcje',
+    individualTwiceWeekly: {
+      name: 'Indywidualne (1:1)',
+      frequency: '2× w tygodniu',
       duration: '50 min',
-      price: '10 rat × 544 zł',
-      schemaPrice: '544',
+      price: '85 zł',
+      schemaPrice: '85',
       fromPrice: '85 zł',
       fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '5440 zł',
-        lessonPrice: '85 zł za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 544 zł',
+      paymentNote: '85 zł za lekcję 50 min',
       details:
-        'Kurs składa się z 64 lekcji po 50 minut, odbywających się zwykle raz w tygodniu w bloku zajęć (jedna po drugiej).',
-      featured: false,
-      contexts: {
-        eighthGradeExam: {
-          details:
-            '64 lekcje po 50 min w pakiecie rocznym 1:1 Intense dla uczniów potrzebujących bardziej regularnej pracy przed egzaminem.',
-        },
-        maturaExam: {
-          details:
-            '64 lekcje po 50 min w pakiecie rocznym 1:1 Intense dla maturzystów potrzebujących mocniejszego rytmu przygotowań.',
-        },
-        adultClasses: {
-          details:
-            '64 lekcje po 50 min w pakiecie rocznym 1:1 Intense dla dorosłych, którzy chcą szybciej wrócić do angielskiego lub utrzymać mocniejszy rytm nauki.',
-        },
-        schoolSupport: {
-          details:
-            '64 lekcje po 50 min w pakiecie rocznym 1:1 Intense dla uczniów i studentów, którzy potrzebują mocniejszego rytmu nauki.',
-        },
-      },
-    },
-    duoAnnualWeekly: {
-      name: 'DUO - Standard',
-      frequency: '32 lekcje',
-      duration: '50 min',
-      price: '10 rat × 210 zł / osoba',
-      schemaPrice: '210',
-      fromPrice: '65,63 zł / osoba',
-      fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '2100 zł / osoba',
-        lessonPrice: '65,63 zł / osoba za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 210 zł / osoba',
-      details:
-        'Kurs dla osób uczących się w parze. 32 spotkania po 50 minut, odbywające się zazwyczaj raz w tygodniu.',
-      featured: false,
-      contexts: {
-        adultClasses: {
-          details:
-            '32 lekcje po 50 min w pakiecie rocznym DUO Standard dla dwóch osób uczących się razem.',
-        },
-        schoolSupport: {
-          details:
-            '32 lekcje po 50 min w pakiecie rocznym DUO Standard dla dwóch uczniów o podobnym poziomie i zbliżonych celach.',
-        },
-      },
-    },
-    duoAnnualTwiceWeekly: {
-      name: 'DUO - Intense',
-      frequency: '64 lekcje',
-      duration: '50 min',
-      price: '10 rat × 385 zł / osoba',
-      schemaPrice: '385',
-      fromPrice: '60,16 zł / osoba',
-      fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '3850 zł / osoba',
-        lessonPrice: '60,16 zł / osoba za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 385 zł / osoba',
-      details:
-        'Kurs dla osób uczących się w parze. 64 spotkania po 50 minut, odbywające się zazwyczaj w bloku zajęć (jedna po drugiej).',
-      featured: false,
-      contexts: {
-        adultClasses: {
-          details:
-            '64 lekcje po 50 min w pakiecie rocznym DUO Intense dla dwóch osób uczących się razem.',
-        },
-        schoolSupport: {
-          details:
-            '64 lekcje po 50 min w pakiecie rocznym DUO Intense dla dwóch uczniów, którzy chcą regularnie nadrabiać materiał i rozwijać komunikację.',
-        },
-      },
-    },
-    onlineMorningIndividualMini: {
-      name: 'Poranne online 1:1 - Mini',
-      frequency: '24 lekcje',
-      duration: '50 min',
-      price: '8 rat × 240 zł',
-      schemaPrice: '240',
-      fromPrice: '80 zł',
-      fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '1920 zł',
-        lessonPrice: '80 zł za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 8 rat × 240 zł',
-      details:
-        '24 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
+        'Lekcje indywidualne dwa razy w tygodniu. Niższa stawka przy regularnych dwóch terminach.',
       featured: false,
     },
-    onlineMorningIndividualAnnualWeekly: {
-      name: 'Poranne online 1:1 - Standard',
-      frequency: '32 lekcje',
+    duoWeekly: {
+      name: 'DUO',
+      frequency: '1× w tygodniu',
       duration: '50 min',
-      price: '10 rat × 240 zł',
-      schemaPrice: '240',
-      fromPrice: '75 zł',
+      price: '75 zł / osoba',
+      schemaPrice: '75',
+      fromPrice: '75 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '2400 zł',
-        lessonPrice: '75 zł za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 240 zł',
+      paymentNote: '75 zł / osoba za lekcję 50 min',
       details:
-        '32 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
+        'Zajęcia w parze raz w tygodniu. Cena podana za osobę za lekcję 50 minut.',
       featured: false,
     },
-    onlineMorningIndividualAnnualTwiceWeekly: {
-      name: 'Poranne online 1:1 - Intense',
-      frequency: '64 lekcje',
+    duoTwiceWeekly: {
+      name: 'DUO',
+      frequency: '2× w tygodniu',
       duration: '50 min',
-      price: '10 rat × 435,20 zł',
-      schemaPrice: '435.20',
-      fromPrice: '68 zł',
+      price: '65 zł / osoba',
+      schemaPrice: '65',
+      fromPrice: '65 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '4352 zł',
-        lessonPrice: '68 zł za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 435,20 zł',
+      paymentNote: '65 zł / osoba za lekcję 50 min',
       details:
-        '64 lekcje po 50 min w porannym wariancie online do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku.',
-      featured: false,
-    },
-    onlineMorningDuoMini: {
-      name: 'Poranne online DUO - Mini',
-      frequency: '24 lekcje',
-      duration: '50 min',
-      price: '8 rat × 168 zł / osoba',
-      schemaPrice: '168',
-      fromPrice: '56 zł / osoba',
-      fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '1344 zł / osoba',
-        lessonPrice: '56 zł / osoba za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 8 rat × 168 zł / osoba',
-      details:
-        '24 lekcje po 50 min w porannym wariancie online dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku.',
-      featured: false,
-    },
-    onlineMorningDuoAnnualWeekly: {
-      name: 'Poranne online DUO - Standard',
-      frequency: '32 lekcje',
-      duration: '50 min',
-      price: '10 rat × 168 zł / osoba',
-      schemaPrice: '168',
-      fromPrice: '52,50 zł / osoba',
-      fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '1680 zł / osoba',
-        lessonPrice: '52,50 zł / osoba za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 168 zł / osoba',
-      details:
-        '32 lekcje po 50 min w porannym wariancie online dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku.',
-      featured: false,
-    },
-    onlineMorningDuoAnnualTwiceWeekly: {
-      name: 'Poranne online DUO - Intense',
-      frequency: '64 lekcje',
-      duration: '50 min',
-      price: '10 rat × 308 zł / osoba',
-      schemaPrice: '308',
-      fromPrice: '48,13 zł / osoba',
-      fromPriceContext: 'za lekcję 50 min',
-      priceDetails: {
-        totalPrice: '3080 zł / osoba',
-        lessonPrice: '48,13 zł / osoba za lekcję 50 min',
-      },
-      paymentNote: 'miesięcznie: 10 rat × 308 zł / osoba',
-      details:
-        '64 lekcje po 50 min w porannym wariancie online dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku.',
+        'Zajęcia w parze dwa razy w tygodniu. Niższa stawka przy regularnych dwóch terminach.',
       featured: false,
     },
     examGroup: {
       name: 'Kurs egzaminacyjny',
-      frequency: '50 lekcji (25 spotkań po 100min)',
+      frequency: '50 lekcji (25 spotkań po 100 min)',
       duration: '100 min (2×50 min)',
-      price: '8 rat × 365 zł / osoba',
-      schemaPrice: '365',
-      fromPrice: '58,40 zł / osoba',
+      price: '108 zł / 100 min',
+      schemaPrice: '337.50',
+      fromPrice: '54 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
       priceDetails: {
-        totalPrice: '2920 zł / osoba',
-        lessonPrice: '58,40 zł / osoba za lekcję 50 min',
+        totalPrice: '2700 zł / osoba',
+        lessonPrice: '54 zł / osoba za lekcję 50 min',
       },
-      paymentNote: 'miesięcznie: 8 rat × 365 zł / osoba',
+      paymentNote: 'miesięcznie: 8 rat × 337,50 zł / osoba',
       details: `Kurs egzaminacyjny dla uczniów klasy 8 oraz maturzystów obejmuje 25 spotkań po 100 minut w
-        kameralnej grupie maksymalnie 4-osobowej. Zajęcia odbywają się raz w tygodniu w bloku
-        (jedna po drugiej). W sumie to ponad 41 godzin nauki, a kurs kończy się przed terminem
-        egzaminu. Płatność jest rozłożona na 8 równych rat.`,
+        kameralnej 3-osobowej grupie. Cena: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min).
+        Zajęcia odbywają się raz w tygodniu (jedna po drugiej). W sumie to ponad 41 godzin nauki,
+        a kurs kończy się przed terminem egzaminu. Płatność: 8 równych rat × 337,50 zł / osoba.`,
       featured: false,
       contexts: {
         eighthGradeExam: {
           details:
-            '50 lekcji (25 spotkań po 100min) w kameralnej grupie maksymalnie 4-osobowej. Program obejmuje arkusze, strategie i najważniejsze powtórki przed egzaminem. Płatność jest rozłożona na 8 równych rat.',
+            '50 lekcji (25 spotkań po 100 min) w 3-osobowej grupie. Program obejmuje arkusze, strategie i najważniejsze powtórki przed egzaminem. Płatność jest rozłożona na 8 równych rat. Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min).',
         },
         maturaExam: {
           details:
-            '50 lekcji (25 spotkań po 100min) w kameralnej grupie maksymalnie 4-osobowej, z pracą na arkuszach, strategiach i najważniejszych obszarach do poprawy. Płatność jest rozłożona na 8 równych rat.',
+            '50 lekcji (25 spotkań po 100 min) w 3-osobowej grupie, z pracą na arkuszach, strategiach i najważniejszych obszarach do poprawy. Płatność jest rozłożona na 8 równych rat. Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min).',
         },
       },
-    },
-    miniIndividual: {
-      name: 'Indywidualne (1:1) - Mini',
-      frequency: '24 lekcje',
-      duration: '50 min',
-      price: '8 rat × 300 zł',
-      schemaPrice: '300',
-      priceDetails: {
-        totalPrice: '2400 zł',
-        lessonPrice: '100 zł za lekcję 50 min',
-      },
-      details: `Kurs obejmuje 24 spotkania po 50 minut, odbywające się zazwyczaj raz w tygodniu.
-        To krótszy cykl nauki z płatnością rozłożoną na 8 rat.`,
-      featured: false,
-      contexts: {
-        eighthGradeExam: {
-          details:
-            '24 lekcje po 50 min w pakiecie MINI 1:1, dobrym jako intensywne wsparcie przed egzaminem ósmoklasisty.',
-        },
-        maturaExam: {
-          details:
-            '24 lekcje po 50 min w pakiecie MINI 1:1, dobrym jako intensywne wsparcie przed maturą.',
-        },
-        adultClasses: {
-          details:
-            '24 lekcje po 50 min w pakiecie MINI 1:1, jeśli potrzebujesz krótszego cyklu nauki bez zobowiązania od września do czerwca.',
-        },
-        schoolSupport: {
-          details:
-            '24 lekcje po 50 min w pakiecie MINI 1:1, dobrym jako krótszy cykl wsparcia w materiale szkolnym, sprawdzianach lub zaliczeniach.',
-        },
-      },
-    },
-    miniDuo: {
-      name: 'DUO - Mini',
-      frequency: '24 lekcje',
-      duration: '50 min',
-      price: '8 rat × 210 zł / osoba',
-      schemaPrice: '210',
-      priceDetails: {
-        totalPrice: '1680 zł / osoba',
-        lessonPrice: '70 zł / osoba za lekcję 50 min',
-      },
-      details:
-        'Pakiet MINI DUO obejmuje 24 lekcje po 50 min dla dwóch osób. To krótszy cykl nauki z płatnością rozłożoną na 8 rat.',
-      featured: false,
-      contexts: {
-        adultClasses: {
-          details:
-            '24 lekcje po 50 min w pakiecie MINI DUO dla dwóch osób, które chcą uczyć się razem w krótszym cyklu.',
-        },
-        schoolSupport: {
-          details:
-            '24 lekcje po 50 min w pakiecie MINI DUO dla dwóch uczniów, którzy chcą wspólnie uporządkować materiał w krótszym cyklu.',
-        },
-      },
-    },
-    occasionalIndividual: {
-      name: 'Indywidualne (1:1)',
-      frequency: 'lekcja okazjonalna',
-      duration: '50 min',
-      price: '110 zł',
-      schemaPrice: '110',
-      promo: {
-        label: 'Jednorazowa lekcja dla nowych kursantów',
-        price: '88 zł',
-      },
-      details:
-        'Doraźna pomoc, nadrabianie materiału lub konsultacje przed sprawdzianem bez długoterminowej umowy. Płatność z góry przed zajęciami.',
-      featured: false,
-    },
-    occasionalDuo: {
-      name: 'DUO',
-      frequency: 'lekcja okazjonalna',
-      duration: '50 min',
-      price: '80 zł / osoba',
-      schemaPrice: '80',
-      promo: {
-        label: 'Jednorazowa lekcja dla nowych kursantów',
-        price: '64 zł / osoba',
-      },
-      details:
-        'Jednorazowa lekcja w parze dla osób, które potrzebują doraźnego wsparcia, konsultacji albo pomocy przed sprawdzianem. Płatność z góry przed zajęciami.',
-      featured: false,
-    },
-    occasionalMorningOnlineIndividual: {
-      name: 'Poranne online 1:1',
-      frequency: 'lekcja okazjonalna do 12:00',
-      duration: '50 min',
-      price: '88 zł',
-      schemaPrice: '88',
-      details:
-        'Jednorazowa lekcja online w porannym wariancie do godziny 12:00. Cena dotyczy zajęć od poniedziałku do piątku. Płatność z góry przed zajęciami.',
-      featured: false,
-    },
-    occasionalMorningOnlineDuo: {
-      name: 'Poranne online DUO',
-      frequency: 'lekcja okazjonalna do 12:00',
-      duration: '50 min',
-      price: '64 zł / osoba',
-      schemaPrice: '64',
-      details:
-        'Jednorazowa lekcja online w porannym wariancie do godziny 12:00 dla dwóch osób uczących się razem. Cena dotyczy zajęć od poniedziałku do piątku. Płatność z góry przed zajęciami.',
-      featured: false,
     },
   },
   collections: {
-    annualIndividual: ['individualAnnualWeekly', 'individualAnnualTwiceWeekly'],
-    annualDuo: ['duoAnnualWeekly', 'duoAnnualTwiceWeekly'],
-    annualExam: ['examGroup'],
-    mini: ['miniIndividual', 'miniDuo'],
-    semester: ['miniIndividual', 'miniDuo'],
-    occasional: [
-      'occasionalIndividual',
-      'occasionalDuo',
-      'occasionalMorningOnlineIndividual',
-      'occasionalMorningOnlineDuo',
-    ],
-    morningOnline: [
-      'onlineMorningIndividualMini',
-      'onlineMorningIndividualAnnualWeekly',
-      'onlineMorningIndividualAnnualTwiceWeekly',
-      'onlineMorningDuoMini',
-      'onlineMorningDuoAnnualWeekly',
-      'onlineMorningDuoAnnualTwiceWeekly',
-      'occasionalMorningOnlineIndividual',
-      'occasionalMorningOnlineDuo',
-    ],
     offer: [
-      'onlineMorningIndividualMini',
-      'onlineMorningIndividualAnnualWeekly',
-      'onlineMorningIndividualAnnualTwiceWeekly',
-      'onlineMorningDuoMini',
-      'onlineMorningDuoAnnualWeekly',
-      'onlineMorningDuoAnnualTwiceWeekly',
-      'miniIndividual',
-      'individualAnnualWeekly',
-      'individualAnnualTwiceWeekly',
-      'miniDuo',
-      'duoAnnualWeekly',
-      'duoAnnualTwiceWeekly',
+      'individualWeekly',
+      'individualTwiceWeekly',
+      'duoWeekly',
+      'duoTwiceWeekly',
       'examGroup',
-      'occasionalIndividual',
-      'occasionalDuo',
-      'occasionalMorningOnlineIndividual',
-      'occasionalMorningOnlineDuo',
     ],
+    individual: ['individualWeekly', 'individualTwiceWeekly'],
+    duo: ['duoWeekly', 'duoTwiceWeekly'],
+    annualExam: ['examGroup'],
     eighthGradeExam: [
       'examGroup',
-      'individualAnnualWeekly',
-      'individualAnnualTwiceWeekly',
-      'miniIndividual',
-      'occasionalIndividual',
+      'individualWeekly',
+      'individualTwiceWeekly',
     ],
     maturaExam: [
       'examGroup',
-      'individualAnnualWeekly',
-      'individualAnnualTwiceWeekly',
-      'miniIndividual',
-      'occasionalIndividual',
+      'individualWeekly',
+      'individualTwiceWeekly',
     ],
     schoolSupport: [
-      'miniIndividual',
-      'individualAnnualWeekly',
-      'individualAnnualTwiceWeekly',
-      'miniDuo',
-      'duoAnnualWeekly',
-      'duoAnnualTwiceWeekly',
-      'occasionalIndividual',
-      'occasionalDuo',
+      'individualWeekly',
+      'individualTwiceWeekly',
+      'duoWeekly',
+      'duoTwiceWeekly',
     ],
     adultClasses: [
-      'miniIndividual',
-      'individualAnnualWeekly',
-      'individualAnnualTwiceWeekly',
-      'miniDuo',
-      'duoAnnualWeekly',
-      'duoAnnualTwiceWeekly',
-      'occasionalIndividual',
-      'occasionalDuo',
+      'individualWeekly',
+      'individualTwiceWeekly',
+      'duoWeekly',
+      'duoTwiceWeekly',
     ],
     onlineClasses: [
-      'miniIndividual',
-      'individualAnnualWeekly',
-      'individualAnnualTwiceWeekly',
-      'miniDuo',
-      'duoAnnualWeekly',
-      'duoAnnualTwiceWeekly',
+      'individualWeekly',
+      'individualTwiceWeekly',
+      'duoWeekly',
+      'duoTwiceWeekly',
       'examGroup',
-      'occasionalIndividual',
-      'occasionalDuo',
-      'occasionalMorningOnlineIndividual',
-      'occasionalMorningOnlineDuo',
     ],
   },
-  promotions: {
-    examEarlyBird: {
-      label: '-10% na cały grupowy kurs egzaminacyjny',
-      deadline: '15 sierpnia 2026 r.',
-      regularTotalPrice: '2920 zł / osoba',
-      promoTotalPrice: '2628 zł / osoba',
-      lowestPriceLast30Days: '2920 zł / osoba',
-      savings: '292 zł',
-      installmentPrice: '328,50 zł',
-      paymentNote: '8 rat × 328,50 zł / osoba',
-    },
-    morningOnline: {
-      label: 'Poranne zajęcia online',
-      deadlineHour: '12:00',
-    },
+  notes: {
+    morningOnline:
+      'Cennik poranny online obowiązuje od poniedziałku do piątku do godz. 12:00.',
+    advancePayment:
+      'Płatność z góry, na podstawie prognozowanej liczby spotkań w danym miesiącu.',
+  },
+  morningOnlineRates: {
+    individualWeekly: '80 zł',
+    individualTwiceWeekly: '70 zł',
+    duoWeekly: '60 zł / osoba',
+    duoTwiceWeekly: '50 zł / osoba',
   },
 })
+
+export const PRICING_NOTES = PRICING.notes
+export const MORNING_ONLINE_RATES = PRICING.morningOnlineRates
+
+export const getMorningOnlinePlans = () => [
+  {
+    id: 'morningIndividualWeekly',
+    name: 'Indywidualne (1:1)',
+    frequency: '1× w tygodniu',
+    duration: '50 min',
+    price: MORNING_ONLINE_RATES.individualWeekly,
+    details: 'Poranne lekcje online od poniedziałku do piątku do godz. 12:00.',
+    featured: false,
+  },
+  {
+    id: 'morningIndividualTwiceWeekly',
+    name: 'Indywidualne (1:1)',
+    frequency: '2× w tygodniu',
+    duration: '50 min',
+    price: MORNING_ONLINE_RATES.individualTwiceWeekly,
+    details: 'Poranne lekcje online od poniedziałku do piątku do godz. 12:00.',
+    featured: false,
+  },
+  {
+    id: 'morningDuoWeekly',
+    name: 'DUO',
+    frequency: '1× w tygodniu',
+    duration: '50 min',
+    price: MORNING_ONLINE_RATES.duoWeekly,
+    details: 'Poranne lekcje online w parze. Cena podana za osobę.',
+    featured: false,
+  },
+  {
+    id: 'morningDuoTwiceWeekly',
+    name: 'DUO',
+    frequency: '2× w tygodniu',
+    duration: '50 min',
+    price: MORNING_ONLINE_RATES.duoTwiceWeekly,
+    details: 'Poranne lekcje online w parze. Cena podana za osobę.',
+    featured: false,
+  },
+]
 
 export const getPricingPlan = (planId, collection) => {
   const planConfig = PRICING.plans[planId]
@@ -488,5 +204,92 @@ export const getPricingPlans = (collection) =>
     return getPricingPlan(planId, collection)
   })
 
-export const getPricingPromotion = (promotionId) =>
-  PRICING.promotions[promotionId] ?? null
+/** Landing card: 1:1 with both weekly rates. */
+export const buildIndividualRateCard = (details, { rates } = {}) => {
+  const weekly = getPricingPlan('individualWeekly')
+  const twiceWeekly = getPricingPlan('individualTwiceWeekly')
+  const weeklyPrice = rates?.weekly ?? weekly.price
+  const twiceWeeklyPrice = rates?.twiceWeekly ?? twiceWeekly.price
+
+  return {
+    id: 'individual',
+    name: 'Lekcje indywidualne 1:1',
+    duration: '50 min',
+    rateOptions: [
+      {
+        id: '1x',
+        frequency: '1× w tygodniu',
+        price: weeklyPrice,
+        priceContext: weekly.fromPriceContext,
+      },
+      {
+        id: '2x',
+        frequency: '2× w tygodniu',
+        price: twiceWeeklyPrice,
+        priceContext: twiceWeekly.fromPriceContext,
+      },
+    ],
+    defaultRateId: '2x',
+    details,
+    simple: true,
+    schemaPrice: twiceWeekly.schemaPrice,
+    fromPrice: twiceWeeklyPrice,
+    fromPriceContext: twiceWeekly.fromPriceContext,
+    price: twiceWeeklyPrice,
+  }
+}
+
+/** Landing card: DUO with both weekly rates. */
+export const buildDuoRateCard = (details, { rates } = {}) => {
+  const weekly = getPricingPlan('duoWeekly')
+  const twiceWeekly = getPricingPlan('duoTwiceWeekly')
+  const weeklyPrice = personPrice(rates?.weekly ?? weekly.price)
+  const twiceWeeklyPrice = personPrice(rates?.twiceWeekly ?? twiceWeekly.price)
+
+  return {
+    id: 'duo',
+    name: 'Lekcje DUO',
+    duration: '50 min',
+    rateOptions: [
+      {
+        id: '1x',
+        frequency: '1× w tygodniu',
+        price: weeklyPrice,
+        priceContext: weekly.fromPriceContext,
+      },
+      {
+        id: '2x',
+        frequency: '2× w tygodniu',
+        price: twiceWeeklyPrice,
+        priceContext: twiceWeekly.fromPriceContext,
+      },
+    ],
+    defaultRateId: '2x',
+    details,
+    simple: true,
+    schemaPrice: twiceWeekly.schemaPrice,
+    fromPrice: twiceWeeklyPrice,
+    fromPriceContext: twiceWeekly.fromPriceContext,
+    price: twiceWeeklyPrice,
+  }
+}
+
+/** Landing card: exam package (only remaining package). */
+export const buildExamRateCard = (collection) => {
+  const exam = getPricingPlan('examGroup', collection)
+
+  return {
+    ...exam,
+    displayPrice: '108 zł / osoba',
+    displayPriceContext: 'za spotkanie 100 min',
+    paymentLines: [
+      {
+        payment: '108 zł / osoba za spotkanie 100 min',
+      },
+      {
+        payment: paymentWithoutPrefix(exam.paymentNote),
+        totalPrice: exam.priceDetails.totalPrice,
+      },
+    ],
+  }
+}

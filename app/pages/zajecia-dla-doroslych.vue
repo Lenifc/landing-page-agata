@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content">
+  <main id="main-content" class="pb-20 md:pb-0">
     <PageHero
       eyebrow="Zajęcia dla dorosłych"
       title="Angielski dla dorosłych w Rumi oraz online. Bez presji i szkolnego stresu."
@@ -23,14 +23,48 @@
         przyjaznej atmosferze.
       </template>
       <template #actions>
-        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
-        <UiButton :to="ROUTES.pricesPackages" variant="outline">
-          Zobacz cennik
+        <UiButton :to="contactCtaPath">Zacznij mówić swobodniej →</UiButton>
+        <UiButton href="#cennik" variant="outline">
+          Zobacz ceny
         </UiButton>
       </template>
     </PageHero>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+      <UiSectionHeader
+        eyebrow="Ceny"
+        title="Ile kosztuje angielski dla dorosłych?"
+        max-width="3xl"
+      >
+        <template #description>
+          Stawka za lekcję zależy od formy nauki (indywidualnie lub w parze)
+          oraz częstotliwości — 1× albo 2× w tygodniu. Dzięki temu możesz
+          dopasować rytm zajęć do swojego tempa nauki, celów i możliwości.
+          <br /><br />
+          Jeśli wygodniejsza jest dla Ciebie nauka z domu,
+          <NuxtLink
+            :to="ROUTES.onlineClasses"
+            class="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            zobacz zajęcia online
+          </NuxtLink>
+          — poza godzinami porannymi stawki są takie same jak w studiu. Poranny
+          cennik online 1:1 (Pn–Pt do 12:00) znajdziesz w kafelku poniżej.
+        </template>
+      </UiSectionHeader>
+      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
+        <LandingPriceCard
+          v-for="option in landingPriceOptions"
+          :key="option.id"
+          :option="option"
+        />
+      </div>
+      <UiButton :to="contactCtaPath" class="mt-8">
+        Umów zajęcia dla dorosłych →
+      </UiButton>
+    </UiSection>
+
+    <UiSection padding="lg">
       <UiSectionHeader
         title="Zajęcia dopasowane do dorosłego rytmu."
         max-width="3xl"
@@ -47,7 +81,7 @@
       </div>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection variant="secondary" padding="lg">
       <div class="grid gap-10 md:grid-cols-2">
         <div>
           <UiSectionHeader
@@ -75,44 +109,6 @@
       </div>
     </UiSection>
 
-    <UiSection id="cennik" variant="secondary" border="y" padding="lg" scroll-margin>
-      <UiSectionHeader
-        eyebrow="Ceny"
-        title="Ile kosztuje angielski dla dorosłych?"
-        max-width="3xl"
-      >
-        <template #description>
-          Koszt zajęć zależy od liczby lekcji w pakiecie oraz wybranej formy
-          nauki - indywidualnie lub w parze. Dzięki elastycznej ofercie możesz
-          dopasować kurs do swojego tempa nauki, celów oraz możliwości
-          finansowych.
-          <br /><br />
-          Jeśli wygodniejsza jest dla Ciebie nauka z domu,
-          <NuxtLink
-            :to="ROUTES.onlineClasses"
-            class="font-medium text-primary underline-offset-4 hover:underline"
-          >
-            zobacz zajęcia online
-          </NuxtLink>
-          - dostępny jest też poranny wariant cenowy do godziny
-          {{ morningOnlinePromotion.deadlineHour }}.
-        </template>
-      </UiSectionHeader>
-      <UiButton :to="ROUTES.prices" variant="outline" class="mt-6">
-        Zobacz pełny cennik
-      </UiButton>
-      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
-        <LandingPriceCard
-          v-for="option in landingPriceOptions"
-          :key="option.name"
-          :option="option"
-          details-id-prefix="adult"
-          :details-open="isPriceDetailsOpen(option.id)"
-          @toggle-details="togglePriceDetails(option.id)"
-        />
-      </div>
-    </UiSection>
-
     <FaqAccordion
       id="faq"
       id-prefix="adult-faq"
@@ -123,14 +119,22 @@
     <CtaBanner
       title="Porozmawiajmy o Twoim angielskim!"
       description="Napisz, do czego potrzebujesz języka, a wspólnie ułożymy spokojny plan dopasowany do Twojego celu i czasu, którym dysponujesz."
-      button-label="Zapytaj o zajęcia →"
+      button-label="Ułóżmy Twój plan nauki →"
       :button-to="contactCtaPath"
     />
+
+    <StickyContactCta :to="contactCtaPath" label="Zapytaj o angielski dla dorosłych →" />
   </main>
 </template>
 
 <script setup>
-import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
+import {
+  buildDuoRateCard,
+  buildIndividualRateCard,
+  getPricingPlan,
+  getPricingPlans,
+  MORNING_ONLINE_RATES,
+} from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
@@ -139,89 +143,34 @@ const pageRoute = ROUTES.adultClasses
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 const priceOptions = getPricingPlans('adultClasses')
-const morningOnlinePromotion = getPricingPromotion('morningOnline')
-const getPriceOption = (id) => priceOptions.find((option) => option.id === id)
-const individualAnnualStandard = priceOptions.find(
-  (option) => option.id === 'individualAnnualWeekly',
-)
-const individualAnnualIntense = priceOptions.find(
-  (option) => option.id === 'individualAnnualTwiceWeekly',
-)
-const duoAnnualIntense = priceOptions.find(
-  (option) => option.id === 'duoAnnualTwiceWeekly',
-)
-const duoAnnualStandard = priceOptions.find(
-  (option) => option.id === 'duoAnnualWeekly',
-)
-const miniIndividual = getPriceOption('miniIndividual')
-const miniDuo = getPriceOption('miniDuo')
-const occasionalIndividual = getPriceOption('occasionalIndividual')
-const occasionalDuo = getPriceOption('occasionalDuo')
+const individualWeekly = getPricingPlan('individualWeekly')
+const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
+const duoWeekly = getPricingPlan('duoWeekly')
+const duoTwiceWeekly = getPricingPlan('duoTwiceWeekly')
 
 const landingPriceOptions = [
+  buildIndividualRateCard(
+    'Lekcje indywidualne 1:1 dla dorosłych — stawka zależy od częstotliwości (1× lub 2× w tygodniu). Te same ceny obowiązują stacjonarnie i online poza godzinami porannymi.',
+  ),
+  buildDuoRateCard(
+    'Lekcje DUO dla dwóch osób uczących się razem — stawka za osobę zależy od częstotliwości. Te same ceny obowiązują stacjonarnie i online poza godzinami porannymi.',
+  ),
   {
-    ...individualAnnualIntense,
-    name: 'Pakiety 1:1',
-    frequency: '24/32/64 lekcje',
-    displayPrefix: 'od',
-    displayPrice: individualAnnualIntense.fromPrice,
-    displayPriceContext: individualAnnualIntense.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(miniIndividual, `24 lekcje: ${miniIndividual.price}`),
-      priceDetailLine(
-        individualAnnualStandard,
-        `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
-      ),
-      priceDetailLine(
-        individualAnnualIntense,
-        `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
-      ),
-    ],
-    details:
-      'Pakiet MINI, Standard lub Intense dla dorosłych, którzy chcą uczyć się regularnie, z programem dopasowanym do celu.',
-  },
-  {
-    ...duoAnnualIntense,
-    name: 'Pakiety DUO',
-    frequency: '24/32/64 lekcje',
-    displayPrefix: 'od',
-    displayPrice: duoAnnualIntense.fromPrice,
-    displayPriceContext: duoAnnualIntense.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(miniDuo, `24 lekcje: ${miniDuo.price}`),
-      priceDetailLine(
-        duoAnnualStandard,
-        `32 lekcje: ${paymentWithoutPrefix(duoAnnualStandard.paymentNote)}`,
-      ),
-      priceDetailLine(
-        duoAnnualIntense,
-        `64 lekcje: ${paymentWithoutPrefix(duoAnnualIntense.paymentNote)}`,
-      ),
-    ],
-    details:
-      'Pakiet MINI, Standard lub Intense dla dwóch osób uczących się razem w podobnym rytmie.',
-  },
-  {
-    ...occasionalIndividual,
-    displayPrice: occasionalIndividual.price,
-    displayPriceContext: `za lekcję ${occasionalIndividual.duration}`,
-    paymentLines: [
-      priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
-    ],
-  },
-  {
-    ...occasionalDuo,
-    displayPrice: occasionalDuo.price,
-    displayPriceContext: `za lekcję ${occasionalDuo.duration}`,
-    paymentLines: [
-      priceDetailLine(occasionalDuo, 'płatność za pojedynczą lekcję'),
-    ],
+    ...buildIndividualRateCard(
+      'Poranne lekcje online (Pn–Pt do 12:00). Niższa stawka niż w godzinach popołudniowych i stacjonarnych.',
+      {
+        rates: {
+          weekly: MORNING_ONLINE_RATES.individualWeekly,
+          twiceWeekly: MORNING_ONLINE_RATES.individualTwiceWeekly,
+        },
+      },
+    ),
+    id: 'morning-individual',
+    name: 'Online poranne 1:1',
   },
 ]
 
-const individualAnnualPrice = `${personPrice(individualAnnualIntense.fromPrice)} ${individualAnnualIntense.fromPriceContext}`
-const duoAnnualPrice = `${personPrice(duoAnnualIntense.fromPrice)} ${duoAnnualIntense.fromPriceContext}`
-const adultPriceFaqAnswer = `Przy wyborze pakietu rocznego 1:1 dla dorosłych cena w przeliczeniu zaczyna się od ${individualAnnualPrice}, a pod ceną podana jest miesięczna płatność, np. ${individualAnnualStandard.price} w pakiecie Standard. Przy wyborze pakietu rocznego DUO cena w przeliczeniu zaczyna się od ${duoAnnualPrice}.`
+const adultPriceFaqAnswer = `Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×). Lekcje DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Poranne online 1:1 (Pn–Pt do 12:00): ${MORNING_ONLINE_RATES.individualWeekly} / ${MORNING_ONLINE_RATES.individualTwiceWeekly}. Pełne stawki znajdziesz w cenniku powyżej.`
 
 const features = [
   {
@@ -274,8 +223,6 @@ rozwiązania - jeśli Twój plan w danym tygodniu tego wymaga, możemy elastyczn
 zajęcia stacjonarne ze zdalnymi.`,
   },
 ]
-
-const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
 
 useSeoMeta({
   title: 'Zajęcia z angielskiego dla dorosłych Rumia',

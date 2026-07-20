@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content">
+  <main id="main-content" class="pb-20 md:pb-0">
     <PageHero
       eyebrow="Egzamin ósmoklasisty"
       title="Egzamin ósmoklasisty bez stresu? To możliwe!"
@@ -17,7 +17,7 @@
       <template #description>
         Kursy przygotowawcze dopasowane do Twoich potrzeb prowadzone w studiu
         w Rumi lub online - ucz się indywidualnie, w duecie z przyjacielem lub
-        przyjaciółką albo w małej, kameralnej grupie (do 4 osób).<br /><br />
+        przyjaciółką albo w kameralnej 3-osobowej grupie.<br /><br />
         Stawiam na systematyczność i regularne powtórki, dzięki czemu
         uczniowie płynnie przyswajają wiedzę i oswajają formułę tego testu.
         Razem pracujemy na wysoki wynik, dbając jednocześnie o to, by ten
@@ -26,13 +26,38 @@
       </template>
       <template #actions>
         <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
-        <UiButton :to="ROUTES.pricesExam" variant="outline">
-          Zobacz cennik
+        <UiButton href="#cennik" variant="outline">
+          Zobacz ceny
         </UiButton>
       </template>
     </PageHero>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+      <UiSectionHeader
+        eyebrow="Ceny"
+        title="Ile kosztuje przygotowanie do egzaminu ósmoklasisty?"
+        max-width="3xl"
+      >
+        <template #description>
+          Możesz wybrać kurs egzaminacyjny w 3-osobowej grupie (pakiet z
+          płatnością w 8 ratach) albo lekcje indywidualne ze stawką za lekcję
+          zależną od częstotliwości. Harmonogram układam tak, aby bez pośpiechu
+          zrealizować materiał przed egzaminem.
+        </template>
+      </UiSectionHeader>
+      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
+        <LandingPriceCard
+          v-for="option in landingPriceOptions"
+          :key="option.name"
+          :option="option"
+        />
+      </div>
+      <UiButton :to="contactCtaPath" class="mt-8">
+        Umów przygotowanie do egzaminu →
+      </UiButton>
+    </UiSection>
+
+    <UiSection padding="lg">
       <UiSectionHeader title="Co obejmuje przygotowanie?" max-width="3xl">
         <template #description>
           Program zajęć oraz metody pracy dobieram indywidualnie do potrzeb
@@ -52,7 +77,7 @@
       </p>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection variant="secondary" padding="lg">
       <UiSectionHeader
         title="Dla kogo przeznaczone są zajęcia?"
         title-tag="h2"
@@ -75,35 +100,6 @@
       </div>
     </UiSection>
 
-    <UiSection id="cennik" variant="secondary" border="y" padding="lg" scroll-margin>
-      <UiSectionHeader
-        eyebrow="Ceny"
-        title="Ile kosztuje przygotowanie do egzaminu ósmoklasisty?"
-        max-width="3xl"
-      >
-        <template #description>
-          Cena kursu zależy od liczby uczestników oraz wybranej liczby lekcji
-          w pakiecie. Oferuję warianty, które pozwalają dopasować formę oraz
-          intensywność zajęć do indywidualnych potrzeb ucznia. Harmonogram
-          układam tak, aby bez pośpiechu zrealizować cały materiał przed
-          egzaminem.
-        </template>
-      </UiSectionHeader>
-      <UiButton :to="ROUTES.prices" variant="outline" class="mt-6">
-        Zobacz pełny cennik
-      </UiButton>
-      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
-        <LandingPriceCard
-          v-for="option in landingPriceOptions"
-          :key="option.name"
-          :option="option"
-          details-id-prefix="exam"
-          :details-open="isPriceDetailsOpen(option.id)"
-          @toggle-details="togglePriceDetails(option.id)"
-        />
-      </div>
-    </UiSection>
-
     <FaqAccordion
       id="faq"
       id-prefix="exam-faq"
@@ -114,14 +110,21 @@
     <CtaBanner
       title="Chcesz sprawdzić, od czego zacząć przygotowania?"
       description="Napisz, w której klasie jest uczeń i jaki jest obecny poziom. Dobierzemy formę pracy i tempo przygotowań do egzaminu."
-      button-label="Zapytaj o zajęcia →"
+      button-label="Dobierzmy plan przygotowań →"
       :button-to="contactCtaPath"
     />
+
+    <StickyContactCta :to="contactCtaPath" label="Zapytaj o egzamin ósmoklasisty →" />
   </main>
 </template>
 
 <script setup>
-import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
+import {
+  buildExamRateCard,
+  buildIndividualRateCard,
+  getPricingPlan,
+  getPricingPlans,
+} from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
@@ -130,73 +133,21 @@ const pageRoute = ROUTES.eighthGradeExam
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 const priceOptions = getPricingPlans('eighthGradeExam')
-const getPriceOption = (id) => priceOptions.find((option) => option.id === id)
-const examGroup = getPriceOption('examGroup')
-const individualAnnualStandard = priceOptions.find(
-  (option) => option.id === 'individualAnnualWeekly',
-)
-const individualAnnualIntense = priceOptions.find(
-  (option) => option.id === 'individualAnnualTwiceWeekly',
-)
-const miniIndividual = getPriceOption('miniIndividual')
-const occasionalIndividual = getPriceOption('occasionalIndividual')
-const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const examGroup = getPricingPlan('examGroup', 'eighthGradeExam')
+const individualWeekly = getPricingPlan('individualWeekly')
+const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
 
 const landingPriceOptions = [
-  {
-    ...examGroup,
-    displayPrice: examGroup.fromPrice,
-    displayPriceContext: examGroup.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(
-        examGroup,
-        `standardowo: ${personPrice(paymentWithoutPrefix(examGroup.paymentNote))}`,
-      ),
-      {
-        payment: `przy zapisie do ${examEarlyBirdPromotion.deadline}: ${personPrice(
-          examEarlyBirdPromotion.paymentNote,
-        )}`,
-        totalPrice: examEarlyBirdPromotion.promoTotalPrice,
-      },
-    ],
-  },
-  {
-    ...individualAnnualIntense,
-    name: 'Pakiety 1:1',
-    frequency: '24/32/64 lekcje',
-    displayPrefix: 'od',
-    displayPrice: individualAnnualIntense.fromPrice,
-    displayPriceContext: individualAnnualIntense.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(miniIndividual, `24 lekcje: ${miniIndividual.price}`),
-      priceDetailLine(
-        individualAnnualStandard,
-        `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
-      ),
-      priceDetailLine(
-        individualAnnualIntense,
-        `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
-      ),
-    ],
-    details:
-      'Pakiet MINI, Standard lub Intense dla uczniów, którzy potrzebują indywidualnego przygotowania do egzaminu.',
-  },
-  {
-    ...occasionalIndividual,
-    displayPrice: occasionalIndividual.price,
-    displayPriceContext: `za lekcję ${occasionalIndividual.duration}`,
-    paymentLines: [
-      priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
-    ],
-  },
+  buildExamRateCard('eighthGradeExam'),
+  buildIndividualRateCard(
+    'Lekcje indywidualne 1:1 dla uczniów przygotowujących się do egzaminu — stawka zależy od częstotliwości (1× lub 2× w tygodniu).',
+  ),
 ]
 
-const examGroupPrice = `${personPrice(examGroup.fromPrice)} ${examGroup.fromPriceContext}`
 const examGroupPayment = personPrice(
   paymentWithoutPrefix(examGroup.paymentNote),
 )
-const individualAnnualPrice = `${individualAnnualIntense.fromPrice} ${individualAnnualIntense.fromPriceContext}`
-const examPriceFaqAnswer = `Grupowy kurs egzaminacyjny ma stałą cenę ${examGroupPrice}. Miesięczna płatność w standardowej cenie to ${examGroupPayment}, a przy zapisie do ${examEarlyBirdPromotion.deadline} rata jest obniżona do ${examEarlyBirdPromotion.installmentPrice} za osobę. Przy wyborze pakietu rocznego 1:1 cena w przeliczeniu zaczyna się od ${individualAnnualPrice}.`
+const examPriceFaqAnswer = `Grupowy kurs egzaminacyjny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min. Miesięczna płatność to ${examGroupPayment}. Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×) za lekcję 50 min.`
 
 const features = [
   {
@@ -262,8 +213,6 @@ zadania i analizujemy popełnione błędy. Dzięki temu uczeń zawsze wie, któr
 opanował, a nad czym powinien jeszcze popracować.`,
   },
 ]
-
-const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
 
 useSeoMeta({
   title: 'Egzamin ósmoklasisty z angielskiego w Rumi',

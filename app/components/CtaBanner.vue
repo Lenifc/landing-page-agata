@@ -1,7 +1,6 @@
 <template>
   <UiSection
     :variant="sectionVariant"
-    border="t"
     padding="md"
     max-width="6xl"
   >

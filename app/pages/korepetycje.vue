@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content">
+  <main id="main-content" class="pb-20 md:pb-0">
     <PageHero
       eyebrow="Pomoc w opanowaniu materiału szkolnego"
       title="Korepetycje z angielskiego dla uczniów i studentów."
@@ -22,14 +22,39 @@
         słownictwa i bieżących tematów.
       </template>
       <template #actions>
-        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
-        <UiButton :to="ROUTES.pricesPackages" variant="outline">
-          Zobacz cennik
+        <UiButton :to="contactCtaPath">Zapytaj o korepetycje →</UiButton>
+        <UiButton href="#cennik" variant="outline">
+          Zobacz ceny
         </UiButton>
       </template>
     </PageHero>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+      <UiSectionHeader
+        eyebrow="Ceny"
+        title="Ile kosztują korepetycje z angielskiego?"
+        max-width="3xl"
+      >
+        <template #description>
+          Stawka za lekcję zależy od formy nauki (indywidualnie lub w parze)
+          oraz częstotliwości — 1× albo 2× w tygodniu. Przy większych
+          zaległościach albo regularnej pomocy szkolnej najlepiej sprawdzają się
+          stałe spotkania, bo dają spokojny rytm pracy i widoczniejsze postępy.
+        </template>
+      </UiSectionHeader>
+      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
+        <LandingPriceCard
+          v-for="option in landingPriceOptions"
+          :key="option.name"
+          :option="option"
+        />
+      </div>
+      <UiButton :to="contactCtaPath" class="mt-8">
+        Umów korepetycje →
+      </UiButton>
+    </UiSection>
+
+    <UiSection padding="lg">
       <UiSectionHeader
         title="Kiedy takie zajęcia sprawdzają się najlepiej?"
         max-width="3xl"
@@ -45,7 +70,7 @@
       </div>
     </UiSection>
 
-    <UiSection padding="lg" max-width="6xl">
+    <UiSection variant="secondary" padding="lg" max-width="6xl">
       <div class="grid gap-10 md:grid-cols-2 md:items-center">
         <div>
           <UiSectionHeader
@@ -85,7 +110,7 @@
       </div>
     </UiSection>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection padding="lg">
       <div class="grid gap-10 md:grid-cols-[0.9fr_1.1fr]">
         <UiSectionHeader
           eyebrow="Zajęcia w duecie"
@@ -110,34 +135,6 @@
       </div>
     </UiSection>
 
-    <UiSection id="cennik" padding="lg" border="y" scroll-margin>
-      <UiSectionHeader
-        eyebrow="Ceny"
-        title="Ile kosztują korepetycje z angielskiego?"
-        max-width="3xl"
-      >
-        <template #description>
-          Cena zależy od formy nauki, liczby lekcji i tego, czy wybierasz
-          zajęcia indywidualne czy w parze. Przy większych zaległościach albo
-          regularnej pomocy szkolnej najlepiej sprawdzają się stałe spotkania,
-          bo dają spokojny rytm pracy i widoczniejsze postępy.
-        </template>
-      </UiSectionHeader>
-      <UiButton :to="ROUTES.prices" variant="outline" class="mt-6">
-        Zobacz pełny cennik
-      </UiButton>
-      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
-        <LandingPriceCard
-          v-for="option in landingPriceOptions"
-          :key="option.name"
-          :option="option"
-          details-id-prefix="school"
-          :details-open="isPriceDetailsOpen(option.id)"
-          @toggle-details="togglePriceDetails(option.id)"
-        />
-      </div>
-    </UiSection>
-
     <FaqAccordion
       id="faq"
       id-prefix="school-faq"
@@ -150,14 +147,20 @@
       section-variant="default"
       title="Wspólnie zadbajmy o rozwój Państwa dziecka."
       description="Regularne zajęcia pomagają uzupełnić zaległości, lepiej zrozumieć materiał i odzyskać pewność siebie podczas lekcji w szkole. Chętnie doradzę, jaka forma wsparcia będzie najlepsza, i odpowiem na wszystkie pytania."
-      button-label="Zapytaj o zajęcia →"
+      button-label="Zapytaj o wsparcie szkolne →"
       :button-to="contactCtaPath"
     />
+
+    <StickyContactCta :to="contactCtaPath" label="Zapytaj o korepetycje →" />
   </main>
 </template>
 
 <script setup>
-import { getPricingPlans } from '~/config/pricing'
+import {
+  buildDuoRateCard,
+  buildIndividualRateCard,
+  getPricingPlans,
+} from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
@@ -166,83 +169,14 @@ const pageRoute = ROUTES.schoolSupport
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 const priceOptions = getPricingPlans('schoolSupport')
-const getPriceOption = (id) => priceOptions.find((option) => option.id === id)
-const individualAnnualStandard = priceOptions.find(
-  (option) => option.id === 'individualAnnualWeekly',
-)
-const individualAnnualIntense = priceOptions.find(
-  (option) => option.id === 'individualAnnualTwiceWeekly',
-)
-const duoAnnualStandard = priceOptions.find(
-  (option) => option.id === 'duoAnnualWeekly',
-)
-const duoAnnualIntense = priceOptions.find(
-  (option) => option.id === 'duoAnnualTwiceWeekly',
-)
-const miniIndividual = getPriceOption('miniIndividual')
-const miniDuo = getPriceOption('miniDuo')
-const occasionalIndividual = getPriceOption('occasionalIndividual')
-const occasionalDuo = getPriceOption('occasionalDuo')
 
 const landingPriceOptions = [
-  {
-    ...individualAnnualIntense,
-    name: 'Pakiety 1:1',
-    frequency: '24/32/64 lekcje',
-    displayPrefix: 'od',
-    displayPrice: individualAnnualIntense.fromPrice,
-    displayPriceContext: individualAnnualIntense.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(miniIndividual, `24 lekcje: ${miniIndividual.price}`),
-      priceDetailLine(
-        individualAnnualStandard,
-        `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
-      ),
-      priceDetailLine(
-        individualAnnualIntense,
-        `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
-      ),
-    ],
-    details:
-      'Pakiet MINI, Standard lub Intense dla uczniów i studentów, którzy potrzebują regularnego, spokojnego wsparcia w bieżącym materiale.',
-  },
-  {
-    ...duoAnnualIntense,
-    name: 'Pakiety DUO',
-    frequency: '24/32/64 lekcje',
-    displayPrefix: 'od',
-    displayPrice: duoAnnualIntense.fromPrice,
-    displayPriceContext: duoAnnualIntense.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(miniDuo, `24 lekcje: ${miniDuo.price}`),
-      priceDetailLine(
-        duoAnnualStandard,
-        `32 lekcje: ${paymentWithoutPrefix(duoAnnualStandard.paymentNote)}`,
-      ),
-      priceDetailLine(
-        duoAnnualIntense,
-        `64 lekcje: ${paymentWithoutPrefix(duoAnnualIntense.paymentNote)}`,
-      ),
-    ],
-    details:
-      'Pakiet MINI, Standard lub Intense dla dwóch osób o podobnym poziomie, które chcą wspólnie nadrabiać materiał i ćwiczyć komunikację.',
-  },
-  {
-    ...occasionalIndividual,
-    displayPrice: occasionalIndividual.price,
-    displayPriceContext: `za lekcję ${occasionalIndividual.duration}`,
-    paymentLines: [
-      priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
-    ],
-  },
-  {
-    ...occasionalDuo,
-    displayPrice: occasionalDuo.price,
-    displayPriceContext: `za lekcję ${occasionalDuo.duration}`,
-    paymentLines: [
-      priceDetailLine(occasionalDuo, 'płatność za pojedynczą lekcję'),
-    ],
-  },
+  buildIndividualRateCard(
+    'Lekcje indywidualne 1:1 dla uczniów i studentów — stawka zależy od częstotliwości (1× lub 2× w tygodniu).',
+  ),
+  buildDuoRateCard(
+    'Lekcje DUO dla dwóch osób o podobnym poziomie — stawka za osobę zależy od częstotliwości.',
+  ),
 ]
 
 const features = [
@@ -291,8 +225,6 @@ const faqs = [
     a: 'Tak. Studenci mogą pracować nad materiałem z zajęć, gramatyką, słownictwem specjalistycznym na poziomie dopasowanym do potrzeb albo przygotowaniem do zaliczenia. Zakres ustalam indywidualnie po krótkiej rozmowie o celu i wymaganiach.',
   },
 ]
-
-const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
 
 useSeoMeta({
   title: 'Korepetycje z angielskiego Rumia',

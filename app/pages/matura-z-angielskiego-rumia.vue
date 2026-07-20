@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content">
+  <main id="main-content" class="pb-20 md:pb-0">
     <PageHero
       eyebrow="Egzamin maturalny"
       title="Egzamin maturalny bez stresu? To możliwe!"
@@ -18,8 +18,8 @@
         Kursy przygotowawcze dopasowane do Twoich potrzeb. Przygotowuję
         kompleksowo do matury na poziomie podstawowym oraz rozszerzonym, a
         także do egzaminu ustnego w studiu w Rumi lub online. Ucz się
-        indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w małej,
-        kameralnej grupie (do 4 osób).<br /><br />
+        indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w
+        makeralnej 3-osobowej grupie.<br /><br />
         Stawiam na systematyczność, zrozumienie wymagań egzaminacyjnych i
         regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
         przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
@@ -30,14 +30,39 @@
         źródłem paraliżującego lęku.
       </template>
       <template #actions>
-        <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
-        <UiButton :to="ROUTES.pricesExam" variant="outline">
-          Sprawdź cennik
+        <UiButton :to="contactCtaPath">Zapytaj o maturę →</UiButton>
+        <UiButton href="#cennik" variant="outline">
+          Zobacz ceny
         </UiButton>
       </template>
     </PageHero>
 
-    <UiSection variant="secondary" border="y" padding="lg">
+    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+      <UiSectionHeader
+        eyebrow="Ceny"
+        title="Ile kosztuje przygotowanie do matury z angielskiego?"
+        max-width="3xl"
+      >
+        <template #description>
+          Możesz wybrać kurs egzaminacyjny w 3-osobowej grupie (pakiet z
+          płatnością w 8 ratach) albo lekcje indywidualne ze stawką za lekcję
+          zależną od częstotliwości. Harmonogram zawsze układamy tak, aby bez
+          pośpiechu zrealizować materiał jeszcze przed egzaminem.
+        </template>
+      </UiSectionHeader>
+      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
+        <LandingPriceCard
+          v-for="option in landingPriceOptions"
+          :key="option.name"
+          :option="option"
+        />
+      </div>
+      <UiButton :to="contactCtaPath" class="mt-8">
+        Umów przygotowanie do matury →
+      </UiButton>
+    </UiSection>
+
+    <UiSection padding="lg">
       <UiSectionHeader
         title="Kompleksowe przygotowanie do matury z angielskiego"
         max-width="3xl"
@@ -55,15 +80,15 @@
       </div>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection variant="secondary" padding="lg">
       <div class="grid gap-10 md:grid-cols-2">
         <UiSectionHeader title="Jak wyglądają zajęcia?" title-tag="h2" size="sm">
           <template #description>
-            Zajęcia odbywają się indywidualnie, w duecie lub w małych, kameralnych
-            grupach do 4 osób, co pozwala na pełne dopasowanie tempa i sposobu
-            pracy do potrzeb każdego ucznia. Podczas lekcji stawiamy na aktywne
-            działanie i zero teorii do szuflady - duży nacisk kładę na praktyczną
-            naukę, systematyczne powtórki oraz bieżące omawianie pracy. Nie tylko
+            Zajęcia odbywają się indywidualnie, w duecie lub w 3-osobowej
+            grupie, co pozwala na pełne dopasowanie tempa i sposobu pracy do
+            potrzeb każdego ucznia. Podczas lekcji stawiamy na aktywne działanie
+            i zero teorii do szuflady - duży nacisk kładę na praktyczną naukę,
+            systematyczne powtórki oraz bieżące omawianie pracy. Nie tylko
             wspólnie rozwiązujemy zadania, ale od razu wyjaśniam każdą
             wątpliwość. Dzięki stałej informacji zwrotnej cały proces jest
             maksymalnie uporządkowany, uczeń dokładnie wie, na czym stoi, a jego
@@ -71,35 +96,6 @@
           </template>
         </UiSectionHeader>
         <BulletList :items="lessonBenefits" />
-      </div>
-    </UiSection>
-
-    <UiSection id="cennik" variant="secondary" border="y" padding="lg" scroll-margin>
-      <UiSectionHeader
-        eyebrow="Ceny"
-        title="Ile kosztuje przygotowanie do matury z angielskiego?"
-        max-width="3xl"
-      >
-        <template #description>
-          Koszt kursu zależy od wybranej formy zajęć (lekcje 1:1, w duecie lub
-          w mini grupie) oraz od całkowitej liczby godzin w danym pakiecie.
-          Harmonogram zawsze układamy tak, aby bez pośpiechu zrealizować
-          wszystkie zaplanowane lekcje i cały niezbędny materiał jeszcze przed
-          samym egzaminem.
-        </template>
-      </UiSectionHeader>
-      <UiButton :to="ROUTES.prices" variant="outline" class="mt-6">
-        Zobacz pełny cennik
-      </UiButton>
-      <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
-        <LandingPriceCard
-          v-for="option in landingPriceOptions"
-          :key="option.name"
-          :option="option"
-          details-id-prefix="matura"
-          :details-open="isPriceDetailsOpen(option.id)"
-          @toggle-details="togglePriceDetails(option.id)"
-        />
       </div>
     </UiSection>
 
@@ -113,14 +109,21 @@
     <CtaBanner
       title="Potrzebujesz pomocy w przygotowaniu do matury?"
       description="Napisz do mnie, czy przygotowujesz się do poziomu podstawowego czy rozszerzonego oraz ile czasu zostało Ci do egzaminu. Wspólnie dobierzemy sensowny rytm pracy, który pozwoli Ci powtórzyć cały materiał, oswoić arkusze i podejść do matury z pełnym spokojem."
-      button-label="Zapytaj o zajęcia →"
+      button-label="Dobierzmy rytm do matury →"
       :button-to="contactCtaPath"
     />
+
+    <StickyContactCta :to="contactCtaPath" label="Zapytaj o maturę →" />
   </main>
 </template>
 
 <script setup>
-import { getPricingPlans, getPricingPromotion } from '~/config/pricing'
+import {
+  buildExamRateCard,
+  buildIndividualRateCard,
+  getPricingPlan,
+  getPricingPlans,
+} from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 
@@ -129,73 +132,21 @@ const pageRoute = ROUTES.maturaExam
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 const priceOptions = getPricingPlans('maturaExam')
-const getPriceOption = (id) => priceOptions.find((option) => option.id === id)
-const examGroup = getPriceOption('examGroup')
-const individualAnnualStandard = priceOptions.find(
-  (option) => option.id === 'individualAnnualWeekly',
-)
-const individualAnnualIntense = priceOptions.find(
-  (option) => option.id === 'individualAnnualTwiceWeekly',
-)
-const miniIndividual = getPriceOption('miniIndividual')
-const occasionalIndividual = getPriceOption('occasionalIndividual')
-const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
+const examGroup = getPricingPlan('examGroup', 'maturaExam')
+const individualWeekly = getPricingPlan('individualWeekly')
+const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
 
 const landingPriceOptions = [
-  {
-    ...examGroup,
-    displayPrice: examGroup.fromPrice,
-    displayPriceContext: examGroup.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(
-        examGroup,
-        `standardowo: ${personPrice(paymentWithoutPrefix(examGroup.paymentNote))}`,
-      ),
-      {
-        payment: `przy zapisie do ${examEarlyBirdPromotion.deadline}: ${personPrice(
-          examEarlyBirdPromotion.paymentNote,
-        )}`,
-        totalPrice: examEarlyBirdPromotion.promoTotalPrice,
-      },
-    ],
-  },
-  {
-    ...individualAnnualIntense,
-    name: 'Pakiety 1:1',
-    frequency: '24/32/64 lekcje',
-    displayPrefix: 'od',
-    displayPrice: individualAnnualIntense.fromPrice,
-    displayPriceContext: individualAnnualIntense.fromPriceContext,
-    paymentLines: [
-      priceDetailLine(miniIndividual, `24 lekcje: ${miniIndividual.price}`),
-      priceDetailLine(
-        individualAnnualStandard,
-        `32 lekcje: ${paymentWithoutPrefix(individualAnnualStandard.paymentNote)}`,
-      ),
-      priceDetailLine(
-        individualAnnualIntense,
-        `64 lekcje: ${paymentWithoutPrefix(individualAnnualIntense.paymentNote)}`,
-      ),
-    ],
-    details:
-      'Pakiet MINI, Standard lub Intense dla maturzystów, którzy potrzebują indywidualnego przygotowania do egzaminu.',
-  },
-  {
-    ...occasionalIndividual,
-    displayPrice: occasionalIndividual.price,
-    displayPriceContext: `za lekcję ${occasionalIndividual.duration}`,
-    paymentLines: [
-      priceDetailLine(occasionalIndividual, 'płatność za pojedynczą lekcję'),
-    ],
-  },
+  buildExamRateCard('maturaExam'),
+  buildIndividualRateCard(
+    'Lekcje indywidualne 1:1 dla maturzystów — stawka zależy od częstotliwości (1× lub 2× w tygodniu).',
+  ),
 ]
 
-const examGroupPrice = `${personPrice(examGroup.fromPrice)} ${examGroup.fromPriceContext}`
 const examGroupPayment = personPrice(
   paymentWithoutPrefix(examGroup.paymentNote),
 )
-const individualAnnualPrice = `${individualAnnualIntense.fromPrice} ${individualAnnualIntense.fromPriceContext}`
-const examPriceFaqAnswer = `Grupowy kurs maturalny ma stałą cenę ${examGroupPrice}. Miesięczna płatność w standardowej cenie to ${examGroupPayment}, a przy zapisie do ${examEarlyBirdPromotion.deadline} rata jest obniżona do ${examEarlyBirdPromotion.installmentPrice} za osobę. Przy wyborze pakietu rocznego 1:1 cena w przeliczeniu zaczyna się od ${individualAnnualPrice}.`
+const examPriceFaqAnswer = `Grupowy kurs maturalny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min. Miesięczna płatność to ${examGroupPayment}. Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×) za lekcję 50 min.`
 
 const features = [
   {
@@ -245,8 +196,6 @@ ułożyć sensowny plan pracy. Na początku sprawdzamy poziom, ustalamy prioryte
 skupiamy się na tych obszarach, które najbardziej wpływają na wynik matury.`,
   },
 ]
-
-const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
 
 useSeoMeta({
   title: 'Matura z angielskiego Rumia – przygotowanie',

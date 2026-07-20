@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content">
+  <main id="main-content" class="pb-20 md:pb-0">
     <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="flex flex-col gap-6">
         <span
@@ -22,7 +22,7 @@
         </p>
         <div class="order-5 flex flex-wrap items-center gap-4 md:order-5">
           <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
-          <UiButton :to="ROUTES.offer" variant="outline">Zobacz ofertę</UiButton>
+          <UiButton :to="ROUTES.offer" variant="outline">Zobacz ofertę i cennik</UiButton>
         </div>
       </div>
 
@@ -48,7 +48,7 @@
       </div>
     </section>
 
-    <section class="border-b border-border bg-secondary">
+    <section class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14">
         <div class="mb-8 max-w-2xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
@@ -71,12 +71,6 @@
               <span class="text-xs font-semibold uppercase text-primary">
                 {{ path.eyebrow }}
               </span>
-              <span
-                v-if="path.badge"
-                class="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary"
-              >
-                {{ path.badge }}
-              </span>
             </div>
             <h3 class="mt-2 font-serif text-xl font-semibold leading-snug text-foreground">
               {{ path.title }}
@@ -84,20 +78,8 @@
             <p class="mt-1.5 text-sm leading-snug text-muted-foreground">
               {{ path.body }}
             </p>
-            <p
-              v-if="path.promoNote"
-              class="mt-2 text-xs leading-snug text-primary"
-            >
-              {{ path.promoNote }}
-              <NuxtLink
-                :to="ROUTES.promotionRules"
-                class="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
-              >
-                Regulamin promocji
-              </NuxtLink>.
-            </p>
             <p class="mt-2.5 text-sm font-medium text-foreground">
-              od {{ path.priceFrom }}
+              {{ path.priceLabel }}
             </p>
             <div v-if="path.links" class="mt-auto flex flex-wrap gap-3 pt-3">
               <NuxtLink
@@ -121,7 +103,31 @@
       </div>
     </section>
 
-    <section class="features">
+    <section class="border-t border-border">
+      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+        <h2
+          class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
+        >
+          Dla kogo są zajęcia w Talkaterii?
+        </h2>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          Jeśli chcesz swobodniej mówić po angielsku, potrzebujesz wsparcia w
+          nauce szkolnej albo szukasz sensownego przygotowania do egzaminu,
+          znajdziesz tu zajęcia dopasowane do celu i poziomu.
+        </p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          To propozycja dla uczniów od klasy 6 szkoły podstawowej, młodzieży i
+          dorosłych, którzy chcą uporządkować wiedzę, mówić pewniej i uczyć się
+          w tempie, które naprawdę da się utrzymać.
+        </p>
+        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
+          Zajęcia prowadzę indywidualnie, w duecie albo w małych grupach, dzięki
+          czemu łatwiej dopasować formę nauki do potrzeb i budżetu.
+        </p>
+      </div>
+    </section>
+
+    <section class="features border-t border-border bg-secondary">
       <div class="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-3">
         <div v-for="feature in features" :key="feature.title" class="space-y-3">
           <h2 class="font-serif text-xl font-semibold text-foreground">
@@ -134,7 +140,7 @@
       </div>
     </section>
 
-    <section class="bg-secondary about-me">
+    <section class="about-me border-t border-border">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div class="relative mx-auto max-w-[18rem] sm:max-w-[20rem] md:mx-0 md:max-w-none">
@@ -207,7 +213,7 @@
       </div>
     </section>
 
-    <section class="localization">
+    <section class="localization border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="mx-auto mb-10 max-w-4xl space-y-3 text-center">
           <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
@@ -286,43 +292,29 @@
       </div>
     </section>
 
-    <section class="border-y border-border bg-secondary">
-      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
-        <h2
-          class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
-        >
-          Dla kogo są zajęcia w Talkaterii?
-        </h2>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Jeśli chcesz swobodniej mówić po angielsku, potrzebujesz wsparcia w
-          nauce szkolnej albo szukasz sensownego przygotowania do egzaminu,
-          znajdziesz tu zajęcia dopasowane do celu i poziomu.
-        </p>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          To propozycja dla uczniów od klasy 6 szkoły podstawowej, młodzieży i
-          dorosłych, którzy chcą uporządkować wiedzę, mówić pewniej i uczyć się
-          w tempie, które naprawdę da się utrzymać.
-        </p>
-        <p class="mt-5 text-pretty leading-relaxed text-muted-foreground">
-          Zajęcia prowadzę indywidualnie, w duecie albo w małych grupach, dzięki
-          czemu łatwiej dopasować formę nauki do potrzeb i budżetu.
-        </p>
-      </div>
-    </section>
+    <FaqAccordion
+      id="faq"
+      id-prefix="home-faq"
+      title="Mini FAQ"
+      :faqs="faqs"
+      padding="lg"
+    />
 
     <CtaBanner
       size="lg"
       section-variant="default"
       title="Szukasz zajęć dopasowanych do Twojego celu?"
       description="Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy interesują Cię spotkania w studiu czy online. Otrzymasz propozycję najlepszej formy pracy i dostępnych terminów."
-      button-label="Zapytaj o zajęcia →"
+      button-label="Napisz, czego potrzebujesz →"
       :button-to="contactCtaPath"
     />
+
+    <StickyContactCta :to="contactCtaPath" label="Dobierzemy formę zajęć →" />
   </main>
 </template>
 
 <script setup>
-import { getPricingPlan, getPricingPromotion } from '~/config/pricing'
+import { getPricingPlan, MORNING_ONLINE_RATES } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildHomePageJsonLd, jsonLdScript } from '~/config/schema'
 
@@ -330,11 +322,7 @@ const pageRoute = ROUTES.home
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 const contactCtaPath = useContactCtaPath()
-const examEarlyBirdPromotion = getPricingPromotion('examEarlyBird')
-const examGroup = getPricingPlan('examGroup')
-const adultFromPlan = getPricingPlan('individualAnnualTwiceWeekly')
-const schoolFromPlan = getPricingPlan('individualAnnualTwiceWeekly')
-const onlineFromPlan = getPricingPlan('onlineMorningIndividualAnnualTwiceWeekly')
+const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
 
 useSeoMeta({
   title:
@@ -424,9 +412,7 @@ const landingPaths = [
     eyebrow: 'Młodzież',
     title: 'Egzamin ósmoklasisty i matura',
     body: 'Przygotowanie do egzaminu ósmoklasisty i matury z angielskiego: arkusze, strategie, gramatyka i spokojne powtórki.',
-    promoNote: `–10% na cały kurs grupowy dla nowych kursantów przy zapisie do ${examEarlyBirdPromotion.deadline} (oszczędność ${examEarlyBirdPromotion.savings}).`,
-    priceFrom: `${personPrice(examGroup.fromPrice)} ${examGroup.fromPriceContext} (cena standardowa)`,
-    badge: '–10%',
+    priceLabel: `108 zł / osoba za spotkanie 100 min`,
     links: [
       { to: ROUTES.eighthGradeExamPrices, label: 'Ósmoklasista' },
       { to: ROUTES.maturaExamPrices, label: 'Matura' },
@@ -438,7 +424,7 @@ const landingPaths = [
     eyebrow: 'Szkoła',
     title: 'Korepetycje i materiał szkolny',
     body: 'Nadrabianie zaległości, przygotowanie do sprawdzianów i spokojne uporządkowanie gramatyki oraz słownictwa.',
-    priceFrom: `${schoolFromPlan.fromPrice} ${schoolFromPlan.fromPriceContext}`,
+    priceLabel: `od ${individualTwiceWeekly.price} za lekcję 50 min`,
   },
   {
     id: 'adults',
@@ -446,7 +432,7 @@ const landingPaths = [
     eyebrow: 'Dorośli',
     title: 'Zajęcia konwersacyjne',
     body: 'Praktyczne zajęcia nastawione na rozwijanie umiejętności mówienia, płynności i pewności siebie w komunikacji.',
-    priceFrom: `${adultFromPlan.fromPrice} ${adultFromPlan.fromPriceContext}`,
+    priceLabel: `od ${individualTwiceWeekly.price} za lekcję 50 min`,
   },
   {
     id: 'online',
@@ -454,7 +440,39 @@ const landingPaths = [
     eyebrow: 'Online',
     title: 'Lekcje języka angielskiego online',
     body: 'Ucz się angielskiego z dowolnego miejsca. Zajęcia online to wygodna i skuteczna forma nauki bez konieczności dojazdów.',
-    priceFrom: `${onlineFromPlan.fromPrice} ${onlineFromPlan.fromPriceContext} (1:1)`,
+    priceLabel: `od ${MORNING_ONLINE_RATES.individualTwiceWeekly} za lekcję 50 min`,
+  },
+]
+
+const faqs = [
+  {
+    q: 'Ile kosztują zajęcia?',
+    a: 'Stawka zależy od formy nauki (1:1, DUO lub kurs egzaminacyjny) oraz częstotliwości. Aktualne ceny znajdziesz w cenniku.',
+    link: {
+      label: 'cenniku',
+      href: ROUTES.prices,
+      before: 'Stawka zależy od formy nauki (1:1, DUO lub kurs egzaminacyjny) oraz częstotliwości. Aktualne ceny znajdziesz w ',
+      after: '.',
+    },
+  },
+  {
+    q: 'Jaką formę zajęć wybrać: indywidualne, DUO czy kurs egzaminacyjny?',
+    a: 'Zajęcia indywidualne sprawdzają się, gdy potrzebujesz maksymalnego dopasowania tempa i programu. DUO jest dobre dla dwóch osób, które chcą uczyć się razem. Kurs egzaminacyjny jest przeznaczony dla uczniów przygotowujących się do egzaminu ósmoklasisty albo matury.',
+  },
+  {
+    q: 'Czy zajęcia online różnią się od stacjonarnych?',
+    a: 'Nie pod względem treści ani jakości. Online prowadzę na Zoomie z taką samą interakcją i indywidualnym podejściem. Poza godzinami porannymi stawki są takie same jak w studiu; poranne lekcje online (Pn–Pt do 12:00) mają osobny cennik.',
+  },
+  {
+    q: 'Jak zapisać się na zajęcia?',
+    a: 'Najprościej napisać przez formularz lub mailowo — albo zadzwonić / wysłać SMS. W wiadomości warto podać wiek ucznia (jeśli dotyczy), cel nauki, preferowaną formę zajęć oraz czy interesują Cię lekcje w Rumi, czy online.',
+    link: {
+      label: 'formularz kontaktowy',
+      href: contactCtaPath,
+      before: 'Najprościej skorzystać z ',
+      after:
+        ' albo napisać mailowo / SMS. W wiadomości warto podać cel nauki, preferowaną formę zajęć oraz czy interesują Cię lekcje w Rumi, czy online.',
+    },
   },
 ]
 

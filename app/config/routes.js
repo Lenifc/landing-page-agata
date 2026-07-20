@@ -17,13 +17,10 @@ export const ROUTES = Object.freeze({
   onlineClassesPrices: '/zajecia-zdalne#cennik',
   prices: '/oferta#cennik',
   pricesMenu: '/oferta#cennik',
-  pricesPackages: '/oferta#pakiety-roczne',
-  pricesMorningOnline: '/oferta#poranne-zajecia-online',
   pricesIndividual: '/oferta#zajecia-indywidualne',
   pricesDuo: '/oferta#zajecia-duo',
-  pricesExam: '/oferta#pakiet-egzaminacyjny',
-  pricesOccasional: '/oferta#lekcje-okazjonalne',
-  promotionRules: '/regulamin-promocji',
+  pricesExam: '/oferta#kurs-egzaminacyjny',
+  pricesOnline: '/oferta#zajecia-online',
   privacyPolicy: '/polityka-prywatnosci',
 })
 

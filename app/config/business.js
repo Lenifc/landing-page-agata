@@ -49,7 +49,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   geo: BUSINESS_GEO,
   hasMap: `https://www.google.com/maps/search/?api=1&query=${BUSINESS_GEO.latitude}%2C${BUSINESS_GEO.longitude}`,
   sameAs: [CONTACT.facebookUrl],
-  priceRange: '48-110 PLN',
+  priceRange: '54-95 PLN',
   currenciesAccepted: 'PLN',
   contactPoint: {
     '@type': 'ContactPoint',

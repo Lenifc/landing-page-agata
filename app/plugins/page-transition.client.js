@@ -7,7 +7,6 @@ const ROUTE_ORDER = [
   '/matura-z-angielskiego-rumia',
   '/zajecia-dla-doroslych',
   '/kontakt',
-  '/regulamin-promocji',
   '/polityka-prywatnosci',
 ]
 

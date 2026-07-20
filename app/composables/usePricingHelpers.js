@@ -5,25 +5,11 @@ export const paymentWithoutPrefix = (value) =>
 
 export const priceDetailLine = (plan, payment = plan.price) => ({
   payment,
-  totalPrice: plan.priceDetails?.totalPrice ?? plan.price,
+  totalPrice: plan.priceDetails?.totalPrice ?? undefined,
 })
 
-export const isOccasionalPriceOption = (option) =>
-  option.id?.startsWith('occasional')
+export const isSimplePriceOption = (option) =>
+  Boolean(option.simple) || option.id?.startsWith('occasional')
 
-export function usePriceDetailsAccordion() {
-  const openPriceDetailsId = ref(null)
-
-  const isPriceDetailsOpen = (optionId) => openPriceDetailsId.value === optionId
-
-  const togglePriceDetails = (optionId) => {
-    openPriceDetailsId.value =
-      openPriceDetailsId.value === optionId ? null : optionId
-  }
-
-  return {
-    openPriceDetailsId,
-    isPriceDetailsOpen,
-    togglePriceDetails,
-  }
-}
+/** @deprecated Use isSimplePriceOption */
+export const isOccasionalPriceOption = isSimplePriceOption

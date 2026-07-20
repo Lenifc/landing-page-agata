@@ -33,11 +33,11 @@
       "
     >
       <div class="px-3.5 py-3 md:py-2.5">
-        <div class="flex items-start justify-between gap-3">
+        <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-3">
           <h5 class="min-w-0 text-base font-semibold text-foreground">
             {{ plan.name }}
           </h5>
-          <div class="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
+          <div class="flex flex-wrap items-center gap-1.5 md:shrink-0 md:justify-end">
             <span
               class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
             >
@@ -93,49 +93,24 @@
 
           <div
             v-if="hasPriceDetails(plan)"
-            class="mt-1.5 w-full text-left text-sm leading-snug text-muted-foreground"
+            class="mt-1.5 w-full space-y-0.5 text-left text-sm leading-snug text-muted-foreground"
           >
-            <button
-              type="button"
-              class="inline-flex cursor-pointer items-center gap-1 font-medium leading-none text-primary transition-colors hover:text-foreground"
-              :aria-expanded="isPriceDetailsOpen(plan.id)"
-              :aria-controls="`price-details-${plan.id}`"
-              @click="togglePriceDetails(plan.id)"
-            >
-              <span>Szczegóły ceny</span>
-              <svg
-                class="h-3.5 w-3.5 shrink-0 translate-y-px transition-transform"
-                :class="{ 'rotate-180': isPriceDetailsOpen(plan.id) }"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </button>
-            <UiCollapse :open="isPriceDetailsOpen(plan.id)" class="w-full">
-              <div
-                :id="`price-details-${plan.id}`"
-                class="mt-1 w-full space-y-0.5 text-left"
-              >
-                <p v-if="plan.priceDetails.totalPrice">
-                  <span class="font-medium text-foreground/75">Cena całkowita:</span>
-                  {{ plan.priceDetails.totalPrice }}
-                </p>
-                <p v-if="plan.priceDetails.lessonPrice">
-                  <span class="font-medium text-foreground/75">Cena za lekcję:</span>
-                  {{ plan.priceDetails.lessonPrice }}
-                </p>
-                <p v-if="plan.priceDetails.savings">
-                  <span class="font-medium text-foreground/75">Oszczędność:</span>
-                  {{ plan.priceDetails.savings }}
-                </p>
-              </div>
-            </UiCollapse>
+            <p v-if="plan.priceDetails.totalPrice">
+              <span class="font-medium text-foreground/75">Cena całkowita:</span>
+              {{ plan.priceDetails.totalPrice }}
+            </p>
+            <p v-if="plan.priceDetails.lessonPrice">
+              <span class="font-medium text-foreground/75">Cena za lekcję:</span>
+              {{ plan.priceDetails.lessonPrice }}
+            </p>
+            <p v-if="plan.paymentNote">
+              <span class="font-medium text-foreground/75">Płatność:</span>
+              {{ paymentWithoutPrefix(plan.paymentNote) }}
+            </p>
+            <p v-if="plan.priceDetails.savings">
+              <span class="font-medium text-foreground/75">Oszczędność:</span>
+              {{ plan.priceDetails.savings }}
+            </p>
           </div>
 
           <p
@@ -160,8 +135,6 @@ defineProps({
     required: true,
   },
 })
-
-const { isPriceDetailsOpen, togglePriceDetails } = usePriceDetailsAccordion()
 
 const planKey = (plan) =>
   plan.id ?? `${plan.name}-${plan.frequency}`
