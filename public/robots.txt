@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://talkateria.pl/sitemap.xml
+# AI / agent discovery
+# https://talkateria.pl/llms.txt
