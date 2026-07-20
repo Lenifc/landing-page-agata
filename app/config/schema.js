@@ -70,9 +70,6 @@ const buildPriceDescription = (plan) =>
         plan.paymentNote
           ? `${sentenceCase(plan.paymentNote)}.`
           : `Płatność: ${plan.price}.`,
-        plan.fromPrice && plan.promo
-          ? `${plan.promo.label}: ${plan.promo.price}.`
-          : undefined,
       ]
         .filter(Boolean)
         .join(' ')

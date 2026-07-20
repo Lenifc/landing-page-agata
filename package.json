@@ -19,7 +19,6 @@
     "vue-router": "latest"
   },
   "devDependencies": {
-    "prettier": "^3.8.3",
-    "sass": "^1.100.0"
+    "prettier": "^3.8.3"
   }
 }

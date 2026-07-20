@@ -42,6 +42,21 @@ export default defineNuxtConfig({
           'cache-control': 'public, max-age=31536000, immutable',
         },
       },
+      '/**/*.png': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
+      '/**/*.svg': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
+      '/**/*.ico': {
+        headers: {
+          'cache-control': 'public, max-age=31536000, immutable',
+        },
+      },
       '/**/*.woff2': {
         headers: {
           'cache-control': 'public, max-age=31536000, immutable',

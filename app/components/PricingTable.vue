@@ -95,11 +95,11 @@
             v-if="hasPriceDetails(plan)"
             class="mt-1.5 w-full space-y-0.5 text-left text-sm leading-snug text-muted-foreground"
           >
-            <p v-if="plan.priceDetails.totalPrice">
+            <p v-if="plan.priceDetails?.totalPrice">
               <span class="font-medium text-foreground/75">Cena całkowita:</span>
               {{ plan.priceDetails.totalPrice }}
             </p>
-            <p v-if="plan.priceDetails.lessonPrice">
+            <p v-if="plan.priceDetails?.lessonPrice">
               <span class="font-medium text-foreground/75">Cena za lekcję:</span>
               {{ plan.priceDetails.lessonPrice }}
             </p>
@@ -107,21 +107,7 @@
               <span class="font-medium text-foreground/75">Płatność:</span>
               {{ paymentWithoutPrefix(plan.paymentNote) }}
             </p>
-            <p v-if="plan.priceDetails.savings">
-              <span class="font-medium text-foreground/75">Oszczędność:</span>
-              {{ plan.priceDetails.savings }}
-            </p>
           </div>
-
-          <p
-            v-if="plan.promo"
-            class="mt-2 text-left text-xs font-medium leading-relaxed text-primary"
-          >
-            {{ plan.promo.label }}:<br />
-            <span class="font-serif text-base font-semibold">
-              {{ plan.promo.price }}
-            </span>
-          </p>
         </div>
       </div>
     </div>
@@ -142,7 +128,6 @@ const planKey = (plan) =>
 const hasPriceDetails = (plan) =>
   Boolean(
     plan.priceDetails?.totalPrice
-      || plan.priceDetails?.lessonPrice
-      || plan.priceDetails?.savings,
+      || plan.priceDetails?.lessonPrice,
   )
 </script>

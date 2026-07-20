@@ -16,11 +16,6 @@ export const ROUTES = Object.freeze({
   onlineClasses: '/zajecia-zdalne',
   onlineClassesPrices: '/zajecia-zdalne#cennik',
   prices: '/oferta#cennik',
-  pricesMenu: '/oferta#cennik',
-  pricesIndividual: '/oferta#zajecia-indywidualne',
-  pricesDuo: '/oferta#zajecia-duo',
-  pricesExam: '/oferta#kurs-egzaminacyjny',
-  pricesOnline: '/oferta#zajecia-online',
   privacyPolicy: '/polityka-prywatnosci',
 })
 

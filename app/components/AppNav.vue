@@ -11,7 +11,7 @@
         @click="closeMenus"
       >
         <img
-          src="/talkateria-logo-color.svg"
+          src="/talkateria-logo-color.webp"
           alt="Talkateria - angielski w Rumi"
           class="h-11 w-auto sm:h-12"
           width="188"
