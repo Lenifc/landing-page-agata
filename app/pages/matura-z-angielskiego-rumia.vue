@@ -19,7 +19,7 @@
         kompleksowo do matury na poziomie podstawowym oraz rozszerzonym, a
         także do egzaminu ustnego w studiu w Rumi lub online. Ucz się
         indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w
-        makeralnej 3-osobowej grupie.<br /><br />
+        kameralnej 3-osobowej grupie.<br /><br />
         Stawiam na systematyczność, zrozumienie wymagań egzaminacyjnych i
         regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
         przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
