@@ -159,6 +159,7 @@
 import {
   buildDuoRateCard,
   buildIndividualRateCard,
+  getPricingPlan,
   getPricingPlans,
 } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
@@ -169,6 +170,10 @@ const pageRoute = ROUTES.schoolSupport
 const pageUrl = `${SITE_URL}${pageRoute}`
 
 const priceOptions = getPricingPlans('schoolSupport')
+const individualWeekly = getPricingPlan('individualWeekly')
+const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
+const duoWeekly = getPricingPlan('duoWeekly')
+const duoTwiceWeekly = getPricingPlan('duoTwiceWeekly')
 
 const landingPriceOptions = [
   buildIndividualRateCard(
@@ -178,6 +183,8 @@ const landingPriceOptions = [
     'Lekcje DUO dla dwóch osób o podobnym poziomie — stawka za osobę zależy od częstotliwości.',
   ),
 ]
+
+const schoolPriceFaqAnswer = `Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×). Lekcje DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Pełne stawki znajdziesz w cenniku powyżej.`
 
 const features = [
   {
@@ -204,6 +211,16 @@ const trustItems = [
 ]
 
 const faqs = [
+  {
+    q: 'Ile kosztują korepetycje z angielskiego?',
+    a: schoolPriceFaqAnswer,
+    link: {
+      label: 'cenniku',
+      href: ROUTES.schoolSupportPrices,
+      before: `Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×). Lekcje DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Pełne stawki znajdziesz w `,
+      after: ' powyżej.',
+    },
+  },
   {
     q: 'Dla kogo są korepetycje z angielskiego?',
     a: 'Korepetycje kieruję do uczniów od klasy 6 szkoły podstawowej, uczniów szkół ponadpodstawowych oraz studentów. Pomagam zarówno przy bieżącym materiale, jak i przy nadrabianiu zaległości, przygotowaniu do sprawdzianów, kartkówek oraz zaliczeń.',
