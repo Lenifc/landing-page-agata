@@ -311,7 +311,7 @@ const pricingSections = [
     navLabel: '1:1',
     title: 'Lekcje indywidualne 1:1',
     description: [
-      'Stawka za lekcję zależy od częstotliwości. Przy dwóch terminach w tygodniu obowiązuje niższa cena za spotkanie.',
+      'Stawka za lekcję zależy od częstotliwości. Przy dwóch lekcjach w tygodniu obowiązuje niższa cena za spotkanie.',
     ],
     plans: getPricingPlans('individual'),
   },
@@ -320,7 +320,7 @@ const pricingSections = [
     navLabel: 'DUO',
     title: 'Lekcje DUO (cena za osobę)',
     description: [
-      'Zajęcia w parze — cena podana za osobę. Przy dwóch terminach w tygodniu stawka jest niższa.',
+      'Zajęcia w parze — cena podana za osobę. Przy dwóch lekcjach w tygodniu stawka jest niższa.',
     ],
     plans: getPricingPlans('duo'),
   },
