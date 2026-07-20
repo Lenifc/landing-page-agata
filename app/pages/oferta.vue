@@ -330,7 +330,7 @@ const pricingSections = [
     title: 'Kurs egzaminacyjny',
     badge: 'Pakiet · 8 rat',
     description: [
-      'Jedyny pakiet w ofercie: 25 spotkań po 100 minut w 3-osobowej grupie (ósmoklasista lub matura). Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min). Płatność w 8 równych ratach.',
+      'Jedyny pakiet w ofercie: 25 spotkań po 100 minut w 3-osobowej grupie (egzamin ósmoklasisty lub matura). Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min). Płatność w 8 równych ratach.',
     ],
     plans: getPricingPlans('annualExam'),
   },
