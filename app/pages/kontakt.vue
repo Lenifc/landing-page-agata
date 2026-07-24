@@ -1,6 +1,6 @@
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-6xl px-6 py-14 md:pb-24">
+    <section class="mx-auto max-w-6xl px-6 py-12 md:pb-16">
       <div class="mb-12 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Kontakt
@@ -10,26 +10,23 @@
         >
           Napisz, jakich zajęć szukasz.
         </h1>
-        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+        <p class="mt-4 text-pretty text-justify text-md leading-relaxed text-muted-foreground">
           Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
           wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
           maila lub wiadomość SMS.
         </p>
-        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+        <p class="mt-4 text-pretty text-justify text-md leading-relaxed text-muted-foreground">
           W wiadomości warto od razu podać wiek ucznia lub swój poziom,
           rodzaj kursu, który Cię interesuje, oraz informację, czy szukasz
           zajęć indywidualnych, w duecie, w grupie, stacjonarnie czy online.
         </p>
-        <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Jeśli chcesz, umówimy też zapoznawczą <b>bezpłatną konsultację 
-          online</b> - potrwa ok.&nbsp;15&nbsp;min. Poznam Twój poziom
-          językowy, porozmawiamy o tym, co chcesz osiągnąć, i na tej podstawie
-          dobiorę skuteczną formę nauki oraz materiały dopasowane do Ciebie.
-        </p>
       </div>
 
-      <div id="dane-kontaktowe" class="scroll-mt-24 space-y-8 md:space-y-12">
-        <UiButton href="#formularz" class="gap-2">
+      <div
+        id="dane-kontaktowe"
+        class="scroll-mt-24 grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-x-12 lg:gap-y-8"
+      >
+        <UiButton href="#formularz" class="order-1 w-fit gap-2 justify-self-start lg:col-span-2">
           Przejdź do formularza
           <svg
             aria-hidden="true"
@@ -46,8 +43,17 @@
           </svg>
         </UiButton>
 
-        <div class="grid gap-12 lg:grid-cols-2 lg:items-stretch">
-        <div class="space-y-5">
+        <p
+          class="order-3 text-pretty text-justify text-base leading-relaxed text-muted-foreground lg:order-2 lg:col-span-2 lg:max-w-3xl"
+        >
+          Jeśli chcesz, umówimy też zapoznawczą
+          <b>bezpłatną konsultację online</b> - potrwa ok.&nbsp;15&nbsp;min.
+          Poznam Twój poziom językowy, porozmawiamy o tym, co chcesz osiągnąć,
+          i na tej podstawie dobiorę skuteczną formę nauki oraz materiały
+          dopasowane do Ciebie.
+        </p>
+
+        <div class="order-2 space-y-5 lg:order-3">
           <div
             v-for="item in details"
             :key="item.label"
@@ -137,54 +143,19 @@
           </div>
         </div>
 
-        <div class="flex h-full min-h-0">
+        <div class="order-4 flex min-h-0 lg:order-4">
           <div
             class="h-full w-full overflow-hidden rounded-3xl border border-border shadow-sm"
           >
             <img
               src="/contact.webp"
               alt="Studio Talkateria w Rumi z widoczną salą zajęć."
-              class="block h-full min-h-[22rem] w-full object-cover object-center lg:min-h-0"
+              class="block h-full min-h-[22rem] w-full object-cover object-center lg:min-h-[28rem]"
               width="1200"
               height="676"
               loading="lazy"
             />
           </div>
-        </div>
-      </div>
-      </div>
-
-      <div class="mt-12 md:mt-16">
-        <div class="mb-6 max-w-2xl">
-          <UiSectionHeader
-            eyebrow="Dojazd"
-            title="Zobacz lokalizację studia na mapie."
-            title-tag="h2"
-            max-width="2xl"
-          />
-        </div>
-
-        <div
-          class="mx-auto overflow-hidden rounded-3xl border border-border bg-card shadow-sm md:w-3/4"
-        >
-          <ClientOnly>
-            <iframe
-              src="https://www.google.com/maps?cid=9730163744970894561&amp;output=embed&amp;hl=pl"
-              title="Mapa dojazdu do studia Talkateria przy ul. Wrocławskiej 2 w Rumi"
-              class="h-[420px] w-full border-0 md:h-[390px]"
-              loading="lazy"
-              allowfullscreen
-            />
-
-            <template #fallback>
-              <div
-                class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[390px]"
-                role="status"
-              >
-                Ładowanie mapy…
-              </div>
-            </template>
-          </ClientOnly>
         </div>
       </div>
     </section>
@@ -261,6 +232,40 @@
           </a>
           .
         </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-12 md:py-16">
+      <div class="mb-6 max-w-2xl">
+        <UiSectionHeader
+          eyebrow="Dojazd"
+          title="Zobacz lokalizację studia na mapie."
+          title-tag="h2"
+          max-width="2xl"
+        />
+      </div>
+
+      <div
+        class="mx-auto overflow-hidden rounded-3xl border border-border bg-card shadow-sm md:w-3/4"
+      >
+        <ClientOnly>
+          <iframe
+            src="https://www.google.com/maps?cid=9730163744970894561&amp;output=embed&amp;hl=pl"
+            title="Mapa dojazdu do studia Talkateria przy ul. Wrocławskiej 2 w Rumi"
+            class="h-[420px] w-full border-0 md:h-[390px]"
+            loading="lazy"
+            allowfullscreen
+          />
+
+          <template #fallback>
+            <div
+              class="flex h-[420px] items-center justify-center bg-muted/40 text-sm text-muted-foreground md:h-[390px]"
+              role="status"
+            >
+              Ładowanie mapy…
+            </div>
+          </template>
+        </ClientOnly>
       </div>
     </section>
   </main>

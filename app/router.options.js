@@ -1,4 +1,4 @@
-const ANCHOR_OFFSET = 96
+import { ANCHOR_OFFSET } from './utils/scrollToHash'
 
 export default {
   scrollBehavior(to, from, savedPosition) {
