@@ -118,7 +118,7 @@
 
     <CtaBanner
       title="Porozmawiajmy o Twoim angielskim!"
-      description="Napisz, do czego potrzebujesz języka, a wspólnie ułożymy spokojny plan dopasowany do Twojego celu i czasu, którym dysponujesz."
+      description="Napisz, do czego potrzebujesz języka — albo umów bezpłatną konsultację online (15&nbsp;min). Wspólnie ułożymy spokojny plan dopasowany do Twojego celu i czasu."
       button-label="Ułóżmy Twój plan nauki →"
       :button-to="contactCtaPath"
     />
@@ -227,10 +227,10 @@ zajęcia stacjonarne ze zdalnymi.`,
 useSeoMeta({
   title: 'Zajęcia z angielskiego dla dorosłych Rumia',
   description:
-    'Angielski dla dorosłych w Rumi: konwersacje, powrót do nauki, angielski do pracy i podróży. Kameralne lekcje stacjonarnie lub online.',
+    'Angielski dla dorosłych w Rumi: konwersacje, powrót do nauki, angielski do pracy i podróży. Bezpłatna konsultacja online 15 min. Kameralne lekcje stacjonarnie lub online.',
   ogTitle: 'Angielski dla dorosłych | Talkateria Rumia',
   ogDescription:
-    'Kameralne zajęcia dla dorosłych: rozmowa, praktyczne słownictwo, powrót do podstaw i nauka bez presji.',
+    'Kameralne zajęcia dla dorosłych. Umów bezpłatną konsultację online (15 min): rozmowa, praktyczne słownictwo i nauka bez presji.',
 })
 
 useHead({
@@ -241,7 +241,7 @@ useHead({
         pageUrl,
         pageName: 'Angielski dla dorosłych Rumia',
         pageDescription:
-          'Angielski dla dorosłych w Rumi: konwersacje, powrót do nauki, angielski do pracy i podróży. Kameralne lekcje stacjonarnie lub online.',
+          'Angielski dla dorosłych w Rumi: konwersacje, powrót do nauki, angielski do pracy i podróży. Bezpłatna konsultacja online 15 min. Kameralne lekcje stacjonarnie lub online.',
         serviceName: 'Angielski dla dorosłych',
         serviceType: 'Angielski dla dorosłych w Rumi',
         serviceDescription:

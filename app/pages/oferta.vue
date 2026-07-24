@@ -37,7 +37,7 @@
         <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3" id="cennik-sekcje">
           Te same stawki obowiązują stacjonarnie w Rumi i online poza godzinami
           porannymi. Cennik poranny online znajdziesz na początku listy poniżej.
-          Przed startem możesz umówić bezpłatną konsultację online —
+          Przed startem możesz umówić bezpłatną konsultację online (15&nbsp;min) —
           po krótkiej rozmowie dobierzemy formę zajęć do celu nauki i dostępnych terminów.
         </p>
       </div>
@@ -266,7 +266,8 @@
               Nie wiesz jeszcze, która opcja będzie najlepsza?
             </h2>
             <p class="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Napisz, dla kogo mają być zajęcia i jaki jest cel nauki.
+              Napisz, dla kogo mają być zajęcia i jaki jest cel nauki —
+              albo umów bezpłatną konsultację online (15&nbsp;min).
               Podpowiem, czy lepiej sprawdzą się zajęcia 1:1, DUO czy kurs
               egzaminacyjny.
             </p>
@@ -322,10 +323,10 @@ const offerPricingFaqAnswer = `Cennik jest prosty: cena za lekcję 50 min zależ
 useSeoMeta({
   title: 'Oferta oraz cennik zajęć z angielskiego w Rumi',
   description:
-    'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online przed startem.',
+    'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny. Bezpłatna konsultacja online 15 min.',
   ogTitle: 'Cennik zajęć z angielskiego w Rumi | Talkateria',
   ogDescription:
-    'Zobacz aktualne ceny lekcji angielskiego w Rumi: 1:1, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online.',
+    'Aktualne ceny lekcji angielskiego w Rumi: 1:1, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online (15 min).',
 })
 
 const pricingSections = [
@@ -415,7 +416,7 @@ const faqs = [
   },
   {
     q: 'Jak wygląda pierwsze spotkanie?',
-    a: 'Przed startem możesz umówić bezpłatną konsultację online. Rozmawiamy o celu nauki, dotychczasowych doświadczeniach i dostępnych terminach. W przypadku uczniów sprawdzamy też poziom, potrzeby szkolne lub egzaminacyjne, aby dobrać odpowiednią formę zajęć i zakres pracy.',
+    a: 'Przed startem możesz umówić bezpłatną konsultację online (15 min). Rozmawiamy o celu nauki, dotychczasowych doświadczeniach i dostępnych terminach. W przypadku uczniów sprawdzamy też poziom, potrzeby szkolne lub egzaminacyjne, aby dobrać odpowiednią formę zajęć i zakres pracy.',
   },
   {
     q: 'Czy zajęcia online różnią się od stacjonarnych?',
@@ -471,7 +472,7 @@ useHead({
         pageUrl,
         name: 'Oferta i cennik zajęć z angielskiego w Rumi',
         description:
-          'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online przed startem.',
+          'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny. Bezpłatna konsultacja online 15 min.',
         plans: offerCatalogPlans,
         faqs,
       }),

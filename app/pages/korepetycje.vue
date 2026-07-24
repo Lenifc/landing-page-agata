@@ -146,7 +146,7 @@
     <CtaBanner
       section-variant="default"
       title="Wspólnie zadbajmy o rozwój Państwa dziecka."
-      description="Regularne zajęcia pomagają uzupełnić zaległości, lepiej zrozumieć materiał i odzyskać pewność siebie podczas lekcji w szkole. Chętnie doradzę, jaka forma wsparcia będzie najlepsza, i odpowiem na wszystkie pytania."
+      description="Regularne zajęcia pomagają uzupełnić zaległości i odzyskać pewność siebie w szkole. Napisz, czego potrzebujecie — albo umów bezpłatną konsultację online (15&nbsp;min), a doradzę najlepszą formę wsparcia."
       button-label="Zapytaj o wsparcie szkolne →"
       :button-to="contactCtaPath"
     />
@@ -246,10 +246,10 @@ const faqs = [
 useSeoMeta({
   title: 'Korepetycje z angielskiego Rumia',
   description:
-    'Wsparcie w materiale szkolnym z angielskiego w Rumi i online dla uczniów od 6 klasy, szkół ponadpodstawowych oraz studentów. Materiał szkolny, sprawdziany i zaległości.',
+    'Korepetycje z angielskiego w Rumi i online dla uczniów od 6 klasy. Bezpłatna konsultacja online 15 min. Materiał szkolny, sprawdziany i zaległości.',
   ogTitle: 'Korepetycje z angielskiego w Rumi | Talkateria',
   ogDescription:
-    'Wsparcie w materiale szkolnym z angielskiego: gramatyka, słownictwo, sprawdziany, zaległości i większa pewność siebie.',
+    'Wsparcie w materiale szkolnym z angielskiego. Umów bezpłatną konsultację online (15 min) i dobierzmy formę zajęć.',
 })
 
 useHead({
@@ -260,7 +260,7 @@ useHead({
         pageUrl,
         pageName: 'Korepetycje z angielskiego w Rumi',
         pageDescription:
-          'Wsparcie w materiale szkolnym z angielskiego w Rumi i online dla uczniów od 6 klasy szkoły podstawowej, uczniów szkół ponadpodstawowych oraz studentów.',
+          'Korepetycje z angielskiego w Rumi i online dla uczniów od 6 klasy. Bezpłatna konsultacja online 15 min. Materiał szkolny, sprawdziany i zaległości.',
         serviceName: 'Korepetycje z angielskiego',
         serviceType: 'Korepetycje z języka angielskiego',
         serviceDescription:

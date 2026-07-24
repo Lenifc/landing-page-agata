@@ -304,7 +304,7 @@
     <CtaBanner
       class="order-8"
       title="Chcesz uczyć się angielskiego online?"
-      description="Napisz, jaki jest Twój cel lub umów bezpłatną konsultację 15min. Wspólnie dobierzemy idealną formę i dogodny termin."
+      description="Napisz, jaki jest Twój cel, albo umów bezpłatną konsultację online (15&nbsp;min). Wspólnie dobierzemy formę zajęć i dogodny termin."
       button-label="Dobierzmy formę online →"
       :button-to="contactCtaPath"
     />
@@ -467,10 +467,10 @@ dnia.`,
 useSeoMeta({
   title: 'Angielski online – zajęcia zdalne',
   description:
-    'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Umów bezpłatną konsultację online. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
+    'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Bezpłatna konsultacja online 15 min. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
   ogTitle: 'Angielski online – zajęcia zdalne | Talkateria',
   ogDescription:
-    'Angielski online bez dojazdów. Umów bezpłatną konsultację przed startem — wygodnie, regularnie i z indywidualnym podejściem.',
+    'Angielski online bez dojazdów. Umów bezpłatną konsultację online (15 min) — wygodnie, regularnie i z indywidualnym podejściem.',
 })
 
 useHead({
@@ -486,7 +486,7 @@ useHead({
         pageUrl,
         pageName: 'Angielski online – zajęcia zdalne',
         pageDescription:
-          'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
+          'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Bezpłatna konsultacja online 15 min. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
         serviceName: 'Lekcje angielskiego online',
         serviceType: 'Lekcje języka angielskiego online',
         serviceDescription:

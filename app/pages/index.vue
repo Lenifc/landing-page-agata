@@ -304,7 +304,7 @@
       size="lg"
       section-variant="default"
       title="Szukasz zajęć dopasowanych do Twojego celu?"
-      description="Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy interesują Cię spotkania w studiu czy online. Otrzymasz propozycję najlepszej formy pracy i dostępnych terminów."
+      description="Napisz, dla kogo mają być zajęcia i jaki jest cel nauki — albo umów bezpłatną konsultację online (15&nbsp;min). Otrzymasz propozycję najlepszej formy pracy i dostępnych terminów."
       button-label="Napisz, czego potrzebujesz →"
       :button-to="contactCtaPath"
     />
@@ -328,10 +328,10 @@ useSeoMeta({
   title:
     'Angielski Rumia - zajęcia dla dorosłych i młodzieży, stacjonarne oraz online',
   description:
-    'Kameralne lekcje angielskiego w Rumi dla młodzieży oraz dorosłych. Umów bezpłatną konsultację online. Indywidualnie, w duecie lub małej grupie, z naciskiem na swobodne mówienie.',
+    'Kameralne lekcje angielskiego w Rumi dla młodzieży oraz dorosłych. Bezpłatna konsultacja online 15 min. Indywidualnie, w duecie lub małej grupie, z naciskiem na swobodne mówienie.',
   ogTitle: 'Angielski w Rumi i online | Talkateria',
   ogDescription:
-    'Kameralne zajęcia z angielskiego w Rumi i online. Umów bezpłatną konsultację przed startem. Mniej stresu, więcej mówienia.',
+    'Kameralne zajęcia z angielskiego w Rumi i online. Umów bezpłatną konsultację online (15 min). Mniej stresu, więcej mówienia.',
 })
 
 const features = [
@@ -494,7 +494,7 @@ useHead({
         pageUrl,
         pageName: 'Angielski w Rumi — egzaminy, szkoła i konwersacje',
         pageDescription:
-          'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych: zajęcia indywidualne, DUO, przygotowanie do egzaminów i konwersacje.',
+          'Kameralne lekcje języka angielskiego w Rumi dla młodzieży i dorosłych. Bezpłatna konsultacja online 15 min. Zajęcia indywidualne, DUO, przygotowanie do egzaminów i konwersacje.',
         audience: {
           '@type': 'Audience',
           audienceType: 'młodzież i dorośli',

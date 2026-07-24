@@ -108,7 +108,7 @@
 
     <CtaBanner
       title="Potrzebujesz pomocy w przygotowaniu do matury?"
-      description="Napisz do mnie, czy przygotowujesz się do poziomu podstawowego czy rozszerzonego oraz ile czasu zostało Ci do egzaminu. Wspólnie dobierzemy sensowny rytm pracy, który pozwoli Ci powtórzyć cały materiał, oswoić arkusze i podejść do matury z pełnym spokojem."
+      description="Napisz, czy przygotowujesz się do poziomu podstawowego czy rozszerzonego oraz ile czasu zostało do egzaminu — albo umów bezpłatną konsultację online (15&nbsp;min). Wspólnie dobierzemy sensowny rytm pracy."
       button-label="Dobierzmy rytm do matury →"
       :button-to="contactCtaPath"
     />
@@ -200,10 +200,10 @@ skupiamy się na tych obszarach, które najbardziej wpływają na wynik matury.`
 useSeoMeta({
   title: 'Matura z angielskiego Rumia – przygotowanie',
   description:
-    'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony dla uczniów z całej Polski.',
+    'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony. Bezpłatna konsultacja online 15 min.',
   ogTitle: 'Matura z angielskiego Rumia | Talkateria',
   ogDescription:
-    'Kameralne lekcje przygotowujące do matury z angielskiego: arkusze, pisanie, mówienie, gramatyka i strategie egzaminacyjne.',
+    'Przygotowanie do matury z angielskiego. Umów bezpłatną konsultację online (15 min): arkusze, pisanie, mówienie i strategie egzaminacyjne.',
 })
 
 useHead({
@@ -214,7 +214,7 @@ useHead({
         pageUrl,
         pageName: 'Przygotowanie do matury z angielskiego w Rumi',
         pageDescription:
-          'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony, arkusze, pisanie, mówienie oraz strategie egzaminacyjne.',
+          'Zajęcia przygotowujące do matury z angielskiego w Rumi: poziom podstawowy i rozszerzony. Bezpłatna konsultacja online 15 min.',
         serviceName: 'Przygotowanie do matury z angielskiego',
         serviceType: 'Przygotowanie do matury z języka angielskiego',
         serviceDescription:

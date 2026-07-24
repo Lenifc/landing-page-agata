@@ -109,7 +109,7 @@
 
     <CtaBanner
       title="Chcesz sprawdzić, od czego zacząć przygotowania?"
-      description="Napisz, w której klasie jest uczeń i jaki jest obecny poziom. Dobierzemy formę pracy i tempo przygotowań do egzaminu."
+      description="Napisz, w której klasie jest uczeń i jaki jest obecny poziom — albo umów bezpłatną konsultację online (15&nbsp;min). Dobierzemy formę pracy i tempo przygotowań do egzaminu."
       button-label="Dobierzmy plan przygotowań →"
       :button-to="contactCtaPath"
     />
@@ -217,10 +217,10 @@ opanował, a nad czym powinien jeszcze popracować.`,
 useSeoMeta({
   title: 'Egzamin ósmoklasisty z angielskiego w Rumi',
   description:
-    'Zajęcia przygotowujące do egzaminu ósmoklasisty z angielskiego w Rumi: arkusze, strategie, gramatyka, słownictwo i spokojne powtórki.',
+    'Zajęcia przygotowujące do egzaminu ósmoklasisty z angielskiego w Rumi. Bezpłatna konsultacja online 15 min. Arkusze, strategie, gramatyka i spokojne powtórki.',
   ogTitle: 'Egzamin ósmoklasisty z języka angielskiego | Talkateria',
   ogDescription:
-    'Kameralne przygotowanie do egzaminu ósmoklasisty z angielskiego: arkusze, strategie, gramatyka, słownictwo i spokojna praca krok po kroku.',
+    'Przygotowanie do egzaminu ósmoklasisty z angielskiego. Umów bezpłatną konsultację online (15 min) i zaplanujmy spokojną pracę krok po kroku.',
 })
 
 useHead({
@@ -231,7 +231,7 @@ useHead({
         pageUrl,
         pageName: 'Egzamin ósmoklasisty z angielskiego w Rumi',
         pageDescription:
-          'Zajęcia przygotowujące do egzaminu ósmoklasisty z angielskiego w Rumi: arkusze, strategie, gramatyka, słownictwo i spokojne powtórki.',
+          'Zajęcia przygotowujące do egzaminu ósmoklasisty z angielskiego w Rumi. Bezpłatna konsultacja online 15 min. Arkusze, strategie, gramatyka i spokojne powtórki.',
         serviceName: 'Przygotowanie do egzaminu ósmoklasisty z angielskiego',
         serviceType:
           'Przygotowanie do egzaminu ósmoklasisty z języka angielskiego',
