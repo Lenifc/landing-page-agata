@@ -151,7 +151,7 @@
       :button-to="contactCtaPath"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Zapytaj o korepetycje →" />
+    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 

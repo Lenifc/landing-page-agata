@@ -114,7 +114,7 @@
       :button-to="contactCtaPath"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Zapytaj o egzamin ósmoklasisty →" />
+    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 

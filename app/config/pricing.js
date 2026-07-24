@@ -134,10 +134,10 @@ export const PRICING = Object.freeze({
       'Płatność z góry, na podstawie prognozowanej liczby spotkań w danym miesiącu.',
   },
   morningOnlineRates: {
-    individualWeekly: '80 zł',
-    individualTwiceWeekly: '70 zł',
-    duoWeekly: '60 zł / osoba',
-    duoTwiceWeekly: '50 zł / osoba',
+    individualWeekly: '85 zł',
+    individualTwiceWeekly: '75 zł',
+    duoWeekly: '70 zł / osoba',
+    duoTwiceWeekly: '60 zł / osoba',
   },
 })
 

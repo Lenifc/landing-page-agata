@@ -11,9 +11,9 @@
           Napisz, jakich zajęć szukasz.
         </h1>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Najprościej wysłać formularz, e-mail lub SMS. Na podstawie krótkiej
-          wiadomości łatwiej dobrać odpowiednią formę zajęć i sprawdzić
-          dostępne terminy.
+          Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
+          wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
+          maila lub wiadomość SMS.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
           W wiadomości warto od razu podać wiek ucznia lub swój poziom,
@@ -21,9 +21,10 @@
           zajęć indywidualnych, w duecie, w grupie, stacjonarnie czy online.
         </p>
         <p class="mt-5 text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
-          Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
-          wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
-          maila lub wiadomość SMS.
+          Jeśli chcesz, umówimy też zapoznawczą <b>bezpłatną konsultację 
+          online</b> - potrwa ok.&nbsp;15&nbsp;min. Poznam Twój poziom
+          językowy, porozmawiamy o tym, co chcesz osiągnąć, i na tej podstawie
+          dobiorę skuteczną formę nauki oraz materiały dopasowane do Ciebie.
         </p>
       </div>
 
@@ -277,10 +278,10 @@ const pageUrl = `${SITE_URL}${pageRoute}`
 useSeoMeta({
   title: 'Kontakt - zajęcia z angielskiego w Rumi oraz online',
   description:
-    'Skontaktuj się z Talkaterią w Rumi i zapytaj o lekcje angielskiego stacjonarnie lub online. Telefon, e-mail i formularz zgłoszeniowy.',
+    'Skontaktuj się z Talkaterią w Rumi i umów bezpłatną konsultację online (15 min). Telefon, e-mail i formularz zgłoszeniowy.',
   ogTitle: 'Talkateria | Kontakt',
   ogDescription:
-    'Napisz i zapytaj o najlepszą formę zajęć z angielskiego w Rumi — studio lub online.',
+    'Umów bezpłatną konsultację online (15 min) i zapytaj o najlepszą formę zajęć z angielskiego w Rumi — studio lub online.',
 })
 
 const email = ref(CONTACT.obfuscatedEmail)

@@ -44,7 +44,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   email: CONTACT.email,
   telephone: CONTACT.phoneInternational,
   description:
-    'Kameralne lekcje języka angielskiego w Rumi Janowie dla młodzieży i dorosłych z Rumi i okolic.',
+    'Kameralne lekcje języka angielskiego w Rumi Janowie dla młodzieży i dorosłych z Rumi i okolic. Umów bezpłatną konsultację online przed startem.',
   address: BUSINESS_ADDRESS,
   geo: BUSINESS_GEO,
   hasMap: `https://www.google.com/maps/search/?api=1&query=${BUSINESS_GEO.latitude}%2C${BUSINESS_GEO.longitude}`,

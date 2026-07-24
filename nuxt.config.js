@@ -82,7 +82,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Kameralne lekcje angielskiego w Rumi i online dla młodzieży oraz dorosłych. Nauka bez stresu, z naciskiem na swobodne mówienie. | Talkateria',
+            'Kameralne lekcje angielskiego w Rumi i online dla młodzieży oraz dorosłych. Umów bezpłatną konsultację online. Nauka bez stresu, z naciskiem na swobodne mówienie. | Talkateria',
         },
         { name: 'robots', content: 'index, follow' },
         { name: 'author', content: 'Talkateria' },
@@ -117,7 +117,7 @@ export default defineNuxtConfig({
         {
           property: 'og:description',
           content:
-            'Kameralne zajęcia z angielskiego w Rumi dla młodzieży oraz dorosłych. Bez stresu, z naciskiem na mówienie.',
+            'Kameralne zajęcia z angielskiego w Rumi dla młodzieży oraz dorosłych. Umów bezpłatną konsultację online. Bez stresu, z naciskiem na mówienie.',
         },
       ],
       link: [

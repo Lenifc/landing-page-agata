@@ -6,14 +6,14 @@
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
       <NuxtLink
         :to="ROUTES.home"
-        class="flex items-center"
+        class="flex shrink-0 items-center"
         aria-label="Talkateria - strona główna"
         @click="closeMenus"
       >
         <img
           src="/talkateria-logo-color.webp"
           alt="Talkateria - angielski w Rumi"
-          class="h-11 w-auto sm:h-12"
+          class="h-11 w-auto shrink-0 sm:h-12"
           width="188"
           height="56"
           decoding="async"
@@ -25,7 +25,7 @@
           <NuxtLink
             :to="link.to"
             class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            active-class="!text-foreground"
+            active-class="!text-primary"
           >
             {{ link.label }}
           </NuxtLink>
@@ -41,7 +41,7 @@
             id="exam-menu-button"
             type="button"
             class="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            :class="{ '!text-foreground': examMenuActive }"
+            :class="{ '!text-primary': examMenuActive }"
             aria-haspopup="true"
             :aria-expanded="examMenuOpen"
             aria-controls="exam-menu"
@@ -79,7 +79,7 @@
                 :to="link.to"
                 role="menuitem"
                 class="block rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-                active-class="!text-foreground"
+                active-class="!text-primary"
                 @click="closeExamMenu"
               >
                 {{ link.label }}
@@ -91,7 +91,7 @@
           <NuxtLink
             :to="link.to"
             class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            active-class="!text-foreground"
+            active-class="!text-primary"
           >
             {{ link.label }}
           </NuxtLink>
@@ -99,11 +99,14 @@
       </ul>
 
       <UiButton :to="contactCtaPath" class="header-contact-button">
-        Zapytaj o zajęcia
+        <span class="header-contact-label">
+          <span>Umów bezpłatną</span>
+          <span>konsultację</span>
+        </span>
       </UiButton>
 
       <button
-        class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
         :aria-expanded="open"
         aria-label="Przełącz menu"
         @click="open = !open"
@@ -174,7 +177,7 @@
         </li>
         <li class="pt-2 md:hidden">
           <UiButton :to="contactCtaPath" class="w-full justify-center">
-            Zapytaj o zajęcia
+            Umów bezpłatną konsultację
           </UiButton>
         </li>
       </ul>
@@ -257,11 +260,39 @@ onBeforeUnmount(() => {
 <style scoped>
 .header-contact-button {
   display: none;
+  flex-shrink: 0;
+  padding-block: 0.55rem;
+  padding-inline: 0.9rem;
+}
+
+.header-contact-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1.2;
 }
 
 @media (min-width: 700px) {
   .header-contact-button {
     display: inline-flex;
+  }
+}
+
+@media (min-width: 1100px) {
+  .header-contact-button {
+    padding-block: 0.75rem;
+    padding-inline: 1.5rem;
+  }
+
+  .header-contact-label {
+    display: inline;
+    line-height: inherit;
+    white-space: nowrap;
+  }
+
+  .header-contact-label > span:first-child::after {
+    content: ' ';
   }
 }
 </style>

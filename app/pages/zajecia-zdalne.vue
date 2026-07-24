@@ -304,12 +304,12 @@
     <CtaBanner
       class="order-8"
       title="Chcesz uczyć się angielskiego online?"
-      description="Napisz, jaki jest Twój cel. Wspólnie dobierzemy idealną formę i dogodny termin."
+      description="Napisz, jaki jest Twój cel lub umów bezpłatną konsultację 15min. Wspólnie dobierzemy idealną formę i dogodny termin."
       button-label="Dobierzmy formę online →"
       :button-to="contactCtaPath"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Zapytaj o lekcje online →" />
+    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 
@@ -467,10 +467,10 @@ dnia.`,
 useSeoMeta({
   title: 'Angielski online – zajęcia zdalne',
   description:
-    'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
+    'Lekcje angielskiego online na Zoomie dla dorosłych i uczniów z całej Polski. Umów bezpłatną konsultację online. Bez dojazdów, z indywidualnym planem i naciskiem na mówienie.',
   ogTitle: 'Angielski online – zajęcia zdalne | Talkateria',
   ogDescription:
-    'Angielski online bez dojazdów, z całej Polski: wygodnie, regularnie i z takim samym indywidualnym podejściem jak w studiu.',
+    'Angielski online bez dojazdów. Umów bezpłatną konsultację przed startem — wygodnie, regularnie i z indywidualnym podejściem.',
 })
 
 useHead({

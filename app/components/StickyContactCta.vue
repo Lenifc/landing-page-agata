@@ -24,7 +24,7 @@ import { ROUTES } from '~/config/routes'
 defineProps({
   label: {
     type: String,
-    default: 'Zapytaj o zajęcia →',
+    default: 'Umów bezpłatną konsultację →',
   },
   to: {
     type: [String, Object],

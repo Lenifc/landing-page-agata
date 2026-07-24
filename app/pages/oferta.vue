@@ -36,8 +36,9 @@
         </p>
         <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3" id="cennik-sekcje">
           Te same stawki obowiązują stacjonarnie w Rumi i online poza godzinami
-          porannymi. Cennik poranny online znajdziesz poniżej. Po krótkiej
-          rozmowie dobierzemy formę zajęć do celu nauki i dostępnych terminów.
+          porannymi. Cennik poranny online znajdziesz na początku listy poniżej.
+          Przed startem możesz umówić bezpłatną konsultację online —
+          po krótkiej rozmowie dobierzemy formę zajęć do celu nauki i dostępnych terminów.
         </p>
       </div>
 
@@ -49,41 +50,9 @@
       </nav>
 
       <div class="space-y-6 md:space-y-8">
-        <article v-for="section in pricingSections" :id="section.id" :key="section.title"
-          class="scroll-mt-24 border-t border-border pt-5 first:border-t-0 first:pt-0 md:pt-6">
-          <div class="max-w-3xl">
-            <div class="flex flex-wrap items-center gap-2 md:gap-3">
-              <h3 class="font-serif text-xl font-semibold tracking-tight text-foreground md:text-2xl">
-                {{ section.title }}
-              </h3>
-              <span
-                v-if="section.badge"
-                class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1">
-                {{ section.badge }}
-              </span>
-            </div>
-            <div class="mt-2 space-y-1.5 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3 md:text-base">
-              <p v-for="paragraph in section.description" :key="paragraph">
-                {{ paragraph }}
-              </p>
-            </div>
-          </div>
-
-          <div v-if="section.groups" class="mt-4 space-y-4 md:mt-5 md:space-y-5">
-            <div v-for="group in section.groups" :id="group.id" :key="group.title" class="scroll-mt-24">
-              <h4 class="font-serif text-lg font-semibold text-foreground md:text-xl">
-                {{ group.title }}
-              </h4>
-              <PricingTable :plans="group.plans" class="mt-2" />
-            </div>
-          </div>
-
-          <PricingTable v-else :plans="section.plans" class="mt-4 md:mt-5" />
-        </article>
-
         <article
           id="zajecia-online"
-          class="scroll-mt-24 border-t border-border pt-5 md:pt-6"
+          class="scroll-mt-24 border-t border-border pt-5 first:border-t-0 first:pt-0 md:pt-6"
         >
           <div class="max-w-3xl">
             <div class="flex flex-wrap items-center gap-2 md:gap-3">
@@ -102,6 +71,60 @@
 
           <PricingTable :plans="morningOnlinePlans" class="mt-4 md:mt-5" />
         </article>
+
+        <div class="space-y-6 border-t border-border pt-5 md:space-y-8 md:pt-6">
+          <header class="max-w-3xl">
+            <div class="flex flex-wrap items-center gap-2 md:gap-3">
+              <h3 class="font-serif text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+                Cennik popołudniowy
+              </h3>
+              <span
+                class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1">
+                Studio | online od 15:00
+              </span>
+            </div>
+            <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3 md:text-base">
+              Te same stawki obowiązują stacjonarnie w Rumi i online w godzinach popołudniowych.
+            </p>
+          </header>
+
+          <article
+            v-for="(section, index) in pricingSections"
+            :id="section.id"
+            :key="section.title"
+            class="scroll-mt-24"
+            :class="index > 0 ? 'border-t border-border pt-5 md:pt-6' : ''"
+          >
+            <div class="max-w-3xl">
+              <div class="flex flex-wrap items-center gap-2 md:gap-3">
+                <h4 class="font-serif text-lg font-semibold tracking-tight text-foreground md:text-xl">
+                  {{ section.title }}
+                </h4>
+                <span
+                  v-if="section.badge"
+                  class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1">
+                  {{ section.badge }}
+                </span>
+              </div>
+              <div class="mt-2 space-y-1.5 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3 md:text-base">
+                <p v-for="paragraph in section.description" :key="paragraph">
+                  {{ paragraph }}
+                </p>
+              </div>
+            </div>
+
+            <div v-if="section.groups" class="mt-4 space-y-4 md:mt-5 md:space-y-5">
+              <div v-for="group in section.groups" :id="group.id" :key="group.title" class="scroll-mt-24">
+                <h5 class="font-serif text-base font-semibold text-foreground md:text-lg">
+                  {{ group.title }}
+                </h5>
+                <PricingTable :plans="group.plans" class="mt-2" />
+              </div>
+            </div>
+
+            <PricingTable v-else :plans="section.plans" class="mt-4 md:mt-5" />
+          </article>
+        </div>
       </div>
 
       <div class="mt-6 max-w-3xl space-y-1.5 text-sm leading-relaxed text-muted-foreground md:mt-8">
@@ -263,7 +286,7 @@
       variant="secondary"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Zapytaj o zajęcia →" />
+    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 
@@ -299,10 +322,10 @@ const offerPricingFaqAnswer = `Cennik jest prosty: cena za lekcję 50 min zależ
 useSeoMeta({
   title: 'Oferta oraz cennik zajęć z angielskiego w Rumi',
   description:
-    'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny w 3-osobowej grupie.',
+    'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online przed startem.',
   ogTitle: 'Cennik zajęć z angielskiego w Rumi | Talkateria',
   ogDescription:
-    'Zobacz aktualne ceny lekcji angielskiego w Rumi: 1:1, DUO i kurs egzaminacyjny.',
+    'Zobacz aktualne ceny lekcji angielskiego w Rumi: 1:1, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online.',
 })
 
 const pricingSections = [
@@ -337,14 +360,14 @@ const pricingSections = [
 ]
 
 const pricingLinks = [
-  ...pricingSections.map((section) => ({
-    href: `#${section.id}`,
-    label: section.navLabel,
-  })),
   {
     href: '#zajecia-online',
     label: 'Poranny online',
   },
+  ...pricingSections.map((section) => ({
+    href: `#${section.id}`,
+    label: section.navLabel,
+  })),
 ]
 
 const faqs = [
@@ -392,7 +415,7 @@ const faqs = [
   },
   {
     q: 'Jak wygląda pierwsze spotkanie?',
-    a: 'Na początku rozmawiamy o celu nauki, dotychczasowych doświadczeniach i dostępnych terminach. W przypadku uczniów sprawdzamy też poziom, potrzeby szkolne lub egzaminacyjne, aby dobrać odpowiednią formę zajęć i zakres pracy.',
+    a: 'Przed startem możesz umówić bezpłatną konsultację online. Rozmawiamy o celu nauki, dotychczasowych doświadczeniach i dostępnych terminach. W przypadku uczniów sprawdzamy też poziom, potrzeby szkolne lub egzaminacyjne, aby dobrać odpowiednią formę zajęć i zakres pracy.',
   },
   {
     q: 'Czy zajęcia online różnią się od stacjonarnych?',
@@ -448,7 +471,7 @@ useHead({
         pageUrl,
         name: 'Oferta i cennik zajęć z angielskiego w Rumi',
         description:
-          'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny w 3-osobowej grupie.',
+          'Sprawdź cennik lekcji angielskiego w Rumi: zajęcia indywidualne, DUO i kurs egzaminacyjny. Umów bezpłatną konsultację online przed startem.',
         plans: offerCatalogPlans,
         faqs,
       }),
