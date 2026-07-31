@@ -1,9 +1,36 @@
-// Google Forms: Send > Embed HTML > use the iframe src value (?embedded=true).
-const GOOGLE_FORM_EMBED_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSeH0Tnelw-lrebqnSYGTmxBQ6W_u1ED4GLb01VP52ftNJHTaw/viewform?embedded=true'
+import { CONTACT } from './contact'
+import { ROUTES, SITE_URL } from './routes'
 
-export const GOOGLE_FORM = Object.freeze({
-  embedUrl: GOOGLE_FORM_EMBED_URL,
-  openUrl: GOOGLE_FORM_EMBED_URL.replace('?embedded=true', ''),
-  isConfigured: Boolean(GOOGLE_FORM_EMBED_URL),
+/** FormSubmit (AJAX) — działa na statycznym hostingu; pierwsze zgłoszenie wymaga aktywacji maila. */
+export const CONTACT_FORM = Object.freeze({
+  submitUrl: `https://formsubmit.co/ajax/${CONTACT.email}`,
+  toEmail: CONTACT.email,
+  subject: 'Zgłoszenie z formularza talkateria.pl',
+  minSubmitMs: 5000,
+  cooldownMs: 60_000,
+  privacyPolicyPath: ROUTES.privacyPolicy,
+  thankYouPath: `${SITE_URL}${ROUTES.contact}#formularz`,
+  /** Typowe domeny jednorazowe / spam — odrzucane po stronie klienta. */
+  blockedEmailDomains: Object.freeze([
+    'mailinator.com',
+    'guerrillamail.com',
+    'guerrillamail.net',
+    'sharklasers.com',
+    'tempmail.com',
+    'temp-mail.org',
+    'throwawaymail.com',
+    'yopmail.com',
+    'yopmail.fr',
+    'trashmail.com',
+    '10minutemail.com',
+    '10minutemail.net',
+    'dispostable.com',
+    'fakeinbox.com',
+    'getnada.com',
+    'maildrop.cc',
+    'moakt.com',
+    'tempail.com',
+    'emailondeck.com',
+    'mailnesia.com',
+  ]),
 })

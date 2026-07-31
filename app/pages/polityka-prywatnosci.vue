@@ -112,19 +112,21 @@
 
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">
-          4. Usługi Google i narzędzia wideokonferencyjne
+          4. Formularz kontaktowy, usługi Google i narzędzia wideokonferencyjne
         </h2>
         <p>
-          Na stronie jest osadzony formularz Google Forms. Wypełnienie
-          formularza jest dobrowolne. Dane wpisane w formularzu mogą być
-          przetwarzane także przez Google Ireland Limited jako dostawcę
-          narzędzia.
+          Na stronie jest natywny formularz zgłoszeniowy. Jego wypełnienie jest
+          dobrowolne. Dane z formularza (m.in. imię, telefon, e-mail, treść
+          zgłoszenia) są przekazywane na adres kontakt@talkateria.pl za
+          pośrednictwem usługi FormSubmit, która obsługuje dostarczenie
+          wiadomości e-mail. FormSubmit może przetwarzać dane techniczne
+          potrzebne do wysyłki, zgodnie ze swoimi zasadami.
         </p>
         <p>
           Na stronie jest także osadzona mapa Google z lokalizacją studia. Po
-          otwarciu formularza lub mapy Google może przetwarzać dane techniczne,
-          takie jak adres IP, informacje o przeglądarce, urządzeniu, aktywności
-          oraz lokalizacji, zależnie od ustawień użytkownika i usług Google.
+          otwarciu mapy Google może przetwarzać dane techniczne, takie jak
+          adres IP, informacje o przeglądarce, urządzeniu, aktywności oraz
+          lokalizacji, zależnie od ustawień użytkownika i usług Google.
         </p>
         <p>
           Zasady przetwarzania danych przez Google opisuje
@@ -234,7 +236,7 @@
           zbierania zagregowanych statystyk odwiedzin i interakcji ze stroną.
         </p>
         <p>
-          Elementy zewnętrzne, takie jak formularz Google lub mapa Google,
+          Elementy zewnętrzne, takie jak usługa wysyłki formularza lub mapa Google,
           mogą stosować własne pliki cookies i podobne technologie zgodnie z
           zasadami dostawcy.
         </p>

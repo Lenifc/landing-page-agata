@@ -1,6 +1,6 @@
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-6xl px-6 py-12 md:pb-16">
+    <section class="mx-auto max-w-6xl px-6 py-8">
       <div class="mb-12 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Kontakt
@@ -11,14 +11,9 @@
           Napisz, jakich zajęć szukasz.
         </h1>
         <p class="mt-4 text-pretty text-justify text-md leading-relaxed text-muted-foreground">
-          Formularz zgłoszeniowy to najszybsza opcja, bo od razu zbiera
-          wszystkie potrzebne informacje. Jeśli wolisz, możesz też napisać
-          maila lub wiadomość SMS.
-        </p>
-        <p class="mt-4 text-pretty text-justify text-md leading-relaxed text-muted-foreground">
-          W wiadomości warto od razu podać wiek ucznia lub swój poziom,
-          rodzaj kursu, który Cię interesuje, oraz informację, czy szukasz
-          zajęć indywidualnych, w duecie, w grupie, stacjonarnie czy online.
+          Formularz zgłoszeniowy to najszybsza opcja — zbiera kontakt i cel
+          nauki w jednym kroku. Jeśli wolisz, możesz też napisać maila lub
+          wiadomość SMS.
         </p>
       </div>
 
@@ -26,25 +21,8 @@
         id="dane-kontaktowe"
         class="scroll-mt-24 grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-x-12 lg:gap-y-8"
       >
-        <UiButton href="#formularz" class="order-1 w-fit gap-2 justify-self-start lg:col-span-2">
-          Przejdź do formularza
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M12 5v14" />
-            <path d="m19 12-7 7-7-7" />
-          </svg>
-        </UiButton>
-
         <p
-          class="order-3 text-pretty text-justify text-base leading-relaxed text-muted-foreground lg:order-2 lg:col-span-2 lg:max-w-3xl"
+          class="text-pretty text-justify text-base leading-relaxed text-muted-foreground lg:col-span-2 lg:max-w-3xl"
         >
           Jeśli chcesz, umówimy też zapoznawczą
           <b>bezpłatną konsultację online</b> - potrwa ok.&nbsp;15&nbsp;min.
@@ -53,7 +31,7 @@
           dopasowane do Ciebie.
         </p>
 
-        <div class="order-2 space-y-5 lg:order-3">
+        <div class="order-1 space-y-5">
           <div
             v-for="item in details"
             :key="item.label"
@@ -143,95 +121,32 @@
           </div>
         </div>
 
-        <div class="order-4 flex min-h-0 lg:order-4">
-          <div
-            class="h-full w-full overflow-hidden rounded-3xl border border-border shadow-sm"
-          >
-            <img
-              src="/contact.webp"
-              alt="Studio Talkateria w Rumi z widoczną salą zajęć."
-              class="block h-full min-h-[22rem] w-full object-cover object-center lg:min-h-[28rem]"
-              width="1200"
-              height="676"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="formularz" class="border-t border-border bg-secondary">
-      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
-        <div class="mb-8 max-w-2xl">
-          <UiSectionHeader
-            eyebrow="Formularz zgłoszeniowy"
-            title="Opisz krótko, jakich zajęć szukasz."
-            title-tag="h2"
-            max-width="2xl"
-          >
-            <template #description>
-              Napisz, dla kogo mają być zajęcia, jaki jest cel nauki i czy
-              interesują Cię spotkania w studiu, czy online. Dzięki temu łatwiej
-              dobrać termin, poziom intensywności i sposób pracy.
-            </template>
-          </UiSectionHeader>
-        </div>
-
-        <div class="overflow-hidden rounded-3xl bg-card">
-          <iframe
-            v-if="GOOGLE_FORM.isConfigured"
-            :src="GOOGLE_FORM.embedUrl"
-            title="Formularz zgłoszeniowy Talkateria"
-            class="h-[760px] w-full bg-background md:h-[820px]"
-            loading="lazy"
-          >
-            Ładowanie formularza...
-          </iframe>
-
-          <div v-else class="px-6 py-10 md:px-10">
-            <div class="max-w-2xl space-y-4">
-              <h3 class="font-serif text-2xl font-semibold text-foreground">
-                Wyślij zapytanie mailowo lub SMS-em.
-              </h3>
-              <p class="leading-relaxed text-muted-foreground">
-                W wiadomości wystarczy krótko opisać wiek lub poziom ucznia, cel
-                nauki, preferowaną formę zajęć oraz dostępność w tygodniu.
-                Odpowiem z propozycją dalszego kroku.
-              </p>
-              <div class="flex flex-wrap gap-3 pt-2">
-                <UiButton
-                  :href="`mailto:${CONTACT.email}`"
-                  class="px-5 py-2.5"
-                >
-                  Napisz maila
-                </UiButton>
-                <UiButton
-                  :href="CONTACT.phoneHref"
-                  variant="outline"
-                  class="px-5 py-2.5"
-                >
-                  Zadzwoń lub wyślij SMS
-                </UiButton>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p
-          v-if="GOOGLE_FORM.isConfigured"
-          class="mt-4 text-sm text-muted-foreground"
+        <div
+          id="formularz"
+          class="order-2 scroll-mt-24 rounded-3xl border border-border bg-card px-4 py-4 shadow-sm md:px-5 md:py-5 lg:order-3 lg:col-span-2"
         >
-          Jeśli formularz nie wyświetla się poprawnie,
-          <a
-            :href="GOOGLE_FORM.openUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-primary underline-offset-4 hover:underline"
-          >
-            otwórz go w nowej karcie
-          </a>
-          .
-        </p>
+          <h2 class="font-serif text-xl font-semibold text-foreground md:text-2xl">
+            Formularz zgłoszeniowy
+          </h2>
+          <p class="mt-1 mb-3 text-sm leading-relaxed text-muted-foreground">
+            Zostaw kontakt i krótko napisz, czego szukasz - zwykle odpisuję w
+            ciągu kilku godzin.
+          </p>
+          <ContactForm />
+        </div>
+
+        <div
+          class="order-3 overflow-hidden rounded-3xl border border-border shadow-sm lg:order-2"
+        >
+          <img
+            src="/contact.webp"
+            alt="Studio Talkateria w Rumi z widoczną salą zajęć."
+            class="block min-h-[18rem] w-full object-cover object-center lg:h-full lg:min-h-[28rem]"
+            width="1200"
+            height="676"
+            loading="lazy"
+          />
+        </div>
       </div>
     </section>
 
@@ -273,7 +188,6 @@
 
 <script setup>
 import { CONTACT } from '~/config/contact'
-import { GOOGLE_FORM } from '~/config/forms'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildContactPageJsonLd, jsonLdScript } from '~/config/schema'
 
