@@ -103,12 +103,12 @@
           </label>
           <input
             :id="ids.phone"
-            v-model="form.phone"
+            :value="form.phone"
             type="tel"
             name="phone"
             autocomplete="tel-national"
             inputmode="numeric"
-            maxlength="15"
+            maxlength="11"
             :disabled="status === 'sending'"
             :class="fieldClass"
             :aria-invalid="Boolean(errors.phone)"
@@ -241,7 +241,7 @@ onMounted(() => {
   }, 900)
 })
 
-/** Normalizuje do 9 cyfr PL (usuwa +48 / 48 / 0048). */
+/** Tylko cyfry: max 9, bez +48/48/0048 i wiodących 0. */
 const normalizePlPhone = (raw) => {
   let digits = String(raw || '').replace(/\D/g, '')
   if (digits.startsWith('0048')) {
@@ -249,13 +249,11 @@ const normalizePlPhone = (raw) => {
   } else if (digits.startsWith('48') && digits.length >= 11) {
     digits = digits.slice(2)
   }
-  return digits
+  digits = digits.replace(/^0+/, '')
+  return digits.slice(0, 9)
 }
 
-const isValidPlPhone = (raw) => {
-  const digits = normalizePlPhone(raw)
-  return /^[1-9]\d{8}$/.test(digits)
-}
+const isValidPlPhone = (raw) => /^[1-9]\d{8}$/.test(normalizePlPhone(raw))
 
 const formatPlPhoneDisplay = (digits) => {
   const d = digits.slice(0, 9)
@@ -268,9 +266,54 @@ const formatPlPhoneDisplay = (digits) => {
   return `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`
 }
 
+const caretPosAfterDigits = (formatted, digitCount) => {
+  if (digitCount <= 0) {
+    return 0
+  }
+
+  let pos = 0
+  let seen = 0
+  while (pos < formatted.length && seen < digitCount) {
+    if (/\d/.test(formatted[pos])) {
+      seen += 1
+    }
+    pos += 1
+  }
+  return pos
+}
+
 const onPhoneInput = (event) => {
-  const digits = normalizePlPhone(event.target.value).slice(0, 9)
-  form.phone = formatPlPhoneDisplay(digits)
+  const input = event.target
+  const selectionStart = input.selectionStart ?? 0
+  const oldDigits = normalizePlPhone(form.phone)
+
+  let digitsBeforeCursor = input.value
+    .slice(0, selectionStart)
+    .replace(/\D/g, '').length
+  let digits = normalizePlPhone(input.value)
+
+  // Backspace na spacji: usuń cyfrę przed nią zamiast „zablokować” pole.
+  if (
+    event.inputType === 'deleteContentBackward' &&
+    digits === oldDigits &&
+    digitsBeforeCursor > 0
+  ) {
+    digits =
+      digits.slice(0, digitsBeforeCursor - 1) + digits.slice(digitsBeforeCursor)
+    digitsBeforeCursor -= 1
+  }
+
+  const formatted = formatPlPhoneDisplay(digits)
+  form.phone = formatted
+  // Gdy model się nie zmienia (np. same litery → ""), Vue nie odświeża DOM —
+  // wymuszamy wartość w inpucie.
+  input.value = formatted
+
+  nextTick(() => {
+    input.value = formatted
+    const pos = caretPosAfterDigits(formatted, digitsBeforeCursor)
+    input.setSelectionRange(pos, pos)
+  })
 }
 
 const clearErrors = () => {
