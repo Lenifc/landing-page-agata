@@ -76,6 +76,10 @@
 
 html {
   --anchor-offset: 6rem;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  /* Sticky CTA bar (~button + padding) + home indicator */
+  --sticky-cta-clearance: calc(4.75rem + var(--safe-area-bottom));
   scroll-behavior: smooth;
   scroll-padding-top: var(--anchor-offset);
   overflow-x: clip;

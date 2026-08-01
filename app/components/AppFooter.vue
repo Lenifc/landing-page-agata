@@ -1,5 +1,11 @@
 <template>
-  <footer class="mt-auto border-t border-border bg-secondary">
+  <footer
+    class="mt-auto border-t border-border bg-secondary"
+    :class="
+      needsStickyClearance &&
+      'pb-[var(--sticky-cta-clearance)] md:pb-0'
+    "
+  >
     <div class="mx-auto grid max-w-6xl gap-10 px-6 py-10 md:grid-cols-3">
       <div class="space-y-3">
         <p class="font-serif text-xl font-semibold text-foreground">
@@ -117,9 +123,21 @@
 <script setup>
 import { CONTACT } from '~/config/contact'
 import { ROUTES } from '~/config/routes'
+import { normalizePath } from '~/utils/scrollToHash'
 
 const year = new Date().getFullYear()
 const email = ref(CONTACT.obfuscatedEmail)
+const route = useRoute()
+
+const NO_STICKY_PATHS = new Set([
+  normalizePath(ROUTES.contact),
+  normalizePath(ROUTES.privacyPolicy),
+])
+
+const needsStickyClearance = computed(
+  () => !NO_STICKY_PATHS.has(normalizePath(route.path)),
+)
+
 const links = [
   { to: ROUTES.home, label: 'Strona główna' },
   { to: ROUTES.offer, label: 'Oferta' },

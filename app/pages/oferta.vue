@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="pb-20 md:pb-0">
+  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <section class="bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14 text-center md:pb-20">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
@@ -287,7 +287,6 @@
       variant="secondary"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 

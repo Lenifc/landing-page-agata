@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="pb-20 md:pb-0">
+  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <PageHero
       eyebrow="Zajęcia dla dorosłych"
       title="Angielski dla dorosłych w Rumi oraz online. Bez presji i szkolnego stresu."
@@ -123,7 +123,6 @@
       :button-to="contactCtaPath"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 

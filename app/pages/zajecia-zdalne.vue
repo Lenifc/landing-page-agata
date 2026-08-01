@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="flex flex-col pb-20 md:pb-0">
+  <main id="main-content" class="flex flex-col pb-[var(--sticky-cta-clearance)] md:pb-0">
     <section
       class="relative order-1 isolate overflow-hidden bg-foreground text-primary-foreground lg:h-[650px]">
       <img src="/photos/online-hero-960.webp" alt="Osoba uczestnicząca w lekcji angielskiego online przy laptopie"
@@ -309,7 +309,6 @@
       :button-to="contactCtaPath"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 

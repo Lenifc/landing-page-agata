@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 z-50 border-b bg-background/85 backdrop-blur-xl transition-[border-color,box-shadow] duration-200"
+    class="sticky top-0 z-50 border-b bg-background/85 pt-[env(safe-area-inset-top,0px)] backdrop-blur-xl transition-[border-color,box-shadow] duration-200"
     :class="showBottomBorder ? 'border-border/80 shadow-sm' : 'border-transparent'"
   >
     <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">

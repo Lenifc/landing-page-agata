@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="pb-20 md:pb-0">
+  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <PageHero
       eyebrow="Egzamin ósmoklasisty"
       title="Egzamin ósmoklasisty bez stresu? To możliwe!"
@@ -114,7 +114,6 @@
       :button-to="contactCtaPath"
     />
 
-    <StickyContactCta :to="contactCtaPath" label="Umów bezpłatną konsultację →" />
   </main>
 </template>
 

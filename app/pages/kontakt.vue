@@ -1,7 +1,7 @@
 <template>
   <main id="main-content">
     <section class="mx-auto max-w-6xl px-6 py-8">
-      <div class="mb-12 max-w-2xl">
+      <div class="mb-8 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Kontakt
         </span>
@@ -10,11 +10,6 @@
         >
           Napisz, jakich zajęć szukasz.
         </h1>
-        <p class="mt-4 text-pretty text-justify text-md leading-relaxed text-muted-foreground">
-          Formularz zgłoszeniowy to najszybsza opcja — zbiera kontakt i cel
-          nauki w jednym kroku. Jeśli wolisz, możesz też napisać maila lub
-          wiadomość SMS.
-        </p>
       </div>
 
       <div

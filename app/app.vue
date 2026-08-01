@@ -10,6 +10,7 @@
     </div>
     <AppFooter />
     <ClientOnly>
+      <StickyContactCta :to="contactCtaPath" />
       <CookieConsent />
     </ClientOnly>
   </div>
@@ -19,12 +20,12 @@
 import { SITE_URL } from '~/config/routes'
 
 const route = useRoute()
+const contactCtaPath = useContactCtaPath()
 const pageUrl = computed(() => {
   const path = route.path === '/' ? '/' : route.path.replace(/\/+$/, '')
 
   return `${SITE_URL}${path}`
 })
-
 const allowPageTransition = useState('allow-page-transition', () => false)
 
 const pageTransition = computed(() => {

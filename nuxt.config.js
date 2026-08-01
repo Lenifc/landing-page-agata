@@ -74,7 +74,11 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'pl', class: 'bg-background' },
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          name: 'viewport',
+          content:
+            'width=device-width, initial-scale=1, viewport-fit=cover',
+        },
         {
           name: 'google-site-verification',
           content: 'hwrUsKc2ui7UcCaU6tQfzlzXcrx3C9zY8hwdUadeSog',
