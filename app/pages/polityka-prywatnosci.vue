@@ -123,6 +123,16 @@
           potrzebne do wysyłki, zgodnie ze swoimi zasadami.
         </p>
         <p>
+          Strona korzysta także z własnego endpointu analitycznego, który
+          zapisuje wybrane dane techniczne i zdarzenia związane z korzystaniem z
+          serwisu, takie jak odwiedzane podstrony, źródło wejścia, podstawowe
+          informacje o urządzeniu i przeglądarce oraz interakcje ze stroną
+          (np. kliknięcia, przewijanie, wejście w formularz czy jego wysłanie).
+          Dane te służą wyłącznie lepszemu zrozumieniu sposobu poruszania się po
+          stronie, poprawie jej działania oraz ulepszaniu treści i ścieżek
+          kontaktu.
+        </p>
+        <p>
           Na stronie jest także osadzona mapa Google z lokalizacją studia. Po
           otwarciu mapy Google może przetwarzać dane techniczne, takie jak
           adres IP, informacje o przeglądarce, urządzeniu, aktywności oraz

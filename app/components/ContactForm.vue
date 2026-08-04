@@ -15,7 +15,15 @@
       </p>
     </div>
 
-    <form v-else class="space-y-3" novalidate @submit.prevent="onSubmit">
+    <form
+      v-else
+      ref="formElement"
+      class="space-y-3"
+      novalidate
+      @click="trackFormInteraction"
+      @focusin="trackFormInteraction"
+      @submit.prevent="onSubmit"
+    >
       <!-- Honeypoty: niewidoczne dla ludzi -->
       <div
         class="pointer-events-none absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0"
@@ -236,18 +244,53 @@ const emptyForm = () => ({
 })
 
 const form = reactive(emptyForm())
+const formElement = ref(null)
 const honeypot = reactive({ website: '', company: '' })
 const errors = reactive({})
 const status = ref('idle')
 const errorMessage = ref('')
 const openedAt = ref(0)
 const jsToken = ref('')
+const hasTrackedFormView = ref(false)
+const hasTrackedFormInteraction = ref(false)
+let formObserver = null
 
 onMounted(() => {
   openedAt.value = Date.now()
   window.setTimeout(() => {
     jsToken.value = `tk_${openedAt.value.toString(36)}_${Math.random().toString(36).slice(2, 10)}`
   }, 900)
+
+  if (!formElement.value || typeof IntersectionObserver === 'undefined') {
+    return
+  }
+
+  formObserver = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting) || hasTrackedFormView.value) {
+        return
+      }
+
+      hasTrackedFormView.value = true
+      trackEvent({
+        eventType: 'form_view',
+        label: 'Formularz kontaktowy',
+        details: {
+          source: 'kontakt_form',
+        },
+      })
+      formObserver?.disconnect()
+    },
+    {
+      threshold: 0.35,
+    },
+  )
+
+  formObserver.observe(formElement.value)
+})
+
+onUnmounted(() => {
+  formObserver?.disconnect()
 })
 
 /** Tylko cyfry: max 9, bez +48/48/0048 i wiodących 0. */
@@ -328,6 +371,21 @@ const onPhoneInput = (event) => {
 const clearErrors = () => {
   Object.keys(errors).forEach((key) => {
     delete errors[key]
+  })
+}
+
+const trackFormInteraction = () => {
+  if (hasTrackedFormInteraction.value) {
+    return
+  }
+
+  hasTrackedFormInteraction.value = true
+  trackEvent({
+    eventType: 'form_interaction',
+    label: 'Formularz kontaktowy',
+    details: {
+      source: 'kontakt_form',
+    },
   })
 }
 
@@ -474,7 +532,17 @@ const onSubmit = async () => {
     Object.assign(form, emptyForm())
     honeypot.website = ''
     honeypot.company = ''
-  } catch {
+  } catch (error) {
+    trackEvent({
+      eventType: 'form_submit_error',
+      label: 'Formularz kontaktowy',
+      details: {
+        hasPhone: Boolean(phoneDigits),
+        source: 'kontakt_form',
+        errorMessage:
+          error instanceof Error ? error.message : 'unknown_form_submit_error',
+      },
+    })
     status.value = 'error'
     errorMessage.value =
       'Nie udało się wysłać formularza. Spróbuj ponownie za chwilę albo'

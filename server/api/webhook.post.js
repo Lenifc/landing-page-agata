@@ -8,6 +8,10 @@ const ALLOWED_EVENT_TYPES = new Set([
   'tel_click',
   'mailto_click',
   'scroll_depth',
+  'form_view',
+  'form_interaction',
+  'form_submit_error',
+  'client_error',
   'form_submit_success',
 ])
 

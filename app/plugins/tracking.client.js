@@ -109,6 +109,18 @@ export default defineNuxtPlugin(() => {
     trackEvent(payload)
   }
 
+  const trackClientError = (label, details) => {
+    if (!enabled.value) {
+      return
+    }
+
+    trackEvent({
+      eventType: 'client_error',
+      label,
+      details,
+    })
+  }
+
   onNuxtReady(() => {
     if (!enabled.value) {
       return
@@ -117,6 +129,26 @@ export default defineNuxtPlugin(() => {
     sendPageview()
     document.addEventListener('click', handleDocumentClick, true)
     window.addEventListener('scroll', maybeTrackScrollDepth, { passive: true })
+    window.addEventListener('error', (event) => {
+      trackClientError('window.error', {
+        message: event.message || 'Unknown client error',
+        source: event.filename || null,
+        line: event.lineno || null,
+        column: event.colno || null,
+      })
+    })
+    window.addEventListener('unhandledrejection', (event) => {
+      const reason =
+        event.reason instanceof Error
+          ? event.reason.message
+          : typeof event.reason === 'string'
+            ? event.reason
+            : 'Unhandled promise rejection'
+
+      trackClientError('unhandledrejection', {
+        message: reason,
+      })
+    })
   })
 
   watch(
