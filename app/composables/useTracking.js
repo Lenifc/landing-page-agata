@@ -4,6 +4,7 @@ const LANDING_CONTEXT_KEY = 'talkateria-tracking-landing-context'
 const INTERACTION_STORAGE_KEY = 'talkateria-tracking-engaged'
 const INTERACTION_COUNT_KEY = 'talkateria-tracking-interaction-count'
 const FIRST_INTERACTION_AT_KEY = 'talkateria-tracking-first-interaction-at'
+const FIRST_PAGEVIEW_SENT_KEY = 'talkateria-tracking-first-pageview-sent'
 const PAGEVIEW_QUEUE_KEY = 'talkateria-tracking-pageviews'
 const EVENT_BATCH_KEY = 'talkateria-tracking-event-batch'
 const TRACKING_ENDPOINT = '/api/webhook'
@@ -393,6 +394,11 @@ export const useTracking = () => {
       eventType: 'pageview',
       label: window.location.pathname,
       details,
+    }
+
+    if (!getStoredBoolean(FIRST_PAGEVIEW_SENT_KEY)) {
+      setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
+      return sendBatch([buildEventPayload(payload)], false)
     }
 
     if (getStoredBoolean(INTERACTION_STORAGE_KEY)) {
