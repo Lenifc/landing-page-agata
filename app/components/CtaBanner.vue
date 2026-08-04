@@ -25,6 +25,7 @@
         variant="inverse"
         class="mt-7"
         :class="size === 'lg' ? 'md:mt-8' : ''"
+        tracking-label="CTA banner"
       >
         <slot name="button">{{ buttonLabel }}</slot>
       </UiButton>

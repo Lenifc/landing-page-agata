@@ -182,7 +182,15 @@
         Napisz na
         <a
           :href="`mailto:${CONTACT_FORM.toEmail}`"
+          data-tracking-skip-delegated="true"
           class="font-medium underline underline-offset-2"
+          @click="
+            trackEvent({
+              eventType: 'mailto_click',
+              label: 'Formularz błąd - mail kontaktowy',
+              href: `mailto:${CONTACT_FORM.toEmail}`,
+            })
+          "
         >
           {{ CONTACT_FORM.toEmail }}
         </a>
@@ -204,6 +212,7 @@
 <script setup>
 import { CONTACT_FORM } from '~/config/forms'
 
+const { trackEvent } = useTracking()
 const STORAGE_KEY = 'talkateria-contact-sent-at'
 const SPAM_PATTERN =
   /(viagra|cialis|crypto|bitcoin|casino|porn|xxx|seo\s*service|make\s*money|click\s*here|https?:\/\/|www\.|\.ru\b|\.cn\b)/i
@@ -448,6 +457,14 @@ const onSubmit = async () => {
     }
 
     markSent()
+    trackEvent({
+      eventType: 'form_submit_success',
+      label: 'Formularz kontaktowy',
+      details: {
+        hasPhone: Boolean(phoneDigits),
+        source: 'kontakt_form',
+      },
+    })
     status.value = 'success'
     Object.assign(form, emptyForm())
     honeypot.website = ''

@@ -2,7 +2,9 @@
   <component
     :is="componentTag"
     v-bind="{ ...linkProps, ...$attrs }"
+    data-tracking-skip-delegated="true"
     :class="buttonClasses"
+    @click="handleClick"
   >
     <slot />
   </component>
@@ -32,7 +34,21 @@ const props = defineProps({
     type: String,
     default: 'button',
   },
+  trackingLabel: {
+    type: String,
+    default: '',
+  },
+  trackingType: {
+    type: String,
+    default: '',
+  },
+  trackingDetails: {
+    type: Object,
+    default: () => ({}),
+  },
 })
+
+const { trackEvent } = useTracking()
 
 const componentTag = computed(() => {
   if (props.to) {
@@ -61,6 +77,56 @@ const linkProps = computed(() => {
 
   return { type: props.type }
 })
+
+const inferredTrackingType = computed(() => {
+  if (props.trackingType) {
+    return props.trackingType
+  }
+
+  const href = props.href || ''
+
+  if (href.startsWith('tel:')) {
+    return 'tel_click'
+  }
+  if (href.startsWith('mailto:')) {
+    return 'mailto_click'
+  }
+  if (props.to || props.href) {
+    return 'cta_click'
+  }
+
+  return ''
+})
+
+const inferredTrackingHref = computed(() => {
+  if (typeof props.to === 'string') {
+    return props.to
+  }
+  if (props.to && typeof props.to === 'object' && 'path' in props.to) {
+    return props.to.path
+  }
+  return props.href || null
+})
+
+const normalizeLabel = (value) => value.replace(/\s+/g, ' ').trim()
+
+const handleClick = (event) => {
+  if (!inferredTrackingType.value) {
+    return
+  }
+
+  const textLabel =
+    event?.currentTarget instanceof HTMLElement
+      ? normalizeLabel(event.currentTarget.textContent || '')
+      : ''
+
+  trackEvent({
+    eventType: inferredTrackingType.value,
+    label: props.trackingLabel || textLabel || null,
+    href: inferredTrackingHref.value,
+    details: props.trackingDetails,
+  })
+}
 
 const buttonClasses = computed(() => {
   const base =

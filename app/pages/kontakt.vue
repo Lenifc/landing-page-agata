@@ -63,7 +63,9 @@
               >
                 <a
                   :href="item.href"
+                  data-tracking-skip-delegated="true"
                   class="break-words font-medium text-foreground transition-colors hover:text-primary"
+                  @click="trackContactInteraction(item)"
                 >
                   {{ item.value }}
                 </a>
@@ -103,12 +105,14 @@
                     ? 'noopener noreferrer'
                     : undefined
                 "
+                :data-tracking-skip-delegated="item.href ? 'true' : undefined"
                 class="break-words text-foreground"
                 :class="
                   item.href
                     ? 'font-medium transition-colors hover:text-primary'
                     : ''
                 "
+                @click="item.href ? trackContactInteraction(item) : undefined"
               >
                 {{ item.value }}
               </component>
@@ -186,6 +190,7 @@ import { CONTACT } from '~/config/contact'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildContactPageJsonLd, jsonLdScript } from '~/config/schema'
 
+const { trackEvent } = useTracking()
 const pageRoute = ROUTES.contact
 const pageUrl = `${SITE_URL}${pageRoute}`
 
@@ -242,6 +247,29 @@ const icons = {
     'M12 21s7-6.1 7-12a7 7 0 0 0-14 0c0 5.9 7 12 7 12Z',
     'M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
   ],
+}
+
+const trackContactInteraction = (item) => {
+  if (!item?.href) {
+    return
+  }
+
+  let eventType = 'cta_click'
+
+  if (item.href.startsWith('mailto:')) {
+    eventType = 'mailto_click'
+  } else if (item.href.startsWith('tel:')) {
+    eventType = 'tel_click'
+  }
+
+  trackEvent({
+    eventType,
+    label: `Kontakt: ${item.label}`,
+    href: item.href,
+    details: {
+      source: 'kontakt_details',
+    },
+  })
 }
 
 useHead({

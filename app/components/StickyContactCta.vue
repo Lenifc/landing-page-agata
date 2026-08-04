@@ -12,7 +12,11 @@
         v-show="isVisible"
         class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] backdrop-blur md:hidden"
       >
-        <UiButton :to="to" class="w-full touch-manipulation justify-center">
+        <UiButton
+          :to="to"
+          class="w-full touch-manipulation justify-center"
+          tracking-label="Sticky CTA"
+        >
           {{ label }}
         </UiButton>
       </div>

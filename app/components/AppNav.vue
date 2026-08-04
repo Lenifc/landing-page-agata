@@ -98,7 +98,11 @@
         </li>
       </ul>
 
-      <UiButton :to="contactCtaPath" class="header-contact-button">
+      <UiButton
+        :to="contactCtaPath"
+        class="header-contact-button"
+        tracking-label="Header CTA"
+      >
         <span class="header-contact-label">
           <span>Umów bezpłatną</span>
           <span>konsultację</span>
@@ -176,7 +180,11 @@
           </NuxtLink>
         </li>
         <li class="pt-2 md:hidden">
-          <UiButton :to="contactCtaPath" class="w-full justify-center">
+          <UiButton
+            :to="contactCtaPath"
+            class="w-full justify-center"
+            tracking-label="Mobile menu CTA"
+          >
             Umów bezpłatną konsultację
           </UiButton>
         </li>

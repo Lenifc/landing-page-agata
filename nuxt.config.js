@@ -11,8 +11,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
   runtimeConfig: {
+    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    supabaseUrl: process.env.SUPABASE_URL || '',
+    trackingEnabled: process.env.NODE_ENV === 'production',
     public: {
       clarityId: process.env.NUXT_PUBLIC_CLARITY_ID || CLARITY_PROJECT_ID,
+      trackingEnabled: process.env.NODE_ENV === 'production',
     },
   },
   ssr: true,
