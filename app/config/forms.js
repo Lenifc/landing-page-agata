@@ -1,9 +1,9 @@
 import { CONTACT } from './contact'
 import { ROUTES, SITE_URL } from './routes'
 
-/** FormSubmit (AJAX) — działa na statycznym hostingu; pierwsze zgłoszenie wymaga aktywacji maila. */
+/** Formspree (AJAX) — działa na statycznym hostingu / Vercel. */
 export const CONTACT_FORM = Object.freeze({
-  submitUrl: `https://formsubmit.co/ajax/${CONTACT.email}`,
+  submitUrl: 'https://formspree.io/f/xgawwvba',
   toEmail: CONTACT.email,
   subject: 'Zgłoszenie z formularza talkateria.pl',
   minSubmitMs: 5000,

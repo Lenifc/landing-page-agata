@@ -419,20 +419,18 @@ const onSubmit = async () => {
 
   const phoneDigits = normalizePlPhone(form.phone)
   const payload = {
+    name: form.name,
+    email: form.email,
+    message: form.message,
+    consent: 'Tak',
+    source: 'talkateria.pl/kontakt',
     _subject: `${CONTACT_FORM.subject} — ${form.name}`,
-    _template: 'table',
-    _captcha: 'false',
-    _honey: '',
     _replyto: form.email,
-    Imię: form.name,
-    Email: form.email,
-    Wiadomość: form.message,
-    Zgoda: 'Tak',
-    Źródło: 'talkateria.pl/kontakt',
+    _gotcha: honeypot.website || honeypot.company || '',
   }
 
   if (phoneDigits) {
-    payload.Telefon = formatPlPhoneDisplay(phoneDigits)
+    payload.phone = formatPlPhoneDisplay(phoneDigits)
   }
 
   try {
@@ -445,8 +443,8 @@ const onSubmit = async () => {
       body: payload,
     })
 
-    if (response?.success === 'false' || response?.success === false) {
-      throw new Error(response?.message || 'Send failed')
+    if (response?.ok === false || response?.error) {
+      throw new Error(response?.error || 'Send failed')
     }
 
     markSent()

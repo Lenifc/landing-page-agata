@@ -118,8 +118,8 @@
           Na stronie jest natywny formularz zgłoszeniowy. Jego wypełnienie jest
           dobrowolne. Dane z formularza (m.in. imię, telefon, e-mail, treść
           zgłoszenia) są przekazywane na adres kontakt@talkateria.pl za
-          pośrednictwem usługi FormSubmit, która obsługuje dostarczenie
-          wiadomości e-mail. FormSubmit może przetwarzać dane techniczne
+          pośrednictwem usługi Formspree, która obsługuje dostarczenie
+          wiadomości e-mail. Formspree może przetwarzać dane techniczne
           potrzebne do wysyłki, zgodnie ze swoimi zasadami.
         </p>
         <p>
