@@ -7,12 +7,15 @@ const ALLOWED_EVENT_TYPES = new Set([
   'button_click',
   'tel_click',
   'mailto_click',
+  'scroll_depth',
   'form_submit_success',
 ])
 
 const MAX_LABEL_LENGTH = 120
 const MAX_URL_LENGTH = 2048
 const MAX_REFERRER_LENGTH = 2048
+const BOT_USER_AGENT_PATTERN =
+  /bot|crawl|crawler|spider|slurp|preview|facebookexternalhit|whatsapp|discordbot|linkedinbot|skypeuripreview|telegrambot|google-inspectiontool|googleother|headlesschrome/i
 
 const getRequestUrl = (event) => {
   const host = getHeader(event, 'x-forwarded-host') || getHeader(event, 'host')
@@ -57,6 +60,21 @@ const detectDeviceType = (userAgent) => {
   return 'desktop'
 }
 
+const isLikelyBotRequest = (event) => {
+  const userAgent = getHeader(event, 'user-agent') || ''
+  const purpose =
+    getHeader(event, 'purpose') ||
+    getHeader(event, 'sec-purpose') ||
+    getHeader(event, 'x-purpose') ||
+    ''
+
+  return (
+    !userAgent ||
+    BOT_USER_AGENT_PATTERN.test(userAgent) ||
+    /prefetch|preview/i.test(purpose)
+  )
+}
+
 const hashIp = (ip) => {
   if (!ip) {
     return null
@@ -94,31 +112,20 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 204)
     return ''
   }
-
-  const payload = await parsePayload(event)
-  const eventType = normalizeString(payload.eventType, 40)
-
-  if (!eventType || !ALLOWED_EVENT_TYPES.has(eventType)) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Unsupported event type',
-    })
+  if (isLikelyBotRequest(event)) {
+    setResponseStatus(event, 204)
+    return ''
   }
 
-  const requestBaseUrl = getRequestUrl(event)
-  const url = toAbsoluteUrl(payload.url, requestBaseUrl)
-  const referrer = toAbsoluteUrl(
-    payload.referrer,
-    requestBaseUrl || 'https://talkateria.pl',
-  )
+  const payload = await parsePayload(event)
+  const events = Array.isArray(payload?.events)
+    ? payload.events
+    : Array.isArray(payload)
+      ? payload
+      : [payload]
 
-  const row = {
-    event_type: eventType,
-    event_label: normalizeString(payload.label, MAX_LABEL_LENGTH),
-    url,
-    path: normalizeString(payload.path, 512),
-    referrer,
-    session_id: normalizeString(payload.sessionId, 80),
+  const requestBaseUrl = getRequestUrl(event)
+  const sharedRowFields = {
     user_agent: normalizeString(getHeader(event, 'user-agent'), 1024),
     device_type: detectDeviceType(getHeader(event, 'user-agent')),
     country: normalizeString(getHeader(event, 'x-vercel-ip-country'), 8),
@@ -132,8 +139,38 @@ export default defineEventHandler(async (event) => {
         xForwardedFor: true,
       }),
     ),
-    payload_json:
-      payload.details && typeof payload.details === 'object' ? payload.details : {},
+  }
+
+  const rows = events
+    .map((entry) => {
+      const eventType = normalizeString(entry?.eventType, 40)
+
+      if (!eventType || !ALLOWED_EVENT_TYPES.has(eventType)) {
+        return null
+      }
+
+      return {
+        event_type: eventType,
+        event_label: normalizeString(entry.label, MAX_LABEL_LENGTH),
+        url: toAbsoluteUrl(entry.url, requestBaseUrl),
+        path: normalizeString(entry.path, 512),
+        referrer: toAbsoluteUrl(
+          entry.referrer,
+          requestBaseUrl || 'https://talkateria.pl',
+        ),
+        session_id: normalizeString(entry.sessionId, 80),
+        payload_json:
+          entry.details && typeof entry.details === 'object' ? entry.details : {},
+        ...sharedRowFields,
+      }
+    })
+    .filter(Boolean)
+
+  if (!rows.length) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Unsupported event type',
+    })
   }
 
   const endpoint = `${config.supabaseUrl.replace(/\/+$/, '')}/rest/v1/tracking_events`
@@ -142,7 +179,7 @@ export default defineEventHandler(async (event) => {
     await $fetch(endpoint, {
       method: 'POST',
       headers: buildSupabaseHeaders(config.supabaseServiceRoleKey),
-      body: row,
+      body: rows,
     })
   } catch (error) {
     console.error('Tracking webhook insert failed', error)

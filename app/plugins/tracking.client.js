@@ -1,6 +1,8 @@
 export default defineNuxtPlugin(() => {
   const route = useRoute()
-  const { enabled, trackEvent, trackPageview } = useTracking()
+  const { enabled, inferPageGroup, trackEvent, trackPageview } = useTracking()
+  const scrollMilestones = [25, 50, 75, 100]
+  const seenScrollDepth = new Map()
 
   const normalizeLabel = (value) => value.replace(/\s+/g, ' ').trim()
 
@@ -58,7 +60,40 @@ export default defineNuxtPlugin(() => {
   const sendPageview = () => {
     trackPageview({
       routeName: route.name || null,
+      pageGroup: inferPageGroup(route.path),
     })
+  }
+
+  const maybeTrackScrollDepth = () => {
+    if (!enabled.value) {
+      return
+    }
+
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+    if (scrollHeight <= 0) {
+      return
+    }
+
+    const scrollPercent = Math.round((window.scrollY / scrollHeight) * 100)
+    const routeKey = route.fullPath
+    const seenForRoute = seenScrollDepth.get(routeKey) || new Set()
+
+    for (const milestone of scrollMilestones) {
+      if (scrollPercent < milestone || seenForRoute.has(milestone)) {
+        continue
+      }
+
+      seenForRoute.add(milestone)
+      seenScrollDepth.set(routeKey, seenForRoute)
+      trackEvent({
+        eventType: 'scroll_depth',
+        label: `${milestone}%`,
+        details: {
+          depthPercent: milestone,
+          pageGroup: inferPageGroup(route.path),
+        },
+      })
+    }
   }
 
   const handleDocumentClick = (event) => {
@@ -81,6 +116,7 @@ export default defineNuxtPlugin(() => {
 
     sendPageview()
     document.addEventListener('click', handleDocumentClick, true)
+    window.addEventListener('scroll', maybeTrackScrollDepth, { passive: true })
   })
 
   watch(
@@ -90,7 +126,9 @@ export default defineNuxtPlugin(() => {
         return
       }
 
+      seenScrollDepth.delete(oldPath)
       sendPageview()
+      maybeTrackScrollDepth()
     },
   )
 })

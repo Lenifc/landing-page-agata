@@ -406,20 +406,25 @@ const onSubmit = async () => {
     return
   }
 
-  const isBot =
-    Boolean(honeypot.website) ||
-    Boolean(honeypot.company) ||
-    !jsToken.value ||
-    Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs ||
-    looksLikeSpam() ||
-    isInCooldown()
+  const honeypotTriggered = Boolean(honeypot.website) || Boolean(honeypot.company)
 
-  if (isBot) {
+  if (honeypotTriggered) {
     status.value = 'success'
     return
   }
 
   if (!validate()) {
+    return
+  }
+
+  const isBotLikeTraffic =
+    !jsToken.value ||
+    Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs ||
+    looksLikeSpam() ||
+    isInCooldown()
+
+  if (isBotLikeTraffic) {
+    status.value = 'success'
     return
   }
 
