@@ -1,6 +1,7 @@
 <template>
   <UiSection
     :id="id"
+    data-track-section="faq"
     :variant="variant"
     :contained="true"
     :max-width="maxWidth"
@@ -74,7 +75,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -106,5 +107,21 @@ defineProps({
   },
 })
 
-const { isOpen, toggle } = useAccordion()
+const { trackEvent } = useTracking()
+const { isOpen, toggle: accordionToggle } = useAccordion()
+
+const toggle = (index) => {
+  const willOpen = !isOpen(index)
+  accordionToggle(index)
+  const question = props.faqs?.[index]?.q || `faq_${index}`
+  trackEvent({
+    eventType: 'faq_toggle',
+    label: String(question).slice(0, 120),
+    details: {
+      index,
+      open: willOpen,
+      faqId: props.id,
+    },
+  })
+}
 </script>

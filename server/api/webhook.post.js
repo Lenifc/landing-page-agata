@@ -7,10 +7,12 @@ const ALLOWED_EVENT_TYPES = new Set([
   'button_click',
   'tel_click',
   'mailto_click',
+  'outbound_click',
   'scroll_depth',
   'form_view',
   'form_interaction',
   'form_field_focus',
+  'form_abandon',
   'form_submit_error',
   'form_submit_blocked',
   'client_error',
@@ -19,6 +21,8 @@ const ALLOWED_EVENT_TYPES = new Set([
   'section_view',
   'nav_toggle',
   'sticky_cta_toggle',
+  'faq_toggle',
+  'pricing_select',
 ])
 
 const MAX_LABEL_LENGTH = 120
@@ -136,7 +140,7 @@ const parseAttributionFromUrl = (urlString) => {
   }
 }
 
-const enrichPayloadDetails = (details, urlString) => {
+const enrichPayloadDetails = (details, urlString, requestMeta = {}) => {
   const base =
     details && typeof details === 'object' && !Array.isArray(details)
       ? { ...details }
@@ -165,6 +169,15 @@ const enrichPayloadDetails = (details, urlString) => {
   )
   base.gbraid = pickFirst(base.gbraid, fromUrl.gbraid)
   base.wbraid = pickFirst(base.wbraid, fromUrl.wbraid)
+
+  if (requestMeta && typeof requestMeta === 'object') {
+    base.requestMeta = {
+      ...(base.requestMeta && typeof base.requestMeta === 'object'
+        ? base.requestMeta
+        : {}),
+      ...requestMeta,
+    }
+  }
 
   return base
 }
@@ -298,6 +311,19 @@ export default defineEventHandler(async (event) => {
   const requestBaseUrl = getRequestUrl(event)
   const userAgent = normalizeString(getHeader(event, 'user-agent'), 1024)
   const city = decodeHeaderValue(getHeader(event, 'x-vercel-ip-city'), 128)
+  const requestMeta = {
+    acceptLanguage: normalizeString(getHeader(event, 'accept-language'), 160),
+    secChUa: normalizeString(getHeader(event, 'sec-ch-ua'), 160),
+    secChUaMobile: normalizeString(getHeader(event, 'sec-ch-ua-mobile'), 16),
+    secChUaPlatform: normalizeString(
+      getHeader(event, 'sec-ch-ua-platform'),
+      64,
+    ),
+    vercelMarketingId: normalizeString(
+      getHeader(event, 'x-vercel-marketing-id'),
+      80,
+    ),
+  }
   const sharedRowFields = {
     user_agent: userAgent,
     device_type: detectDeviceType(getHeader(event, 'user-agent')),
@@ -323,7 +349,11 @@ export default defineEventHandler(async (event) => {
       }
 
       const absoluteUrl = toAbsoluteUrl(entry.url, requestBaseUrl)
-      const enrichedDetails = enrichPayloadDetails(entry.details, absoluteUrl)
+      const enrichedDetails = enrichPayloadDetails(
+        entry.details,
+        absoluteUrl,
+        requestMeta,
+      )
       const bot = scoreLikelyBot({
         event,
         userAgent,

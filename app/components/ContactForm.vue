@@ -241,6 +241,7 @@ import { CONTACT_FORM } from '~/config/forms'
 
 const { trackEvent, getLeadAttribution } = useTracking()
 const STORAGE_KEY = 'talkateria-contact-sent-at'
+const FORM_STARTED_KEY = 'talkateria-tracking-form-started'
 const SPAM_PATTERN =
   /(viagra|cialis|crypto|bitcoin|casino|porn|xxx|seo\s*service|make\s*money|click\s*here|https?:\/\/|www\.|\.ru\b|\.cn\b)/i
 
@@ -274,6 +275,22 @@ const hasTrackedFormView = ref(false)
 const hasTrackedFormInteraction = ref(false)
 const focusedFields = new Set()
 let formObserver = null
+
+const markFormStarted = () => {
+  try {
+    sessionStorage.setItem(FORM_STARTED_KEY, '1')
+  } catch {
+    // ignore
+  }
+}
+
+const clearFormStarted = () => {
+  try {
+    sessionStorage.removeItem(FORM_STARTED_KEY)
+  } catch {
+    // ignore
+  }
+}
 
 onMounted(() => {
   openedAt.value = Date.now()
@@ -400,6 +417,7 @@ const trackFormInteraction = () => {
   }
 
   hasTrackedFormInteraction.value = true
+  markFormStarted()
   trackEvent({
     eventType: 'form_interaction',
     label: 'Formularz kontaktowy',
@@ -535,6 +553,7 @@ const onSubmit = async () => {
   // Silent drop for honeypot bots — do not train scrapers with error copy.
   if (honeypotTriggered) {
     trackBlockedSubmit('honeypot')
+    clearFormStarted()
     status.value = 'success'
     return
   }
@@ -616,6 +635,10 @@ const onSubmit = async () => {
     }
 
     markSent()
+    clearFormStarted()
+    if (import.meta.client) {
+      window.dispatchEvent(new CustomEvent('talkateria:form-success'))
+    }
     trackEvent({
       eventType: 'form_submit_success',
       label: 'Formularz kontaktowy',
@@ -625,6 +648,7 @@ const onSubmit = async () => {
         utmCampaign: attribution.utmCampaign || null,
         gclid: attribution.gclid || null,
         landingPath: attribution.landingPath || null,
+        focusedFields: [...focusedFields],
       },
     })
     status.value = 'success'

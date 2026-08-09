@@ -120,6 +120,8 @@ const props = defineProps({
   },
 })
 
+const { trackEvent } = useTracking()
+
 const hasRateSwitch = computed(
   () => (props.option.rateOptions?.length ?? 0) > 1,
 )
@@ -137,6 +139,25 @@ watch(
     }
   },
 )
+
+watch(selectedRateId, (rateId, previousRateId) => {
+  if (!rateId || rateId === previousRateId || previousRateId == null) {
+    return
+  }
+
+  const rate = props.option.rateOptions?.find((item) => item.id === rateId)
+  trackEvent({
+    eventType: 'pricing_select',
+    label: props.option.name || rateId,
+    details: {
+      optionName: props.option.name || null,
+      rateId,
+      frequency: rate?.frequency || null,
+      price: rate?.price || null,
+      source: 'landing_price_card',
+    },
+  })
+})
 
 const selectedRate = computed(() =>
   props.option.rateOptions?.find((rate) => rate.id === selectedRateId.value),

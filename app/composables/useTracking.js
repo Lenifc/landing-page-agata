@@ -3,16 +3,21 @@ const SESSION_STARTED_AT_KEY = 'talkateria-tracking-session-started-at'
 const LANDING_CONTEXT_KEY = 'talkateria-tracking-landing-context'
 const ATTRIBUTION_STORAGE_KEY = 'talkateria-tracking-attribution'
 const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000
+const VISITOR_STORAGE_KEY = 'talkateria-tracking-visitor'
 const INTERACTION_STORAGE_KEY = 'talkateria-tracking-engaged'
 const INTERACTION_COUNT_KEY = 'talkateria-tracking-interaction-count'
 const FIRST_INTERACTION_AT_KEY = 'talkateria-tracking-first-interaction-at'
 const FIRST_PAGEVIEW_SENT_KEY = 'talkateria-tracking-first-pageview-sent'
 const PAGEVIEW_QUEUE_KEY = 'talkateria-tracking-pageviews'
 const EVENT_BATCH_KEY = 'talkateria-tracking-event-batch'
+const SESSION_PAGE_COUNT_KEY = 'talkateria-tracking-session-page-count'
 const TRACKING_ENDPOINT = '/api/webhook'
 const BATCH_INTERVAL_MS = 3000
+/** Drop bounce pageviews if the tab dies sooner with zero interaction. */
+const PAGEVIEW_MIN_DWELL_MS = 2000
 
 let flushTimer = null
+let pageviewDwellTimer = null
 let flushListenersRegistered = false
 
 const createSessionId = () => {
@@ -275,6 +280,36 @@ const buildLandingContext = (href = window.location.href) => {
   }
 }
 
+const getNavigationType = () => {
+  if (typeof performance === 'undefined') {
+    return null
+  }
+
+  try {
+    const entry = performance.getEntriesByType?.('navigation')?.[0]
+    return entry?.type || null
+  } catch {
+    return null
+  }
+}
+
+const getViewportInfo = () => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  return {
+    width: window.innerWidth || null,
+    height: window.innerHeight || null,
+    screenWidth: window.screen?.width || null,
+    screenHeight: window.screen?.height || null,
+    devicePixelRatio: Number(window.devicePixelRatio) || null,
+    orientation:
+      screen?.orientation?.type ||
+      (window.innerWidth >= window.innerHeight ? 'landscape' : 'portrait'),
+  }
+}
+
 const getClientBotHints = () => {
   if (typeof navigator === 'undefined') {
     return {}
@@ -285,12 +320,128 @@ const getClientBotHints = () => {
     languagesCount: Array.isArray(navigator.languages)
       ? navigator.languages.length
       : 0,
+    language: navigator.language || null,
+    languages: Array.isArray(navigator.languages)
+      ? navigator.languages.slice(0, 5)
+      : null,
     hardwareConcurrency: Number(navigator.hardwareConcurrency) || null,
     deviceMemory: Number(navigator.deviceMemory) || null,
     maxTouchPoints: Number(navigator.maxTouchPoints) || 0,
+    cookieEnabled: navigator.cookieEnabled === true,
+    online: navigator.onLine !== false,
+    doNotTrack:
+      navigator.doNotTrack === '1' ||
+      navigator.doNotTrack === 'yes' ||
+      window.doNotTrack === '1',
+    pdfViewerEnabled: navigator.pdfViewerEnabled === true,
   }
 }
 
+const parseUaSummary = () => {
+  if (typeof navigator === 'undefined') {
+    return null
+  }
+
+  const ua = navigator.userAgent || ''
+  const uaLower = ua.toLowerCase()
+
+  let browser = 'other'
+  if (/edg\//.test(uaLower)) browser = 'edge'
+  else if (/chrome\//.test(uaLower) && !/chromium/.test(uaLower)) browser = 'chrome'
+  else if (/safari\//.test(uaLower) && !/chrome\//.test(uaLower)) browser = 'safari'
+  else if (/firefox\//.test(uaLower)) browser = 'firefox'
+  else if (/opr\//.test(uaLower) || /opera/.test(uaLower)) browser = 'opera'
+
+  let os = 'other'
+  if (/windows/.test(uaLower)) os = 'windows'
+  else if (/android/.test(uaLower)) os = 'android'
+  else if (/iphone|ipad|ipod/.test(uaLower)) os = 'ios'
+  else if (/mac os x/.test(uaLower)) os = 'macos'
+  else if (/linux/.test(uaLower)) os = 'linux'
+
+  return { browser, os }
+}
+
+const getDisplayMode = () => {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return null
+  }
+
+  if (window.matchMedia('(display-mode: standalone)').matches) return 'standalone'
+  if (window.matchMedia('(display-mode: minimal-ui)').matches) return 'minimal-ui'
+  if (window.navigator.standalone === true) return 'standalone'
+  return 'browser'
+}
+
+const getPerformanceTiming = () => {
+  if (typeof performance === 'undefined') {
+    return null
+  }
+
+  try {
+    const entry = performance.getEntriesByType?.('navigation')?.[0]
+    if (!entry) {
+      return null
+    }
+
+    return {
+      ttfbMs: Math.round(entry.responseStart || 0) || null,
+      domContentLoadedMs: Math.round(entry.domContentLoadedEventEnd || 0) || null,
+      loadMs: Math.round(entry.loadEventEnd || 0) || null,
+      transferSize: Number.isFinite(entry.transferSize) ? entry.transferSize : null,
+    }
+  } catch {
+    return null
+  }
+}
+
+const getReferrerHost = () => {
+  if (typeof document === 'undefined' || !document.referrer) {
+    return null
+  }
+
+  try {
+    return new URL(document.referrer).hostname || null
+  } catch {
+    return null
+  }
+}
+
+let cachedVisitorProfile = null
+
+const touchVisitorProfile = () => {
+  if (cachedVisitorProfile) {
+    return cachedVisitorProfile
+  }
+
+  const now = Date.now()
+  const existing = readLocalJson(VISITOR_STORAGE_KEY, null)
+  const firstSeenAt =
+    Number(existing?.firstSeenAt) > 0 ? Number(existing.firstSeenAt) : now
+  const lastSeenAt = Number(existing?.lastSeenAt) || 0
+  const isNewVisit =
+    !lastSeenAt || now - lastSeenAt > 30 * 60 * 1000 /* 30 min gap = new visit */
+  const visitCount = Number(existing?.visitCount) || 0
+
+  const next = {
+    firstSeenAt,
+    lastSeenAt: now,
+    visitCount: isNewVisit ? visitCount + 1 : Math.max(visitCount, 1),
+  }
+  writeLocalJson(VISITOR_STORAGE_KEY, next)
+
+  cachedVisitorProfile = {
+    firstSeenAt: next.firstSeenAt,
+    visitCount: next.visitCount,
+    daysSinceFirst: Math.max(
+      0,
+      Math.floor((now - next.firstSeenAt) / (24 * 60 * 60 * 1000)),
+    ),
+    isReturning: next.visitCount > 1,
+  }
+
+  return cachedVisitorProfile
+}
 const ensureSessionContext = () => {
   const storage = getStorage()
 
@@ -321,7 +472,11 @@ const ensureSessionContext = () => {
     setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, false)
     writeStoredJson(PAGEVIEW_QUEUE_KEY, [])
     writeStoredJson(EVENT_BATCH_KEY, [])
-    const nextLanding = buildLandingContext()
+    setStoredNumber(SESSION_PAGE_COUNT_KEY, 0)
+    if (pageviewDwellTimer) {
+      window.clearTimeout(pageviewDwellTimer)
+      pageviewDwellTimer = null
+    }    const nextLanding = buildLandingContext()
     writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
     persistAttribution(nextLanding)
   } else if (!existing) {
@@ -473,6 +628,23 @@ const buildSharedDetails = () => {
     gbraid: attribution.gbraid || landingContext.gbraid || null,
     wbraid: attribution.wbraid || landingContext.wbraid || null,
     clientBotHints: getClientBotHints(),
+    viewport: getViewportInfo(),
+    navigationType: getNavigationType(),
+    uaSummary: parseUaSummary(),
+    displayMode: getDisplayMode(),
+    performanceTiming: getPerformanceTiming(),
+    referrerHost: getReferrerHost(),
+    visitor: touchVisitorProfile(),
+    pagesInSession: getStoredNumber(SESSION_PAGE_COUNT_KEY) || 1,
+    localHour: new Date().getHours(),
+    localDayOfWeek: new Date().getDay(),
+    timezone: (() => {
+      try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone || null
+      } catch {
+        return null
+      }
+    })(),
   }
 }
 
@@ -531,7 +703,7 @@ export const useTracking = () => {
     const delivered = await sendBatch(pending, preferBeacon)
 
     if (!delivered) {
-      writePendingEvents([...pending, ...readPendingEvents()].slice(-50))
+      writePendingEvents([...pending, ...readPendingEvents()].slice(-100))
     }
   }
 
@@ -549,7 +721,7 @@ export const useTracking = () => {
   const queueEvent = (payload) => {
     const pending = readPendingEvents()
     pending.push(payload)
-    writePendingEvents(pending.slice(-50))
+    writePendingEvents(pending.slice(-100))
     scheduleFlush()
   }
 
@@ -564,6 +736,11 @@ export const useTracking = () => {
   })
 
   const flushQueuedPageviews = () => {
+    if (pageviewDwellTimer) {
+      window.clearTimeout(pageviewDwellTimer)
+      pageviewDwellTimer = null
+    }
+
     const queued = readQueuedPageviews()
 
     if (!queued.length) {
@@ -571,10 +748,40 @@ export const useTracking = () => {
     }
 
     writeQueuedPageviews([])
+    setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
 
     for (const payload of queued) {
       queueEvent(buildEventPayload(payload))
     }
+  }
+
+  const dropIdlePageviewQueue = () => {
+    if (getStoredBoolean(INTERACTION_STORAGE_KEY)) {
+      return
+    }
+
+    if (pageviewDwellTimer) {
+      window.clearTimeout(pageviewDwellTimer)
+      pageviewDwellTimer = null
+    }
+
+    writeQueuedPageviews([])
+  }
+
+  const schedulePageviewDwellFlush = () => {
+    if (typeof window === 'undefined' || pageviewDwellTimer) {
+      return
+    }
+
+    pageviewDwellTimer = window.setTimeout(() => {
+      pageviewDwellTimer = null
+
+      // Still idle after threshold → keep the pageview (human-looking dwell).
+      if (!getStoredBoolean(INTERACTION_STORAGE_KEY)) {
+        flushQueuedPageviews()
+        void flushPendingEvents(false)
+      }
+    }, PAGEVIEW_MIN_DWELL_MS)
   }
 
   const ensureFlushListeners = () => {
@@ -591,7 +798,13 @@ export const useTracking = () => {
       void flushPendingEvents(true)
     }
 
-    window.addEventListener('pagehide', flushWithBeacon)
+    const flushOnPageHide = () => {
+      // Bounce < threshold, zero interaction → discard queued pageviews.
+      dropIdlePageviewQueue()
+      flushWithBeacon()
+    }
+
+    window.addEventListener('pagehide', flushOnPageHide)
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
         flushWithBeacon()
@@ -612,6 +825,12 @@ export const useTracking = () => {
     ensureSessionContext()
 
     let interactionCount = getInteractionCount()
+    const alreadyEngaged = getStoredBoolean(INTERACTION_STORAGE_KEY)
+
+    // Idle sessions: ignore passive noise until the user actually interacts.
+    if (!countAsInteraction && !alreadyEngaged) {
+      return Promise.resolve(false)
+    }
 
     if (countAsInteraction) {
       setStoredBoolean(INTERACTION_STORAGE_KEY, true)
@@ -639,25 +858,30 @@ export const useTracking = () => {
     ensureFlushListeners()
     ensureSessionContext()
 
+    const nextCount = getStoredNumber(SESSION_PAGE_COUNT_KEY) + 1
+    setStoredNumber(SESSION_PAGE_COUNT_KEY, nextCount)
+
     const payload = {
       eventType: 'pageview',
       label: window.location.pathname,
-      details,
+      details: {
+        ...details,
+        pagesInSession: nextCount,
+      },
     }
 
-    if (!getStoredBoolean(FIRST_PAGEVIEW_SENT_KEY)) {
-      setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
-      return sendBatch([buildEventPayload(payload)], false)
-    }
-
+    // Already engaged → send immediately.
     if (getStoredBoolean(INTERACTION_STORAGE_KEY)) {
+      setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
       queueEvent(buildEventPayload(payload))
       return Promise.resolve(true)
     }
 
+    // Idle: queue and send after dwell threshold (drop earlier on bounce).
     const queued = readQueuedPageviews()
     queued.push(payload)
     writeQueuedPageviews(queued.slice(-10))
+    schedulePageviewDwellFlush()
     return Promise.resolve(false)
   }
 

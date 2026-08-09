@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(() => {
   const route = useRoute()
   const { enabled, inferPageGroup, trackEvent, trackPageview } = useTracking()
-  const scrollMilestones = [25, 50, 75, 100]
+  const scrollMilestones = [10, 25, 50, 75, 90, 100]
   const seenScrollDepth = new Map()
   const seenSections = new Set()
 
@@ -11,6 +11,8 @@ export default defineNuxtPlugin(() => {
   let maxScrollPercent = 0
   let sectionObserver = null
   let pageMetricsBound = false
+
+  const FORM_STARTED_KEY = 'talkateria-tracking-form-started'
 
   const normalizeLabel = (value) => value.replace(/\s+/g, ' ').trim()
 
@@ -60,6 +62,22 @@ export default defineNuxtPlugin(() => {
     return activeMs
   }
 
+  const wasFormStarted = () => {
+    try {
+      return sessionStorage.getItem(FORM_STARTED_KEY) === '1'
+    } catch {
+      return false
+    }
+  }
+
+  const clearFormStarted = () => {
+    try {
+      sessionStorage.removeItem(FORM_STARTED_KEY)
+    } catch {
+      // ignore
+    }
+  }
+
   const resetPageMetrics = () => {
     pageEnteredAt = Date.now()
     activeMs = 0
@@ -80,12 +98,30 @@ export default defineNuxtPlugin(() => {
     const activeTimeMs = getActiveMs()
     const scrollPercent = maxScrollPercent
     const leavePath = pathOverride || route.path
+    const formStarted = wasFormStarted()
 
     // Prevent duplicate page_leave (pagehide + later route_change / bfcache).
     pageEnteredAt = 0
     activeMs = 0
     activeSegmentStartedAt = 0
 
+    if (formStarted && reason !== 'form_submit_success') {
+      trackEvent({
+        eventType: 'form_abandon',
+        label: 'Formularz kontaktowy',
+        countAsInteraction: false,
+        details: {
+          reason,
+          path: leavePath,
+          activeMs: activeTimeMs,
+          dwellMs,
+          maxScrollPercent: scrollPercent,
+        },
+      })
+      clearFormStarted()
+    }
+
+    // Passiveed sessions only (passive events are dropped while idle in useTracking).
     trackEvent({
       eventType: 'page_leave',
       label: leavePath,
@@ -96,6 +132,8 @@ export default defineNuxtPlugin(() => {
         dwellMs,
         maxScrollPercent: scrollPercent,
         pageGroup: inferPageGroup(leavePath),
+        sectionsSeen: seenSections.size,
+        formStarted,
       },
     })
   }
@@ -113,7 +151,6 @@ export default defineNuxtPlugin(() => {
       return
     }
 
-    // Scope to current page root so page transitions don't pick up leaving DOM.
     const root =
       document.querySelector('#main-content') || document.querySelector('main')
     const sections = root
@@ -159,18 +196,39 @@ export default defineNuxtPlugin(() => {
             details: {
               sectionId,
               pageGroup: inferPageGroup(route.path),
+              intersectionRatio: Number(entry.intersectionRatio.toFixed(2)),
             },
           })
           sectionObserver?.unobserve(el)
         }
       },
       {
-        threshold: 0.35,
+        threshold: [0.25, 0.35, 0.5],
       },
     )
 
     for (const section of sections) {
       sectionObserver.observe(section)
+    }
+  }
+
+  const nearestSectionId = (el) => {
+    const section = el?.closest?.('[data-track-section]')
+    return section instanceof HTMLElement
+      ? section.dataset.trackSection || null
+      : null
+  }
+
+  const isExternalHref = (href) => {
+    if (!href || href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:')) {
+      return false
+    }
+
+    try {
+      const url = new URL(href, window.location.origin)
+      return url.origin !== window.location.origin
+    } catch {
+      return false
     }
   }
 
@@ -203,12 +261,15 @@ export default defineNuxtPlugin(() => {
       null
 
     let eventType = 'button_click'
+    const external = isExternalHref(href)
 
     if (href) {
       if (href.startsWith('tel:')) {
         eventType = 'tel_click'
       } else if (href.startsWith('mailto:')) {
         eventType = 'mailto_click'
+      } else if (external) {
+        eventType = 'outbound_click'
       } else {
         eventType = 'link_click'
       }
@@ -216,7 +277,7 @@ export default defineNuxtPlugin(() => {
 
     return {
       eventType,
-      label,
+      label: label ? label.slice(0, 120) : null,
       href,
       details: {
         tagName: trackable.tagName.toLowerCase(),
@@ -225,6 +286,9 @@ export default defineNuxtPlugin(() => {
           trackable instanceof HTMLButtonElement
             ? trackable.type || 'button'
             : null,
+        isExternal: external,
+        sectionId: nearestSectionId(trackable),
+        ariaExpanded: trackable.getAttribute('aria-expanded'),
       },
     }
   }
@@ -233,6 +297,7 @@ export default defineNuxtPlugin(() => {
     trackPageview({
       routeName: route.name || null,
       pageGroup: inferPageGroup(route.path),
+      hash: route.hash || null,
     })
   }
 
@@ -259,6 +324,8 @@ export default defineNuxtPlugin(() => {
         details: {
           depthPercent: milestone,
           pageGroup: inferPageGroup(route.path),
+          scrollY: Math.round(window.scrollY),
+          documentHeight: document.documentElement.scrollHeight,
         },
       })
     }
@@ -285,6 +352,7 @@ export default defineNuxtPlugin(() => {
     trackEvent({
       eventType: 'client_error',
       label,
+      countAsInteraction: false,
       details,
     })
   }
@@ -314,7 +382,6 @@ export default defineNuxtPlugin(() => {
 
   const enterPage = () => {
     resetPageMetrics()
-    // Double tick: wait out page transition / async page mount before observing.
     nextTick(() => {
       nextTick(() => {
         observeSections()
@@ -361,11 +428,26 @@ export default defineNuxtPlugin(() => {
         return
       }
 
-      emitPageLeave('route_change', oldPath.split('?')[0] || oldPath)
+      const oldPathname = oldPath.split('?')[0]?.split('#')[0] || oldPath
+      const newPathname = newPath.split('?')[0]?.split('#')[0] || newPath
+
+      // Hash-only change on same page — no extra event.
+      if (oldPathname === newPathname) {
+        return
+      }
+
+      emitPageLeave('route_change', oldPathname)
       seenScrollDepth.delete(oldPath)
       disconnectSectionObserver()
       enterPage()
       sendPageview()
     },
   )
+
+  // Allow ContactForm success to clear abandon flag without coupling.
+  if (import.meta.client) {
+    window.addEventListener('talkateria:form-success', () => {
+      clearFormStarted()
+    })
+  }
 })

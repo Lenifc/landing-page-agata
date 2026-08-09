@@ -1,5 +1,6 @@
 <template>
   <UiSection
+    data-track-section="cta"
     :variant="sectionVariant"
     padding="md"
     max-width="6xl"

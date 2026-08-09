@@ -127,7 +127,7 @@
                 : 'border-border bg-card hover:border-primary/40'
             "
             :aria-pressed="onlineSchedule === 'morning'"
-            @click="onlineSchedule = 'morning'"
+            @click="setOnlineSchedule('morning')"
           >
             <span
               class="block text-sm font-bold"
@@ -149,7 +149,7 @@
                 : 'border-border bg-card hover:border-primary/40'
             "
             :aria-pressed="onlineSchedule === 'afternoon'"
-            @click="onlineSchedule = 'afternoon'"
+            @click="setOnlineSchedule('afternoon')"
           >
             <span
               class="block text-sm font-bold"
@@ -332,6 +332,7 @@ import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
 import { AREA_SERVED_ONLINE } from '~/config/business'
 
 const contactCtaPath = useContactCtaPath()
+const { trackEvent } = useTracking()
 const pageRoute = ROUTES.onlineClasses
 const pageUrl = `${SITE_URL}${pageRoute}`
 
@@ -345,6 +346,21 @@ const duoTwiceWeekly = getPricingPlan('duoTwiceWeekly')
 
 const onlineSchedule = ref('morning')
 
+const setOnlineSchedule = (value) => {
+  if (onlineSchedule.value === value) {
+    return
+  }
+
+  onlineSchedule.value = value
+  trackEvent({
+    eventType: 'pricing_select',
+    label: value,
+    details: {
+      source: 'online_schedule',
+      schedule: value,
+    },
+  })
+}
 const landingPriceOptions = computed(() => {
   const isMorning = onlineSchedule.value === 'morning'
   const individualRates = isMorning

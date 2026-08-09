@@ -238,6 +238,21 @@ watch(open, (isOpen) => {
   })
 })
 
+watch(examMenuOpen, (isOpen, wasOpen) => {
+  if (!import.meta.client || isOpen === wasOpen) {
+    return
+  }
+
+  trackEvent({
+    eventType: 'nav_toggle',
+    label: isOpen ? 'open' : 'close',
+    details: {
+      menu: 'exam',
+      open: isOpen,
+    },
+  })
+})
+
 watch(
   () => route.fullPath,
   () => {
