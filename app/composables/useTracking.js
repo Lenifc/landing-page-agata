@@ -122,7 +122,20 @@ const writeStoredJson = (key, value) => {
   }
 }
 
-const parseUtmParams = (url) => {
+const emptyAttribution = () => ({
+  utmSource: null,
+  utmMedium: null,
+  utmCampaign: null,
+  utmContent: null,
+  utmTerm: null,
+  gclid: null,
+  gadSource: null,
+  gadCampaignId: null,
+  gbraid: null,
+  wbraid: null,
+})
+
+const parseAttributionParams = (url) => {
   try {
     const { searchParams } = new URL(url)
 
@@ -132,15 +145,63 @@ const parseUtmParams = (url) => {
       utmCampaign: searchParams.get('utm_campaign'),
       utmContent: searchParams.get('utm_content'),
       utmTerm: searchParams.get('utm_term'),
+      gclid: searchParams.get('gclid'),
+      gadSource: searchParams.get('gad_source'),
+      gadCampaignId: searchParams.get('gad_campaignid'),
+      gbraid: searchParams.get('gbraid'),
+      wbraid: searchParams.get('wbraid'),
     }
   } catch {
-    return {
-      utmSource: null,
-      utmMedium: null,
-      utmCampaign: null,
-      utmContent: null,
-      utmTerm: null,
-    }
+    return emptyAttribution()
+  }
+}
+
+const hasPaidAttribution = (attribution) =>
+  Boolean(
+    attribution?.gclid ||
+      attribution?.gbraid ||
+      attribution?.wbraid ||
+      attribution?.gadSource ||
+      attribution?.gadCampaignId ||
+      (attribution?.utmSource &&
+        attribution?.utmMedium &&
+        /cpc|ppc|paid|ads/i.test(String(attribution.utmMedium))),
+  )
+
+const hasAnyAttribution = (attribution) =>
+  Boolean(
+    hasPaidAttribution(attribution) ||
+      attribution?.utmSource ||
+      attribution?.utmMedium ||
+      attribution?.utmCampaign ||
+      attribution?.utmContent ||
+      attribution?.utmTerm,
+  )
+
+const buildLandingContext = (href = window.location.href) => {
+  const url = new URL(href)
+
+  return {
+    landingUrl: href,
+    landingPath: url.pathname + url.search + url.hash,
+    landingPageGroup: inferPageGroup(url.pathname),
+    ...parseAttributionParams(href),
+  }
+}
+
+const getClientBotHints = () => {
+  if (typeof navigator === 'undefined') {
+    return {}
+  }
+
+  return {
+    webdriver: navigator.webdriver === true,
+    languagesCount: Array.isArray(navigator.languages)
+      ? navigator.languages.length
+      : 0,
+    hardwareConcurrency: Number(navigator.hardwareConcurrency) || null,
+    deviceMemory: Number(navigator.deviceMemory) || null,
+    maxTouchPoints: Number(navigator.maxTouchPoints) || 0,
   }
 }
 
@@ -151,24 +212,55 @@ const ensureSessionContext = () => {
     return
   }
 
+  const currentAttribution = parseAttributionParams(window.location.href)
+  const existing = readStoredJson(LANDING_CONTEXT_KEY, null)
+  const isNewPaidLanding =
+    existing &&
+    hasPaidAttribution(currentAttribution) &&
+    (!hasPaidAttribution(existing) ||
+      (currentAttribution.gclid &&
+        currentAttribution.gclid !== existing.gclid) ||
+      (currentAttribution.gbraid &&
+        currentAttribution.gbraid !== existing.gbraid) ||
+      (currentAttribution.wbraid &&
+        currentAttribution.wbraid !== existing.wbraid))
+
+  // New ad click in the same tab → start a fresh tracking session.
+  if (isNewPaidLanding) {
+    setStoredString(SESSION_STORAGE_KEY, createSessionId())
+    setStoredNumber(SESSION_STARTED_AT_KEY, Date.now())
+    setStoredBoolean(INTERACTION_STORAGE_KEY, false)
+    setStoredNumber(INTERACTION_COUNT_KEY, 0)
+    setStoredString(FIRST_INTERACTION_AT_KEY, '')
+    setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, false)
+    writeStoredJson(PAGEVIEW_QUEUE_KEY, [])
+    writeStoredJson(EVENT_BATCH_KEY, [])
+    writeStoredJson(LANDING_CONTEXT_KEY, buildLandingContext())
+  } else if (!existing) {
+    writeStoredJson(LANDING_CONTEXT_KEY, buildLandingContext())
+  } else if (
+    hasAnyAttribution(currentAttribution) &&
+    !hasAnyAttribution(existing)
+  ) {
+    // Backfill UTMs when landing was saved before query params appeared.
+    writeStoredJson(LANDING_CONTEXT_KEY, {
+      ...existing,
+      ...currentAttribution,
+      landingUrl: window.location.href,
+      landingPath:
+        window.location.pathname +
+        window.location.search +
+        window.location.hash,
+      landingPageGroup: inferPageGroup(window.location.pathname),
+    })
+  }
+
   if (!getStoredString(SESSION_STORAGE_KEY)) {
     setStoredString(SESSION_STORAGE_KEY, createSessionId())
   }
 
   if (!getStoredNumber(SESSION_STARTED_AT_KEY)) {
     setStoredNumber(SESSION_STARTED_AT_KEY, Date.now())
-  }
-
-  const landingContext = readStoredJson(LANDING_CONTEXT_KEY, null)
-
-  if (!landingContext) {
-    writeStoredJson(LANDING_CONTEXT_KEY, {
-      landingUrl: window.location.href,
-      landingPath:
-        window.location.pathname + window.location.search + window.location.hash,
-      landingPageGroup: inferPageGroup(window.location.pathname),
-      ...parseUtmParams(window.location.href),
-    })
   }
 }
 
@@ -217,6 +309,11 @@ const buildSharedDetails = () => {
   const firstInteractionAt = getStoredNumber(FIRST_INTERACTION_AT_KEY)
   const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {})
   const now = Date.now()
+  const attribution = {
+    ...emptyAttribution(),
+    ...landingContext,
+    ...parseAttributionParams(window.location.href),
+  }
 
   return {
     currentPageGroup: inferPageGroup(window.location.pathname),
@@ -229,6 +326,19 @@ const buildSharedDetails = () => {
         ? firstInteractionAt - sessionStartedAt
         : null,
     ...landingContext,
+    // Prefer current URL attribution so Ads params are never lost.
+    utmSource: attribution.utmSource || landingContext.utmSource || null,
+    utmMedium: attribution.utmMedium || landingContext.utmMedium || null,
+    utmCampaign: attribution.utmCampaign || landingContext.utmCampaign || null,
+    utmContent: attribution.utmContent || landingContext.utmContent || null,
+    utmTerm: attribution.utmTerm || landingContext.utmTerm || null,
+    gclid: attribution.gclid || landingContext.gclid || null,
+    gadSource: attribution.gadSource || landingContext.gadSource || null,
+    gadCampaignId:
+      attribution.gadCampaignId || landingContext.gadCampaignId || null,
+    gbraid: attribution.gbraid || landingContext.gbraid || null,
+    wbraid: attribution.wbraid || landingContext.wbraid || null,
+    clientBotHints: getClientBotHints(),
   }
 }
 

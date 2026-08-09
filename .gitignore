@@ -19,3 +19,5 @@ dist/
 .nuxt/
 .vscode/
 google-ads-import/
+facebook-covers/
+supabase/
