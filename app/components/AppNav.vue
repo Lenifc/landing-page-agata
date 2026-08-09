@@ -1,9 +1,14 @@
 <template>
   <header
-    class="sticky top-0 z-50 border-b bg-background/85 pt-[env(safe-area-inset-top,0px)] backdrop-blur-xl transition-[border-color,box-shadow] duration-200"
-    :class="showBottomBorder ? 'border-border/80 shadow-sm' : 'border-transparent'"
+    class="z-50 border-b bg-background/85 pt-[env(safe-area-inset-top,0px)] backdrop-blur-xl transition-[border-color,box-shadow] duration-200"
+    :class="[
+      showBottomBorder ? 'border-border/80 shadow-sm' : 'border-transparent',
+      open
+        ? 'fixed inset-0 flex h-dvh flex-col md:sticky md:inset-auto md:h-auto md:max-h-none'
+        : 'sticky top-0',
+    ]"
   >
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
+    <nav class="mx-auto flex w-full max-w-6xl shrink-0 items-center justify-between px-6 py-2">
       <NuxtLink
         :to="ROUTES.home"
         class="flex shrink-0 items-center"
@@ -110,7 +115,7 @@
       </UiButton>
 
       <button
-        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
+        class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
         :aria-expanded="open"
         aria-label="Przełącz menu"
         @click="open = !open"
@@ -143,26 +148,33 @@
       </button>
     </nav>
 
-    <div v-if="open" class="border-t border-border bg-background md:hidden">
-      <ul class="mx-auto flex max-w-6xl flex-col px-6 py-4">
+    <div
+      v-if="open"
+      class="flex min-h-0 flex-1 flex-col overflow-y-auto border-t border-border bg-background md:hidden"
+    >
+      <ul
+        class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))]"
+      >
         <li v-for="link in primaryLinks" :key="link.to">
           <NuxtLink
             :to="link.to"
-            class="block py-3 text-sm font-medium text-foreground"
+            class="block py-3.5 text-base font-medium text-foreground"
             @click="closeMenus"
           >
             {{ link.label }}
           </NuxtLink>
         </li>
         <li class="py-2">
-          <p class="pb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <p
+            class="pb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
+          >
             Egzaminy
           </p>
           <ul class="border-l border-border pl-4">
             <li v-for="link in examLinks" :key="link.to">
               <NuxtLink
                 :to="link.to"
-                class="block py-2.5 text-sm font-medium text-foreground"
+                class="block py-3 text-base font-medium text-foreground"
                 @click="closeMenus"
               >
                 {{ link.label }}
@@ -173,13 +185,13 @@
         <li v-for="link in secondaryLinks" :key="link.to">
           <NuxtLink
             :to="link.to"
-            class="block py-3 text-sm font-medium text-foreground"
+            class="block py-3.5 text-base font-medium text-foreground"
             @click="closeMenus"
           >
             {{ link.label }}
           </NuxtLink>
         </li>
-        <li class="pt-2 md:hidden">
+        <li class="mt-auto pt-6">
           <UiButton
             :to="contactCtaPath"
             class="w-full justify-center"
@@ -191,16 +203,47 @@
       </ul>
     </div>
   </header>
+  <!-- Reserve sticky header space when mobile menu is fixed fullscreen -->
+  <div
+    v-if="open"
+    class="h-[calc(3.25rem+env(safe-area-inset-top,0px))] md:hidden"
+    aria-hidden="true"
+  />
 </template>
 
 <script setup>
 import { ROUTES } from '~/config/routes'
 
 const contactCtaPath = useContactCtaPath()
+const { trackEvent } = useTracking()
 const open = ref(false)
 const examMenuOpen = ref(false)
 const scrollPosition = ref(0)
 const route = useRoute()
+
+watch(open, (isOpen) => {
+  if (!import.meta.client) {
+    return
+  }
+
+  document.body.style.overflow = isOpen ? 'hidden' : ''
+
+  trackEvent({
+    eventType: 'nav_toggle',
+    label: isOpen ? 'open' : 'close',
+    details: {
+      menu: 'mobile',
+      open: isOpen,
+    },
+  })
+})
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeMenus()
+  },
+)
 
 const primaryLinks = [
   { to: ROUTES.offer, label: 'Oferta' },
@@ -225,10 +268,11 @@ const examMenuLabel = computed(() =>
   examMenuOpen.value ? 'Zwiń menu egzaminów' : 'Rozwiń menu egzaminów',
 )
 
-const showBottomBorder = computed(() => scrollPosition.value > 0)
+const showBottomBorder = computed(() => scrollPosition.value > 0 || open.value)
 
 const updateScrollPosition = () => {
-  scrollPosition.value = window.scrollY || document.documentElement.scrollTop || 0
+  scrollPosition.value =
+    window.scrollY || document.documentElement.scrollTop || 0
 }
 
 const closeExamMenu = () => {
@@ -262,6 +306,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', updateScrollPosition)
+  if (import.meta.client) {
+    document.body.style.overflow = ''
+  }
 })
 </script>
 

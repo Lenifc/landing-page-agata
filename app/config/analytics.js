@@ -1,6 +1,9 @@
 export const CLARITY_PROJECT_ID = 'xjwn999ocv'
 
-export const isClarityEnabled = () => !import.meta.dev
+/** Set to true to re-enable Clarity + cookie consent banner. */
+export const CLARITY_ENABLED = false
+
+export const isClarityEnabled = () => CLARITY_ENABLED && !import.meta.dev
 
 export const ANALYTICS_CONSENT_KEY = 'talkateria-analytics-consent'
 

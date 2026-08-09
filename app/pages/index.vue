@@ -1,6 +1,6 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
-    <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
+    <section data-track-section="hero" class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="flex flex-col gap-6">
         <span
           class="order-4 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1"
@@ -48,7 +48,7 @@
       </div>
     </section>
 
-    <section class="border-t border-border bg-secondary">
+    <section data-track-section="paths" class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14">
         <div class="mb-8 max-w-2xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
@@ -103,7 +103,7 @@
       </div>
     </section>
 
-    <section class="border-t border-border">
+    <section data-track-section="audience" class="border-t border-border">
       <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
         <h2
           class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
@@ -127,7 +127,7 @@
       </div>
     </section>
 
-    <section class="features border-t border-border bg-secondary">
+    <section data-track-section="features" class="features border-t border-border bg-secondary">
       <div class="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-3">
         <div v-for="feature in features" :key="feature.title" class="space-y-3">
           <h2 class="font-serif text-xl font-semibold text-foreground">
@@ -140,7 +140,7 @@
       </div>
     </section>
 
-    <section class="about-me border-t border-border">
+    <section data-track-section="about" class="about-me border-t border-border">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div class="relative mx-auto max-w-[18rem] sm:max-w-[20rem] md:mx-0 md:max-w-none">
@@ -213,7 +213,7 @@
       </div>
     </section>
 
-    <section class="localization border-t border-border bg-secondary">
+    <section data-track-section="location" class="localization border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-20">
         <div class="mx-auto mb-10 max-w-4xl space-y-3 text-center">
           <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">

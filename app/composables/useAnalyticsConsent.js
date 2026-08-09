@@ -66,13 +66,13 @@ export const useAnalyticsConsent = () => {
     const activateWhenIdle = () => {
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(() => {
-          activateClarity()
+          void activateClarity()
         })
         return
       }
 
       window.setTimeout(() => {
-        activateClarity()
+        void activateClarity()
       }, 1500)
     }
 
@@ -89,15 +89,16 @@ export const useAnalyticsConsent = () => {
     consent.value = storedConsent
     isReady.value = true
 
-    if (storedConsent !== ANALYTICS_CONSENT.rejected) {
-      await activateClarity()
+    // Only load Clarity after explicit accept (privacy policy promise).
+    if (storedConsent === ANALYTICS_CONSENT.accepted) {
+      scheduleClarityActivation()
     }
   }
 
   const acceptAnalytics = async () => {
     consent.value = ANALYTICS_CONSENT.accepted
     persistConsent(ANALYTICS_CONSENT.accepted)
-    // await activateClarity()
+    scheduleClarityActivation()
   }
 
   const rejectAnalytics = () => {

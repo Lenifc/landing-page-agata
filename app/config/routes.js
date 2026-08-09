@@ -5,6 +5,7 @@ export const ROUTES = Object.freeze({
   offer: '/oferta',
   contact: '/kontakt',
   contactDetails: '/kontakt#dane-kontaktowe',
+  contactForm: '/kontakt#formularz',
   eighthGradeExam: '/egzamin-osmoklasisty-rumia',
   eighthGradeExamPrices: '/egzamin-osmoklasisty-rumia#cennik',
   maturaExam: '/matura-z-angielskiego-rumia',

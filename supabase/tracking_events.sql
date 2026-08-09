@@ -13,11 +13,30 @@ create table if not exists public.tracking_events (
   region text,
   city text,
   ip_hash text,
-  payload_json jsonb not null default '{}'::jsonb
+  payload_json jsonb not null default '{}'::jsonb,
+  is_likely_bot boolean not null default false,
+  bot_score integer not null default 0,
+  bot_signals jsonb not null default '[]'::jsonb
 );
+
+alter table public.tracking_events
+  add column if not exists is_likely_bot boolean not null default false;
+
+alter table public.tracking_events
+  add column if not exists bot_score integer not null default 0;
+
+alter table public.tracking_events
+  add column if not exists bot_signals jsonb not null default '[]'::jsonb;
 
 create index if not exists tracking_events_created_at_idx
   on public.tracking_events (created_at desc);
 
 create index if not exists tracking_events_event_type_idx
   on public.tracking_events (event_type);
+
+create index if not exists tracking_events_session_id_idx
+  on public.tracking_events (session_id);
+
+create index if not exists tracking_events_is_likely_bot_idx
+  on public.tracking_events (is_likely_bot)
+  where is_likely_bot = true;

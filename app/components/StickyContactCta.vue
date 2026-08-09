@@ -35,7 +35,7 @@ defineProps({
   },
   to: {
     type: [String, Object],
-    default: () => ROUTES.contactDetails,
+    default: () => ROUTES.contactForm,
   },
 })
 
@@ -49,8 +49,10 @@ const HIDDEN_PATHS = new Set([
 ])
 
 const route = useRoute()
+const { trackEvent } = useTracking()
 const pastScrollThreshold = ref(false)
 const stickyCtaVisible = useState('sticky-cta-visible', () => false)
+const hasTrackedStickyVisibility = ref(false)
 
 const isEnabledOnRoute = computed(
   () => !HIDDEN_PATHS.has(normalizePath(route.path)),
@@ -66,8 +68,27 @@ const updateVisibility = () => {
 
 watch(
   isVisible,
-  (visible) => {
+  (visible, wasVisible) => {
     stickyCtaVisible.value = visible
+
+    if (!hasTrackedStickyVisibility.value && !visible) {
+      return
+    }
+
+    if (visible === wasVisible) {
+      return
+    }
+
+    hasTrackedStickyVisibility.value = true
+    trackEvent({
+      eventType: 'sticky_cta_toggle',
+      label: visible ? 'show' : 'hide',
+      countAsInteraction: false,
+      details: {
+        visible,
+        path: route.path,
+      },
+    })
   },
   { immediate: true },
 )

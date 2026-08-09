@@ -1,4 +1,4 @@
 import { ROUTES } from '~/config/routes'
 
-/** Wszystkie CTA kontaktu prowadzą do danych kontaktowych / formularza. */
-export const useContactCtaPath = () => ROUTES.contactDetails
+/** Primary CTAs go straight to the form (mobile-first conversion path). */
+export const useContactCtaPath = () => ROUTES.contactForm

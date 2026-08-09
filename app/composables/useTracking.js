@@ -1,6 +1,8 @@
 const SESSION_STORAGE_KEY = 'talkateria-tracking-session-id'
 const SESSION_STARTED_AT_KEY = 'talkateria-tracking-session-started-at'
 const LANDING_CONTEXT_KEY = 'talkateria-tracking-landing-context'
+const ATTRIBUTION_STORAGE_KEY = 'talkateria-tracking-attribution'
+const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000
 const INTERACTION_STORAGE_KEY = 'talkateria-tracking-engaged'
 const INTERACTION_COUNT_KEY = 'talkateria-tracking-interaction-count'
 const FIRST_INTERACTION_AT_KEY = 'talkateria-tracking-first-interaction-at'
@@ -122,6 +124,31 @@ const writeStoredJson = (key, value) => {
   }
 }
 
+const readLocalJson = (key, fallback) => {
+  if (typeof window === 'undefined') {
+    return fallback
+  }
+
+  try {
+    const stored = window.localStorage.getItem(key)
+    return stored ? JSON.parse(stored) : fallback
+  } catch {
+    return fallback
+  }
+}
+
+const writeLocalJson = (key, value) => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    // ignore
+  }
+}
+
 const emptyAttribution = () => ({
   utmSource: null,
   utmMedium: null,
@@ -133,6 +160,19 @@ const emptyAttribution = () => ({
   gadCampaignId: null,
   gbraid: null,
   wbraid: null,
+})
+
+const attributionFieldsFrom = (source = {}) => ({
+  utmSource: source.utmSource || null,
+  utmMedium: source.utmMedium || null,
+  utmCampaign: source.utmCampaign || null,
+  utmContent: source.utmContent || null,
+  utmTerm: source.utmTerm || null,
+  gclid: source.gclid || null,
+  gadSource: source.gadSource || null,
+  gadCampaignId: source.gadCampaignId || null,
+  gbraid: source.gbraid || null,
+  wbraid: source.wbraid || null,
 })
 
 const parseAttributionParams = (url) => {
@@ -178,14 +218,60 @@ const hasAnyAttribution = (attribution) =>
       attribution?.utmTerm,
   )
 
+const readPersistedAttribution = () => {
+  const stored = readLocalJson(ATTRIBUTION_STORAGE_KEY, null)
+
+  if (!stored || typeof stored !== 'object') {
+    return null
+  }
+
+  const savedAt = Number(stored.savedAt) || 0
+  if (!savedAt || Date.now() - savedAt > ATTRIBUTION_TTL_MS) {
+    return null
+  }
+
+  return {
+    ...emptyAttribution(),
+    ...attributionFieldsFrom(stored),
+    landingUrl: stored.landingUrl || null,
+    landingPath: stored.landingPath || null,
+    landingPageGroup: stored.landingPageGroup || null,
+    firstTouchAt: stored.firstTouchAt || savedAt,
+    savedAt,
+  }
+}
+
+const persistAttribution = (context) => {
+  if (!hasAnyAttribution(context) && !context?.landingPath) {
+    return
+  }
+
+  const previous = readPersistedAttribution()
+  writeLocalJson(ATTRIBUTION_STORAGE_KEY, {
+    ...attributionFieldsFrom(context),
+    landingUrl: context.landingUrl || previous?.landingUrl || null,
+    landingPath: context.landingPath || previous?.landingPath || null,
+    landingPageGroup:
+      context.landingPageGroup || previous?.landingPageGroup || null,
+    firstTouchAt: previous?.firstTouchAt || Date.now(),
+    lastTouchAt: Date.now(),
+    savedAt: Date.now(),
+  })
+}
+
 const buildLandingContext = (href = window.location.href) => {
   const url = new URL(href)
+  const fromUrl = parseAttributionParams(href)
+  const persisted = readPersistedAttribution()
+  const mergedAttribution = hasAnyAttribution(fromUrl)
+    ? fromUrl
+    : attributionFieldsFrom(persisted || {})
 
   return {
     landingUrl: href,
     landingPath: url.pathname + url.search + url.hash,
     landingPageGroup: inferPageGroup(url.pathname),
-    ...parseAttributionParams(href),
+    ...mergedAttribution,
   }
 }
 
@@ -235,15 +321,19 @@ const ensureSessionContext = () => {
     setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, false)
     writeStoredJson(PAGEVIEW_QUEUE_KEY, [])
     writeStoredJson(EVENT_BATCH_KEY, [])
-    writeStoredJson(LANDING_CONTEXT_KEY, buildLandingContext())
+    const nextLanding = buildLandingContext()
+    writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
+    persistAttribution(nextLanding)
   } else if (!existing) {
-    writeStoredJson(LANDING_CONTEXT_KEY, buildLandingContext())
+    const nextLanding = buildLandingContext()
+    writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
+    persistAttribution(nextLanding)
   } else if (
     hasAnyAttribution(currentAttribution) &&
     !hasAnyAttribution(existing)
   ) {
     // Backfill UTMs when landing was saved before query params appeared.
-    writeStoredJson(LANDING_CONTEXT_KEY, {
+    const nextLanding = {
       ...existing,
       ...currentAttribution,
       landingUrl: window.location.href,
@@ -252,7 +342,11 @@ const ensureSessionContext = () => {
         window.location.search +
         window.location.hash,
       landingPageGroup: inferPageGroup(window.location.pathname),
-    })
+    }
+    writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
+    persistAttribution(nextLanding)
+  } else if (hasAnyAttribution(existing) || existing?.landingPath) {
+    persistAttribution(existing)
   }
 
   if (!getStoredString(SESSION_STORAGE_KEY)) {
@@ -261,6 +355,46 @@ const ensureSessionContext = () => {
 
   if (!getStoredNumber(SESSION_STARTED_AT_KEY)) {
     setStoredNumber(SESSION_STARTED_AT_KEY, Date.now())
+  }
+}
+
+const getLeadAttribution = () => {
+  ensureSessionContext()
+
+  const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {}) || {}
+  const persisted = readPersistedAttribution() || {}
+  const fromUrl =
+    typeof window !== 'undefined'
+      ? parseAttributionParams(window.location.href)
+      : emptyAttribution()
+  const attribution = {
+    ...emptyAttribution(),
+    ...attributionFieldsFrom(persisted),
+    ...attributionFieldsFrom(landingContext),
+    ...attributionFieldsFrom(fromUrl),
+  }
+
+  return {
+    sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
+    landingUrl:
+      landingContext.landingUrl ||
+      persisted.landingUrl ||
+      (typeof window !== 'undefined' ? window.location.href : null),
+    landingPath:
+      landingContext.landingPath ||
+      persisted.landingPath ||
+      (typeof window !== 'undefined'
+        ? window.location.pathname +
+          window.location.search +
+          window.location.hash
+        : null),
+    landingPageGroup:
+      landingContext.landingPageGroup ||
+      persisted.landingPageGroup ||
+      (typeof window !== 'undefined'
+        ? inferPageGroup(window.location.pathname)
+        : null),
+    ...attribution,
   }
 }
 
@@ -472,14 +606,19 @@ export const useTracking = () => {
     label = null,
     href = null,
     details = {},
+    countAsInteraction = true,
   }) => {
     ensureFlushListeners()
     ensureSessionContext()
-    setStoredBoolean(INTERACTION_STORAGE_KEY, true)
-    ensureFirstInteractionAt()
-    const interactionCount = incrementInteractionCount()
 
-    flushQueuedPageviews()
+    let interactionCount = getInteractionCount()
+
+    if (countAsInteraction) {
+      setStoredBoolean(INTERACTION_STORAGE_KEY, true)
+      ensureFirstInteractionAt()
+      interactionCount = incrementInteractionCount()
+      flushQueuedPageviews()
+    }
 
     queueEvent(
       buildEventPayload({
@@ -525,6 +664,7 @@ export const useTracking = () => {
   return {
     enabled,
     inferPageGroup,
+    getLeadAttribution,
     trackEvent,
     trackPageview,
   }

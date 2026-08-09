@@ -27,6 +27,14 @@ export const AREA_SERVED = Object.freeze([
   { '@type': 'City', name: 'Reda' },
 ])
 
+export const AREA_SERVED_ONLINE = Object.freeze([
+  { '@type': 'Country', name: 'Poland' },
+  {
+    '@type': 'VirtualLocation',
+    name: 'Zajęcia online (Zoom)',
+  },
+])
+
 export const BUSINESS_GEO = Object.freeze({
   '@type': 'GeoCoordinates',
   latitude: 54.565312360,

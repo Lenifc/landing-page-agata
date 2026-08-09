@@ -1,5 +1,6 @@
 import {
   AREA_SERVED,
+  AREA_SERVED_ONLINE,
   BUSINESS_ENTITY,
   BUSINESS_REFERENCE,
   BUSINESS_NAME,
@@ -146,6 +147,7 @@ const buildOfferNode = (
     itemOffered,
     itemName = plan.name,
     serviceType = 'Lekcje języka angielskiego',
+    areaServed = AREA_SERVED,
   },
 ) => {
   const price = getPlanPrice(plan)
@@ -161,13 +163,13 @@ const buildOfferNode = (
     price,
     priceCurrency: SCHEMA_CURRENCY,
     seller: BUSINESS_REFERENCE,
-    areaServed: AREA_SERVED,
+    areaServed,
     itemOffered: itemOffered ?? {
       '@type': 'Service',
       name: itemName,
       serviceType,
       provider: BUSINESS_REFERENCE,
-      areaServed: AREA_SERVED,
+      areaServed,
     },
     priceSpecification: {
       '@type': 'PriceSpecification',
@@ -183,7 +185,7 @@ const buildOfferCatalogNode = ({
   pageUrl,
   plans,
   name = 'Cennik lekcji angielskiego Talkateria',
-  description = 'Pakiety i ceny lekcji języka angielskiego w Talkaterii.',
+  description = 'Oferta i cennik lekcji języka angielskiego w Talkaterii.',
 }) => ({
   '@type': 'OfferCatalog',
   '@id': OFFER_CATALOG_ID(pageUrl),
@@ -208,6 +210,7 @@ const buildServiceNode = ({
   priceOptions = [],
   audience,
   availableChannel,
+  areaServed = AREA_SERVED,
 }) =>
   compact({
     '@type': 'Service',
@@ -217,7 +220,7 @@ const buildServiceNode = ({
     category: 'Edukacja językowa',
     description,
     provider: BUSINESS_REFERENCE,
-    areaServed: AREA_SERVED,
+    areaServed,
     audience,
     url: pageUrl,
     availableChannel,
@@ -226,6 +229,7 @@ const buildServiceNode = ({
         pageUrl,
         category: name,
         itemOffered: nodeRef(SERVICE_ID(pageUrl)),
+        areaServed,
       }),
     ),
   })
@@ -295,6 +299,7 @@ export const buildServicePageJsonLd = ({
   priceOptions = [],
   audience,
   availableChannel,
+  areaServed = AREA_SERVED,
   faqs = [],
 }) => {
   const mainEntity = [SERVICE_ID(pageUrl)]
@@ -324,6 +329,7 @@ export const buildServicePageJsonLd = ({
       priceOptions,
       audience,
       availableChannel,
+      areaServed,
     }),
     faqs.length ? buildFAQPageNode({ pageUrl, faqs }) : undefined,
   ])

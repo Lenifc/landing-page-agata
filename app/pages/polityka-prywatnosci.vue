@@ -240,10 +240,10 @@
       <section class="mt-8 space-y-3">
         <h2 class="text-xl font-semibold">9. Pliki cookies</h2>
         <p>
-          Strona może korzystać z plików cookies potrzebnych do prawidłowego
-          działania serwisu. Po wyrażeniu zgody w banerze cookies strona może
-          korzystać z analitycznych plików cookies Microsoft Clarity w celu
-          zbierania zagregowanych statystyk odwiedzin i interakcji ze stroną.
+          Strona może korzystać z plików cookies i podobnych technologii
+          potrzebnych do prawidłowego działania serwisu. Własna analityka
+          first-party (opisana w punkcie 4) służy do zrozumienia ruchu i
+          interakcji ze stroną — bez zewnętrznych narzędzi typu session replay.
         </p>
         <p>
           Elementy zewnętrzne, takie jak usługa wysyłki formularza lub mapa Google,
@@ -251,10 +251,8 @@
           zasadami dostawcy.
         </p>
         <p>
-          Zgody na cookies analityczne możesz udzielić lub odrzucić w banerze
-          wyświetlanym na dole strony. Ustawienia cookies możesz też zmienić w
-          swojej przeglądarce. Ograniczenie cookies może wpłynąć na działanie
-          niektórych elementów strony.
+          Ustawienia cookies możesz zmienić w swojej przeglądarce. Ograniczenie
+          cookies może wpłynąć na działanie niektórych elementów strony.
         </p>
       </section>
 

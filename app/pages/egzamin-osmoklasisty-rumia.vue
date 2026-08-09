@@ -1,8 +1,9 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <PageHero
+      data-track-section="hero"
       eyebrow="Egzamin ósmoklasisty"
-      title="Egzamin ósmoklasisty bez stresu? To możliwe!"
+      title="Egzamin ósmoklasisty z angielskiego w Rumi"
       image-src="/photos/egzamin-osmoklasisty-hero-800.webp"
       image-srcset="
         /photos/egzamin-osmoklasisty-hero-400.webp   400w,
@@ -15,14 +16,10 @@
       image-height="800"
     >
       <template #description>
-        Kursy przygotowawcze dopasowane do Twoich potrzeb prowadzone w studiu
-        w Rumi lub online - ucz się indywidualnie, w duecie z przyjacielem lub
-        przyjaciółką albo w kameralnej 3-osobowej grupie.<br /><br />
-        Stawiam na systematyczność i regularne powtórki, dzięki czemu
-        uczniowie płynnie przyswajają wiedzę i oswajają formułę tego testu.
-        Razem pracujemy na wysoki wynik, dbając jednocześnie o to, by ten
-        ważny dzień był dla nastolatka spokojnym podsumowaniem jego sukcesów,
-        a nie źródłem lęku.
+        Przygotowanie do egzaminu ósmoklasisty z angielskiego — w studiu w Rumi
+        lub online. Indywidualnie, w duecie albo w grupie 3-osobowej.
+        Systematyczne powtórki i praca na typowych zadaniach, żeby uczeń
+        podszedł do testu spokojniej i pewniej.
       </template>
       <template #actions>
         <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
@@ -32,7 +29,7 @@
       </template>
     </PageHero>
 
-    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+    <UiSection id="cennik" data-track-section="pricing" variant="secondary" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztuje przygotowanie do egzaminu ósmoklasisty?"
@@ -57,7 +54,7 @@
       </UiButton>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection data-track-section="features" padding="lg">
       <UiSectionHeader title="Co obejmuje przygotowanie?" max-width="3xl">
         <template #description>
           Program zajęć oraz metody pracy dobieram indywidualnie do potrzeb
@@ -70,14 +67,29 @@
       <div class="mt-10">
         <FeatureGrid :items="features" />
       </div>
-      <p class="max-w-3xl pt-8 text-pretty leading-relaxed text-muted-foreground">
-        Efekt? Uczeń podchodzi do egzaminu spokojnie, świadomy swoich
-        umiejętności i dobrze przygotowany - bez stresu, za to z realną
-        szansą na wysoki wynik.
-      </p>
+      <div
+        class="mt-10 max-w-3xl space-y-5 text-pretty leading-relaxed text-muted-foreground"
+      >
+        <p>
+          Zajęcia prowadzę w studiu w Rumi lub online — indywidualnie, w duecie
+          z przyjacielem lub przyjaciółką albo w kameralnej 3-osobowej grupie.
+        </p>
+        <p>
+          Stawiam na systematyczność i regularne powtórki, dzięki czemu
+          uczniowie płynnie przyswajają wiedzę i oswajają formułę tego testu.
+          Razem pracujemy na wysoki wynik, dbając jednocześnie o to, by ten
+          ważny dzień był dla nastolatka spokojnym podsumowaniem jego sukcesów,
+          a nie źródłem lęku.
+        </p>
+        <p>
+          Efekt? Uczeń podchodzi do egzaminu spokojnie, świadomy swoich
+          umiejętności i dobrze przygotowany — bez stresu, za to z realną
+          szansą na wysoki wynik.
+        </p>
+      </div>
     </UiSection>
 
-    <UiSection variant="secondary" padding="lg">
+    <UiSection data-track-section="audience" variant="secondary" padding="lg">
       <UiSectionHeader
         title="Dla kogo przeznaczone są zajęcia?"
         title-tag="h2"

@@ -3,8 +3,176 @@ export default defineNuxtPlugin(() => {
   const { enabled, inferPageGroup, trackEvent, trackPageview } = useTracking()
   const scrollMilestones = [25, 50, 75, 100]
   const seenScrollDepth = new Map()
+  const seenSections = new Set()
+
+  let pageEnteredAt = 0
+  let activeMs = 0
+  let activeSegmentStartedAt = 0
+  let maxScrollPercent = 0
+  let sectionObserver = null
+  let pageMetricsBound = false
 
   const normalizeLabel = (value) => value.replace(/\s+/g, ' ').trim()
+
+  const getScrollPercent = () => {
+    const scrollHeight =
+      document.documentElement.scrollHeight - window.innerHeight
+    if (scrollHeight <= 0) {
+      return 100
+    }
+
+    return Math.min(
+      100,
+      Math.max(0, Math.round((window.scrollY / scrollHeight) * 100)),
+    )
+  }
+
+  const updateMaxScroll = () => {
+    maxScrollPercent = Math.max(maxScrollPercent, getScrollPercent())
+  }
+
+  const pauseActiveTime = () => {
+    if (!activeSegmentStartedAt) {
+      return
+    }
+
+    activeMs += Date.now() - activeSegmentStartedAt
+    activeSegmentStartedAt = 0
+  }
+
+  const resumeActiveTime = () => {
+    if (
+      document.visibilityState !== 'visible' ||
+      activeSegmentStartedAt ||
+      !pageEnteredAt
+    ) {
+      return
+    }
+
+    activeSegmentStartedAt = Date.now()
+  }
+
+  const getActiveMs = () => {
+    if (activeSegmentStartedAt) {
+      return activeMs + (Date.now() - activeSegmentStartedAt)
+    }
+
+    return activeMs
+  }
+
+  const resetPageMetrics = () => {
+    pageEnteredAt = Date.now()
+    activeMs = 0
+    activeSegmentStartedAt =
+      document.visibilityState === 'visible' ? Date.now() : 0
+    maxScrollPercent = getScrollPercent()
+  }
+
+  const emitPageLeave = (reason, pathOverride = null) => {
+    if (!enabled.value || !pageEnteredAt) {
+      return
+    }
+
+    pauseActiveTime()
+    updateMaxScroll()
+
+    const dwellMs = Date.now() - pageEnteredAt
+    const activeTimeMs = getActiveMs()
+    const scrollPercent = maxScrollPercent
+    const leavePath = pathOverride || route.path
+
+    // Prevent duplicate page_leave (pagehide + later route_change / bfcache).
+    pageEnteredAt = 0
+    activeMs = 0
+    activeSegmentStartedAt = 0
+
+    trackEvent({
+      eventType: 'page_leave',
+      label: leavePath,
+      countAsInteraction: false,
+      details: {
+        reason,
+        activeMs: activeTimeMs,
+        dwellMs,
+        maxScrollPercent: scrollPercent,
+        pageGroup: inferPageGroup(leavePath),
+      },
+    })
+  }
+
+  const disconnectSectionObserver = () => {
+    sectionObserver?.disconnect()
+    sectionObserver = null
+  }
+
+  const observeSections = () => {
+    disconnectSectionObserver()
+    seenSections.clear()
+
+    if (typeof IntersectionObserver === 'undefined') {
+      return
+    }
+
+    // Scope to current page root so page transitions don't pick up leaving DOM.
+    const root =
+      document.querySelector('#main-content') || document.querySelector('main')
+    const sections = root
+      ? root.querySelectorAll('[data-track-section]')
+      : document.querySelectorAll('[data-track-section]')
+    if (!sections.length) {
+      return
+    }
+
+    const routeKey = route.fullPath
+
+    sectionObserver = new IntersectionObserver(
+      (entries) => {
+        if (!enabled.value || route.fullPath !== routeKey) {
+          return
+        }
+
+        for (const entry of entries) {
+          if (!entry.isIntersecting) {
+            continue
+          }
+
+          const el = entry.target
+          if (!(el instanceof HTMLElement)) {
+            continue
+          }
+
+          const sectionId = el.dataset.trackSection
+          if (!sectionId) {
+            continue
+          }
+
+          const key = `${routeKey}::${sectionId}`
+          if (seenSections.has(key)) {
+            continue
+          }
+
+          seenSections.add(key)
+          trackEvent({
+            eventType: 'section_view',
+            label: sectionId,
+            countAsInteraction: false,
+            details: {
+              sectionId,
+              pageGroup: inferPageGroup(route.path),
+            },
+          })
+          sectionObserver?.unobserve(el)
+        }
+      },
+      {
+        threshold: 0.35,
+      },
+    )
+
+    for (const section of sections) {
+      sectionObserver.observe(section)
+    }
+  }
 
   const inferClickPayload = (target) => {
     if (!(target instanceof Element)) {
@@ -24,7 +192,9 @@ export default defineNuxtPlugin(() => {
     }
 
     const href =
-      trackable instanceof HTMLAnchorElement ? trackable.getAttribute('href') : null
+      trackable instanceof HTMLAnchorElement
+        ? trackable.getAttribute('href')
+        : null
     const label =
       trackable.getAttribute('aria-label') ||
       trackable.getAttribute('title') ||
@@ -52,7 +222,9 @@ export default defineNuxtPlugin(() => {
         tagName: trackable.tagName.toLowerCase(),
         id: trackable.id || null,
         buttonType:
-          trackable instanceof HTMLButtonElement ? trackable.type || 'button' : null,
+          trackable instanceof HTMLButtonElement
+            ? trackable.type || 'button'
+            : null,
       },
     }
   }
@@ -69,12 +241,8 @@ export default defineNuxtPlugin(() => {
       return
     }
 
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-    if (scrollHeight <= 0) {
-      return
-    }
-
-    const scrollPercent = Math.round((window.scrollY / scrollHeight) * 100)
+    updateMaxScroll()
+    const scrollPercent = getScrollPercent()
     const routeKey = route.fullPath
     const seenForRoute = seenScrollDepth.get(routeKey) || new Set()
 
@@ -121,14 +289,49 @@ export default defineNuxtPlugin(() => {
     })
   }
 
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      pauseActiveTime()
+    } else {
+      resumeActiveTime()
+    }
+  }
+
+  const handlePageHide = () => {
+    emitPageLeave('pagehide')
+  }
+
+  const bindPageMetrics = () => {
+    if (pageMetricsBound) {
+      return
+    }
+
+    window.addEventListener('scroll', maybeTrackScrollDepth, { passive: true })
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('pagehide', handlePageHide)
+    pageMetricsBound = true
+  }
+
+  const enterPage = () => {
+    resetPageMetrics()
+    // Double tick: wait out page transition / async page mount before observing.
+    nextTick(() => {
+      nextTick(() => {
+        observeSections()
+        maybeTrackScrollDepth()
+      })
+    })
+  }
+
   onNuxtReady(() => {
     if (!enabled.value) {
       return
     }
 
+    bindPageMetrics()
+    enterPage()
     sendPageview()
     document.addEventListener('click', handleDocumentClick, true)
-    window.addEventListener('scroll', maybeTrackScrollDepth, { passive: true })
     window.addEventListener('error', (event) => {
       trackClientError('window.error', {
         message: event.message || 'Unknown client error',
@@ -158,9 +361,11 @@ export default defineNuxtPlugin(() => {
         return
       }
 
+      emitPageLeave('route_change', oldPath.split('?')[0] || oldPath)
       seenScrollDepth.delete(oldPath)
+      disconnectSectionObserver()
+      enterPage()
       sendPageview()
-      maybeTrackScrollDepth()
     },
   )
 })

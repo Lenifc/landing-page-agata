@@ -1,6 +1,7 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <PageHero
+      data-track-section="hero"
       eyebrow="Zajęcia dla dorosłych"
       title="Angielski dla dorosłych w Rumi oraz online. Bez presji i szkolnego stresu."
       image-src="/photos/dorosli-hero-800.webp"
@@ -30,7 +31,7 @@
       </template>
     </PageHero>
 
-    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+    <UiSection id="cennik" data-track-section="pricing" variant="secondary" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztuje angielski dla dorosłych?"
@@ -64,7 +65,7 @@
       </UiButton>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection data-track-section="features" padding="lg">
       <UiSectionHeader
         title="Zajęcia dopasowane do dorosłego rytmu."
         max-width="3xl"
@@ -81,7 +82,7 @@
       </div>
     </UiSection>
 
-    <UiSection variant="secondary" padding="lg">
+    <UiSection data-track-section="how-it-works" variant="secondary" padding="lg">
       <div class="grid gap-10 md:grid-cols-2">
         <div>
           <UiSectionHeader

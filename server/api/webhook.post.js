@@ -10,9 +10,15 @@ const ALLOWED_EVENT_TYPES = new Set([
   'scroll_depth',
   'form_view',
   'form_interaction',
+  'form_field_focus',
   'form_submit_error',
+  'form_submit_blocked',
   'client_error',
   'form_submit_success',
+  'page_leave',
+  'section_view',
+  'nav_toggle',
+  'sticky_cta_toggle',
 ])
 
 const MAX_LABEL_LENGTH = 120

@@ -1,6 +1,7 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <PageHero
+      data-track-section="hero"
       eyebrow="Pomoc w opanowaniu materiału szkolnego"
       title="Korepetycje z angielskiego dla uczniów i studentów."
       image-src="/photos/material-szkolny-800.webp"
@@ -29,7 +30,7 @@
       </template>
     </PageHero>
 
-    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+    <UiSection id="cennik" data-track-section="pricing" variant="secondary" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztują korepetycje z angielskiego?"
@@ -54,7 +55,7 @@
       </UiButton>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection data-track-section="when" padding="lg">
       <UiSectionHeader
         title="Kiedy takie zajęcia sprawdzają się najlepiej?"
         max-width="3xl"
@@ -70,7 +71,7 @@
       </div>
     </UiSection>
 
-    <UiSection variant="secondary" padding="lg" max-width="6xl">
+    <UiSection data-track-section="pace" variant="secondary" padding="lg" max-width="6xl">
       <div class="grid gap-10 md:grid-cols-2 md:items-center">
         <div>
           <UiSectionHeader

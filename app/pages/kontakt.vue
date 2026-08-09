@@ -1,6 +1,6 @@
 <template>
   <main id="main-content">
-    <section class="mx-auto max-w-6xl px-6 py-8">
+    <section data-track-section="contact" class="mx-auto max-w-6xl px-6 py-8">
       <div class="mb-8 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Kontakt
@@ -26,7 +26,7 @@
           dopasowane do Ciebie.
         </p>
 
-        <div class="order-1 space-y-5">
+        <div class="order-2 space-y-5 lg:order-1">
           <div
             v-for="item in details"
             :key="item.label"
@@ -71,7 +71,7 @@
                 </a>
                 <button
                   type="button"
-                  class="peer inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  class="peer inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   aria-label="Informacja o kontakcie telefonicznym"
                   aria-describedby="contact-phone-tooltip"
                 >
@@ -122,7 +122,8 @@
 
         <div
           id="formularz"
-          class="order-2 scroll-mt-24 rounded-3xl border border-border bg-card px-4 py-4 shadow-sm md:px-5 md:py-5 lg:order-3 lg:col-span-2"
+          data-track-section="form"
+          class="order-1 scroll-mt-24 rounded-3xl border border-border bg-card px-4 py-4 shadow-sm md:px-5 md:py-5 lg:order-3 lg:col-span-2"
         >
           <h2 class="font-serif text-xl font-semibold text-foreground md:text-2xl">
             Formularz zgłoszeniowy
@@ -149,7 +150,7 @@
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <section data-track-section="map" class="mx-auto max-w-6xl px-6 py-12 md:py-16">
       <div class="mb-6 max-w-2xl">
         <UiSectionHeader
           eyebrow="Dojazd"

@@ -21,7 +21,7 @@
       class="space-y-3"
       novalidate
       @click="trackFormInteraction"
-      @focusin="trackFormInteraction"
+      @focusin="onFormFocusIn"
       @submit.prevent="onSubmit"
     >
       <!-- Honeypoty: niewidoczne dla ludzi -->
@@ -154,7 +154,7 @@
       </div>
 
       <label
-        class="flex cursor-pointer items-start gap-2.5 text-sm leading-snug text-muted-foreground"
+        class="flex min-h-11 cursor-pointer items-start gap-3 text-sm leading-snug text-muted-foreground"
       >
         <input
           v-model="form.consent"
@@ -162,7 +162,9 @@
           name="consent"
           required
           :disabled="status === 'sending'"
-          class="mt-0.5 h-4 w-4 shrink-0 accent-primary cursor-pointer"
+          class="mt-0.5 h-5 w-5 shrink-0 accent-primary cursor-pointer"
+          :aria-invalid="Boolean(errors.consent)"
+          :aria-describedby="errors.consent ? 'contact-consent-error' : undefined"
         />
         <span>
           Zgadzam się na kontakt w sprawie zajęć.
@@ -177,7 +179,11 @@
           .
         </span>
       </label>
-      <p v-if="errors.consent" class="mt-1 text-xs text-red-700">
+      <p
+        v-if="errors.consent"
+        id="contact-consent-error"
+        class="mt-1 text-xs text-red-700"
+      >
         {{ errors.consent }}
       </p>
 
@@ -220,7 +226,7 @@
 <script setup>
 import { CONTACT_FORM } from '~/config/forms'
 
-const { trackEvent } = useTracking()
+const { trackEvent, getLeadAttribution } = useTracking()
 const STORAGE_KEY = 'talkateria-contact-sent-at'
 const SPAM_PATTERN =
   /(viagra|cialis|crypto|bitcoin|casino|porn|xxx|seo\s*service|make\s*money|click\s*here|https?:\/\/|www\.|\.ru\b|\.cn\b)/i
@@ -253,6 +259,7 @@ const openedAt = ref(0)
 const jsToken = ref('')
 const hasTrackedFormView = ref(false)
 const hasTrackedFormInteraction = ref(false)
+const focusedFields = new Set()
 let formObserver = null
 
 onMounted(() => {
@@ -389,6 +396,41 @@ const trackFormInteraction = () => {
   })
 }
 
+const TRACKED_FIELD_NAMES = new Set([
+  'name',
+  'phone',
+  'email',
+  'message',
+  'consent',
+])
+
+const onFormFocusIn = (event) => {
+  trackFormInteraction()
+
+  const target = event.target
+  if (!(target instanceof HTMLElement)) {
+    return
+  }
+
+  const fieldName = target.getAttribute('name')
+  if (!fieldName || !TRACKED_FIELD_NAMES.has(fieldName)) {
+    return
+  }
+  if (focusedFields.has(fieldName)) {
+    return
+  }
+
+  focusedFields.add(fieldName)
+  trackEvent({
+    eventType: 'form_field_focus',
+    label: fieldName,
+    details: {
+      fieldName,
+      source: 'kontakt_form',
+    },
+  })
+}
+
 const emailDomain = (email) => email.split('@')[1]?.toLowerCase() || ''
 
 const looksLikeSpam = () => {
@@ -459,6 +501,17 @@ const validate = () => {
   return Object.keys(errors).length === 0
 }
 
+const trackBlockedSubmit = (reason) => {
+  trackEvent({
+    eventType: 'form_submit_blocked',
+    label: 'Formularz kontaktowy',
+    details: {
+      reason,
+      source: 'kontakt_form',
+    },
+  })
+}
+
 const onSubmit = async () => {
   if (status.value === 'sending') {
     return
@@ -466,7 +519,9 @@ const onSubmit = async () => {
 
   const honeypotTriggered = Boolean(honeypot.website) || Boolean(honeypot.company)
 
+  // Silent drop for honeypot bots — do not train scrapers with error copy.
   if (honeypotTriggered) {
+    trackBlockedSubmit('honeypot')
     status.value = 'success'
     return
   }
@@ -475,14 +530,27 @@ const onSubmit = async () => {
     return
   }
 
-  const isBotLikeTraffic =
-    !jsToken.value ||
-    Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs ||
-    looksLikeSpam() ||
-    isInCooldown()
+  if (isInCooldown()) {
+    trackBlockedSubmit('cooldown')
+    status.value = 'error'
+    errorMessage.value =
+      'To zgłoszenie już wysłałam / wysłałeś przed chwilą. Odczekaj minutę albo'
+    return
+  }
 
-  if (isBotLikeTraffic) {
-    status.value = 'success'
+  if (!jsToken.value || Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs) {
+    trackBlockedSubmit('too_fast')
+    status.value = 'error'
+    errorMessage.value =
+      'Formularz wysłano zbyt szybko. Odczekaj sekundę i spróbuj ponownie albo'
+    return
+  }
+
+  if (looksLikeSpam()) {
+    trackBlockedSubmit('spam_heuristic')
+    status.value = 'error'
+    errorMessage.value =
+      'Nie mogę przyjąć tej wiadomości. Usuń linki / uprość treść albo'
     return
   }
 
@@ -490,13 +558,28 @@ const onSubmit = async () => {
   errorMessage.value = ''
 
   const phoneDigits = normalizePlPhone(form.phone)
+  const attribution = getLeadAttribution()
+  const campaignLabel = attribution.utmCampaign || attribution.utmSource || 'direct'
   const payload = {
     name: form.name,
     email: form.email,
     message: form.message,
     consent: 'Tak',
     source: 'talkateria.pl/kontakt',
-    _subject: `${CONTACT_FORM.subject} — ${form.name}`,
+    session_id: attribution.sessionId || '',
+    landing_path: attribution.landingPath || '',
+    landing_page_group: attribution.landingPageGroup || '',
+    utm_source: attribution.utmSource || '',
+    utm_medium: attribution.utmMedium || '',
+    utm_campaign: attribution.utmCampaign || '',
+    utm_content: attribution.utmContent || '',
+    utm_term: attribution.utmTerm || '',
+    gclid: attribution.gclid || '',
+    gad_source: attribution.gadSource || '',
+    gad_campaignid: attribution.gadCampaignId || '',
+    gbraid: attribution.gbraid || '',
+    wbraid: attribution.wbraid || '',
+    _subject: `${CONTACT_FORM.subject} — ${form.name} [${campaignLabel}]`,
     _replyto: form.email,
     _gotcha: honeypot.website || honeypot.company || '',
   }
@@ -526,6 +609,9 @@ const onSubmit = async () => {
       details: {
         hasPhone: Boolean(phoneDigits),
         source: 'kontakt_form',
+        utmCampaign: attribution.utmCampaign || null,
+        gclid: attribution.gclid || null,
+        landingPath: attribution.landingPath || null,
       },
     })
     status.value = 'success'

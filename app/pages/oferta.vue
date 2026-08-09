@@ -1,6 +1,6 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
-    <section class="bg-secondary">
+    <section data-track-section="hero" class="bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14 text-center md:pb-20">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
         <h1
@@ -19,7 +19,7 @@
       </div>
     </section>
 
-    <section id="cennik" class="scroll-mt-24 border-t border-border">
+    <section id="cennik" data-track-section="pricing" class="scroll-mt-24 border-t border-border">
       <div class="mx-auto max-w-6xl px-6 py-10 md:py-14">
       <div class="mb-5 max-w-2xl md:mb-7">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Cennik</span>
@@ -137,7 +137,7 @@
       </div>
     </section>
 
-    <section class="border-t border-border bg-secondary">
+    <section data-track-section="formats" class="border-t border-border bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">Formy zajęć</span>
@@ -257,7 +257,7 @@
       </div>
     </section>
 
-    <section class="border-t border-border">
+    <section data-track-section="cta" class="border-t border-border">
       <div class="mx-auto max-w-6xl px-6 py-10">
         <div
           class="flex flex-col items-center rounded-[2rem] border border-border bg-card px-8 py-10 text-center shadow-sm">
@@ -450,7 +450,7 @@ const faqs = [
     a: 'Najprościej napisać wiadomość przez formularz lub mailowo. Można też zadzwonić lub wysłać SMS. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',
     link: {
       label: 'formularz lub mailowo',
-      href: ROUTES.contactDetails,
+      href: ROUTES.contactForm,
       before: 'Najprościej napisać wiadomość przez ',
       after:
         '. W wiadomości warto podać wiek ucznia, cel nauki, preferowaną formę zajęć oraz informację, czy interesują Cię lekcje stacjonarne w Rumi, czy online.',

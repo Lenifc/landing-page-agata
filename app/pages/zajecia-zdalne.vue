@@ -1,6 +1,7 @@
 <template>
   <main id="main-content" class="flex flex-col pb-[var(--sticky-cta-clearance)] md:pb-0">
     <section
+      data-track-section="hero"
       class="relative order-1 isolate overflow-hidden bg-foreground text-primary-foreground lg:h-[650px]">
       <img src="/photos/online-hero-960.webp" alt="Osoba uczestnicząca w lekcji angielskiego online przy laptopie"
         class="online-hero-image absolute inset-y-0 right-0 -z-20 h-full w-full object-cover object-[25%_center] md:w-[70%] md:object-contain md:object-right lg:w-auto lg:max-w-none"
@@ -37,7 +38,7 @@
       </div>
     </section>
 
-    <section class="order-3 border-t border-border md:order-2">
+    <section data-track-section="audience" class="order-3 border-t border-border md:order-2">
       <div class="mx-auto max-w-6xl px-6 py-12">
         <div class="grid gap-x-10 gap-y-8 md:grid-cols-2">
           <div class="flex flex-col">
@@ -87,6 +88,7 @@
     </section>
     <UiSection
       id="cennik"
+      data-track-section="pricing"
       class="order-2 md:order-3"
       variant="secondary"
       padding="lg"
@@ -104,8 +106,12 @@
       </UiSectionHeader>
 
       <div class="mt-6 md:mt-8">
-        <p class="text-sm font-medium text-foreground">
+            <p class="text-sm font-medium text-foreground">
           Wybierz porę zajęć
+        </p>
+        <p class="mt-1 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          Online prowadzę w dwóch oknach: rano (Pn–Pt do 12:00, niższy cennik)
+          oraz popołudniu (Pn–Pt 15:00–20:00 i ew. soboty do 12:00)
         </p>
         <div
           class="mt-2 grid max-w-lg grid-cols-2 gap-2"
@@ -207,7 +213,7 @@
       </div>
     </UiSection>
 
-    <section class="order-6 border-t border-border">
+    <section data-track-section="how-it-works" class="order-6 border-t border-border">
       <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
         <div>
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
@@ -323,6 +329,7 @@ import {
 } from '~/config/pricing'
 import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildServicePageJsonLd, jsonLdScript } from '~/config/schema'
+import { AREA_SERVED_ONLINE } from '~/config/business'
 
 const contactCtaPath = useContactCtaPath()
 const pageRoute = ROUTES.onlineClasses
@@ -491,6 +498,7 @@ useHead({
         serviceDescription:
           'Indywidualne i kameralne zajęcia z języka angielskiego online na platformie Zoom, prowadzone przez studio w Rumi.',
         priceOptions,
+        areaServed: AREA_SERVED_ONLINE,
         audience: {
           '@type': 'Audience',
           audienceType: 'młodzież i dorośli',

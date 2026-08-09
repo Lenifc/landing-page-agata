@@ -1,8 +1,9 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
     <PageHero
+      data-track-section="hero"
       eyebrow="Egzamin maturalny"
-      title="Egzamin maturalny bez stresu? To możliwe!"
+      title="Matura z angielskiego w Rumi — przygotowanie do egzaminu"
       image-src="/photos/matura-hero-800.webp"
       image-srcset="
         /photos/matura-hero-400.webp   400w,
@@ -15,19 +16,10 @@
       image-height="800"
     >
       <template #description>
-        Kursy przygotowawcze dopasowane do Twoich potrzeb. Przygotowuję
-        kompleksowo do matury na poziomie podstawowym oraz rozszerzonym, a
-        także do egzaminu ustnego w studiu w Rumi lub online. Ucz się
-        indywidualnie, w duecie z przyjacielem lub przyjaciółką albo w
-        kameralnej 3-osobowej grupie.<br /><br />
-        Stawiam na systematyczność, zrozumienie wymagań egzaminacyjnych i
-        regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
-        przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
-        <br /><br />
-        Razem pracujemy na wysoki wynik, który otworzy Ci drzwi na wymarzone
-        studia. Dbam o to, by egzamin dojrzałości był dla Ciebie spokojnym
-        podsumowaniem Twojej wiedzy i pewnym krokiem w przyszłość, a nie
-        źródłem paraliżującego lęku.
+        Przygotowanie do matury podstawowej, rozszerzonej i ustnej — w studiu w
+        Rumi lub online. Indywidualnie, w duecie albo w kameralnej grupie
+        3-osobowej. Pracujemy na arkuszach CKE i strategiach egzaminacyjnych,
+        żebyś wszedł na salę ze spokojem i planem.
       </template>
       <template #actions>
         <UiButton :to="contactCtaPath">Zapytaj o maturę →</UiButton>
@@ -37,7 +29,7 @@
       </template>
     </PageHero>
 
-    <UiSection id="cennik" variant="secondary" padding="lg" scroll-margin>
+    <UiSection id="cennik" data-track-section="pricing" variant="secondary" padding="lg" scroll-margin>
       <UiSectionHeader
         eyebrow="Ceny"
         title="Ile kosztuje przygotowanie do matury z angielskiego?"
@@ -62,7 +54,7 @@
       </UiButton>
     </UiSection>
 
-    <UiSection padding="lg">
+    <UiSection data-track-section="features" padding="lg">
       <UiSectionHeader
         title="Kompleksowe przygotowanie do matury z angielskiego"
         max-width="3xl"
@@ -78,9 +70,30 @@
       <div class="mt-10">
         <FeatureGrid :items="features" />
       </div>
+      <div
+        class="mt-10 max-w-3xl space-y-5 text-pretty leading-relaxed text-muted-foreground"
+      >
+        <p>
+          Przygotowuję kompleksowo do matury na poziomie podstawowym oraz
+          rozszerzonym, a także do egzaminu ustnego — w studiu w Rumi lub
+          online. Możesz uczyć się indywidualnie, w duecie z przyjacielem lub
+          przyjaciółką albo w kameralnej 3-osobowej grupie.
+        </p>
+        <p>
+          Stawiam na systematyczność, zrozumienie wymagań egzaminacyjnych i
+          regularną praktykę, dzięki czemu płynnie opanujesz wymagany materiał,
+          przełamiesz barierę językową i w pełni oswoisz formułę arkuszy CKE.
+        </p>
+        <p>
+          Razem pracujemy na wysoki wynik, który otworzy Ci drzwi na wymarzone
+          studia. Dbam o to, by egzamin dojrzałości był dla Ciebie spokojnym
+          podsumowaniem Twojej wiedzy i pewnym krokiem w przyszłość, a nie
+          źródłem paraliżującego lęku.
+        </p>
+      </div>
     </UiSection>
 
-    <UiSection variant="secondary" padding="lg">
+    <UiSection data-track-section="how-it-works" variant="secondary" padding="lg">
       <div class="grid gap-10 md:grid-cols-2">
         <UiSectionHeader title="Jak wyglądają zajęcia?" title-tag="h2" size="sm">
           <template #description>
