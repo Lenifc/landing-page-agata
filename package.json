@@ -19,6 +19,7 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "playwright": "^1.62.1",
     "prettier": "^3.8.3"
   }
 }

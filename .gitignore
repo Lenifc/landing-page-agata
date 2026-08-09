@@ -17,6 +17,7 @@ dist/
 .DS_Store
 
 .nuxt/
+.bugcheck/
 .vscode/
 google-ads-import/
 facebook-covers/

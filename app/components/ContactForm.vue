@@ -20,6 +20,7 @@
       ref="formElement"
       class="space-y-3"
       novalidate
+      autocomplete="off"
       @click="trackFormInteraction"
       @focusin="onFormFocusIn"
       @submit.prevent="onSubmit"
@@ -37,6 +38,12 @@
             name="website"
             tabindex="-1"
             autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            data-lpignore="true"
+            data-1p-ignore="true"
+            data-form-type="other"
           />
         </label>
         <label>
@@ -47,6 +54,12 @@
             name="company"
             tabindex="-1"
             autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            data-lpignore="true"
+            data-1p-ignore="true"
+            data-form-type="other"
           />
         </label>
       </div>
