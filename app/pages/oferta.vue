@@ -317,7 +317,7 @@ const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
 const duoWeekly = getPricingPlan('duoWeekly')
 const duoTwiceWeekly = getPricingPlan('duoTwiceWeekly')
 const examGroup = getPricingPlan('examGroup')
-const offerPricingFaqAnswer = `Cennik jest prosty: cena za lekcję 50 min zależy od formy i częstotliwości. Zajęcia 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×), DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Kurs egzaminacyjny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min, płatność ${paymentWithoutPrefix(examGroup.paymentNote)}. Osobny cennik obowiązuje przy porannych lekcjach online (Pn–Pt do 12:00).`
+const offerPricingFaqAnswer = `Cennik jest prosty: cena za lekcję 50 min zależy od formy i częstotliwości. Zajęcia 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×), DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Kurs egzaminacyjny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min); płatność ${paymentWithoutPrefix(examGroup.paymentNote)}. Osobny cennik obowiązuje przy porannych lekcjach online (Pn-Pt do 12:00).`
 
 useSeoMeta({
   title: 'Oferta oraz cennik zajęć z angielskiego w Rumi',
@@ -353,7 +353,7 @@ const pricingSections = [
     title: 'Kurs egzaminacyjny',
     badge: 'Pakiet · 8 rat',
     description: [
-      'Jedyny pakiet w ofercie: 25 spotkań po 100 minut w 3-osobowej grupie (egzamin ósmoklasisty lub matura). Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min). Płatność w 8 równych ratach.',
+      'Jedyny pakiet w ofercie: 25 spotkań po 100 minut w 3-osobowej grupie (ósmoklasista lub matura). Cena: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min). Płatność w 8 równych ratach.',
     ],
     plans: getPricingPlans('annualExam'),
   },

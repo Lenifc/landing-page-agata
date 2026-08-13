@@ -36,10 +36,11 @@
         max-width="3xl"
       >
         <template #description>
-          Możesz wybrać kurs egzaminacyjny w 3-osobowej grupie (pakiet z
-          płatnością w 8 ratach) albo lekcje indywidualne ze stawką za lekcję
-          zależną od częstotliwości. Harmonogram zawsze układamy tak, aby bez
-          pośpiechu zrealizować materiał jeszcze przed egzaminem.
+          Możesz wybrać kurs egzaminacyjny w 3-osobowej grupie (108 zł / osoba
+          za 100 min, czyli 54 zł za standardowe 50 min) z płatnością w 8
+          ratach albo lekcje indywidualne ze stawką zależną od częstotliwości.
+          Harmonogram zawsze układamy tak, aby bez pośpiechu zrealizować
+          materiał jeszcze przed egzaminem.
         </template>
       </UiSectionHeader>
       <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
@@ -158,7 +159,7 @@ const landingPriceOptions = [
 const examGroupPayment = personPrice(
   paymentWithoutPrefix(examGroup.paymentNote),
 )
-const examPriceFaqAnswer = `Grupowy kurs maturalny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min. Miesięczna płatność to ${examGroupPayment}. Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×) za lekcję 50 min.`
+const examPriceFaqAnswer = `Grupowy kurs maturalny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min). Miesięczna płatność to ${examGroupPayment}. Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×) za lekcję 50 min.`
 
 const features = [
   {

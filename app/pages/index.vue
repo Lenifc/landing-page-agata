@@ -411,7 +411,7 @@ const landingPaths = [
     eyebrow: 'Młodzież',
     title: 'Egzamin ósmoklasisty i matura',
     body: 'Przygotowanie do egzaminu ósmoklasisty i matury z angielskiego: arkusze, strategie, gramatyka i spokojne powtórki.',
-    priceLabel: `108 zł / osoba za spotkanie 100 min`,
+    priceLabel: `108 zł / osoba · 100 min · czyli 54 zł za standardowe 50 min`,
     links: [
       { to: ROUTES.eighthGradeExamPrices, label: '8 klasa' },
       { to: ROUTES.maturaExamPrices, label: 'Matura' },

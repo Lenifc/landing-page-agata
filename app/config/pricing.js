@@ -60,28 +60,29 @@ export const PRICING = Object.freeze({
       name: 'Kurs egzaminacyjny',
       frequency: '50 lekcji (25 spotkań po 100 min)',
       duration: '100 min (2×50 min)',
-      price: '108 zł / 100 min',
+      price: '108 zł / osoba',
       schemaPrice: '337.50',
       fromPrice: '54 zł / osoba',
       fromPriceContext: 'za lekcję 50 min',
       priceDetails: {
         totalPrice: '2700 zł / osoba',
-        lessonPrice: '54 zł / osoba za lekcję 50 min',
+        lessonPrice: '54 zł / osoba za 50 min',
       },
       paymentNote: 'miesięcznie: 8 rat × 337,50 zł / osoba',
-      details: `Kurs egzaminacyjny dla uczniów klasy 8 oraz maturzystów obejmuje 25 spotkań po 100 minut w
-        kameralnej 3-osobowej grupie. Cena: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min).
-        Zajęcia odbywają się raz w tygodniu (jedna po drugiej). W sumie to ponad 41 godzin nauki,
-        a kurs kończy się przed terminem egzaminu. Płatność: 8 równych rat × 337,50 zł / osoba.`,
+      details: `Kurs egzaminacyjny dla uczniów klasy 8 oraz maturzystów: 25 spotkań po 100 minut
+        w kameralnej 3-osobowej grupie. Cena: 108 zł / osoba za spotkanie 100 min
+        (54 zł za 50 min). Spotkania raz w tygodniu (dwie lekcje jedna po drugiej).
+        Ponad 41 godzin nauki, kurs kończy się przed egzaminem.
+        Płatność: 8 równych rat × 337,50 zł / osoba.`,
       featured: false,
       contexts: {
         eighthGradeExam: {
           details:
-            '50 lekcji (25 spotkań po 100 min) w 3-osobowej grupie. Program obejmuje arkusze, strategie i najważniejsze powtórki przed egzaminem. Płatność jest rozłożona na 8 równych rat. Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min).',
+            '25 spotkań po 100 min w grupie 3-osobowej. 108 zł / osoba za spotkanie (54 zł za 50 min). Arkusze, strategie i powtórki przed egzaminem. Płatność w 8 równych ratach.',
         },
         maturaExam: {
           details:
-            '50 lekcji (25 spotkań po 100 min) w 3-osobowej grupie, z pracą na arkuszach, strategiach i najważniejszych obszarach do poprawy. Płatność jest rozłożona na 8 równych rat. Spotkanie 100 min = 108 zł / osoba (54 zł za 50 min).',
+            '25 spotkań po 100 min w grupie 3-osobowej. 108 zł / osoba za spotkanie (54 zł za 50 min). Arkusze, strategie i praca nad obszarami do poprawy. Płatność w 8 równych ratach.',
         },
       },
     },
@@ -280,11 +281,13 @@ export const buildExamRateCard = (collection) => {
 
   return {
     ...exam,
+    displayPriceLabel: 'Cena za spotkanie',
     displayPrice: '108 zł / osoba',
-    displayPriceContext: 'za spotkanie 100 min',
+    displayPriceContext: '100 min · grupa 3-osobowa',
+    displayPriceNote: '54 zł za 50 min',
     paymentLines: [
       {
-        payment: '108 zł / osoba za spotkanie 100 min',
+        payment: '108 zł / osoba za spotkanie 100 min (54 zł / 50 min)',
       },
       {
         payment: paymentWithoutPrefix(exam.paymentNote),

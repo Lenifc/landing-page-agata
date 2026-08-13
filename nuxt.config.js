@@ -116,7 +116,7 @@ export default defineNuxtConfig({
         { property: 'og:image:height', content: '630' },
         {
           property: 'og:image:alt',
-          content: 'Talkateria — angielski w Rumi',
+          content: 'Talkateria - angielski w Rumi',
         },
         {
           property: 'og:title',

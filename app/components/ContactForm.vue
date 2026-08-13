@@ -7,7 +7,7 @@
       aria-live="polite"
     >
       <h3 class="font-serif text-lg font-semibold text-foreground md:text-xl">
-        Dziękuję — zgłoszenie poszło.
+        Dziękuję - zgłoszenie poszło.
       </h3>
       <p class="text-sm leading-relaxed text-muted-foreground">
         Odpowiem zwykle w ciągu kilku godzin z propozycją konsultacji albo

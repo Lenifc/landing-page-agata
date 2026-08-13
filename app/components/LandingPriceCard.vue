@@ -66,7 +66,7 @@
 
       <template v-else>
         <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-          Cena za lekcję
+          {{ option.displayPriceLabel || 'Cena za lekcję' }}
         </p>
         <p class="mt-0.5 font-serif text-xl font-semibold text-primary md:text-2xl">
           <span v-if="option.displayPrefix">{{ option.displayPrefix }} </span>
@@ -74,6 +74,12 @@
         </p>
         <p class="mt-0.5 text-xs text-muted-foreground md:text-sm">
           {{ displayPriceContext }}
+        </p>
+        <p
+          v-if="option.displayPriceNote"
+          class="mt-1 text-xs font-medium text-foreground/80 md:text-sm"
+        >
+          {{ option.displayPriceNote }}
         </p>
       </template>
 
