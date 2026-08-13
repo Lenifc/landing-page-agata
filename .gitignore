@@ -22,3 +22,5 @@ dist/
 google-ads-import/
 facebook-covers/
 supabase/
+
+.cursor/

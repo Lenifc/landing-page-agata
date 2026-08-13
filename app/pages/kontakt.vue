@@ -59,26 +59,26 @@
               </p>
               <div
                 v-if="item.icon === 'phone'"
-                class="relative inline-flex max-w-full items-center gap-1.5"
+                class="relative inline-flex max-w-full items-center gap-1"
               >
                 <a
                   :href="item.href"
                   data-tracking-skip-delegated="true"
-                  class="break-words font-medium text-foreground transition-colors hover:text-primary"
+                  class="break-words font-medium leading-normal text-foreground transition-colors hover:text-primary"
                   @click="trackContactInteraction(item)"
                 >
                   {{ item.value }}
                 </a>
                 <button
                   type="button"
-                  class="peer inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  class="peer relative inline-flex size-4 shrink-0 cursor-pointer items-center justify-center text-primary before:absolute before:-inset-3 before:content-[''] transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   aria-label="Informacja o kontakcie telefonicznym"
                   aria-describedby="contact-phone-tooltip"
                 >
                   <svg
                     aria-hidden="true"
                     viewBox="0 0 24 24"
-                    class="h-4 w-4"
+                    class="size-3.5"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"

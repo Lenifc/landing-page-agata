@@ -121,6 +121,7 @@
           <button
             type="button"
             class="cursor-pointer rounded-xl border px-3 py-3 text-left transition-colors"
+            data-tracking-skip-delegated="true"
             :class="
               onlineSchedule === 'morning'
                 ? 'border-primary bg-primary/10 shadow-sm'
@@ -143,6 +144,7 @@
           <button
             type="button"
             class="cursor-pointer rounded-xl border px-3 py-3 text-left transition-colors"
+            data-tracking-skip-delegated="true"
             :class="
               onlineSchedule === 'afternoon'
                 ? 'border-primary bg-primary/10 shadow-sm'
@@ -185,7 +187,7 @@
 
 
 
-    <UiSection class="order-4" padding="lg">
+    <UiSection class="order-4" data-track-section="benefits" padding="lg">
       <UiSectionHeader
         eyebrow="Zalety zajęć zdalnych"
         title="Dlaczego warto wybrać zajęcia online?"
@@ -196,7 +198,7 @@
       </div>
     </UiSection>
 
-    <UiSection class="order-5" variant="secondary" padding="lg">
+    <UiSection class="order-5" data-track-section="scenarios" variant="secondary" padding="lg">
       <UiSectionHeader
         eyebrow="Kiedy najbardziej docenisz naukę online?"
         title="Zdalne zajęcia pomagają utrzymać kurs, gdy życie robi swoje."

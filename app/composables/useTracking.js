@@ -165,6 +165,7 @@ const emptyAttribution = () => ({
   gadCampaignId: null,
   gbraid: null,
   wbraid: null,
+  fbclid: null,
 })
 
 const attributionFieldsFrom = (source = {}) => ({
@@ -178,7 +179,56 @@ const attributionFieldsFrom = (source = {}) => ({
   gadCampaignId: source.gadCampaignId || null,
   gbraid: source.gbraid || null,
   wbraid: source.wbraid || null,
+  fbclid: source.fbclid || null,
 })
+
+/** First non-empty value wins — never let a later `null` wipe first-touch UTMs. */
+const mergeFilledAttribution = (...sources) => {
+  const result = emptyAttribution()
+
+  for (const source of sources) {
+    if (!source || typeof source !== 'object') {
+      continue
+    }
+
+    const fields = attributionFieldsFrom(source)
+    for (const key of Object.keys(result)) {
+      if (!result[key] && fields[key]) {
+        result[key] = fields[key]
+      }
+    }
+  }
+
+  return result
+}
+
+const splitLocation = (href = '', fallbackPath = '') => {
+  try {
+    const url = href
+      ? new URL(href, 'https://talkateria.pl')
+      : new URL(fallbackPath || '/', 'https://talkateria.pl')
+
+    return {
+      pathname: url.pathname || '/',
+      query: url.search || '',
+      hash: url.hash || '',
+    }
+  } catch {
+    const raw = String(fallbackPath || href || '/')
+    const noHash = raw.split('#')[0] || '/'
+    const pathname = noHash.split('?')[0] || '/'
+    const queryIndex = noHash.indexOf('?')
+
+    return {
+      pathname,
+      query: queryIndex >= 0 ? noHash.slice(queryIndex) : '',
+      hash: raw.includes('#') ? `#${raw.split('#').slice(1).join('#')}` : '',
+    }
+  }
+}
+
+const pathForReporting = (pathname, hash = '') =>
+  `${pathname || '/'}${hash || ''}`
 
 const parseAttributionParams = (url) => {
   try {
@@ -195,6 +245,7 @@ const parseAttributionParams = (url) => {
       gadCampaignId: searchParams.get('gad_campaignid'),
       gbraid: searchParams.get('gbraid'),
       wbraid: searchParams.get('wbraid'),
+      fbclid: searchParams.get('fbclid'),
     }
   } catch {
     return emptyAttribution()
@@ -220,7 +271,8 @@ const hasAnyAttribution = (attribution) =>
       attribution?.utmMedium ||
       attribution?.utmCampaign ||
       attribution?.utmContent ||
-      attribution?.utmTerm,
+      attribution?.utmTerm ||
+      attribution?.fbclid,
   )
 
 const readPersistedAttribution = () => {
@@ -274,7 +326,7 @@ const buildLandingContext = (href = window.location.href) => {
 
   return {
     landingUrl: href,
-    landingPath: url.pathname + url.search + url.hash,
+    landingPath: pathForReporting(url.pathname, url.hash),
     landingPageGroup: inferPageGroup(url.pathname),
     ...mergedAttribution,
   }
@@ -476,13 +528,23 @@ const ensureSessionContext = () => {
     if (pageviewDwellTimer) {
       window.clearTimeout(pageviewDwellTimer)
       pageviewDwellTimer = null
-    }    const nextLanding = buildLandingContext()
+    }
+
+    const nextLanding = buildLandingContext()
     writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
     persistAttribution(nextLanding)
   } else if (!existing) {
     const nextLanding = buildLandingContext()
     writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
     persistAttribution(nextLanding)
+  } else if (existing.landingPath?.includes('?')) {
+    const split = splitLocation('', existing.landingPath)
+    const cleaned = {
+      ...existing,
+      landingPath: pathForReporting(split.pathname, split.hash),
+    }
+    writeStoredJson(LANDING_CONTEXT_KEY, cleaned)
+    persistAttribution(cleaned)
   } else if (
     hasAnyAttribution(currentAttribution) &&
     !hasAnyAttribution(existing)
@@ -492,10 +554,10 @@ const ensureSessionContext = () => {
       ...existing,
       ...currentAttribution,
       landingUrl: window.location.href,
-      landingPath:
-        window.location.pathname +
-        window.location.search +
+      landingPath: pathForReporting(
+        window.location.pathname,
         window.location.hash,
+      ),
       landingPageGroup: inferPageGroup(window.location.pathname),
     }
     writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
@@ -522,12 +584,11 @@ const getLeadAttribution = () => {
     typeof window !== 'undefined'
       ? parseAttributionParams(window.location.href)
       : emptyAttribution()
-  const attribution = {
-    ...emptyAttribution(),
-    ...attributionFieldsFrom(persisted),
-    ...attributionFieldsFrom(landingContext),
-    ...attributionFieldsFrom(fromUrl),
-  }
+  const attribution = mergeFilledAttribution(
+    fromUrl,
+    landingContext,
+    persisted,
+  )
 
   return {
     sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
@@ -539,9 +600,7 @@ const getLeadAttribution = () => {
       landingContext.landingPath ||
       persisted.landingPath ||
       (typeof window !== 'undefined'
-        ? window.location.pathname +
-          window.location.search +
-          window.location.hash
+        ? pathForReporting(window.location.pathname, window.location.hash)
         : null),
     landingPageGroup:
       landingContext.landingPageGroup ||
@@ -598,11 +657,12 @@ const buildSharedDetails = () => {
   const firstInteractionAt = getStoredNumber(FIRST_INTERACTION_AT_KEY)
   const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {})
   const now = Date.now()
-  const attribution = {
-    ...emptyAttribution(),
-    ...landingContext,
-    ...parseAttributionParams(window.location.href),
-  }
+  const here = splitLocation(window.location.href)
+  const attribution = mergeFilledAttribution(
+    parseAttributionParams(window.location.href),
+    landingContext,
+    readPersistedAttribution(),
+  )
 
   return {
     currentPageGroup: inferPageGroup(window.location.pathname),
@@ -614,19 +674,12 @@ const buildSharedDetails = () => {
       sessionStartedAt && firstInteractionAt
         ? firstInteractionAt - sessionStartedAt
         : null,
+    engaged: getStoredBoolean(INTERACTION_STORAGE_KEY),
     ...landingContext,
-    // Prefer current URL attribution so Ads params are never lost.
-    utmSource: attribution.utmSource || landingContext.utmSource || null,
-    utmMedium: attribution.utmMedium || landingContext.utmMedium || null,
-    utmCampaign: attribution.utmCampaign || landingContext.utmCampaign || null,
-    utmContent: attribution.utmContent || landingContext.utmContent || null,
-    utmTerm: attribution.utmTerm || landingContext.utmTerm || null,
-    gclid: attribution.gclid || landingContext.gclid || null,
-    gadSource: attribution.gadSource || landingContext.gadSource || null,
-    gadCampaignId:
-      attribution.gadCampaignId || landingContext.gadCampaignId || null,
-    gbraid: attribution.gbraid || landingContext.gbraid || null,
-    wbraid: attribution.wbraid || landingContext.wbraid || null,
+    ...attribution,
+    pathNormalized: here.pathname,
+    queryString: here.query || null,
+    hash: here.hash || null,
     clientBotHints: getClientBotHints(),
     viewport: getViewportInfo(),
     navigationType: getNavigationType(),
@@ -651,13 +704,27 @@ const buildSharedDetails = () => {
 const buildBasePayload = () => {
   ensureSessionContext()
 
+  const here = splitLocation(window.location.href)
+
   return {
     sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
     url: window.location.href,
-    path: window.location.pathname + window.location.search + window.location.hash,
+    path: pathForReporting(here.pathname, here.hash),
     referrer: document.referrer || '',
   }
 }
+
+const PASSIVE_EVENT_TYPES = new Set([
+  'scroll_depth',
+  'section_view',
+  'form_view',
+  'page_leave',
+  'form_abandon',
+  'client_error',
+  'sticky_cta_toggle',
+])
+
+const IDLE_ALLOWED_EVENT_TYPES = new Set(['form_view'])
 
 export const useTracking = () => {
   const config = useRuntimeConfig()
@@ -819,20 +886,26 @@ export const useTracking = () => {
     label = null,
     href = null,
     details = {},
-    countAsInteraction = true,
+    countAsInteraction,
+    persistWhenIdle,
   }) => {
     ensureFlushListeners()
     ensureSessionContext()
 
     let interactionCount = getInteractionCount()
     const alreadyEngaged = getStoredBoolean(INTERACTION_STORAGE_KEY)
+    const counts =
+      countAsInteraction ?? !PASSIVE_EVENT_TYPES.has(eventType)
+    const keepWhenIdle =
+      persistWhenIdle ?? IDLE_ALLOWED_EVENT_TYPES.has(eventType)
+    const pageviewSent = getStoredBoolean(FIRST_PAGEVIEW_SENT_KEY)
 
-    // Idle sessions: ignore passive noise until the user actually interacts.
-    if (!countAsInteraction && !alreadyEngaged) {
+    // Idle sessions: drop noise until pageview is kept or user interacts.
+    if (!counts && !alreadyEngaged && !keepWhenIdle && !pageviewSent) {
       return Promise.resolve(false)
     }
 
-    if (countAsInteraction) {
+    if (counts) {
       setStoredBoolean(INTERACTION_STORAGE_KEY, true)
       ensureFirstInteractionAt()
       interactionCount = incrementInteractionCount()

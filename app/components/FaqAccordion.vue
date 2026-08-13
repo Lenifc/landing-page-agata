@@ -23,6 +23,7 @@
           <button
             type="button"
             class="flex w-full cursor-pointer items-center justify-between gap-4 py-6 text-left font-medium text-foreground transition-colors hover:text-primary"
+            data-tracking-skip-delegated="true"
             :aria-expanded="isOpen(index)"
             :aria-controls="`${idPrefix}-answer-${index}`"
             :aria-label="`${isOpen(index) ? 'Zwiń' : 'Rozwiń'} odpowiedź: ${faq.q}`"

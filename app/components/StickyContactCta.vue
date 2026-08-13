@@ -40,7 +40,8 @@ defineProps({
 })
 
 /** Appear after scrolling past ~first viewport / into 2nd section. */
-const SHOW_AFTER_PX = 480
+/** Appear after leaving the hero, still in the first screenful on most phones. */
+const SHOW_AFTER_PX = 260
 
 /** Pages where sticky CTA is redundant or would cover local actions. */
 const HIDDEN_PATHS = new Set([

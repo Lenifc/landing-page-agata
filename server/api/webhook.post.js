@@ -134,6 +134,7 @@ const parseAttributionFromUrl = (urlString) => {
       gadCampaignId: url.searchParams.get('gad_campaignid'),
       gbraid: url.searchParams.get('gbraid'),
       wbraid: url.searchParams.get('wbraid'),
+      fbclid: url.searchParams.get('fbclid'),
     }
   } catch {
     return {}
@@ -169,6 +170,7 @@ const enrichPayloadDetails = (details, urlString, requestMeta = {}) => {
   )
   base.gbraid = pickFirst(base.gbraid, fromUrl.gbraid)
   base.wbraid = pickFirst(base.wbraid, fromUrl.wbraid)
+  base.fbclid = pickFirst(base.fbclid, fromUrl.fbclid)
 
   if (requestMeta && typeof requestMeta === 'object') {
     base.requestMeta = {
@@ -180,6 +182,30 @@ const enrichPayloadDetails = (details, urlString, requestMeta = {}) => {
   }
 
   return base
+}
+
+const splitLocation = (pathValue, urlValue) => {
+  const source = urlValue || pathValue || '/'
+
+  try {
+    const url = new URL(source, 'https://talkateria.pl')
+    return {
+      pathname: url.pathname || '/',
+      query: url.search || '',
+      hash: url.hash || '',
+    }
+  } catch {
+    const raw = String(pathValue || '/')
+    const [beforeHash, ...hashParts] = raw.split('#')
+    const pathname = (beforeHash.split('?')[0] || '/') || '/'
+    const queryIndex = beforeHash.indexOf('?')
+
+    return {
+      pathname,
+      query: queryIndex >= 0 ? beforeHash.slice(queryIndex) : '',
+      hash: hashParts.length ? `#${hashParts.join('#')}` : '',
+    }
+  }
 }
 
 const scoreLikelyBot = ({
@@ -349,8 +375,17 @@ export default defineEventHandler(async (event) => {
       }
 
       const absoluteUrl = toAbsoluteUrl(entry.url, requestBaseUrl)
+      const location = splitLocation(entry.path, absoluteUrl)
+      const pathWithHash = `${location.pathname}${location.hash}`
       const enrichedDetails = enrichPayloadDetails(
-        entry.details,
+        {
+          ...(entry.details && typeof entry.details === 'object'
+            ? entry.details
+            : {}),
+          pathNormalized: location.pathname,
+          queryString: location.query || null,
+          hash: location.hash || null,
+        },
         absoluteUrl,
         requestMeta,
       )
@@ -362,11 +397,19 @@ export default defineEventHandler(async (event) => {
         eventType,
       })
 
+      if (
+        typeof enrichedDetails.landingPath === 'string' &&
+        enrichedDetails.landingPath.includes('?')
+      ) {
+        const landing = splitLocation(enrichedDetails.landingPath)
+        enrichedDetails.landingPath = `${landing.pathname}${landing.hash}`
+      }
+
       return {
         event_type: eventType,
         event_label: normalizeString(entry.label, MAX_LABEL_LENGTH),
         url: absoluteUrl,
-        path: normalizeString(entry.path, 512),
+        path: normalizeString(pathWithHash, 512),
         referrer: toAbsoluteUrl(
           entry.referrer,
           requestBaseUrl || 'https://talkateria.pl',

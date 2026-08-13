@@ -38,6 +38,7 @@
             :key="rate.id"
             type="button"
             class="cursor-pointer rounded-xl border px-3 py-2.5 text-left transition-colors"
+            data-tracking-skip-delegated="true"
             :class="
               selectedRateId === rate.id
                 ? 'border-primary bg-primary/10 shadow-sm'

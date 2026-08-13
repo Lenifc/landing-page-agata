@@ -41,6 +41,34 @@ export const BUSINESS_GEO = Object.freeze({
   longitude: 18.408936081,
 })
 
+/**
+ * AggregateRating — prawdziwe opinie Google (GBP).
+ * Aktualizuj reviewCount / ratingValue po nowych opiniach.
+ */
+export const BUSINESS_REVIEWS = Object.freeze({
+  ratingValue: 5.0,
+  reviewCount: 4,
+  bestRating: 5,
+  worstRating: 1,
+})
+
+export const buildAggregateRating = () => {
+  const count = Number(BUSINESS_REVIEWS.reviewCount) || 0
+  const rating = Number(BUSINESS_REVIEWS.ratingValue)
+
+  if (count < 1 || !Number.isFinite(rating) || rating <= 0) {
+    return undefined
+  }
+
+  return {
+    '@type': 'AggregateRating',
+    ratingValue: String(rating),
+    reviewCount: String(count),
+    bestRating: String(BUSINESS_REVIEWS.bestRating ?? 5),
+    worstRating: String(BUSINESS_REVIEWS.worstRating ?? 1),
+  }
+}
+
 export const BUSINESS_ENTITY = Object.freeze({
   '@type': ['LocalBusiness', 'EducationalOrganization'],
   '@id': BUSINESS_ID,
@@ -59,6 +87,7 @@ export const BUSINESS_ENTITY = Object.freeze({
   sameAs: [CONTACT.facebookUrl],
   priceRange: '54-95 PLN',
   currenciesAccepted: 'PLN',
+  aggregateRating: buildAggregateRating(),
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: CONTACT.phoneInternational,

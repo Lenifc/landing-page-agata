@@ -246,6 +246,7 @@ watch(examMenuOpen, (isOpen, wasOpen) => {
   trackEvent({
     eventType: 'nav_toggle',
     label: isOpen ? 'open' : 'close',
+    countAsInteraction: false,
     details: {
       menu: 'exam',
       open: isOpen,

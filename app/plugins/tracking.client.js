@@ -121,7 +121,7 @@ export default defineNuxtPlugin(() => {
       clearFormStarted()
     }
 
-    // Passiveed sessions only (passive events are dropped while idle in useTracking).
+    // Passive sessions only (passive events are dropped while idle in useTracking).
     trackEvent({
       eventType: 'page_leave',
       label: leavePath,
@@ -321,6 +321,7 @@ export default defineNuxtPlugin(() => {
       trackEvent({
         eventType: 'scroll_depth',
         label: `${milestone}%`,
+        countAsInteraction: false,
         details: {
           depthPercent: milestone,
           pageGroup: inferPageGroup(route.path),
@@ -344,8 +345,19 @@ export default defineNuxtPlugin(() => {
     trackEvent(payload)
   }
 
+  const isIgnorableClientError = (details = {}) => {
+    const source = String(details.source || '')
+    const message = String(details.message || '')
+
+    return (
+      source.startsWith('iabjs://') ||
+      /Java object is gone/i.test(message) ||
+      /script error/i.test(message)
+    )
+  }
+
   const trackClientError = (label, details) => {
-    if (!enabled.value) {
+    if (!enabled.value || isIgnorableClientError(details)) {
       return
     }
 

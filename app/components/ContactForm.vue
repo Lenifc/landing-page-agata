@@ -312,6 +312,7 @@ onMounted(() => {
       trackEvent({
         eventType: 'form_view',
         label: 'Formularz kontaktowy',
+        countAsInteraction: false,
         details: {
           source: 'kontakt_form',
         },
@@ -559,6 +560,7 @@ const onSubmit = async () => {
   }
 
   if (!validate()) {
+    trackBlockedSubmit('validation')
     return
   }
 
@@ -645,8 +647,6 @@ const onSubmit = async () => {
       details: {
         hasPhone: Boolean(phoneDigits),
         source: 'kontakt_form',
-        utmCampaign: attribution.utmCampaign || null,
-        gclid: attribution.gclid || null,
         landingPath: attribution.landingPath || null,
         focusedFields: [...focusedFields],
       },
