@@ -120,7 +120,7 @@
             :for="ids.phone"
             class="mb-1 block text-sm font-medium text-foreground"
           >
-            Telefon
+            Telefon (nieobowiązkowy)
           </label>
           <input
             :id="ids.phone"

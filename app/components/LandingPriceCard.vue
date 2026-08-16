@@ -164,6 +164,7 @@ watch(selectedRateId, (rateId, previousRateId) => {
       source: 'landing_price_card',
     },
   })
+  revealDesktopStickyCta()
 })
 
 const selectedRate = computed(() =>

@@ -10,14 +10,14 @@
     >
       <div
         v-show="isVisible"
-        class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] backdrop-blur md:hidden"
+        class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] backdrop-blur md:flex md:justify-center"
       >
         <UiButton
           :to="to"
-          class="w-full touch-manipulation justify-center"
+          class="w-full touch-manipulation justify-center md:max-w-md"
           tracking-label="Sticky CTA"
         >
-          {{ label }}
+          {{ displayLabel }}
         </UiButton>
       </div>
     </Transition>
@@ -28,10 +28,14 @@
 import { ROUTES } from '~/config/routes'
 import { normalizePath } from '~/utils/scrollToHash'
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     default: 'Umów bezpłatną konsultację →',
+  },
+  desktopLabel: {
+    type: String,
+    default: 'Umów lekcję →',
   },
   to: {
     type: [String, Object],
@@ -39,9 +43,9 @@ defineProps({
   },
 })
 
-/** Appear after scrolling past ~first viewport / into 2nd section. */
-/** Appear after leaving the hero, still in the first screenful on most phones. */
+/** Appear after scrolling past ~first viewport / into 2nd section (mobile). */
 const SHOW_AFTER_PX = 260
+const DESKTOP_MQ = '(min-width: 768px)'
 
 /** Pages where sticky CTA is redundant or would cover local actions. */
 const HIDDEN_PATHS = new Set([
@@ -52,25 +56,55 @@ const HIDDEN_PATHS = new Set([
 const route = useRoute()
 const { trackEvent } = useTracking()
 const pastScrollThreshold = ref(false)
+const isDesktop = ref(false)
+
+const displayLabel = computed(() =>
+  isDesktop.value ? props.desktopLabel : props.label,
+)
+const revealDesktop = useStickyCtaRevealDesktop()
 const stickyCtaVisible = useState('sticky-cta-visible', () => false)
 const hasTrackedStickyVisibility = ref(false)
+
+let desktopMediaQuery = null
 
 const isEnabledOnRoute = computed(
   () => !HIDDEN_PATHS.has(normalizePath(route.path)),
 )
 
-const isVisible = computed(
-  () => isEnabledOnRoute.value && pastScrollThreshold.value,
-)
+/** Mobile: scroll threshold. Desktop: only after pricing_select. */
+const isVisible = computed(() => {
+  if (!isEnabledOnRoute.value) {
+    return false
+  }
 
-const updateVisibility = () => {
+  if (isDesktop.value) {
+    return revealDesktop.value
+  }
+
+  return pastScrollThreshold.value
+})
+
+const updateScrollVisibility = () => {
   pastScrollThreshold.value = window.scrollY >= SHOW_AFTER_PX
+}
+
+const syncDesktopPad = (visible) => {
+  document.documentElement.style.setProperty(
+    '--sticky-cta-desktop-pad',
+    visible && isDesktop.value ? 'var(--sticky-cta-clearance)' : '0px',
+  )
+}
+
+const updateDesktopFlag = () => {
+  isDesktop.value = desktopMediaQuery?.matches ?? false
+  syncDesktopPad(isVisible.value)
 }
 
 watch(
   isVisible,
   (visible, wasVisible) => {
     stickyCtaVisible.value = visible
+    syncDesktopPad(visible)
 
     if (!hasTrackedStickyVisibility.value && !visible) {
       return
@@ -88,6 +122,7 @@ watch(
       details: {
         visible,
         path: route.path,
+        trigger: isDesktop.value ? 'pricing_select' : 'scroll',
       },
     })
   },
@@ -95,19 +130,27 @@ watch(
 )
 
 onMounted(() => {
-  updateVisibility()
-  window.addEventListener('scroll', updateVisibility, { passive: true })
+  desktopMediaQuery = window.matchMedia(DESKTOP_MQ)
+  updateDesktopFlag()
+  desktopMediaQuery.addEventListener('change', updateDesktopFlag)
+
+  updateScrollVisibility()
+  window.addEventListener('scroll', updateScrollVisibility, { passive: true })
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', updateVisibility)
+  window.removeEventListener('scroll', updateScrollVisibility)
+  desktopMediaQuery?.removeEventListener('change', updateDesktopFlag)
   stickyCtaVisible.value = false
+  revealDesktop.value = false
+  document.documentElement.style.setProperty('--sticky-cta-desktop-pad', '0px')
 })
 
 watch(
   () => route.path,
   () => {
-    nextTick(updateVisibility)
+    revealDesktop.value = false
+    nextTick(updateScrollVisibility)
   },
 )
 </script>

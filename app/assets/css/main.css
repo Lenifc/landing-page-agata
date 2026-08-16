@@ -80,6 +80,8 @@ html {
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
   /* Sticky CTA bar (~button + padding) + home indicator */
   --sticky-cta-clearance: calc(4.75rem + var(--safe-area-bottom));
+  /* Desktop sticky is opt-in (pricing_select); default no pad */
+  --sticky-cta-desktop-pad: 0px;
   scroll-behavior: smooth;
   scroll-padding-top: var(--anchor-offset);
   overflow-x: clip;

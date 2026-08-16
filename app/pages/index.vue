@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
+  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]">
     <section data-track-section="hero" class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
       <div class="flex flex-col gap-6">
         <span

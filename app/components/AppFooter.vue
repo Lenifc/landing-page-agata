@@ -3,7 +3,7 @@
     class="mt-auto border-t border-border bg-secondary"
     :class="
       needsStickyClearance &&
-      'pb-[var(--sticky-cta-clearance)] md:pb-0'
+      'pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]'
     "
   >
     <div class="mx-auto grid max-w-6xl gap-10 px-6 py-10 md:grid-cols-3">

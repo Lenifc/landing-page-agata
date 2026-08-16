@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
+  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]">
     <section data-track-section="hero" class="bg-secondary">
       <div class="mx-auto max-w-6xl px-6 py-14 text-center md:pb-20">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>

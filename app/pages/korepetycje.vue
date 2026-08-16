@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-0">
+  <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]">
     <PageHero
       data-track-section="hero"
       eyebrow="Pomoc w opanowaniu materiału szkolnego"

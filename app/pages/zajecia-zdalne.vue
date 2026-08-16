@@ -1,5 +1,5 @@
 <template>
-  <main id="main-content" class="flex flex-col pb-[var(--sticky-cta-clearance)] md:pb-0">
+  <main id="main-content" class="flex flex-col pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]">
     <section
       data-track-section="hero"
       class="relative order-1 isolate overflow-hidden bg-foreground text-primary-foreground lg:h-[650px]">
@@ -12,10 +12,6 @@
       <div
         class="mx-auto flex min-h-[68svh] max-w-6xl items-center px-6 py-14 md:min-h-[70svh] md:py-20 lg:h-full lg:min-h-0 lg:py-16">
         <div class="max-w-2xl">
-          <span
-            class="inline-flex rounded-full bg-background/92 px-4 py-1.5 text-sm font-medium text-primary shadow-sm">
-            Angielski online
-          </span>
           <h1 class="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
             Angielski online: bez dojazdów i bez straty na jakości.
           </h1>
@@ -38,7 +34,7 @@
       </div>
     </section>
 
-    <section data-track-section="audience" class="order-3 border-t border-border md:order-2">
+    <section data-track-section="audience" class="order-3 border-t border-border">
       <div class="mx-auto max-w-6xl px-6 py-12">
         <div class="grid gap-x-10 gap-y-8 md:grid-cols-2">
           <div class="flex flex-col">
@@ -89,7 +85,7 @@
     <UiSection
       id="cennik"
       data-track-section="pricing"
-      class="order-2 md:order-3"
+      class="order-2"
       variant="secondary"
       padding="lg"
       scroll-margin
@@ -187,7 +183,7 @@
 
 
 
-    <UiSection class="order-4" data-track-section="benefits" padding="lg">
+    <UiSection class="order-4" data-track-section="benefits" variant="secondary" padding="lg">
       <UiSectionHeader
         eyebrow="Zalety zajęć zdalnych"
         title="Dlaczego warto wybrać zajęcia online?"
@@ -198,7 +194,7 @@
       </div>
     </UiSection>
 
-    <UiSection class="order-5" data-track-section="scenarios" variant="secondary" padding="lg">
+    <UiSection class="order-5" data-track-section="scenarios" padding="lg">
       <UiSectionHeader
         eyebrow="Kiedy najbardziej docenisz naukę online?"
         title="Zdalne zajęcia pomagają utrzymać kurs, gdy życie robi swoje."
@@ -215,7 +211,7 @@
       </div>
     </UiSection>
 
-    <section data-track-section="how-it-works" class="order-6 border-t border-border">
+    <section data-track-section="how-it-works" class="order-6 border-t border-border bg-secondary">
       <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
         <div>
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
@@ -362,6 +358,7 @@ const setOnlineSchedule = (value) => {
       schedule: value,
     },
   })
+  revealDesktopStickyCta()
 }
 const landingPriceOptions = computed(() => {
   const isMorning = onlineSchedule.value === 'morning'
