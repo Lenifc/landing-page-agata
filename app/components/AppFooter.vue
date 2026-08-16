@@ -41,7 +41,16 @@
       <div class="space-y-3">
         <p class="text-sm font-semibold text-foreground">Kontakt</p>
         <ul class="space-y-2 text-sm text-muted-foreground">
-          <li>{{ email }}</li>
+          <li>
+            <a
+              v-if="email === CONTACT.email"
+              :href="`mailto:${CONTACT.email}`"
+              class="transition-colors hover:text-foreground"
+            >
+              {{ email }}
+            </a>
+            <span v-else>{{ email }}</span>
+          </li>
           <li class="relative inline-flex items-center gap-1.5">
             <a
               :href="CONTACT.phoneHref"

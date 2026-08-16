@@ -8,7 +8,7 @@
         title-tag="h1"
         size="lg"
       />
-      <div class="text-pretty text-justify text-lg leading-relaxed text-muted-foreground">
+      <div class="text-pretty text-start text-lg leading-relaxed text-muted-foreground md:text-justify">
         <slot name="description" />
       </div>
       <div v-if="$slots.actions" class="flex flex-wrap gap-4">

@@ -17,7 +17,7 @@
         class="scroll-mt-24 grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-x-12 lg:gap-y-8"
       >
         <p
-          class="text-pretty text-justify text-base leading-relaxed text-muted-foreground lg:col-span-2 lg:max-w-3xl"
+          class="text-pretty text-start text-base leading-relaxed text-muted-foreground md:text-justify lg:col-span-2 lg:max-w-3xl"
         >
           Jeśli chcesz, umówimy też zapoznawczą
           <b>bezpłatną konsultację online</b> - potrwa ok.&nbsp;15&nbsp;min.

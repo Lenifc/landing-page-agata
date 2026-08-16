@@ -82,9 +82,14 @@
           :disabled="status === 'sending'"
           :class="fieldClass"
           :aria-invalid="Boolean(errors.name)"
+          :aria-describedby="errors.name ? ids.nameError : undefined"
           placeholder="np. Anna"
         />
-        <p v-if="errors.name" class="mt-1 text-xs text-red-700">
+        <p
+          v-if="errors.name"
+          :id="ids.nameError"
+          class="mt-1 text-xs text-red-700"
+        >
           {{ errors.name }}
         </p>
       </div>
@@ -108,9 +113,14 @@
             :disabled="status === 'sending'"
             :class="fieldClass"
             :aria-invalid="Boolean(errors.email)"
+            :aria-describedby="errors.email ? ids.emailError : undefined"
             placeholder="np. anna@email.pl"
           />
-          <p v-if="errors.email" class="mt-1 text-xs text-red-700">
+          <p
+            v-if="errors.email"
+            :id="ids.emailError"
+            class="mt-1 text-xs text-red-700"
+          >
             {{ errors.email }}
           </p>
         </div>
@@ -133,10 +143,15 @@
             :disabled="status === 'sending'"
             :class="fieldClass"
             :aria-invalid="Boolean(errors.phone)"
+            :aria-describedby="errors.phone ? ids.phoneError : undefined"
             placeholder="np. 455 407 926"
             @input="onPhoneInput"
           />
-          <p v-if="errors.phone" class="mt-1 text-xs text-red-700">
+          <p
+            v-if="errors.phone"
+            :id="ids.phoneError"
+            class="mt-1 text-xs text-red-700"
+          >
             {{ errors.phone }}
           </p>
         </div>
@@ -159,9 +174,14 @@
           :disabled="status === 'sending'"
           :class="`${fieldClass} min-h-[4.25rem] resize-y`"
           :aria-invalid="Boolean(errors.message)"
+          :aria-describedby="errors.message ? ids.messageError : undefined"
           placeholder="np. córka 14 lat, ósmoklasista, online lub Rumia"
         />
-        <p v-if="errors.message" class="mt-1 text-xs text-red-700">
+        <p
+          v-if="errors.message"
+          :id="ids.messageError"
+          class="mt-1 text-xs text-red-700"
+        >
           {{ errors.message }}
         </p>
       </div>
@@ -177,7 +197,7 @@
           :disabled="status === 'sending'"
           class="mt-0.5 h-5 w-5 shrink-0 accent-primary cursor-pointer"
           :aria-invalid="Boolean(errors.consent)"
-          :aria-describedby="errors.consent ? 'contact-consent-error' : undefined"
+          :aria-describedby="errors.consent ? ids.consentError : undefined"
         />
         <span>
           Zgadzam się na kontakt w sprawie zajęć.
@@ -194,7 +214,7 @@
       </label>
       <p
         v-if="errors.consent"
-        id="contact-consent-error"
+        :id="ids.consentError"
         class="mt-1 text-xs text-red-700"
       >
         {{ errors.consent }}
@@ -202,8 +222,12 @@
 
       <div
         v-if="status === 'error'"
+        :id="ids.submitError"
+        ref="submitErrorElement"
         class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800"
         role="alert"
+        aria-live="assertive"
+        tabindex="-1"
       >
         {{ errorMessage }}
         Napisz na
@@ -228,6 +252,7 @@
         type="submit"
         class="w-full gap-2 px-5 py-2.5 sm:w-auto cursor-pointer"
         :disabled="status === 'sending'"
+        :aria-describedby="status === 'error' ? ids.submitError : undefined"
       >
         <span v-if="status === 'sending'">Wysyłanie…</span>
         <span v-else>Wyślij zgłoszenie →</span>
@@ -250,7 +275,15 @@ const ids = {
   phone: 'contact-phone',
   email: 'contact-email',
   message: 'contact-message',
+  nameError: 'contact-name-error',
+  phoneError: 'contact-phone-error',
+  emailError: 'contact-email-error',
+  messageError: 'contact-message-error',
+  consentError: 'contact-consent-error',
+  submitError: 'contact-submit-error',
 }
+
+const FIELD_FOCUS_ORDER = ['name', 'email', 'phone', 'message', 'consent']
 
 const fieldClass =
   'w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60'
@@ -265,6 +298,7 @@ const emptyForm = () => ({
 
 const form = reactive(emptyForm())
 const formElement = ref(null)
+const submitErrorElement = ref(null)
 const honeypot = reactive({ website: '', company: '' })
 const errors = reactive({})
 const status = ref('idle')
@@ -410,6 +444,41 @@ const clearErrors = () => {
   Object.keys(errors).forEach((key) => {
     delete errors[key]
   })
+}
+
+const focusFirstFieldError = async () => {
+  await nextTick()
+
+  const firstKey = FIELD_FOCUS_ORDER.find((key) => errors[key])
+  if (!firstKey || !formElement.value) {
+    return
+  }
+
+  const field = formElement.value.querySelector(`[name="${firstKey}"]`)
+  if (!(field instanceof HTMLElement)) {
+    return
+  }
+
+  field.focus({ preventScroll: true })
+  field.scrollIntoView({ block: 'center', behavior: 'smooth' })
+}
+
+const focusSubmitError = async () => {
+  await nextTick()
+
+  const alertEl = submitErrorElement.value
+  if (!(alertEl instanceof HTMLElement)) {
+    return
+  }
+
+  alertEl.focus({ preventScroll: true })
+  alertEl.scrollIntoView({ block: 'center', behavior: 'smooth' })
+}
+
+const showSubmitError = (message) => {
+  status.value = 'error'
+  errorMessage.value = message
+  void focusSubmitError()
 }
 
 const trackFormInteraction = () => {
@@ -561,30 +630,33 @@ const onSubmit = async () => {
 
   if (!validate()) {
     trackBlockedSubmit('validation')
+    status.value = 'idle'
+    errorMessage.value = ''
+    void focusFirstFieldError()
     return
   }
 
   if (isInCooldown()) {
     trackBlockedSubmit('cooldown')
-    status.value = 'error'
-    errorMessage.value =
-      'To zgłoszenie już wysłałam / wysłałeś przed chwilą. Odczekaj minutę albo'
+    showSubmitError(
+      'To zgłoszenie już wysłałam / wysłałeś przed chwilą. Odczekaj minutę albo',
+    )
     return
   }
 
   if (!jsToken.value || Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs) {
     trackBlockedSubmit('too_fast')
-    status.value = 'error'
-    errorMessage.value =
-      'Formularz wysłano zbyt szybko. Odczekaj sekundę i spróbuj ponownie albo'
+    showSubmitError(
+      'Formularz wysłano zbyt szybko. Odczekaj sekundę i spróbuj ponownie albo',
+    )
     return
   }
 
   if (looksLikeSpam()) {
     trackBlockedSubmit('spam_heuristic')
-    status.value = 'error'
-    errorMessage.value =
-      'Nie mogę przyjąć tej wiadomości. Usuń linki / uprość treść albo'
+    showSubmitError(
+      'Nie mogę przyjąć tej wiadomości. Usuń linki / uprość treść albo',
+    )
     return
   }
 
@@ -666,9 +738,9 @@ const onSubmit = async () => {
           error instanceof Error ? error.message : 'unknown_form_submit_error',
       },
     })
-    status.value = 'error'
-    errorMessage.value =
-      'Nie udało się wysłać formularza. Spróbuj ponownie za chwilę albo'
+    showSubmitError(
+      'Nie udało się wysłać formularza. Spróbuj ponownie za chwilę albo',
+    )
   }
 }
 </script>

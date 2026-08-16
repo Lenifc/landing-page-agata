@@ -13,7 +13,7 @@
           Angielski w Rumi - zajęcia dla młodzieży i dorosłych
         </h1>
         <p
-          class="order-3 max-w-md text-pretty text-justify text-lg leading-relaxed text-muted-foreground md:order-4"
+          class="order-3 max-w-md text-pretty text-start text-lg leading-relaxed text-muted-foreground md:order-4 md:text-justify"
         >
           Talkateria English Studio to kameralne studio języka angielskiego w Rumi. Pomagam młodzieży i
           dorosłym rozwijać pewność siebie w mówieniu po angielsku, przygotować

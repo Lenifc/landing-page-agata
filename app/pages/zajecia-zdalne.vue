@@ -15,7 +15,7 @@
           <h1 class="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
             Angielski online: bez dojazdów i bez straty na jakości.
           </h1>
-          <p class="mt-5 max-w-xl text-pretty text-justify text-lg leading-relaxed text-primary-foreground/88">
+          <p class="mt-5 max-w-xl text-pretty text-start text-lg leading-relaxed text-primary-foreground/88 md:text-justify">
             Uczysz się tam, gdzie jest Ci najwygodniej, a lekcje nadal mają
             jasny plan, opierają się na aktywnej rozmowie, indywidualnej
             informacji zwrotnej i materiałach dopasowanych do Twojego celu.

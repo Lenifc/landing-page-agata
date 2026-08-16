@@ -118,7 +118,7 @@ const descriptionClasses = computed(() => {
   if (props.align === 'center') {
     classes.push('text-center')
   } else {
-    classes.push('text-justify')
+    classes.push('text-start md:text-justify')
   }
 
   if (props.size === 'lg') {

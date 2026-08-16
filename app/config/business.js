@@ -44,9 +44,10 @@ export const BUSINESS_GEO = Object.freeze({
 /**
  * AggregateRating — prawdziwe opinie Google (GBP).
  * Aktualizuj reviewCount / ratingValue po nowych opiniach.
+ * Google: pełna ocena to liczba 5 (nie "5.0"); ułamek z kropką, np. 4.8.
  */
 export const BUSINESS_REVIEWS = Object.freeze({
-  ratingValue: 5.0,
+  ratingValue: 5,
   reviewCount: 4,
   bestRating: 5,
   worstRating: 1,
@@ -60,12 +61,16 @@ export const buildAggregateRating = () => {
     return undefined
   }
 
+  const ratingValue = Number.isInteger(rating)
+    ? rating
+    : Math.round(rating * 10) / 10
+
   return {
     '@type': 'AggregateRating',
-    ratingValue: String(rating),
-    reviewCount: String(count),
-    bestRating: String(BUSINESS_REVIEWS.bestRating ?? 5),
-    worstRating: String(BUSINESS_REVIEWS.worstRating ?? 1),
+    ratingValue,
+    reviewCount: count,
+    bestRating: Number(BUSINESS_REVIEWS.bestRating ?? 5),
+    worstRating: Number(BUSINESS_REVIEWS.worstRating ?? 1),
   }
 }
 
