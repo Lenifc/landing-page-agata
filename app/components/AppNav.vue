@@ -16,11 +16,11 @@
         @click="closeMenus"
       >
         <img
-          src="/talkateria-logo-color.webp"
+          src="/talkateria-logo-color.webp?v2"
           alt="Talkateria - angielski w Rumi"
           class="h-11 w-auto shrink-0 sm:h-12"
-          width="188"
-          height="56"
+          width="130"
+          height="48"
           decoding="async"
         />
       </NuxtLink>

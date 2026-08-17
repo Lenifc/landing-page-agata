@@ -20,13 +20,16 @@ let flushTimer = null
 let pageviewDwellTimer = null
 let flushListenersRegistered = false
 
-const createSessionId = () => {
+const createId = (prefix) => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID()
   }
 
-  return `sess_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`
+  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`
 }
+
+const createSessionId = () => createId('sess')
+const createVisitorId = () => createId('vis')
 
 const inferPageGroup = (path) => {
   if (path === '/') {
@@ -474,8 +477,13 @@ const touchVisitorProfile = () => {
   const isNewVisit =
     !lastSeenAt || now - lastSeenAt > 30 * 60 * 1000 /* 30 min gap = new visit */
   const visitCount = Number(existing?.visitCount) || 0
+  const id =
+    typeof existing?.id === 'string' && existing.id.length >= 8
+      ? existing.id
+      : createVisitorId()
 
   const next = {
+    id,
     firstSeenAt,
     lastSeenAt: now,
     visitCount: isNewVisit ? visitCount + 1 : Math.max(visitCount, 1),
@@ -483,6 +491,7 @@ const touchVisitorProfile = () => {
   writeLocalJson(VISITOR_STORAGE_KEY, next)
 
   cachedVisitorProfile = {
+    id: next.id,
     firstSeenAt: next.firstSeenAt,
     visitCount: next.visitCount,
     daysSinceFirst: Math.max(
@@ -592,6 +601,7 @@ const getLeadAttribution = () => {
 
   return {
     sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
+    visitorId: touchVisitorProfile()?.id || null,
     landingUrl:
       landingContext.landingUrl ||
       persisted.landingUrl ||
@@ -708,6 +718,7 @@ const buildBasePayload = () => {
 
   return {
     sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
+    visitorId: touchVisitorProfile()?.id || null,
     url: window.location.href,
     path: pathForReporting(here.pathname, here.hash),
     referrer: document.referrer || '',

@@ -673,6 +673,7 @@ const onSubmit = async () => {
     consent: 'Tak',
     source: 'talkateria.pl/kontakt',
     session_id: attribution.sessionId || '',
+    visitor_id: attribution.visitorId || '',
     landing_path: attribution.landingPath || '',
     landing_page_group: attribution.landingPageGroup || '',
     utm_source: attribution.utmSource || '',
