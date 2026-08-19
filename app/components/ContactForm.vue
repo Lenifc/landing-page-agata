@@ -440,10 +440,62 @@ const onPhoneInput = (event) => {
   })
 }
 
+const hasAttemptedSubmit = ref(false)
+
+const getFieldError = (key) => {
+  if (key === 'name' && (!form.name || form.name.length < 2)) {
+    return 'Podaj imię.'
+  }
+
+  if (key === 'phone' && form.phone.trim() && !isValidPlPhone(form.phone)) {
+    return 'Podaj polski numer (9 cyfr), np. 455 407 926.'
+  }
+
+  if (key === 'email') {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      return 'Podaj poprawny e-mail.'
+    }
+    if (CONTACT_FORM.blockedEmailDomains.includes(emailDomain(form.email))) {
+      return 'Użyj stałego adresu e-mail.'
+    }
+  }
+
+  if (key === 'message') {
+    if (!form.message || form.message.length < 5) {
+      return 'Napisz krótko, czego szukasz.'
+    }
+    if (SPAM_PATTERN.test(form.message)) {
+      return 'Usuń linki i spróbuj jeszcze raz.'
+    }
+  }
+
+  if (key === 'consent' && !form.consent) {
+    return 'Zaznacz zgodę, żeby wysłać.'
+  }
+
+  return ''
+}
+
 const clearErrors = () => {
   Object.keys(errors).forEach((key) => {
     delete errors[key]
   })
+}
+
+const syncVisibleErrors = () => {
+  const keys =
+    hasAttemptedSubmit.value
+      ? FIELD_FOCUS_ORDER
+      : FIELD_FOCUS_ORDER.filter((key) => errors[key])
+
+  for (const key of keys) {
+    const next = getFieldError(key)
+    if (next) {
+      errors[key] = next
+    } else {
+      delete errors[key]
+    }
+  }
 }
 
 const focusFirstFieldError = async () => {
@@ -573,34 +625,29 @@ const markSent = () => {
 }
 
 const validate = () => {
+  hasAttemptedSubmit.value = true
   clearErrors()
 
-  if (!form.name || form.name.length < 2) {
-    errors.name = 'Podaj imię.'
-  }
-
-  if (form.phone.trim() && !isValidPlPhone(form.phone)) {
-    errors.phone = 'Podaj polski numer (9 cyfr), np. 455 407 926.'
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-    errors.email = 'Podaj poprawny e-mail.'
-  } else if (CONTACT_FORM.blockedEmailDomains.includes(emailDomain(form.email))) {
-    errors.email = 'Użyj stałego adresu e-mail.'
-  }
-
-  if (!form.message || form.message.length < 5) {
-    errors.message = 'Napisz krótko, czego szukasz.'
-  } else if (SPAM_PATTERN.test(form.message)) {
-    errors.message = 'Usuń linki i spróbuj jeszcze raz.'
-  }
-
-  if (!form.consent) {
-    errors.consent = 'Zaznacz zgodę, żeby wysłać.'
+  for (const key of FIELD_FOCUS_ORDER) {
+    const next = getFieldError(key)
+    if (next) {
+      errors[key] = next
+    }
   }
 
   return Object.keys(errors).length === 0
 }
+
+watch(
+  () => [form.name, form.email, form.phone, form.message, form.consent],
+  () => {
+    if (!hasAttemptedSubmit.value && Object.keys(errors).length === 0) {
+      return
+    }
+
+    syncVisibleErrors()
+  },
+)
 
 const trackBlockedSubmit = (reason) => {
   trackEvent({

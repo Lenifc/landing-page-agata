@@ -6,7 +6,7 @@
       'pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]'
     "
   >
-    <div class="mx-auto grid max-w-6xl gap-10 px-6 py-10 md:grid-cols-3">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 py-10 xs:px-6 md:grid-cols-3">
       <div class="space-y-3">
         <p class="font-serif text-xl font-semibold text-foreground">
           <img
@@ -51,34 +51,14 @@
             </a>
             <span v-else>{{ email }}</span>
           </li>
-          <li class="relative inline-flex items-center gap-1.5">
+          <li class="relative inline-flex items-center">
             <a
               :href="CONTACT.phoneHref"
               class="transition-colors hover:text-foreground"
+              aria-describedby="footer-phone-tooltip"
             >
               Tel. {{ CONTACT.phoneNumber }}
             </a>
-            <button
-              type="button"
-              class="peer inline-flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              aria-label="Informacja o kontakcie telefonicznym"
-              aria-describedby="footer-phone-tooltip"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                class="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 16v-4" />
-                <path d="M12 8h.01" />
-              </svg>
-            </button>
             <PhoneTooltip
               tooltip-id="footer-phone-tooltip"
               placement="footer"
@@ -114,7 +94,7 @@
     </div>
 
     <div class="border-t border-border">
-      <div class="mx-auto max-w-6xl px-6 py-2">
+      <div class="mx-auto max-w-6xl px-5 py-2 xs:px-6">
         <p class="text-xs text-muted-foreground">
           © {{ year }} Talkateria. Wszelkie prawa zastrzeżone.
           <NuxtLink

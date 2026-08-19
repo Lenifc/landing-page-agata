@@ -1,12 +1,12 @@
 <template>
   <main id="main-content">
-    <section data-track-section="contact" class="mx-auto max-w-6xl px-6 py-8">
+    <section data-track-section="contact" class="mx-auto max-w-6xl px-5 py-8 xs:px-6">
       <div class="mb-8 max-w-2xl">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">
           Kontakt
         </span>
         <h1
-          class="mt-4 text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-foreground"
+          class="mt-4 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl"
         >
           Napisz, jakich zajęć szukasz.
         </h1>
@@ -30,7 +30,7 @@
           <div
             v-for="item in details"
             :key="item.label"
-            class="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm"
+            class="flex items-start gap-3 rounded-2xl border border-border bg-card px-4 py-4 shadow-sm xs:gap-4 xs:px-5"
           >
             <span
               class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
@@ -59,37 +59,17 @@
               </p>
               <div
                 v-if="item.icon === 'phone'"
-                class="relative inline-flex max-w-full items-center gap-1"
+                class="relative inline-flex max-w-full items-center"
               >
                 <a
                   :href="item.href"
                   data-tracking-skip-delegated="true"
                   class="break-words font-medium leading-normal text-foreground transition-colors hover:text-primary"
+                  aria-describedby="contact-phone-tooltip"
                   @click="trackContactInteraction(item)"
                 >
                   {{ item.value }}
                 </a>
-                <button
-                  type="button"
-                  class="peer relative inline-flex size-4 shrink-0 cursor-pointer items-center justify-center text-primary before:absolute before:-inset-3 before:content-[''] transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  aria-label="Informacja o kontakcie telefonicznym"
-                  aria-describedby="contact-phone-tooltip"
-                >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    class="size-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 16v-4" />
-                    <path d="M12 8h.01" />
-                  </svg>
-                </button>
                 <PhoneTooltip
                   tooltip-id="contact-phone-tooltip"
                   placement="contact"
@@ -150,7 +130,7 @@
       </div>
     </section>
 
-    <section data-track-section="map" class="mx-auto max-w-6xl px-6 py-12 md:py-16">
+    <section data-track-section="map" class="mx-auto max-w-6xl px-5 py-12 xs:px-6 md:py-16">
       <div class="mb-6 max-w-2xl">
         <UiSectionHeader
           eyebrow="Dojazd"

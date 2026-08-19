@@ -1,6 +1,6 @@
 <template>
   <main id="main-content">
-    <article class="mx-auto max-w-3xl px-6 py-12 text-foreground md:py-16">
+    <article class="mx-auto max-w-3xl px-5 py-12 text-foreground xs:px-6 md:py-16">
       <h1 class="text-3xl font-semibold">Polityka prywatności</h1>
       <p class="mt-2 text-sm text-muted-foreground">
         Ostatnia aktualizacja: {{ updatedAt }}

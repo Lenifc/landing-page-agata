@@ -1,10 +1,10 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]">
     <section data-track-section="hero" class="bg-secondary">
-      <div class="mx-auto max-w-6xl px-6 py-14 text-center md:pb-20">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-14 text-center md:pb-20">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Oferta</span>
         <h1
-          class="mx-auto mt-4 max-w-4xl font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-4xl sm:leading-[1.08] md:text-5xl">
+          class="mx-auto mt-4 max-w-4xl font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-foreground md:text-5xl md:leading-[1.08]">
           <span class="block sm:whitespace-nowrap">
             Angielski w Rumi oraz online -
           </span>
@@ -20,7 +20,7 @@
     </section>
 
     <section id="cennik" data-track-section="pricing" class="scroll-mt-24 border-t border-border">
-      <div class="mx-auto max-w-6xl px-6 py-10 md:py-14">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-10 md:py-14">
       <div class="mb-5 max-w-2xl md:mb-7">
         <span class="text-sm font-medium uppercase tracking-widest text-primary">Cennik</span>
         <h2 class="mt-2 text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:mt-3 md:text-4xl">
@@ -43,8 +43,19 @@
       </div>
 
       <nav class="mb-5 flex flex-wrap gap-1.5 md:mb-8 md:gap-2" aria-label="Sekcje cennika">
-        <a v-for="link in pricingLinks" :key="link.href" :href="link.href" :aria-label="link.label"
-          class="inline-flex rounded-full border border-border bg-card px-3 py-1 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary md:px-3.5 md:py-1.5">
+        <a
+          v-for="link in pricingLinks"
+          :key="link.href"
+          :href="link.href"
+          :aria-label="link.label"
+          :aria-current="activePricingHref === link.href ? 'true' : undefined"
+          class="inline-flex min-h-11 items-center rounded-full border px-3.5 py-2 text-sm font-medium transition-colors md:min-h-0 md:px-3.5 md:py-1.5"
+          :class="
+            activePricingHref === link.href
+              ? 'border-primary bg-primary/10 text-primary'
+              : 'border-border bg-card text-foreground hover:border-primary/40 hover:text-primary'
+          "
+        >
           {{ link.label }}
         </a>
       </nav>
@@ -131,14 +142,14 @@
         <p>{{ PRICING_NOTES.advancePayment }}</p>
       </div>
 
-      <div class="mt-8 flex flex-wrap gap-3 md:mt-10">
+      <div class="mt-8 flex w-full flex-col gap-3 xs:flex-row xs:flex-wrap xs:gap-3 md:mt-10 [&>*]:w-full xs:[&>*]:w-auto">
         <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
       </div>
       </div>
     </section>
 
     <section data-track-section="formats" class="border-t border-border bg-secondary">
-      <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-16 md:py-20">
         <div class="max-w-3xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">Formy zajęć</span>
           <h2 class="mt-4 text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
@@ -258,9 +269,9 @@
     </section>
 
     <section data-track-section="cta" class="border-t border-border">
-      <div class="mx-auto max-w-6xl px-6 py-10">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-10">
         <div
-          class="flex flex-col items-center rounded-[2rem] border border-border bg-card px-8 py-10 text-center shadow-sm">
+          class="flex flex-col items-center rounded-[1.75rem] border border-border bg-card px-6 py-9 text-center shadow-sm xs:rounded-[2rem] xs:px-8 xs:py-10">
           <div class="max-w-2xl">
             <h2 class="font-serif text-3xl font-semibold tracking-tight text-foreground">
               Nie wiesz jeszcze, która opcja będzie najlepsza?
@@ -272,7 +283,7 @@
               egzaminacyjny.
             </p>
           </div>
-          <UiButton :to="contactCtaPath" class="mt-6">
+          <UiButton :to="contactCtaPath" class="mt-6 w-full xs:w-auto">
             Napisz, czego szukasz →
           </UiButton>
         </div>
@@ -301,6 +312,7 @@ import { ROUTES, SITE_URL } from '~/config/routes'
 import { buildOfferPageJsonLd, jsonLdScript } from '~/config/schema'
 
 const contactCtaPath = useContactCtaPath()
+const route = useRoute()
 const pageRoute = ROUTES.offer
 const pageUrl = `${SITE_URL}${pageRoute}`
 const plans = getPricingPlans('offer')
@@ -369,6 +381,60 @@ const pricingLinks = [
     label: section.navLabel,
   })),
 ]
+
+const activePricingHref = ref(pricingLinks[0].href)
+let pricingObserver = null
+
+const syncActivePricingFromHash = () => {
+  const hash = route.hash || pricingLinks[0].href
+  if (pricingLinks.some((link) => link.href === hash)) {
+    activePricingHref.value = hash
+  }
+}
+
+onMounted(() => {
+  syncActivePricingFromHash()
+
+  const ids = pricingLinks.map((link) => link.href.slice(1))
+  const elements = ids
+    .map((id) => document.getElementById(id))
+    .filter((el) => el instanceof HTMLElement)
+
+  if (!elements.length || typeof IntersectionObserver === 'undefined') {
+    return
+  }
+
+  pricingObserver = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+      if (visible?.target?.id) {
+        activePricingHref.value = `#${visible.target.id}`
+      }
+    },
+    {
+      rootMargin: '-18% 0px -62% 0px',
+      threshold: [0.1, 0.35, 0.6],
+    },
+  )
+
+  for (const element of elements) {
+    pricingObserver.observe(element)
+  }
+})
+
+onBeforeUnmount(() => {
+  pricingObserver?.disconnect()
+})
+
+watch(
+  () => route.hash,
+  () => {
+    syncActivePricingFromHash()
+  },
+)
 
 const faqs = [
   {

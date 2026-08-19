@@ -7,22 +7,22 @@
         class="online-hero-image absolute inset-y-0 right-0 -z-20 h-full w-full object-cover object-[25%_center] md:w-[70%] md:object-contain md:object-right lg:w-auto lg:max-w-none"
         width="974" height="650" fetchpriority="high" />
       <div
-        class="online-hero-overlay absolute inset-0 -z-10 bg-foreground/75 md:bg-transparent md:bg-[linear-gradient(90deg,var(--color-hero-overlay)_0%,var(--color-hero-overlay)_34%,color-mix(in_oklch,var(--color-hero-overlay)_92%,transparent)_40%,color-mix(in_oklch,var(--color-hero-overlay)_74%,transparent)_48%,color-mix(in_oklch,var(--color-hero-overlay)_50%,transparent)_57%,color-mix(in_oklch,var(--color-hero-overlay)_28%,transparent)_66%,color-mix(in_oklch,var(--color-hero-overlay)_12%,transparent)_76%,transparent_86%)] lg:hidden" />
+        class="online-hero-overlay absolute inset-0 -z-10 bg-foreground/86 md:bg-transparent md:bg-[linear-gradient(90deg,var(--color-hero-overlay)_0%,var(--color-hero-overlay)_34%,color-mix(in_oklch,var(--color-hero-overlay)_92%,transparent)_40%,color-mix(in_oklch,var(--color-hero-overlay)_74%,transparent)_48%,color-mix(in_oklch,var(--color-hero-overlay)_50%,transparent)_57%,color-mix(in_oklch,var(--color-hero-overlay)_28%,transparent)_66%,color-mix(in_oklch,var(--color-hero-overlay)_12%,transparent)_76%,transparent_86%)] lg:hidden" />
 
       <div
-        class="mx-auto flex min-h-[68svh] max-w-6xl items-center px-6 py-14 md:min-h-[70svh] md:py-20 lg:h-full lg:min-h-0 lg:py-16">
+        class="mx-auto flex min-h-0 max-w-6xl items-center px-5 py-12 xs:px-6 md:min-h-[70svh] md:py-20 lg:h-full lg:min-h-0 lg:py-16">
         <div class="max-w-2xl">
-          <h1 class="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
+          <h1 class="text-balance font-serif text-4xl font-semibold leading-[1.08] tracking-tight md:mt-5 md:text-6xl md:leading-[1.05]">
             Angielski online: bez dojazdów i bez straty na jakości.
           </h1>
-          <p class="mt-5 max-w-xl text-pretty text-start text-lg leading-relaxed text-primary-foreground/88 md:text-justify">
+          <p class="mt-4 max-w-xl text-pretty text-start text-lg leading-relaxed text-primary-foreground/88 md:mt-5 md:text-justify">
             Uczysz się tam, gdzie jest Ci najwygodniej, a lekcje nadal mają
             jasny plan, opierają się na aktywnej rozmowie, indywidualnej
             informacji zwrotnej i materiałach dopasowanych do Twojego celu.
             Oszczędzasz czas na dojazdy – to idealna opcja również wtedy, gdy
             mieszkasz daleko od Rumi.
           </p>
-          <div class="mt-7 flex flex-wrap gap-4">
+          <div class="mt-6 flex w-full flex-col gap-3 xs:flex-row xs:flex-wrap xs:gap-4 md:mt-7 [&>*]:w-full xs:[&>*]:w-auto">
             <UiButton :to="contactCtaPath" variant="inverse" class="shadow-neutral-sm">
               Zapytaj o lekcje online →
             </UiButton>
@@ -35,7 +35,7 @@
     </section>
 
     <section data-track-section="audience" class="order-3 border-t border-border">
-      <div class="mx-auto max-w-6xl px-6 py-12">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-12">
         <div class="grid gap-x-10 gap-y-8 md:grid-cols-2">
           <div class="flex flex-col">
             <h2 class="font-serif text-xl font-semibold leading-snug text-primary">
@@ -173,7 +173,7 @@
       <div class="mt-6 max-w-3xl space-y-1.5 text-sm leading-relaxed text-muted-foreground">
         <p>{{ PRICING_NOTES.advancePayment }}</p>
       </div>
-      <div class="mt-8 flex flex-wrap gap-4">
+      <div class="mt-8 flex w-full flex-col gap-3 xs:flex-row xs:flex-wrap xs:gap-4 [&>*]:w-full xs:[&>*]:w-auto">
         <UiButton :to="contactCtaPath">Umów termin online →</UiButton>
         <UiButton :to="ROUTES.prices" variant="outline">
           Pełny cennik
@@ -212,7 +212,7 @@
     </UiSection>
 
     <section data-track-section="how-it-works" class="order-6 border-t border-border bg-secondary">
-      <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
+      <div class="mx-auto grid max-w-6xl gap-10 px-5 xs:px-6 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
         <div>
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
             Przebieg lekcji
@@ -230,7 +230,7 @@
           </p>
         </div>
 
-        <div class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div class="rounded-2xl border border-border bg-card p-5 shadow-sm xs:p-6">
           <ul class="space-y-3">
             <li class="flex gap-4 text-muted-foreground">
               <span

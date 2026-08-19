@@ -45,6 +45,7 @@
   --shadow-panel-top: 0 -8px 30px oklch(0.25 0.035 255 / 0.12);
 
   --radius: 0.625rem;
+  --breakpoint-xs: 430px;
 }
 
 @layer base {
@@ -82,12 +83,20 @@ html {
   --sticky-cta-clearance: calc(4.75rem + var(--safe-area-bottom));
   /* Desktop sticky is opt-in (pricing_select); default no pad */
   --sticky-cta-desktop-pad: 0px;
+  min-width: 360px;
   scroll-behavior: smooth;
   scroll-padding-top: var(--anchor-offset);
   overflow-x: clip;
 }
 
+@media (max-width: 359.98px) {
+  html {
+    overflow-x: auto;
+  }
+}
+
 body {
+  min-width: 360px;
   min-height: 100vh;
   background: linear-gradient(
     180deg,
@@ -110,6 +119,12 @@ img {
 a,
 button {
   transition-duration: 180ms;
+}
+
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
 }
 
 #main-content {

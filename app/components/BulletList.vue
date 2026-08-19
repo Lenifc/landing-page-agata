@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-2xl border border-border bg-card p-6 shadow-sm">
+  <div class="rounded-2xl border border-border bg-card p-5 shadow-sm xs:p-6">
     <h3
       v-if="title"
       class="font-serif text-xl font-semibold text-foreground"

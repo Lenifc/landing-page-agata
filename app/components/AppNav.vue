@@ -8,7 +8,7 @@
         : 'sticky top-0',
     ]"
   >
-    <nav class="mx-auto flex w-full max-w-6xl shrink-0 items-center justify-between px-6 py-2">
+    <nav class="mx-auto flex w-full max-w-6xl shrink-0 items-center justify-between px-5 py-2 xs:px-6">
       <NuxtLink
         :to="ROUTES.home"
         class="flex shrink-0 items-center"
@@ -153,7 +153,7 @@
       class="flex min-h-0 flex-1 flex-col overflow-y-auto border-t border-border bg-background md:hidden"
     >
       <ul
-        class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))]"
+        class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-5 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] xs:px-6"
       >
         <li v-for="link in primaryLinks" :key="link.to">
           <NuxtLink

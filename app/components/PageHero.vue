@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
+  <section class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-12 xs:gap-12 xs:px-6 xs:py-14 md:grid-cols-2 md:pb-24">
     <div class="space-y-6">
       <slot name="badge" />
       <UiSectionHeader
@@ -11,7 +11,10 @@
       <div class="text-pretty text-start text-lg leading-relaxed text-muted-foreground md:text-justify">
         <slot name="description" />
       </div>
-      <div v-if="$slots.actions" class="flex flex-wrap gap-4">
+      <div
+        v-if="$slots.actions"
+        class="flex w-full flex-col gap-3 xs:flex-row xs:flex-wrap xs:gap-4 [&>*]:w-full xs:[&>*]:w-auto"
+      >
         <slot name="actions" />
       </div>
     </div>

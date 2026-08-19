@@ -1,9 +1,9 @@
 <template>
   <main id="main-content" class="pb-[var(--sticky-cta-clearance)] md:pb-[var(--sticky-cta-desktop-pad)]">
-    <section data-track-section="hero" class="mx-auto grid max-w-6xl items-center gap-12 px-6 py-14 md:grid-cols-2 md:pb-24">
-      <div class="flex flex-col gap-6">
+    <section data-track-section="hero" class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-12 xs:gap-12 xs:px-6 xs:py-14 md:grid-cols-2 md:pb-24">
+      <div class="flex min-w-0 flex-col gap-6">
         <span
-          class="order-4 inline-flex self-start items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1"
+          class="order-4 inline-flex max-w-full flex-wrap self-start items-center gap-x-2 gap-y-1 rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-foreground shadow-sm md:order-1"
         >
           Konwersacje • Materiał szkolny • Egzaminy
         </span>
@@ -20,7 +20,7 @@
           się do matury i egzaminu ósmoklasisty oraz skutecznie radzić sobie z
           materiałem szkolnym.
         </p>
-        <div class="order-5 flex flex-wrap items-center gap-4 md:order-5">
+        <div class="order-5 flex w-full flex-col gap-3 xs:flex-row xs:flex-wrap xs:items-center xs:gap-4 md:order-5 [&>*]:w-full xs:[&>*]:w-auto">
           <UiButton :to="contactCtaPath">Umów darmową konsultację →</UiButton>
           <UiButton :to="ROUTES.offer" variant="outline">Zobacz ofertę i cennik</UiButton>
         </div>
@@ -49,7 +49,7 @@
     </section>
 
     <section data-track-section="paths" class="border-t border-border bg-secondary">
-      <div class="mx-auto max-w-6xl px-6 py-14">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-14">
         <div class="mb-8 max-w-2xl">
           <span class="text-sm font-medium uppercase tracking-widest text-primary">
             Wybierz cel nauki
@@ -104,7 +104,7 @@
     </section>
 
     <section data-track-section="audience" class="border-t border-border">
-      <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+      <div class="mx-auto max-w-4xl px-5 xs:px-6 py-16 md:py-20">
         <h2
           class="text-balance font-serif text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
         >
@@ -128,7 +128,7 @@
     </section>
 
     <section data-track-section="features" class="features border-t border-border bg-secondary">
-      <div class="mx-auto grid max-w-6xl gap-8 px-6 py-16 md:grid-cols-3">
+      <div class="mx-auto grid max-w-6xl gap-8 px-5 xs:px-6 py-16 md:grid-cols-3">
         <div v-for="feature in features" :key="feature.title" class="space-y-3">
           <h2 class="font-serif text-xl font-semibold text-foreground">
             {{ feature.title }}
@@ -141,7 +141,7 @@
     </section>
 
     <section data-track-section="about" class="about-me border-t border-border">
-      <div class="mx-auto max-w-6xl px-6 py-20">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-20">
         <div class="grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
           <div class="relative mx-auto max-w-[18rem] sm:max-w-[20rem] md:mx-0 md:max-w-none">
             <div class="aspect-square overflow-hidden rounded-full border border-border shadow-sm">
@@ -155,7 +155,7 @@
               />
             </div>
             <div
-              class="absolute bottom-4 right-2 inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-border bg-card/95 px-4 py-2 text-center shadow-sm backdrop-blur-sm sm:bottom-5 sm:right-3 sm:px-5 sm:py-2.5 md:right-4"
+              class="absolute bottom-4 right-2 inline-flex max-w-[calc(100%-1rem)] items-center gap-2 rounded-full border border-border bg-card/95 px-3 py-2 text-center shadow-sm backdrop-blur-sm xs:px-4 sm:bottom-5 sm:right-3 sm:px-5 sm:py-2.5 md:right-4"
             >
               <span class="font-serif text-2xl font-semibold leading-none text-primary sm:text-3xl">
                 8+
@@ -214,7 +214,7 @@
     </section>
 
     <section data-track-section="location" class="localization border-t border-border bg-secondary">
-      <div class="mx-auto max-w-6xl px-6 py-20">
+      <div class="mx-auto max-w-6xl px-5 xs:px-6 py-20">
         <div class="mx-auto mb-10 max-w-4xl space-y-3 text-center">
           <h2 class="text-balance font-serif text-4xl font-semibold tracking-tight text-foreground">
             Lokalizacja

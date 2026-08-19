@@ -130,7 +130,7 @@ const handleClick = (event) => {
 
 const buttonClasses = computed(() => {
   const base =
-    'inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium transition-all'
+    'inline-flex max-w-full items-center justify-center rounded-full px-5 py-3 text-center text-sm font-medium whitespace-normal xs:px-6 transition-all'
 
   if (props.variant === 'primary') {
     return `${base} bg-primary text-primary-foreground shadow-primary-sm hover:-translate-y-0.5 hover:opacity-90`

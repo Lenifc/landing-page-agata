@@ -6,8 +6,8 @@
     max-width="6xl"
   >
     <div
-      class="mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-primary px-8 text-center shadow-primary-lg"
-      :class="size === 'lg' ? 'py-14 md:px-16' : 'py-12'"
+      class="mx-auto flex max-w-4xl flex-col items-center rounded-[1.75rem] bg-primary px-6 text-center shadow-primary-lg xs:rounded-[2rem] xs:px-8"
+      :class="size === 'lg' ? 'py-12 xs:py-14 md:px-16' : 'py-12'"
     >
       <h2
         class="mx-auto max-w-2xl font-serif font-semibold tracking-tight text-primary-foreground"
@@ -24,7 +24,7 @@
       <UiButton
         :to="buttonTo"
         variant="inverse"
-        class="mt-7"
+        class="mt-7 w-full xs:w-auto"
         :class="size === 'lg' ? 'md:mt-8' : ''"
         tracking-label="CTA banner"
       >

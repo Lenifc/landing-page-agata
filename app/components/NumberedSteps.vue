@@ -3,7 +3,7 @@
     <li
       v-for="(step, index) in steps"
       :key="step.title"
-      class="rounded-2xl border border-border bg-card p-6 shadow-sm"
+      class="rounded-2xl border border-border bg-card p-5 shadow-sm xs:p-6"
     >
       <div class="flex items-center gap-4">
         <span
@@ -12,7 +12,7 @@
         >
           {{ index + 1 }}
         </span>
-        <h3 class="font-serif text-xl font-semibold text-foreground">
+        <h3 class="min-w-0 font-serif text-xl font-semibold text-foreground">
           {{ step.title }}
         </h3>
       </div>
