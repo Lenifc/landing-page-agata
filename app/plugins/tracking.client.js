@@ -1,6 +1,12 @@
 export default defineNuxtPlugin(() => {
   const route = useRoute()
-  const { enabled, inferPageGroup, trackEvent, trackPageview } = useTracking()
+  const {
+    enabled,
+    inferPageGroup,
+    trackEvent,
+    trackPageview,
+    trackRawLandingVisit,
+  } = useTracking()
   const scrollMilestones = [10, 25, 50, 75, 90, 100]
   const seenScrollDepth = new Map()
   const seenSections = new Set()
@@ -294,6 +300,11 @@ export default defineNuxtPlugin(() => {
   }
 
   const sendPageview = () => {
+    trackRawLandingVisit({
+      routeName: route.name || null,
+      pageGroup: inferPageGroup(route.path),
+      hash: route.hash || null,
+    })
     trackPageview({
       routeName: route.name || null,
       pageGroup: inferPageGroup(route.path),

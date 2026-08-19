@@ -21,7 +21,7 @@
           materiałem szkolnym.
         </p>
         <div class="order-5 flex flex-wrap items-center gap-4 md:order-5">
-          <UiButton :to="contactCtaPath">Zapytaj o zajęcia →</UiButton>
+          <UiButton :to="contactCtaPath">Umów darmową konsultację →</UiButton>
           <UiButton :to="ROUTES.offer" variant="outline">Zobacz ofertę i cennik</UiButton>
         </div>
       </div>

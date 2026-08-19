@@ -15,6 +15,7 @@ const TRACKING_ENDPOINT = '/api/webhook'
 const BATCH_INTERVAL_MS = 3000
 /** Drop bounce pageviews if the tab dies sooner with zero interaction. */
 const PAGEVIEW_MIN_DWELL_MS = 2000
+const RAW_LANDING_SENT_KEY = 'talkateria-tracking-raw-landing-sent'
 
 let flushTimer = null
 let pageviewDwellTimer = null
@@ -531,6 +532,7 @@ const ensureSessionContext = () => {
     setStoredNumber(INTERACTION_COUNT_KEY, 0)
     setStoredString(FIRST_INTERACTION_AT_KEY, '')
     setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, false)
+    setStoredBoolean(RAW_LANDING_SENT_KEY, false)
     writeStoredJson(PAGEVIEW_QUEUE_KEY, [])
     writeStoredJson(EVENT_BATCH_KEY, [])
     setStoredNumber(SESSION_PAGE_COUNT_KEY, 0)
@@ -581,6 +583,10 @@ const ensureSessionContext = () => {
 
   if (!getStoredNumber(SESSION_STARTED_AT_KEY)) {
     setStoredNumber(SESSION_STARTED_AT_KEY, Date.now())
+  }
+
+  if (!getStoredString(RAW_LANDING_SENT_KEY)) {
+    setStoredBoolean(RAW_LANDING_SENT_KEY, false)
   }
 }
 
@@ -724,6 +730,18 @@ const buildBasePayload = () => {
     referrer: document.referrer || '',
   }
 }
+
+const hasRawLandingSignal = () =>
+  hasPaidAttribution(parseAttributionParams(window.location.href))
+
+const buildRawLandingPayload = (details = {}) => ({
+  eventType: 'landing_visit_raw',
+  label: window.location.pathname,
+  details: {
+    ...details,
+    rawLanding: true,
+  },
+})
 
 const PASSIVE_EVENT_TYPES = new Set([
   'scroll_depth',
@@ -969,10 +987,24 @@ export const useTracking = () => {
     return Promise.resolve(false)
   }
 
+  const trackRawLandingVisit = (details = {}) => {
+    ensureFlushListeners()
+    ensureSessionContext()
+
+    if (!hasRawLandingSignal() || getStoredBoolean(RAW_LANDING_SENT_KEY)) {
+      return Promise.resolve(false)
+    }
+
+    setStoredBoolean(RAW_LANDING_SENT_KEY, true)
+    queueEvent(buildEventPayload(buildRawLandingPayload(details)))
+    return Promise.resolve(true)
+  }
+
   return {
     enabled,
     inferPageGroup,
     getLeadAttribution,
+    trackRawLandingVisit,
     trackEvent,
     trackPageview,
   }

@@ -31,6 +31,7 @@
           ? 'max-md:bg-muted bg-muted/60 md:bg-muted'
           : 'max-md:bg-card bg-card'
       "
+      @click="trackPlanInteraction(plan)"
     >
       <div class="px-3.5 py-3 md:py-2.5">
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-3">
@@ -115,12 +116,15 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   plans: {
     type: Array,
     required: true,
   },
 })
+
+const { trackEvent } = useTracking()
+const trackedPlanKeys = new Set()
 
 const planKey = (plan) =>
   plan.id ?? `${plan.name}-${plan.frequency}`
@@ -130,4 +134,26 @@ const hasPriceDetails = (plan) =>
     plan.priceDetails?.totalPrice
       || plan.priceDetails?.lessonPrice,
   )
+
+const trackPlanInteraction = (plan) => {
+  const key = planKey(plan)
+  if (trackedPlanKeys.has(key)) {
+    return
+  }
+
+  trackedPlanKeys.add(key)
+  trackEvent({
+    eventType: 'pricing_table_interaction',
+    label: plan.name || key,
+    details: {
+      planId: plan.id || null,
+      planName: plan.name || null,
+      frequency: plan.frequency || null,
+      duration: plan.duration || null,
+      price: plan.price || null,
+      featured: Boolean(plan.featured),
+      source: 'pricing_table',
+    },
+  })
+}
 </script>
