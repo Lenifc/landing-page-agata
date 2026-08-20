@@ -422,6 +422,13 @@ export default defineEventHandler(async (event) => {
         enrichedDetails.landingPath = `${landing.pathname}${landing.hash}`
       }
 
+      const visitorId = normalizeString(
+        entry?.visitorId ||
+          enrichedDetails?.visitorId ||
+          enrichedDetails?.visitor?.id,
+        80,
+      )
+
       return {
         event_type: eventType,
         event_label: normalizeString(entry.label, MAX_LABEL_LENGTH),
@@ -432,7 +439,11 @@ export default defineEventHandler(async (event) => {
           requestBaseUrl || 'https://talkateria.pl',
         ),
         session_id: normalizeString(entry.sessionId, 80),
-        payload_json: enrichedDetails,
+        visitor_id: visitorId,
+        payload_json: {
+          ...enrichedDetails,
+          visitorId: visitorId || enrichedDetails.visitorId || null,
+        },
         is_likely_bot: bot.is_likely_bot,
         bot_score: bot.bot_score,
         bot_signals: bot.bot_signals,
@@ -449,15 +460,33 @@ export default defineEventHandler(async (event) => {
   }
 
   const endpoint = `${config.supabaseUrl.replace(/\/+$/, '')}/rest/v1/tracking_events`
+  const headers = buildSupabaseHeaders(config.supabaseServiceRoleKey)
 
   try {
     await $fetch(endpoint, {
       method: 'POST',
-      headers: buildSupabaseHeaders(config.supabaseServiceRoleKey),
+      headers,
       body: rows,
     })
   } catch (error) {
-    console.error('Tracking webhook insert failed', error)
+    const message = String(error?.data?.message || error?.message || '')
+    const missingVisitorColumn =
+      /visitor_id/i.test(message) &&
+      /schema cache|could not find|column/i.test(message)
+
+    if (missingVisitorColumn) {
+      try {
+        await $fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body: rows.map(({ visitor_id: _visitorId, ...row }) => row),
+        })
+      } catch (fallbackError) {
+        console.error('Tracking webhook insert failed', fallbackError)
+      }
+    } else {
+      console.error('Tracking webhook insert failed', error)
+    }
   }
 
   setResponseStatus(event, 204)

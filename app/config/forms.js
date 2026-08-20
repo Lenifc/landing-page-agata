@@ -6,6 +6,8 @@ export const CONTACT_FORM = Object.freeze({
   submitUrl: 'https://formspree.io/f/xgawwvba',
   toEmail: CONTACT.email,
   subject: 'Zgłoszenie z formularza talkateria.pl',
+  /** TEMP: set true to re-enable honeypot / cooldown / spam heuristics. */
+  antispamEnabled: false,
   minSubmitMs: 2000,
   cooldownMs: 60_000,
   privacyPolicyPath: ROUTES.privacyPolicy,

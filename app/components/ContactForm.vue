@@ -377,8 +377,6 @@ const normalizePlPhone = (raw) => {
   return digits.slice(0, 9)
 }
 
-const isValidPlPhone = (raw) => /^[1-9]\d{8}$/.test(normalizePlPhone(raw))
-
 const formatPlPhoneDisplay = (digits) => {
   const d = digits.slice(0, 9)
   if (d.length <= 3) {
@@ -447,15 +445,18 @@ const getFieldError = (key) => {
     return 'Podaj imię.'
   }
 
-  if (key === 'phone' && form.phone.trim() && !isValidPlPhone(form.phone)) {
-    return 'Podaj polski numer (9 cyfr), np. 455 407 926.'
+  if (key === 'phone') {
+    return ''
   }
 
   if (key === 'email') {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       return 'Podaj poprawny e-mail.'
     }
-    if (CONTACT_FORM.blockedEmailDomains.includes(emailDomain(form.email))) {
+    if (
+      CONTACT_FORM.antispamEnabled &&
+      CONTACT_FORM.blockedEmailDomains.includes(emailDomain(form.email))
+    ) {
       return 'Użyj stałego adresu e-mail.'
     }
   }
@@ -464,7 +465,7 @@ const getFieldError = (key) => {
     if (!form.message || form.message.length < 5) {
       return 'Napisz krótko, czego szukasz.'
     }
-    if (SPAM_PATTERN.test(form.message)) {
+    if (CONTACT_FORM.antispamEnabled && SPAM_PATTERN.test(form.message)) {
       return 'Usuń linki i spróbuj jeszcze raz.'
     }
   }
@@ -587,6 +588,10 @@ const onFormFocusIn = (event) => {
 const emailDomain = (email) => email.split('@')[1]?.toLowerCase() || ''
 
 const looksLikeSpam = () => {
+  if (!CONTACT_FORM.antispamEnabled) {
+    return false
+  }
+
   const message = form.message
   if (
     (message.match(/https?:\/\/|www\./gi) || []).length > 0 ||
@@ -608,6 +613,10 @@ const looksLikeSpam = () => {
 }
 
 const isInCooldown = () => {
+  if (!CONTACT_FORM.antispamEnabled) {
+    return false
+  }
+
   try {
     const last = Number(localStorage.getItem(STORAGE_KEY) || 0)
     return last > 0 && Date.now() - last < CONTACT_FORM.cooldownMs
@@ -665,7 +674,9 @@ const onSubmit = async () => {
     return
   }
 
-  const honeypotTriggered = Boolean(honeypot.website) || Boolean(honeypot.company)
+  const honeypotTriggered =
+    CONTACT_FORM.antispamEnabled &&
+    (Boolean(honeypot.website) || Boolean(honeypot.company))
 
   // Silent drop for honeypot bots — do not train scrapers with error copy.
   if (honeypotTriggered) {
@@ -691,7 +702,10 @@ const onSubmit = async () => {
     return
   }
 
-  if (!jsToken.value || Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs) {
+  if (
+    CONTACT_FORM.antispamEnabled &&
+    (!jsToken.value || Date.now() - openedAt.value < CONTACT_FORM.minSubmitMs)
+  ) {
     trackBlockedSubmit('too_fast')
     showSubmitError(
       'Formularz wysłano zbyt szybko. Odczekaj sekundę i spróbuj ponownie albo',
@@ -735,7 +749,9 @@ const onSubmit = async () => {
     wbraid: attribution.wbraid || '',
     _subject: `${CONTACT_FORM.subject} — ${form.name} [${campaignLabel}]`,
     _replyto: form.email,
-    _gotcha: honeypot.website || honeypot.company || '',
+    _gotcha: CONTACT_FORM.antispamEnabled
+      ? honeypot.website || honeypot.company || ''
+      : '',
   }
 
   if (phoneDigits) {

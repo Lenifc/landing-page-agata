@@ -680,6 +680,8 @@ const buildSharedDetails = () => {
     readPersistedAttribution(),
   )
 
+  const visitor = touchVisitorProfile()
+
   return {
     currentPageGroup: inferPageGroup(window.location.pathname),
     sessionStartedAt,
@@ -703,7 +705,8 @@ const buildSharedDetails = () => {
     displayMode: getDisplayMode(),
     performanceTiming: getPerformanceTiming(),
     referrerHost: getReferrerHost(),
-    visitor: touchVisitorProfile(),
+    visitorId: visitor?.id || null,
+    visitor,
     pagesInSession: getStoredNumber(SESSION_PAGE_COUNT_KEY) || 1,
     localHour: new Date().getHours(),
     localDayOfWeek: new Date().getDay(),
