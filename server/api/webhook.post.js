@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto'
 
 const ALLOWED_EVENT_TYPES = new Set([
   'pageview',
+  'landing_visit_raw',
   'cta_click',
   'link_click',
   'button_click',
@@ -23,7 +24,19 @@ const ALLOWED_EVENT_TYPES = new Set([
   'sticky_cta_toggle',
   'faq_toggle',
   'pricing_select',
+  'pricing_table_interaction',
 ])
+
+/** Form engagement → treat as human even if bot score is high. */
+const HUMAN_FORM_EVENT_TYPES = new Set([
+  'form_interaction',
+  'form_field_focus',
+  'form_submit_blocked',
+  'form_submit_success',
+  'form_submit_error',
+])
+
+const BOT_SCORE_THRESHOLD = 50
 
 const MAX_LABEL_LENGTH = 120
 const MAX_URL_LENGTH = 2048
@@ -232,8 +245,9 @@ const scoreLikelyBot = ({
     signals.push('soft_bot_ua')
   }
 
+  // Alone must not flag a session — needs a companion signal to reach threshold.
   if (hints.webdriver === true) {
-    score += 80
+    score += 30
     signals.push('navigator_webdriver')
   }
 
@@ -278,9 +292,12 @@ const scoreLikelyBot = ({
   }
 
   const capped = Math.min(score, 100)
+  const formEngagement = HUMAN_FORM_EVENT_TYPES.has(eventType)
+
   return {
     bot_score: capped,
-    is_likely_bot: capped >= 40,
+    // Keep score/signals for diagnostics; never mark form engagement as a bot.
+    is_likely_bot: !formEngagement && capped >= BOT_SCORE_THRESHOLD,
     bot_signals: signals,
   }
 }

@@ -740,6 +740,7 @@ const buildRawLandingPayload = (details = {}) => ({
   details: {
     ...details,
     rawLanding: true,
+    clientOccurredAt: Date.now(),
   },
 })
 
@@ -821,15 +822,24 @@ export const useTracking = () => {
     scheduleFlush()
   }
 
-  const buildEventPayload = ({ eventType, label = null, details = {} }) => ({
-    ...buildBasePayload(),
-    eventType,
-    label,
-    details: {
-      ...buildSharedDetails(),
-      ...(details || {}),
-    },
-  })
+  const buildEventPayload = ({ eventType, label = null, details = {} }) => {
+    const mergedDetails = details && typeof details === 'object' ? details : {}
+
+    return {
+      ...buildBasePayload(),
+      eventType,
+      label,
+      details: {
+        ...buildSharedDetails(),
+        ...mergedDetails,
+        // Prefer a stamp set at event creation (e.g. idle pageview queue).
+        clientOccurredAt:
+          typeof mergedDetails.clientOccurredAt === 'number'
+            ? mergedDetails.clientOccurredAt
+            : Date.now(),
+      },
+    }
+  }
 
   const flushQueuedPageviews = () => {
     if (pageviewDwellTimer) {
@@ -969,6 +979,7 @@ export const useTracking = () => {
       details: {
         ...details,
         pagesInSession: nextCount,
+        clientOccurredAt: Date.now(),
       },
     }
 
