@@ -201,8 +201,6 @@ export default defineNuxtPlugin(() => {
             countAsInteraction: false,
             details: {
               sectionId,
-              pageGroup: inferPageGroup(route.path),
-              intersectionRatio: Number(entry.intersectionRatio.toFixed(2)),
             },
           })
           sectionObserver?.unobserve(el)
@@ -286,15 +284,8 @@ export default defineNuxtPlugin(() => {
       label: label ? label.slice(0, 120) : null,
       href,
       details: {
-        tagName: trackable.tagName.toLowerCase(),
-        id: trackable.id || null,
-        buttonType:
-          trackable instanceof HTMLButtonElement
-            ? trackable.type || 'button'
-            : null,
-        isExternal: external,
         sectionId: nearestSectionId(trackable),
-        ariaExpanded: trackable.getAttribute('aria-expanded'),
+        isExternal: external,
       },
     }
   }
@@ -302,13 +293,9 @@ export default defineNuxtPlugin(() => {
   const sendPageview = () => {
     trackRawLandingVisit({
       routeName: route.name || null,
-      pageGroup: inferPageGroup(route.path),
-      hash: route.hash || null,
     })
     trackPageview({
       routeName: route.name || null,
-      pageGroup: inferPageGroup(route.path),
-      hash: route.hash || null,
     })
   }
 
@@ -335,9 +322,6 @@ export default defineNuxtPlugin(() => {
         countAsInteraction: false,
         details: {
           depthPercent: milestone,
-          pageGroup: inferPageGroup(route.path),
-          scrollY: Math.round(window.scrollY),
-          documentHeight: document.documentElement.scrollHeight,
         },
       })
     }
@@ -454,7 +438,7 @@ export default defineNuxtPlugin(() => {
       const oldPathname = oldPath.split('?')[0]?.split('#')[0] || oldPath
       const newPathname = newPath.split('?')[0]?.split('#')[0] || newPath
 
-      // Hash-only change on same page — no extra event.
+      // Hash-only change on same page - no extra event.
       if (oldPathname === newPathname) {
         return
       }

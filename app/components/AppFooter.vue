@@ -135,6 +135,7 @@ const links = [
   { to: ROUTES.maturaExam, label: 'Matura z angielskiego' },
   { to: ROUTES.adultClasses, label: 'Zajęcia dla dorosłych' },
   { to: ROUTES.onlineClasses, label: 'Zajęcia online' },
+  { to: ROUTES.demoLessons, label: 'Lekcje pokazowe 5 września' },
   { to: ROUTES.contact, label: 'Kontakt' },
 ]
 

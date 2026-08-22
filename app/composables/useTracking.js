@@ -186,7 +186,7 @@ const attributionFieldsFrom = (source = {}) => ({
   fbclid: source.fbclid || null,
 })
 
-/** First non-empty value wins — never let a later `null` wipe first-touch UTMs. */
+/** First non-empty value wins - never let a later `null` wipe first-touch UTMs. */
 const mergeFilledAttribution = (...sources) => {
   const result = emptyAttribution()
 
@@ -336,36 +336,15 @@ const buildLandingContext = (href = window.location.href) => {
   }
 }
 
-const getNavigationType = () => {
-  if (typeof performance === 'undefined') {
-    return null
-  }
-
-  try {
-    const entry = performance.getEntriesByType?.('navigation')?.[0]
-    return entry?.type || null
-  } catch {
-    return null
-  }
-}
-
-const getViewportInfo = () => {
+const getViewportWidth = () => {
   if (typeof window === 'undefined') {
     return null
   }
 
-  return {
-    width: window.innerWidth || null,
-    height: window.innerHeight || null,
-    screenWidth: window.screen?.width || null,
-    screenHeight: window.screen?.height || null,
-    devicePixelRatio: Number(window.devicePixelRatio) || null,
-    orientation:
-      screen?.orientation?.type ||
-      (window.innerWidth >= window.innerHeight ? 'landscape' : 'portrait'),
-  }
+  return window.innerWidth || null
 }
 
+/** Minimal hints for server-side bot scoring only - stripped before DB insert. */
 const getClientBotHints = () => {
   if (typeof navigator === 'undefined') {
     return {}
@@ -376,78 +355,7 @@ const getClientBotHints = () => {
     languagesCount: Array.isArray(navigator.languages)
       ? navigator.languages.length
       : 0,
-    language: navigator.language || null,
-    languages: Array.isArray(navigator.languages)
-      ? navigator.languages.slice(0, 5)
-      : null,
     hardwareConcurrency: Number(navigator.hardwareConcurrency) || null,
-    deviceMemory: Number(navigator.deviceMemory) || null,
-    maxTouchPoints: Number(navigator.maxTouchPoints) || 0,
-    cookieEnabled: navigator.cookieEnabled === true,
-    online: navigator.onLine !== false,
-    doNotTrack:
-      navigator.doNotTrack === '1' ||
-      navigator.doNotTrack === 'yes' ||
-      window.doNotTrack === '1',
-    pdfViewerEnabled: navigator.pdfViewerEnabled === true,
-  }
-}
-
-const parseUaSummary = () => {
-  if (typeof navigator === 'undefined') {
-    return null
-  }
-
-  const ua = navigator.userAgent || ''
-  const uaLower = ua.toLowerCase()
-
-  let browser = 'other'
-  if (/edg\//.test(uaLower)) browser = 'edge'
-  else if (/chrome\//.test(uaLower) && !/chromium/.test(uaLower)) browser = 'chrome'
-  else if (/safari\//.test(uaLower) && !/chrome\//.test(uaLower)) browser = 'safari'
-  else if (/firefox\//.test(uaLower)) browser = 'firefox'
-  else if (/opr\//.test(uaLower) || /opera/.test(uaLower)) browser = 'opera'
-
-  let os = 'other'
-  if (/windows/.test(uaLower)) os = 'windows'
-  else if (/android/.test(uaLower)) os = 'android'
-  else if (/iphone|ipad|ipod/.test(uaLower)) os = 'ios'
-  else if (/mac os x/.test(uaLower)) os = 'macos'
-  else if (/linux/.test(uaLower)) os = 'linux'
-
-  return { browser, os }
-}
-
-const getDisplayMode = () => {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-    return null
-  }
-
-  if (window.matchMedia('(display-mode: standalone)').matches) return 'standalone'
-  if (window.matchMedia('(display-mode: minimal-ui)').matches) return 'minimal-ui'
-  if (window.navigator.standalone === true) return 'standalone'
-  return 'browser'
-}
-
-const getPerformanceTiming = () => {
-  if (typeof performance === 'undefined') {
-    return null
-  }
-
-  try {
-    const entry = performance.getEntriesByType?.('navigation')?.[0]
-    if (!entry) {
-      return null
-    }
-
-    return {
-      ttfbMs: Math.round(entry.responseStart || 0) || null,
-      domContentLoadedMs: Math.round(entry.domContentLoadedEventEnd || 0) || null,
-      loadMs: Math.round(entry.loadEventEnd || 0) || null,
-      transferSize: Number.isFinite(entry.transferSize) ? entry.transferSize : null,
-    }
-  } catch {
-    return null
   }
 }
 
@@ -671,9 +579,8 @@ const buildSharedDetails = () => {
 
   const sessionStartedAt = getStoredNumber(SESSION_STARTED_AT_KEY)
   const firstInteractionAt = getStoredNumber(FIRST_INTERACTION_AT_KEY)
-  const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {})
+  const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {}) || {}
   const now = Date.now()
-  const here = splitLocation(window.location.href)
   const attribution = mergeFilledAttribution(
     parseAttributionParams(window.location.href),
     landingContext,
@@ -683,7 +590,7 @@ const buildSharedDetails = () => {
   const visitor = touchVisitorProfile()
 
   return {
-    currentPageGroup: inferPageGroup(window.location.pathname),
+    pageGroup: inferPageGroup(window.location.pathname),
     sessionStartedAt,
     sessionAgeMs: sessionStartedAt ? now - sessionStartedAt : null,
     interactionCount: getInteractionCount(),
@@ -693,30 +600,19 @@ const buildSharedDetails = () => {
         ? firstInteractionAt - sessionStartedAt
         : null,
     engaged: getStoredBoolean(INTERACTION_STORAGE_KEY),
-    ...landingContext,
+    landingPath: landingContext.landingPath || null,
+    landingPageGroup: landingContext.landingPageGroup || null,
     ...attribution,
-    pathNormalized: here.pathname,
-    queryString: here.query || null,
-    hash: here.hash || null,
+    // Ephemeral - used for bot scoring, stripped in webhook before insert.
     clientBotHints: getClientBotHints(),
-    viewport: getViewportInfo(),
-    navigationType: getNavigationType(),
-    uaSummary: parseUaSummary(),
-    displayMode: getDisplayMode(),
-    performanceTiming: getPerformanceTiming(),
+    viewportWidth: getViewportWidth(),
     referrerHost: getReferrerHost(),
     visitorId: visitor?.id || null,
-    visitor,
+    isReturning: Boolean(visitor?.isReturning),
+    visitCount: Number(visitor?.visitCount) || 1,
+    firstSeenAt: Number(visitor?.firstSeenAt) || null,
+    daysSinceFirstVisit: Number(visitor?.daysSinceFirst) || 0,
     pagesInSession: getStoredNumber(SESSION_PAGE_COUNT_KEY) || 1,
-    localHour: new Date().getHours(),
-    localDayOfWeek: new Date().getDay(),
-    timezone: (() => {
-      try {
-        return Intl.DateTimeFormat().resolvedOptions().timeZone || null
-      } catch {
-        return null
-      }
-    })(),
   }
 }
 

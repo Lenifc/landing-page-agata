@@ -18,8 +18,14 @@ export const ROUTES = Object.freeze({
   onlineClassesPrices: '/zajecia-zdalne#cennik',
   prices: '/oferta#cennik',
   privacyPolicy: '/polityka-prywatnosci',
+  demoLessons: '/lekcje-pokazowe',
 })
 
+/** Not listed in sitemap; served with noindex. */
+export const NOINDEX_ROUTES = Object.freeze([ROUTES.privacyPolicy, ROUTES.demoLessons])
+
 export const PRERENDER_ROUTES = Object.freeze(
-  Object.values(ROUTES).filter((route) => !route.includes('#')),
+  Object.values(ROUTES).filter(
+    (route) => !route.includes('#') && !NOINDEX_ROUTES.includes(route),
+  ),
 )

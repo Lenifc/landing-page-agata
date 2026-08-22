@@ -1,7 +1,7 @@
 import { CONTACT } from './contact'
 import { ROUTES, SITE_URL } from './routes'
 
-/** Formspree (AJAX) — działa na statycznym hostingu / Vercel. */
+/** Formspree (AJAX) - działa na statycznym hostingu / Vercel. */
 export const CONTACT_FORM = Object.freeze({
   submitUrl: 'https://formspree.io/f/xgawwvba',
   toEmail: CONTACT.email,
@@ -12,7 +12,7 @@ export const CONTACT_FORM = Object.freeze({
   cooldownMs: 60_000,
   privacyPolicyPath: ROUTES.privacyPolicy,
   thankYouPath: `${SITE_URL}${ROUTES.contact}#formularz`,
-  /** Typowe domeny jednorazowe / spam — odrzucane po stronie klienta. */
+  /** Typowe domeny jednorazowe / spam - odrzucane po stronie klienta. */
   blockedEmailDomains: Object.freeze([
     'mailinator.com',
     'guerrillamail.com',

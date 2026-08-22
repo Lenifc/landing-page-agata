@@ -427,7 +427,7 @@ const onPhoneInput = (event) => {
 
   const formatted = formatPlPhoneDisplay(digits)
   form.phone = formatted
-  // Gdy model się nie zmienia (np. same litery → ""), Vue nie odświeża DOM —
+  // Gdy model się nie zmienia (np. same litery → ""), Vue nie odświeża DOM -
   // wymuszamy wartość w inpucie.
   input.value = formatted
 
@@ -678,7 +678,7 @@ const onSubmit = async () => {
     CONTACT_FORM.antispamEnabled &&
     (Boolean(honeypot.website) || Boolean(honeypot.company))
 
-  // Silent drop for honeypot bots — do not train scrapers with error copy.
+  // Silent drop for honeypot bots - do not train scrapers with error copy.
   if (honeypotTriggered) {
     trackBlockedSubmit('honeypot')
     clearFormStarted()
@@ -747,7 +747,7 @@ const onSubmit = async () => {
     gad_campaignid: attribution.gadCampaignId || '',
     gbraid: attribution.gbraid || '',
     wbraid: attribution.wbraid || '',
-    _subject: `${CONTACT_FORM.subject} — ${form.name} [${campaignLabel}]`,
+    _subject: `${CONTACT_FORM.subject} - ${form.name} [${campaignLabel}]`,
     _replyto: form.email,
     _gotcha: CONTACT_FORM.antispamEnabled
       ? honeypot.website || honeypot.company || ''

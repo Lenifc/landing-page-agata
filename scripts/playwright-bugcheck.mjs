@@ -84,7 +84,7 @@ async function checkForm(page) {
   if ((await page.locator('[aria-invalid="true"]').count()) === 0) {
     add('P1', 'form', 'Empty submit: no validation errors')
   }
-  if ((await page.locator('text=Dziękuję — zgłoszenie poszło').count()) > 0) {
+  if ((await page.locator('text=Dziękuję - zgłoszenie poszło').count()) > 0) {
     add('P0', 'form', 'Empty submit shows success')
   }
 
@@ -123,7 +123,7 @@ async function checkForm(page) {
   await page.locator('form button[type="submit"]').click()
   await page.waitForTimeout(1200)
   page.off('request', onReq)
-  const thanks = await page.locator('text=Dziękuję — zgłoszenie poszło').count()
+  const thanks = await page.locator('text=Dziękuję - zgłoszenie poszło').count()
   if (!(hits > 0 && thanks > 0)) {
     add('P1', 'form', 'Valid submit did not succeed', { hits, thanks })
   }

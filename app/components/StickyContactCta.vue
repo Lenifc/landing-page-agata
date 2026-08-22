@@ -53,14 +53,28 @@ const HIDDEN_PATHS = new Set([
   normalizePath(ROUTES.privacyPolicy),
 ])
 
+const ROUTE_LABEL_OVERRIDES = Object.freeze({
+  [normalizePath(ROUTES.demoLessons)]: {
+    label: 'Zapisz się na lekcję pokazową →',
+  },
+})
+
+/** Sticky CTA hidden on md+ (mobile-only sticky). */
+const DESKTOP_HIDDEN_PATHS = new Set([normalizePath(ROUTES.demoLessons)])
+
 const route = useRoute()
 const { trackEvent } = useTracking()
 const pastScrollThreshold = ref(false)
 const isDesktop = ref(false)
 
-const displayLabel = computed(() =>
-  isDesktop.value ? props.desktopLabel : props.label,
-)
+const displayLabel = computed(() => {
+  const override = ROUTE_LABEL_OVERRIDES[normalizePath(route.path)]
+  if (override?.label) {
+    return override.label
+  }
+
+  return isDesktop.value ? props.desktopLabel : props.label
+})
 const revealDesktop = useStickyCtaRevealDesktop()
 const stickyCtaVisible = useState('sticky-cta-visible', () => false)
 const hasTrackedStickyVisibility = ref(false)
@@ -71,13 +85,17 @@ const isEnabledOnRoute = computed(
   () => !HIDDEN_PATHS.has(normalizePath(route.path)),
 )
 
-/** Mobile: scroll threshold. Desktop: only after pricing_select. */
+/** Mobile: scroll threshold. Desktop: pricing_select only (unless hidden). */
 const isVisible = computed(() => {
   if (!isEnabledOnRoute.value) {
     return false
   }
 
   if (isDesktop.value) {
+    if (DESKTOP_HIDDEN_PATHS.has(normalizePath(route.path))) {
+      return false
+    }
+
     return revealDesktop.value
   }
 
@@ -121,7 +139,6 @@ watch(
       countAsInteraction: false,
       details: {
         visible,
-        path: route.path,
         trigger: isDesktop.value ? 'pricing_select' : 'scroll',
       },
     })

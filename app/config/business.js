@@ -42,7 +42,7 @@ export const BUSINESS_GEO = Object.freeze({
 })
 
 /**
- * AggregateRating — prawdziwe opinie Google (GBP).
+ * AggregateRating - prawdziwe opinie Google (GBP).
  * Aktualizuj reviewCount / ratingValue po nowych opiniach.
  * Google: pełna ocena to liczba 5 (nie "5.0"); ułamek z kropką, np. 4.8.
  */

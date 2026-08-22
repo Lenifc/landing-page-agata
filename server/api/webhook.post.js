@@ -1,5 +1,3 @@
-import { createHash } from 'node:crypto'
-
 const ALLOWED_EVENT_TYPES = new Set([
   'pageview',
   'landing_visit_raw',
@@ -154,7 +152,7 @@ const parseAttributionFromUrl = (urlString) => {
   }
 }
 
-const enrichPayloadDetails = (details, urlString, requestMeta = {}) => {
+const enrichPayloadDetails = (details, urlString) => {
   const base =
     details && typeof details === 'object' && !Array.isArray(details)
       ? { ...details }
@@ -185,16 +183,41 @@ const enrichPayloadDetails = (details, urlString, requestMeta = {}) => {
   base.wbraid = pickFirst(base.wbraid, fromUrl.wbraid)
   base.fbclid = pickFirst(base.fbclid, fromUrl.fbclid)
 
-  if (requestMeta && typeof requestMeta === 'object') {
-    base.requestMeta = {
-      ...(base.requestMeta && typeof base.requestMeta === 'object'
-        ? base.requestMeta
-        : {}),
-      ...requestMeta,
-    }
+  return base
+}
+
+/** Drop noisy / redundant client fields after bot scoring. */
+const sanitizePayloadForStorage = (details) => {
+  if (!details || typeof details !== 'object') {
+    return {}
   }
 
-  return base
+  const cleaned = { ...details }
+  delete cleaned.clientBotHints
+  delete cleaned.requestMeta
+  delete cleaned.landingUrl
+  delete cleaned.pathNormalized
+  delete cleaned.queryString
+  delete cleaned.hash
+  delete cleaned.visitor
+  delete cleaned.currentPageGroup
+  delete cleaned.viewport
+  delete cleaned.navigationType
+  delete cleaned.uaSummary
+  delete cleaned.displayMode
+  delete cleaned.performanceTiming
+  delete cleaned.localHour
+  delete cleaned.localDayOfWeek
+  delete cleaned.timezone
+  delete cleaned.scrollY
+  delete cleaned.documentHeight
+  delete cleaned.intersectionRatio
+  delete cleaned.tagName
+  delete cleaned.buttonType
+  delete cleaned.ariaExpanded
+  delete cleaned.id
+
+  return cleaned
 }
 
 const splitLocation = (pathValue, urlValue) => {
@@ -245,7 +268,7 @@ const scoreLikelyBot = ({
     signals.push('soft_bot_ua')
   }
 
-  // Alone must not flag a session — needs a companion signal to reach threshold.
+  // Alone must not flag a session - needs a companion signal to reach threshold.
   if (hints.webdriver === true) {
     score += 30
     signals.push('navigator_webdriver')
@@ -302,14 +325,6 @@ const scoreLikelyBot = ({
   }
 }
 
-const hashIp = (ip) => {
-  if (!ip) {
-    return null
-  }
-
-  return createHash('sha256').update(ip).digest('hex')
-}
-
 const parsePayload = async (event) => {
   try {
     const body = await readBody(event)
@@ -354,19 +369,6 @@ export default defineEventHandler(async (event) => {
   const requestBaseUrl = getRequestUrl(event)
   const userAgent = normalizeString(getHeader(event, 'user-agent'), 1024)
   const city = decodeHeaderValue(getHeader(event, 'x-vercel-ip-city'), 128)
-  const requestMeta = {
-    acceptLanguage: normalizeString(getHeader(event, 'accept-language'), 160),
-    secChUa: normalizeString(getHeader(event, 'sec-ch-ua'), 160),
-    secChUaMobile: normalizeString(getHeader(event, 'sec-ch-ua-mobile'), 16),
-    secChUaPlatform: normalizeString(
-      getHeader(event, 'sec-ch-ua-platform'),
-      64,
-    ),
-    vercelMarketingId: normalizeString(
-      getHeader(event, 'x-vercel-marketing-id'),
-      80,
-    ),
-  }
   const sharedRowFields = {
     user_agent: userAgent,
     device_type: detectDeviceType(getHeader(event, 'user-agent')),
@@ -376,11 +378,6 @@ export default defineEventHandler(async (event) => {
       64,
     ),
     city,
-    ip_hash: hashIp(
-      getRequestIP(event, {
-        xForwardedFor: true,
-      }),
-    ),
   }
 
   const rows = events
@@ -395,16 +392,8 @@ export default defineEventHandler(async (event) => {
       const location = splitLocation(entry.path, absoluteUrl)
       const pathWithHash = `${location.pathname}${location.hash}`
       const enrichedDetails = enrichPayloadDetails(
-        {
-          ...(entry.details && typeof entry.details === 'object'
-            ? entry.details
-            : {}),
-          pathNormalized: location.pathname,
-          queryString: location.query || null,
-          hash: location.hash || null,
-        },
+        entry.details && typeof entry.details === 'object' ? entry.details : {},
         absoluteUrl,
-        requestMeta,
       )
       const bot = scoreLikelyBot({
         event,
@@ -429,6 +418,11 @@ export default defineEventHandler(async (event) => {
         80,
       )
 
+      const storedPayload = sanitizePayloadForStorage({
+        ...enrichedDetails,
+        visitorId: visitorId || enrichedDetails.visitorId || null,
+      })
+
       return {
         event_type: eventType,
         event_label: normalizeString(entry.label, MAX_LABEL_LENGTH),
@@ -440,10 +434,7 @@ export default defineEventHandler(async (event) => {
         ),
         session_id: normalizeString(entry.sessionId, 80),
         visitor_id: visitorId,
-        payload_json: {
-          ...enrichedDetails,
-          visitorId: visitorId || enrichedDetails.visitorId || null,
-        },
+        payload_json: storedPayload,
         is_likely_bot: bot.is_likely_bot,
         bot_score: bot.bot_score,
         bot_signals: bot.bot_signals,

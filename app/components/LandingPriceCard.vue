@@ -31,7 +31,7 @@
         <div
           class="mt-2 grid grid-cols-2 gap-2"
           role="group"
-          :aria-label="`Częstotliwość — ${option.name}`"
+          :aria-label="`Częstotliwość - ${option.name}`"
         >
           <button
             v-for="rate in option.rateOptions"

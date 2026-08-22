@@ -60,7 +60,7 @@
   }
 }
 
-/* Soften Fraunces tracking — subset instance reads tighter than before */
+/* Soften Fraunces tracking - subset instance reads tighter than before */
 @layer utilities {
   .font-serif {
     letter-spacing: 0.025em;
