@@ -6,12 +6,51 @@
     </a>
     <AppNav />
     <div class="relative flex flex-1 flex-col overflow-x-clip">
-      <NuxtPage :transition="pageTransition" />
+      <NuxtErrorBoundary @error="onBoundaryError">
+        <NuxtPage :transition="pageTransition" />
+        <template #error="{ clearError: clearBoundaryError }">
+          <main
+            id="main-content"
+            class="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-6 px-5 py-16 xs:px-6"
+          >
+            <p class="text-sm font-medium text-muted-foreground">
+              Coś poszło nie tak
+            </p>
+            <h1
+              class="font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground"
+            >
+              Nie udało się wczytać tej sekcji
+            </h1>
+            <p
+              class="max-w-md text-pretty text-lg leading-relaxed text-muted-foreground"
+            >
+              Menu i stopka działają dalej. Odśwież widok albo wróć na stronę
+              główną.
+            </p>
+            <div
+              class="flex w-full flex-col gap-3 xs:flex-row xs:flex-wrap [&>*]:w-full xs:[&>*]:w-auto"
+            >
+              <UiButton to="/" @click="clearBoundaryError">
+                Wróć na stronę główną
+              </UiButton>
+              <UiButton
+                variant="outline"
+                type="button"
+                @click="clearBoundaryError"
+              >
+                Spróbuj ponownie
+              </UiButton>
+            </div>
+          </main>
+        </template>
+      </NuxtErrorBoundary>
     </div>
     <AppFooter />
     <ClientOnly>
-      <StickyContactCta :to="contactCtaPath" />
-      <CookieConsent />
+      <NuxtErrorBoundary>
+        <StickyContactCta :to="contactCtaPath" />
+        <CookieConsent />
+      </NuxtErrorBoundary>
     </ClientOnly>
   </div>
 </template>
@@ -39,6 +78,12 @@ const pageTransition = computed(() => {
     }
   )
 })
+
+const onBoundaryError = (error) => {
+  if (import.meta.dev) {
+    console.error('[NuxtErrorBoundary]', error)
+  }
+}
 
 useSeoMeta({
   ogUrl: () => pageUrl.value,

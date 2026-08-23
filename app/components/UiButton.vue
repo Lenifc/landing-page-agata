@@ -1,7 +1,7 @@
 <template>
   <component
     :is="componentTag"
-    v-bind="{ ...linkProps, ...$attrs }"
+    v-bind="{ ...linkProps, ...forwardedAttrs }"
     data-tracking-skip-delegated="true"
     :class="buttonClasses"
     @click="handleClick"
@@ -48,6 +48,7 @@ const props = defineProps({
   },
 })
 
+const attrs = useAttrs()
 const { trackEvent } = useTracking()
 
 const componentTag = computed(() => {
@@ -76,6 +77,11 @@ const linkProps = computed(() => {
   }
 
   return { type: props.type }
+})
+
+const forwardedAttrs = computed(() => {
+  const { onClick: _onClick, ...rest } = attrs
+  return rest
 })
 
 const inferredTrackingType = computed(() => {
@@ -110,22 +116,39 @@ const inferredTrackingHref = computed(() => {
 
 const normalizeLabel = (value) => value.replace(/\s+/g, ' ').trim()
 
-const handleClick = (event) => {
-  if (!inferredTrackingType.value) {
+const callParentClick = (event) => {
+  const parentClick = attrs.onClick
+
+  if (typeof parentClick === 'function') {
+    parentClick(event)
     return
   }
 
-  const textLabel =
-    event?.currentTarget instanceof HTMLElement
-      ? normalizeLabel(event.currentTarget.textContent || '')
-      : ''
+  if (Array.isArray(parentClick)) {
+    for (const handler of parentClick) {
+      if (typeof handler === 'function') {
+        handler(event)
+      }
+    }
+  }
+}
 
-  trackEvent({
-    eventType: inferredTrackingType.value,
-    label: props.trackingLabel || textLabel || null,
-    href: inferredTrackingHref.value,
-    details: props.trackingDetails,
-  })
+const handleClick = (event) => {
+  if (inferredTrackingType.value) {
+    const textLabel =
+      event?.currentTarget instanceof HTMLElement
+        ? normalizeLabel(event.currentTarget.textContent || '')
+        : ''
+
+    trackEvent({
+      eventType: inferredTrackingType.value,
+      label: props.trackingLabel || textLabel || null,
+      href: inferredTrackingHref.value,
+      details: props.trackingDetails,
+    })
+  }
+
+  callParentClick(event)
 }
 
 const buttonClasses = computed(() => {

@@ -19,6 +19,7 @@ defineProps({
 })
 
 const DURATION_MS = 300
+const FALLBACK_MS = DURATION_MS + 50
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
@@ -31,23 +32,42 @@ const clearInlineStyles = (el) => {
 }
 
 const animateHeight = (el, from, to, done) => {
+  if (from === to) {
+    clearInlineStyles(el)
+    done()
+    return
+  }
+
   el.style.overflow = 'hidden'
   el.style.height = from
   el.style.transition = `height ${DURATION_MS}ms ease-out`
   el.getBoundingClientRect()
   el.style.height = to
 
-  const onEnd = (event) => {
-    if (event.target !== el || event.propertyName !== 'height') {
+  let finished = false
+
+  const finish = () => {
+    if (finished) {
       return
     }
 
+    finished = true
+    window.clearTimeout(timeoutId)
     el.removeEventListener('transitionend', onEnd)
     clearInlineStyles(el)
     done()
   }
 
+  const onEnd = (event) => {
+    if (event.target !== el || event.propertyName !== 'height') {
+      return
+    }
+
+    finish()
+  }
+
   el.addEventListener('transitionend', onEnd)
+  const timeoutId = window.setTimeout(finish, FALLBACK_MS)
 }
 
 const onEnter = (el, done) => {

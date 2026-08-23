@@ -24,13 +24,17 @@ export const useAnalyticsConsent = () => {
       return null
     }
 
-    const storedValue = window.localStorage.getItem(ANALYTICS_CONSENT_KEY)
+    try {
+      const storedValue = window.localStorage.getItem(ANALYTICS_CONSENT_KEY)
 
-    if (
-      storedValue === ANALYTICS_CONSENT.accepted ||
-      storedValue === ANALYTICS_CONSENT.rejected
-    ) {
-      return storedValue
+      if (
+        storedValue === ANALYTICS_CONSENT.accepted ||
+        storedValue === ANALYTICS_CONSENT.rejected
+      ) {
+        return storedValue
+      }
+    } catch {
+      // Private mode / blocked storage — treat as unset.
     }
 
     return null
@@ -41,7 +45,11 @@ export const useAnalyticsConsent = () => {
       return
     }
 
-    window.localStorage.setItem(ANALYTICS_CONSENT_KEY, value)
+    try {
+      window.localStorage.setItem(ANALYTICS_CONSENT_KEY, value)
+    } catch {
+      // ignore
+    }
   }
 
   const activateClarity = async () => {

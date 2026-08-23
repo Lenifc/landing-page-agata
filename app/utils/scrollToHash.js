@@ -5,7 +5,19 @@ export const scrollToHash = (hash, { behavior = 'smooth' } = {}) => {
     return false
   }
 
-  const id = decodeURIComponent(hash.startsWith('#') ? hash.slice(1) : hash)
+  const rawId = hash.startsWith('#') ? hash.slice(1) : hash
+  let id
+
+  try {
+    id = decodeURIComponent(rawId)
+  } catch {
+    return false
+  }
+
+  if (!id) {
+    return false
+  }
+
   const el = document.getElementById(id)
 
   if (!el) {
