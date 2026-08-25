@@ -25,3 +25,4 @@ supabase/
 
 .cursor/
 /plakaty-lekcje-pokazowe/
+*.sql

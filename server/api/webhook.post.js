@@ -25,13 +25,15 @@ const ALLOWED_EVENT_TYPES = new Set([
   'pricing_table_interaction',
 ])
 
-/** Form engagement → treat as human even if bot score is high. */
-const HUMAN_FORM_EVENT_TYPES = new Set([
+/** Deliberate contact intent → treat as human even if bot score is high. */
+const HUMAN_INTENT_EVENT_TYPES = new Set([
   'form_interaction',
   'form_field_focus',
   'form_submit_blocked',
   'form_submit_success',
   'form_submit_error',
+  'tel_click',
+  'mailto_click',
 ])
 
 const BOT_SCORE_THRESHOLD = 50
@@ -42,10 +44,22 @@ const HARD_BOT_USER_AGENT_PATTERN =
   /bot|crawl|crawler|spider|slurp|preview|facebookexternalhit|whatsapp|discordbot|linkedinbot|skypeuripreview|telegrambot|google-inspectiontool|googleother|headlesschrome|pingdom|uptimerobot|statuscake|phantomjs|selenium|puppeteer|playwright/i
 
 const SOFT_BOT_USER_AGENT_PATTERN =
-  /curl|wget|python-requests|python-urllib|go-http-client|scrapy|httpclient|libwww|okhttp|axios\/|node-fetch|java\/|powershell|sqlmap|nmap|zgrab|censys|shodan|masscan|aiohttp|http\.rb|libcurl|postman|insomnia|scrapy|httrack/i
+  /curl|wget|python-requests|python-urllib|go-http-client|scrapy|httpclient|libwww|okhttp|axios\/|node-fetch|java\/|powershell|sqlmap|nmap|zgrab|censys|shodan|masscan|aiohttp|http\.rb|libcurl|postman|insomnia|httrack|pageburst|dataprovider|siteaudit|semrush|ahrefs|mj12|dotbot|petalbot|bytespider|gptbot|claudebot|ccbot/i
 
+/** Towns that exist essentially only as cloud datacenters. */
 const DATACENTER_CITY_PATTERN =
-  /ashburn|boardman|frankfurt|amsterdam|singapore|mumbai|tokyo|seoul|dublin|london|paris|sydney|montreal|shanghai|dubai|dallas|chicago|san jose|council bluffs|the dalles/i
+  /ashburn|sterling|chantilly|boardman|prineville|hillsboro|the dalles|council bluffs|forest city|altoona|papillion|quincy|moncks corner|maiden|lenoir|gallatin|new albany|mount pleasant/i
+
+/** Real cities that also host major cloud regions — weak signal on its own. */
+const CLOUD_REGION_CITY_PATTERN =
+  /frankfurt|amsterdam|dublin|london|paris|singapore|mumbai|tokyo|seoul|sydney|montreal|shanghai|dubai|san jose|dallas|chicago/i
+
+/** Audience is a local Polish tutoring business — PL is the only expected market. */
+const EXPECTED_COUNTRY = 'PL'
+
+/** Desktop Linux, excluding Android (which also reports "Linux"). */
+const isLinuxDesktopUserAgent = (ua) =>
+  /x11|linux x86_64/i.test(ua) && !/android/i.test(ua)
 
 const getRequestUrl = (event) => {
   const host = getHeader(event, 'x-forwarded-host') || getHeader(event, 'host')
@@ -220,6 +234,33 @@ const sanitizePayloadForStorage = (details) => {
   return cleaned
 }
 
+/**
+ * Browser timestamp for the event, as an ISO string.
+ *
+ * Events are buffered client-side and flushed in batches, so insert time cannot
+ * order them within a session. A client clock is untrusted though, so anything
+ * implausible relative to server time falls back to now.
+ */
+const CLIENT_CLOCK_MAX_AHEAD_MS = 10 * 60 * 1000
+const CLIENT_CLOCK_MAX_BEHIND_MS = 24 * 60 * 60 * 1000
+
+const resolveOccurredAt = (details) => {
+  const now = Date.now()
+  const claimed = Number(details?.clientOccurredAt)
+
+  if (!Number.isFinite(claimed)) {
+    return new Date(now).toISOString()
+  }
+
+  const drift = now - claimed
+
+  if (drift > CLIENT_CLOCK_MAX_BEHIND_MS || drift < -CLIENT_CLOCK_MAX_AHEAD_MS) {
+    return new Date(now).toISOString()
+  }
+
+  return new Date(claimed).toISOString()
+}
+
 const splitLocation = (pathValue, urlValue) => {
   const source = urlValue || pathValue || '/'
 
@@ -247,6 +288,7 @@ const splitLocation = (pathValue, urlValue) => {
 const scoreLikelyBot = ({
   event,
   userAgent,
+  country,
   city,
   details,
   eventType,
@@ -305,8 +347,22 @@ const scoreLikelyBot = ({
   }
 
   if (city && DATACENTER_CITY_PATTERN.test(city) && !details?.gclid) {
-    score += 15
+    score += 30
     signals.push('datacenter_city')
+  } else if (city && CLOUD_REGION_CITY_PATTERN.test(city) && !details?.gclid) {
+    score += 15
+    signals.push('cloud_region_city')
+  }
+
+  // Never decisive alone: a Polish visitor abroad must stay in the stats.
+  if (country && country.toUpperCase() !== EXPECTED_COUNTRY) {
+    score += 35
+    signals.push('unexpected_country')
+  }
+
+  if (isLinuxDesktopUserAgent(ua)) {
+    score += 25
+    signals.push('linux_desktop_ua')
   }
 
   if (/Headless|Electron|Nightmare|SlimerJS/i.test(ua)) {
@@ -315,12 +371,12 @@ const scoreLikelyBot = ({
   }
 
   const capped = Math.min(score, 100)
-  const formEngagement = HUMAN_FORM_EVENT_TYPES.has(eventType)
+  const humanIntent = HUMAN_INTENT_EVENT_TYPES.has(eventType)
 
   return {
     bot_score: capped,
-    // Keep score/signals for diagnostics; never mark form engagement as a bot.
-    is_likely_bot: !formEngagement && capped >= BOT_SCORE_THRESHOLD,
+    // Keep score/signals for diagnostics; never mark deliberate contact as a bot.
+    is_likely_bot: !humanIntent && capped >= BOT_SCORE_THRESHOLD,
     bot_signals: signals,
   }
 }
@@ -369,10 +425,11 @@ export default defineEventHandler(async (event) => {
   const requestBaseUrl = getRequestUrl(event)
   const userAgent = normalizeString(getHeader(event, 'user-agent'), 1024)
   const city = decodeHeaderValue(getHeader(event, 'x-vercel-ip-city'), 128)
+  const country = normalizeString(getHeader(event, 'x-vercel-ip-country'), 8)
   const sharedRowFields = {
     user_agent: userAgent,
     device_type: detectDeviceType(getHeader(event, 'user-agent')),
-    country: normalizeString(getHeader(event, 'x-vercel-ip-country'), 8),
+    country,
     region: decodeHeaderValue(
       getHeader(event, 'x-vercel-ip-country-region'),
       64,
@@ -398,6 +455,7 @@ export default defineEventHandler(async (event) => {
       const bot = scoreLikelyBot({
         event,
         userAgent,
+        country,
         city,
         details: enrichedDetails,
         eventType,
@@ -425,6 +483,7 @@ export default defineEventHandler(async (event) => {
 
       return {
         event_type: eventType,
+        occurred_at: resolveOccurredAt(enrichedDetails),
         event_label: normalizeString(entry.label, MAX_LABEL_LENGTH),
         url: absoluteUrl,
         path: normalizeString(pathWithHash, 512),
@@ -461,16 +520,25 @@ export default defineEventHandler(async (event) => {
     })
   } catch (error) {
     const message = String(error?.data?.message || error?.message || '')
-    const missingVisitorColumn =
-      /visitor_id/i.test(message) &&
-      /schema cache|could not find|column/i.test(message)
+    const looksLikeMissingColumn = /schema cache|could not find|column/i.test(
+      message,
+    )
+    const missingColumns = ['visitor_id', 'occurred_at'].filter(
+      (column) => looksLikeMissingColumn && new RegExp(column, 'i').test(message),
+    )
 
-    if (missingVisitorColumn) {
+    if (missingColumns.length) {
       try {
         await $fetch(endpoint, {
           method: 'POST',
           headers,
-          body: rows.map(({ visitor_id: _visitorId, ...row }) => row),
+          body: rows.map((row) => {
+            const retried = { ...row }
+            for (const column of missingColumns) {
+              delete retried[column]
+            }
+            return retried
+          }),
         })
       } catch (fallbackError) {
         console.error('Tracking webhook insert failed', fallbackError)

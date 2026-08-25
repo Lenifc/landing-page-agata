@@ -1,5 +1,11 @@
-const SESSION_STORAGE_KEY = 'talkateria-tracking-session-id'
-const SESSION_STARTED_AT_KEY = 'talkateria-tracking-session-started-at'
+/**
+ * Session identity lives in localStorage, not sessionStorage: sessionStorage is
+ * per-tab and is dropped when a mobile browser discards a backgrounded tab, which
+ * split single visits into several "sessions" minutes apart. A sliding
+ * inactivity window closes the session instead.
+ */
+const SESSION_RECORD_KEY = 'talkateria-tracking-session'
+const SESSION_INACTIVITY_MS = 30 * 60 * 1000
 const LANDING_CONTEXT_KEY = 'talkateria-tracking-landing-context'
 const ATTRIBUTION_STORAGE_KEY = 'talkateria-tracking-attribution'
 const ATTRIBUTION_TTL_MS = 90 * 24 * 60 * 60 * 1000
@@ -73,37 +79,6 @@ const getStorage = () => {
   }
 }
 
-const getStoredString = (key) => getStorage()?.getItem(key) || ''
-
-const setStoredString = (key, value) => {
-  const storage = getStorage()
-
-  if (!storage) {
-    return
-  }
-
-  try {
-    storage.setItem(key, value)
-  } catch {
-    // ignore
-  }
-}
-
-const getStoredBoolean = (key) => getStoredString(key) === '1'
-
-const setStoredBoolean = (key, value) => {
-  setStoredString(key, value ? '1' : '0')
-}
-
-const getStoredNumber = (key) => {
-  const raw = Number(getStoredString(key))
-  return Number.isFinite(raw) && raw > 0 ? raw : 0
-}
-
-const setStoredNumber = (key, value) => {
-  setStoredString(key, String(value))
-}
-
 const readStoredJson = (key, fallback) => {
   const storage = getStorage()
 
@@ -156,6 +131,50 @@ const writeLocalJson = (key, value) => {
   } catch {
     // ignore
   }
+}
+
+/**
+ * Session-scoped counters follow the session, so they live in localStorage too.
+ * The event/pageview queues deliberately stay in sessionStorage: a shared queue
+ * would let two tabs flush the same buffered events twice.
+ */
+const getLocalString = (key) => {
+  if (typeof window === 'undefined') {
+    return ''
+  }
+
+  try {
+    return window.localStorage.getItem(key) || ''
+  } catch {
+    return ''
+  }
+}
+
+const setLocalString = (key, value) => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    window.localStorage.setItem(key, value)
+  } catch {
+    // ignore
+  }
+}
+
+const getLocalBoolean = (key) => getLocalString(key) === '1'
+
+const setLocalBoolean = (key, value) => {
+  setLocalString(key, value ? '1' : '0')
+}
+
+const getLocalNumber = (key) => {
+  const raw = Number(getLocalString(key))
+  return Number.isFinite(raw) && raw > 0 ? raw : 0
+}
+
+const setLocalNumber = (key, value) => {
+  setLocalString(key, String(value))
 }
 
 const emptyAttribution = () => ({
@@ -412,15 +431,83 @@ const touchVisitorProfile = () => {
 
   return cachedVisitorProfile
 }
-const ensureSessionContext = () => {
-  const storage = getStorage()
 
-  if (!storage) {
+const resetSessionScopedState = () => {
+  setLocalBoolean(INTERACTION_STORAGE_KEY, false)
+  setLocalNumber(INTERACTION_COUNT_KEY, 0)
+  setLocalString(FIRST_INTERACTION_AT_KEY, '')
+  setLocalBoolean(FIRST_PAGEVIEW_SENT_KEY, false)
+  setLocalBoolean(RAW_LANDING_SENT_KEY, false)
+  setLocalNumber(SESSION_PAGE_COUNT_KEY, 0)
+  // Dropping the landing context makes the next page the new session's landing.
+  // Long-term attribution survives separately under ATTRIBUTION_STORAGE_KEY.
+  writeLocalJson(LANDING_CONTEXT_KEY, null)
+  writeStoredJson(PAGEVIEW_QUEUE_KEY, [])
+  writeStoredJson(EVENT_BATCH_KEY, [])
+
+  if (pageviewDwellTimer) {
+    window.clearTimeout(pageviewDwellTimer)
+    pageviewDwellTimer = null
+  }
+}
+
+const readSessionRecord = () => {
+  const stored = readLocalJson(SESSION_RECORD_KEY, null)
+
+  if (!stored || typeof stored.id !== 'string' || !stored.id) {
+    return null
+  }
+
+  const lastActivityAt = Number(stored.lastActivityAt) || 0
+
+  if (!lastActivityAt || Date.now() - lastActivityAt > SESSION_INACTIVITY_MS) {
+    return null
+  }
+
+  return {
+    id: stored.id,
+    startedAt: Number(stored.startedAt) || lastActivityAt,
+    lastActivityAt,
+  }
+}
+
+const startNewSession = () => {
+  const now = Date.now()
+  const record = { id: createSessionId(), startedAt: now, lastActivityAt: now }
+  writeLocalJson(SESSION_RECORD_KEY, record)
+  resetSessionScopedState()
+  return record
+}
+
+/**
+ * Returns the live session, extending its inactivity window. A session that has
+ * been idle past SESSION_INACTIVITY_MS is replaced rather than resumed.
+ */
+const touchSession = () => {
+  const existing = readSessionRecord()
+
+  if (!existing) {
+    return startNewSession()
+  }
+
+  const record = { ...existing, lastActivityAt: Date.now() }
+  writeLocalJson(SESSION_RECORD_KEY, record)
+  return record
+}
+
+const getSessionId = () => touchSession().id
+
+const ensureSessionContext = () => {
+  if (typeof window === 'undefined') {
     return
   }
 
+  // Resolve session identity first: a lapsed session clears the landing context
+  // here, so the checks below treat the current page as a fresh landing.
+  touchSession()
+
   const currentAttribution = parseAttributionParams(window.location.href)
-  const existing = readStoredJson(LANDING_CONTEXT_KEY, null)
+  const existing = readLocalJson(LANDING_CONTEXT_KEY, null)
   const isNewPaidLanding =
     existing &&
     hasPaidAttribution(currentAttribution) &&
@@ -432,29 +519,16 @@ const ensureSessionContext = () => {
       (currentAttribution.wbraid &&
         currentAttribution.wbraid !== existing.wbraid))
 
-  // New ad click in the same tab → start a fresh tracking session.
+  // New ad click → start a fresh tracking session so each click bills separately.
   if (isNewPaidLanding) {
-    setStoredString(SESSION_STORAGE_KEY, createSessionId())
-    setStoredNumber(SESSION_STARTED_AT_KEY, Date.now())
-    setStoredBoolean(INTERACTION_STORAGE_KEY, false)
-    setStoredNumber(INTERACTION_COUNT_KEY, 0)
-    setStoredString(FIRST_INTERACTION_AT_KEY, '')
-    setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, false)
-    setStoredBoolean(RAW_LANDING_SENT_KEY, false)
-    writeStoredJson(PAGEVIEW_QUEUE_KEY, [])
-    writeStoredJson(EVENT_BATCH_KEY, [])
-    setStoredNumber(SESSION_PAGE_COUNT_KEY, 0)
-    if (pageviewDwellTimer) {
-      window.clearTimeout(pageviewDwellTimer)
-      pageviewDwellTimer = null
-    }
+    startNewSession()
 
     const nextLanding = buildLandingContext()
-    writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
+    writeLocalJson(LANDING_CONTEXT_KEY, nextLanding)
     persistAttribution(nextLanding)
   } else if (!existing) {
     const nextLanding = buildLandingContext()
-    writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
+    writeLocalJson(LANDING_CONTEXT_KEY, nextLanding)
     persistAttribution(nextLanding)
   } else if (existing.landingPath?.includes('?')) {
     const split = splitLocation('', existing.landingPath)
@@ -462,7 +536,7 @@ const ensureSessionContext = () => {
       ...existing,
       landingPath: pathForReporting(split.pathname, split.hash),
     }
-    writeStoredJson(LANDING_CONTEXT_KEY, cleaned)
+    writeLocalJson(LANDING_CONTEXT_KEY, cleaned)
     persistAttribution(cleaned)
   } else if (
     hasAnyAttribution(currentAttribution) &&
@@ -479,29 +553,17 @@ const ensureSessionContext = () => {
       ),
       landingPageGroup: inferPageGroup(window.location.pathname),
     }
-    writeStoredJson(LANDING_CONTEXT_KEY, nextLanding)
+    writeLocalJson(LANDING_CONTEXT_KEY, nextLanding)
     persistAttribution(nextLanding)
   } else if (hasAnyAttribution(existing) || existing?.landingPath) {
     persistAttribution(existing)
-  }
-
-  if (!getStoredString(SESSION_STORAGE_KEY)) {
-    setStoredString(SESSION_STORAGE_KEY, createSessionId())
-  }
-
-  if (!getStoredNumber(SESSION_STARTED_AT_KEY)) {
-    setStoredNumber(SESSION_STARTED_AT_KEY, Date.now())
-  }
-
-  if (!getStoredString(RAW_LANDING_SENT_KEY)) {
-    setStoredBoolean(RAW_LANDING_SENT_KEY, false)
   }
 }
 
 const getLeadAttribution = () => {
   ensureSessionContext()
 
-  const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {}) || {}
+  const landingContext = readLocalJson(LANDING_CONTEXT_KEY, {}) || {}
   const persisted = readPersistedAttribution() || {}
   const fromUrl =
     typeof window !== 'undefined'
@@ -514,7 +576,7 @@ const getLeadAttribution = () => {
   )
 
   return {
-    sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
+    sessionId: getSessionId(),
     visitorId: touchVisitorProfile()?.id || null,
     landingUrl:
       landingContext.landingUrl ||
@@ -554,32 +616,32 @@ const writePendingEvents = (items) => {
   writeStoredJson(EVENT_BATCH_KEY, items)
 }
 
-const getInteractionCount = () => getStoredNumber(INTERACTION_COUNT_KEY)
+const getInteractionCount = () => getLocalNumber(INTERACTION_COUNT_KEY)
 
 const incrementInteractionCount = () => {
   const next = getInteractionCount() + 1
-  setStoredNumber(INTERACTION_COUNT_KEY, next)
+  setLocalNumber(INTERACTION_COUNT_KEY, next)
   return next
 }
 
 const ensureFirstInteractionAt = () => {
-  const existing = getStoredNumber(FIRST_INTERACTION_AT_KEY)
+  const existing = getLocalNumber(FIRST_INTERACTION_AT_KEY)
 
   if (existing) {
     return existing
   }
 
   const now = Date.now()
-  setStoredNumber(FIRST_INTERACTION_AT_KEY, now)
+  setLocalNumber(FIRST_INTERACTION_AT_KEY, now)
   return now
 }
 
 const buildSharedDetails = () => {
   ensureSessionContext()
 
-  const sessionStartedAt = getStoredNumber(SESSION_STARTED_AT_KEY)
-  const firstInteractionAt = getStoredNumber(FIRST_INTERACTION_AT_KEY)
-  const landingContext = readStoredJson(LANDING_CONTEXT_KEY, {}) || {}
+  const sessionStartedAt = touchSession().startedAt
+  const firstInteractionAt = getLocalNumber(FIRST_INTERACTION_AT_KEY)
+  const landingContext = readLocalJson(LANDING_CONTEXT_KEY, {}) || {}
   const now = Date.now()
   const attribution = mergeFilledAttribution(
     parseAttributionParams(window.location.href),
@@ -599,7 +661,7 @@ const buildSharedDetails = () => {
       sessionStartedAt && firstInteractionAt
         ? firstInteractionAt - sessionStartedAt
         : null,
-    engaged: getStoredBoolean(INTERACTION_STORAGE_KEY),
+    engaged: getLocalBoolean(INTERACTION_STORAGE_KEY),
     landingPath: landingContext.landingPath || null,
     landingPageGroup: landingContext.landingPageGroup || null,
     ...attribution,
@@ -612,7 +674,7 @@ const buildSharedDetails = () => {
     visitCount: Number(visitor?.visitCount) || 1,
     firstSeenAt: Number(visitor?.firstSeenAt) || null,
     daysSinceFirstVisit: Number(visitor?.daysSinceFirst) || 0,
-    pagesInSession: getStoredNumber(SESSION_PAGE_COUNT_KEY) || 1,
+    pagesInSession: getLocalNumber(SESSION_PAGE_COUNT_KEY) || 1,
   }
 }
 
@@ -622,7 +684,7 @@ const buildBasePayload = () => {
   const here = splitLocation(window.location.href)
 
   return {
-    sessionId: getStoredString(SESSION_STORAGE_KEY) || null,
+    sessionId: getSessionId(),
     visitorId: touchVisitorProfile()?.id || null,
     url: window.location.href,
     path: pathForReporting(here.pathname, here.hash),
@@ -753,7 +815,7 @@ export const useTracking = () => {
     }
 
     writeQueuedPageviews([])
-    setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
+    setLocalBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
 
     for (const payload of queued) {
       queueEvent(buildEventPayload(payload))
@@ -761,7 +823,7 @@ export const useTracking = () => {
   }
 
   const dropIdlePageviewQueue = () => {
-    if (getStoredBoolean(INTERACTION_STORAGE_KEY)) {
+    if (getLocalBoolean(INTERACTION_STORAGE_KEY)) {
       return
     }
 
@@ -782,7 +844,7 @@ export const useTracking = () => {
       pageviewDwellTimer = null
 
       // Still idle after threshold → keep the pageview (human-looking dwell).
-      if (!getStoredBoolean(INTERACTION_STORAGE_KEY)) {
+      if (!getLocalBoolean(INTERACTION_STORAGE_KEY)) {
         flushQueuedPageviews()
         void flushPendingEvents(false)
       }
@@ -831,12 +893,12 @@ export const useTracking = () => {
     ensureSessionContext()
 
     let interactionCount = getInteractionCount()
-    const alreadyEngaged = getStoredBoolean(INTERACTION_STORAGE_KEY)
+    const alreadyEngaged = getLocalBoolean(INTERACTION_STORAGE_KEY)
     const counts =
       countAsInteraction ?? !PASSIVE_EVENT_TYPES.has(eventType)
     const keepWhenIdle =
       persistWhenIdle ?? IDLE_ALLOWED_EVENT_TYPES.has(eventType)
-    const pageviewSent = getStoredBoolean(FIRST_PAGEVIEW_SENT_KEY)
+    const pageviewSent = getLocalBoolean(FIRST_PAGEVIEW_SENT_KEY)
 
     // Idle sessions: drop noise until pageview is kept or user interacts.
     if (!counts && !alreadyEngaged && !keepWhenIdle && !pageviewSent) {
@@ -844,7 +906,7 @@ export const useTracking = () => {
     }
 
     if (counts) {
-      setStoredBoolean(INTERACTION_STORAGE_KEY, true)
+      setLocalBoolean(INTERACTION_STORAGE_KEY, true)
       ensureFirstInteractionAt()
       interactionCount = incrementInteractionCount()
       flushQueuedPageviews()
@@ -869,8 +931,8 @@ export const useTracking = () => {
     ensureFlushListeners()
     ensureSessionContext()
 
-    const nextCount = getStoredNumber(SESSION_PAGE_COUNT_KEY) + 1
-    setStoredNumber(SESSION_PAGE_COUNT_KEY, nextCount)
+    const nextCount = getLocalNumber(SESSION_PAGE_COUNT_KEY) + 1
+    setLocalNumber(SESSION_PAGE_COUNT_KEY, nextCount)
 
     const payload = {
       eventType: 'pageview',
@@ -883,8 +945,8 @@ export const useTracking = () => {
     }
 
     // Already engaged → send immediately.
-    if (getStoredBoolean(INTERACTION_STORAGE_KEY)) {
-      setStoredBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
+    if (getLocalBoolean(INTERACTION_STORAGE_KEY)) {
+      setLocalBoolean(FIRST_PAGEVIEW_SENT_KEY, true)
       queueEvent(buildEventPayload(payload))
       return Promise.resolve(true)
     }
@@ -901,11 +963,11 @@ export const useTracking = () => {
     ensureFlushListeners()
     ensureSessionContext()
 
-    if (!hasRawLandingSignal() || getStoredBoolean(RAW_LANDING_SENT_KEY)) {
+    if (!hasRawLandingSignal() || getLocalBoolean(RAW_LANDING_SENT_KEY)) {
       return Promise.resolve(false)
     }
 
-    setStoredBoolean(RAW_LANDING_SENT_KEY, true)
+    setLocalBoolean(RAW_LANDING_SENT_KEY, true)
     queueEvent(buildEventPayload(buildRawLandingPayload(details)))
     return Promise.resolve(true)
   }
