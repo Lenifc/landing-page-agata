@@ -275,8 +275,20 @@ const parseAttributionParams = (url) => {
   }
 }
 
-const hasPaidAttribution = (attribution) =>
-  Boolean(
+const isAdAuditorCrawler = () => {
+  if (typeof navigator === 'undefined') {
+    return false
+  }
+
+  return /pageburst/i.test(navigator.userAgent || '')
+}
+
+const hasPaidAttribution = (attribution) => {
+  if (isAdAuditorCrawler()) {
+    return false
+  }
+
+  return Boolean(
     attribution?.gclid ||
       attribution?.gbraid ||
       attribution?.wbraid ||
@@ -286,6 +298,7 @@ const hasPaidAttribution = (attribution) =>
         attribution?.utmMedium &&
         /cpc|ppc|paid|ads/i.test(String(attribution.utmMedium))),
   )
+}
 
 const hasAnyAttribution = (attribution) =>
   Boolean(
@@ -648,6 +661,7 @@ const buildSharedDetails = () => {
     landingContext,
     readPersistedAttribution(),
   )
+  const paidAttribution = isAdAuditorCrawler() ? emptyAttribution() : attribution
 
   const visitor = touchVisitorProfile()
 
@@ -664,7 +678,7 @@ const buildSharedDetails = () => {
     engaged: getLocalBoolean(INTERACTION_STORAGE_KEY),
     landingPath: landingContext.landingPath || null,
     landingPageGroup: landingContext.landingPageGroup || null,
-    ...attribution,
+    ...paidAttribution,
     // Ephemeral - used for bot scoring, stripped in webhook before insert.
     clientBotHints: getClientBotHints(),
     viewportWidth: getViewportWidth(),

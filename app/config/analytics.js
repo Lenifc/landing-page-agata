@@ -1,3 +1,9 @@
+/** Ad landing auditors (e.g. PageBurst) — carry campaign UTMs but are not paid clicks. */
+export const AD_AUDITOR_CRAWLER_UA_PATTERN = /pageburst/i
+
+export const isAdAuditorCrawlerUserAgent = (userAgent) =>
+  AD_AUDITOR_CRAWLER_UA_PATTERN.test(String(userAgent || ''))
+
 export const CLARITY_PROJECT_ID = 'xjwn999ocv'
 
 /** Set to true to re-enable Clarity + cookie consent banner. */

@@ -1,3 +1,5 @@
+import { isAdAuditorCrawlerUserAgent } from '../../app/config/analytics.js'
+
 const ALLOWED_EVENT_TYPES = new Set([
   'pageview',
   'landing_visit_raw',
@@ -198,6 +200,32 @@ const enrichPayloadDetails = (details, urlString) => {
   base.fbclid = pickFirst(base.fbclid, fromUrl.fbclid)
 
   return base
+}
+
+const stripPaidAttributionFields = (details) => {
+  if (!details || typeof details !== 'object') {
+    return details
+  }
+
+  details.utmSource = null
+  details.utmMedium = null
+  details.utmCampaign = null
+  details.utmContent = null
+  details.utmTerm = null
+  details.utm_source = null
+  details.utm_medium = null
+  details.utm_campaign = null
+  details.utm_content = null
+  details.utm_term = null
+  details.gclid = null
+  details.gadSource = null
+  details.gadCampaignId = null
+  details.gad_source = null
+  details.gad_campaignid = null
+  details.gbraid = null
+  details.wbraid = null
+
+  return details
 }
 
 /** Drop noisy / redundant client fields after bot scoring. */
@@ -452,6 +480,9 @@ export default defineEventHandler(async (event) => {
         entry.details && typeof entry.details === 'object' ? entry.details : {},
         absoluteUrl,
       )
+      if (isAdAuditorCrawlerUserAgent(userAgent)) {
+        stripPaidAttributionFields(enrichedDetails)
+      }
       const bot = scoreLikelyBot({
         event,
         userAgent,
