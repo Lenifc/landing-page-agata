@@ -342,7 +342,7 @@ const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
 const duoWeekly = getPricingPlan('duoWeekly')
 const duoTwiceWeekly = getPricingPlan('duoTwiceWeekly')
 
-const onlineSchedule = ref('morning')
+const onlineSchedule = ref('afternoon')
 
 const setOnlineSchedule = (value) => {
   if (onlineSchedule.value === value) {
