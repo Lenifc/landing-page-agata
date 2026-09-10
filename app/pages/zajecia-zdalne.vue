@@ -106,8 +106,8 @@
           Wybierz porę zajęć
         </p>
         <p class="mt-1 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Online prowadzę w dwóch oknach: rano (Pn–Pt do 12:00, niższy cennik)
-          oraz popołudniu (Pn–Pt 15:00–20:00 i ew. soboty do 12:00)
+          Online prowadzę w dwóch oknach: porannym (niższy cennik) oraz
+          popołudniowym.
         </p>
         <div
           class="mt-2 grid max-w-lg grid-cols-2 gap-2"
@@ -134,7 +134,7 @@
                   : 'text-muted-foreground'
               "
             >
-              Pn–Pt do 12:00
+              Ceny poranne
             </span>
           </button>
           <button
@@ -157,7 +157,7 @@
                   : 'text-muted-foreground'
               "
             >
-            Pon-Pt 15:00–20:00 | Sob do 12:00
+            Ceny popołudniowe
             </span>
           </button>
         </div>
@@ -378,14 +378,14 @@ const landingPriceOptions = computed(() => {
   return [
     buildIndividualRateCard(
       isMorning
-        ? 'Lekcje indywidualne 1:1 online w godzinach porannych (Pn–Pt do 12:00). Stawka zależy od częstotliwości.'
-        : 'Lekcje indywidualne 1:1 online w godzinach 15:00–20:00. Stawka zależy od częstotliwości.',
+        ? 'Lekcje indywidualne 1:1 online w godzinach porannych. Stawka zależy od częstotliwości.'
+        : 'Lekcje indywidualne 1:1 online w godzinach popołudniowych. Stawka zależy od częstotliwości.',
       { rates: individualRates },
     ),
     buildDuoRateCard(
       isMorning
-        ? 'Lekcje DUO online w godzinach porannych (Pn–Pt do 12:00). Stawka za osobę zależy od częstotliwości.'
-        : 'Lekcje DUO online w godzinach 15:00–20:00. Stawka za osobę zależy od częstotliwości.',
+        ? 'Lekcje DUO online w godzinach porannych. Stawka za osobę zależy od częstotliwości.'
+        : 'Lekcje DUO online w godzinach popołudniowych. Stawka za osobę zależy od częstotliwości.',
       { rates: duoRates },
     ),
   ]
@@ -440,7 +440,7 @@ const onlineScenarios = [
 const faqs = [
   {
     q: 'Ile kosztują lekcje angielskiego online?',
-    a: `Poranne lekcje online (Pn–Pt do 12:00): 1:1 ${MORNING_ONLINE_RATES.individualWeekly} / ${MORNING_ONLINE_RATES.individualTwiceWeekly}, DUO ${personPrice(MORNING_ONLINE_RATES.duoWeekly)} / ${personPrice(MORNING_ONLINE_RATES.duoTwiceWeekly)}. W godzinach 15:00–20:00: 1:1 ${individualWeekly.price} / ${individualTwiceWeekly.price}, DUO ${personPrice(duoWeekly.price)} / ${personPrice(duoTwiceWeekly.price)}. ${PRICING_NOTES.advancePayment}`,
+    a: `Poranne lekcje online: 1:1 ${MORNING_ONLINE_RATES.individualWeekly} / ${MORNING_ONLINE_RATES.individualTwiceWeekly}, DUO ${personPrice(MORNING_ONLINE_RATES.duoWeekly)} / ${personPrice(MORNING_ONLINE_RATES.duoTwiceWeekly)}. Popołudniowe lekcje online: 1:1 ${individualWeekly.price} / ${individualTwiceWeekly.price}, DUO ${personPrice(duoWeekly.price)} / ${personPrice(duoTwiceWeekly.price)}. ${PRICING_NOTES.advancePayment}`,
   },
   {
     q: 'Czy zajęcia zdalne są tak samo skuteczne jak stacjonarne?',

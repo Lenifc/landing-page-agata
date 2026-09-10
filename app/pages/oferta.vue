@@ -72,7 +72,7 @@
               </h3>
               <span
                 class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1">
-                Pn–Pt do 12:00
+                Poranne
               </span>
             </div>
             <div class="mt-2 space-y-1.5 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3 md:text-base">
@@ -91,7 +91,7 @@
               </h3>
               <span
                 class="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary md:px-3 md:py-1">
-                Studio | online od 15:00
+                Studio | online popołudniowe
               </span>
             </div>
             <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-3 md:text-base">
@@ -329,7 +329,7 @@ const individualTwiceWeekly = getPricingPlan('individualTwiceWeekly')
 const duoWeekly = getPricingPlan('duoWeekly')
 const duoTwiceWeekly = getPricingPlan('duoTwiceWeekly')
 const examGroup = getPricingPlan('examGroup')
-const offerPricingFaqAnswer = `Cennik jest prosty: cena za lekcję 50 min zależy od formy i częstotliwości. Zajęcia 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×), DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Kurs egzaminacyjny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min); płatność ${paymentWithoutPrefix(examGroup.paymentNote)}. Osobny cennik obowiązuje przy porannych lekcjach online (Pn-Pt do 12:00).`
+const offerPricingFaqAnswer = `Cennik jest prosty: cena za lekcję 50 min zależy od formy i częstotliwości. Zajęcia 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×), DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Kurs egzaminacyjny w 3-osobowej grupie: 108 zł / osoba za spotkanie 100 min (54 zł za 50 min); płatność ${paymentWithoutPrefix(examGroup.paymentNote)}. Osobny cennik obowiązuje przy porannych lekcjach online.`
 
 useSeoMeta({
   title: 'Oferta oraz cennik zajęć z angielskiego w Rumi',
@@ -485,7 +485,7 @@ const faqs = [
   },
   {
     q: 'Czy zajęcia online różnią się od stacjonarnych?',
-    a: 'Zajęcia online nie różnią się pod względem treści ani jakości od zajęć stacjonarnych. Prowadzone są na platformie Zoom i zapewniają taką samą interakcję, wsparcie oraz indywidualne podejście do kursanta. Poza godzinami porannymi stawki są takie same jak przy zajęciach stacjonarnych. Poranne lekcje online (Pn–Pt do 12:00) mają osobny cennik.',
+    a: 'Zajęcia online nie różnią się pod względem treści ani jakości od zajęć stacjonarnych. Prowadzone są na platformie Zoom i zapewniają taką samą interakcję, wsparcie oraz indywidualne podejście do kursanta. Poza godzinami porannymi stawki są takie same jak przy zajęciach stacjonarnych. Poranne lekcje online mają osobny cennik.',
   },
   {
     q: 'Jak często warto chodzić na angielski?',

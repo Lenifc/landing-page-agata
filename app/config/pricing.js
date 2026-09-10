@@ -130,7 +130,7 @@ export const PRICING = Object.freeze({
   },
   notes: {
     morningOnline:
-      'Cennik poranny online obowiązuje od poniedziałku do piątku do godz. 12:00.',
+      'Cennik poranny online dotyczy lekcji do godziny 12:00.',
     advancePayment:
       'Płatność z góry, na podstawie prognozowanej liczby spotkań w danym miesiącu.',
   },
@@ -152,7 +152,7 @@ export const getMorningOnlinePlans = () => [
     frequency: '1× w tygodniu',
     duration: '50 min',
     price: MORNING_ONLINE_RATES.individualWeekly,
-    details: 'Poranne lekcje online od poniedziałku do piątku do godz. 12:00.',
+    details: 'Poranne lekcje online.',
     featured: false,
   },
   {
@@ -161,7 +161,7 @@ export const getMorningOnlinePlans = () => [
     frequency: '2× w tygodniu',
     duration: '50 min',
     price: MORNING_ONLINE_RATES.individualTwiceWeekly,
-    details: 'Poranne lekcje online od poniedziałku do piątku do godz. 12:00.',
+    details: 'Poranne lekcje online.',
     featured: false,
   },
   {

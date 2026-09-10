@@ -460,7 +460,7 @@ const faqs = [
   },
   {
     q: 'Czy zajęcia online różnią się od stacjonarnych?',
-    a: 'Nie pod względem treści ani jakości. Online prowadzę na Zoomie z taką samą interakcją i indywidualnym podejściem. Poza godzinami porannymi stawki są takie same jak w studiu; poranne lekcje online (Pn–Pt do 12:00) mają osobny cennik.',
+    a: 'Nie pod względem treści ani jakości. Online prowadzę na Zoomie z taką samą interakcją i indywidualnym podejściem. Poza godzinami porannymi stawki są takie same jak w studiu; poranne lekcje online mają osobny cennik.',
   },
   {
     q: 'Jak zapisać się na zajęcia?',

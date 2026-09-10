@@ -50,7 +50,7 @@
             zobacz zajęcia online
           </NuxtLink>
           — poza godzinami porannymi stawki są takie same jak w studiu. Poranny
-          cennik online 1:1 (Pn–Pt do 12:00) znajdziesz w kafelku poniżej.
+          cennik online 1:1 znajdziesz w kafelku poniżej.
         </template>
       </UiSectionHeader>
       <div class="mt-6 grid gap-2.5 sm:grid-cols-2 md:mt-8 md:gap-3">
@@ -157,7 +157,7 @@ const landingPriceOptions = [
   ),
   {
     ...buildIndividualRateCard(
-      'Poranne lekcje online (Pn–Pt do 12:00). Niższa stawka niż w godzinach popołudniowych i stacjonarnych.',
+      'Poranne lekcje online. Niższa stawka niż w godzinach popołudniowych i stacjonarnych.',
       {
         rates: {
           weekly: MORNING_ONLINE_RATES.individualWeekly,
@@ -170,7 +170,7 @@ const landingPriceOptions = [
   },
 ]
 
-const adultPriceFaqAnswer = `Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×). Lekcje DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Poranne online 1:1 (Pn–Pt do 12:00): ${MORNING_ONLINE_RATES.individualWeekly} / ${MORNING_ONLINE_RATES.individualTwiceWeekly}. Pełne stawki znajdziesz w cenniku powyżej.`
+const adultPriceFaqAnswer = `Lekcje indywidualne 1:1: ${individualWeekly.price} (1×) / ${individualTwiceWeekly.price} (2×). Lekcje DUO: ${personPrice(duoWeekly.price)} (1×) / ${personPrice(duoTwiceWeekly.price)} (2×). Poranne online 1:1: ${MORNING_ONLINE_RATES.individualWeekly} / ${MORNING_ONLINE_RATES.individualTwiceWeekly}. Pełne stawki znajdziesz w cenniku powyżej.`
 
 const features = [
   {
